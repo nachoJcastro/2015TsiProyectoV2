@@ -1,0 +1,89 @@
+﻿@model Crosscutting.Entity.TiendaVirtualDTO
+
+@{
+    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TiendaVirtual</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dominio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dominio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Logo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Logo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_creacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_creacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Css)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Css)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StringConection)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StringConection)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

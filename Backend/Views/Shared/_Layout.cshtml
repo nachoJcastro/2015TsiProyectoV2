@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="~/img/favicon.ico" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body id="site">
+    <div id="inicio"></div>
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-chebay" role="navigation">
+        <div class="container">
+            <div class="navbar-header navbar-header-index">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand logo-index" href="#">
+                    <img alt="Brand" src="~/img/logo2.png">
+                </a>
+
+            </div>
+            <div class="collapse navbar-collapse menu-header-index">
+                <ul class="nav navbar-nav navbar-right menu-index">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#aplicacion">Aplicacion</a></li>
+                    <li><a href="#equipo">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li>@Html.ActionLink("TiendaVirtual", "Index", "TiendaVirtual")</li>
+                    @*@Html.Partial("_LoginPartial")*@
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/otros")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

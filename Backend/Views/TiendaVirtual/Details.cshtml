@@ -1,0 +1,83 @@
+﻿@model Crosscutting.Entity.TiendaVirtualDTO
+
+@{
+    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TiendaVirtual</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dominio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dominio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Logo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Logo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_creacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_creacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Css)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Css)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StringConection)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StringConection)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TiendaVitualId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

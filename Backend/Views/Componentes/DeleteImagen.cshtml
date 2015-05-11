@@ -1,0 +1,58 @@
+﻿@model Crosscutting.Entity.ImagenesDTO
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Eliminar Imagen</h4>
+</div>
+<br />
+<h3>Estas seguro de elimnar la imagen?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TiendaId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TiendaId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UrlImagenMediana)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UrlImagenMediana)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EsPortada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EsPortada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagenEliminada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImagenEliminada)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="modal-footer">
+        <input type="submit" value="Eliminar" class="btn btn-default" />
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+    }
+</div>

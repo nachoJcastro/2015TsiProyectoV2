@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Crosscutting.Entity.TiendaVirtualDTO>
+
+@{
+    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dominio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Logo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Css)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dominio)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Logo)*@
+            <img src="@Url.Content(item.Logo)" alt="Muestra de la Imagen" width="50" height="50" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Css)
+        </td>
+        <td>
+            @Html.ActionLink("Componentes", "Index", "Componentes", new { id = item.TiendaVitualId }, null) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.TiendaVitualId }) |*@
+            @*@Html.ActionLink("Details", "Details", new { id=item.TiendaVitualId }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.TiendaVitualId })
+        </td>
+    </tr>
+}
+
+</table>

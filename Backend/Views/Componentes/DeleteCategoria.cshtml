@@ -1,0 +1,43 @@
+﻿@model Crosscutting.Entity.CategoriasDTO
+
+@{
+    ViewBag.Title = "DeleteCategoria";
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Eliminar Categoria</h4>
+</div>
+<br />
+<h3>Estas seguro de eliminar la categoria?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TiendaId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TiendaId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="modal-footer">
+        <input type="submit" value="Eliminar" class="btn btn-default" />
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> 
+    </div>
+    }
+</div>

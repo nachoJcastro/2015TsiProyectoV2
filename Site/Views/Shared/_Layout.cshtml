@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="container">
+           
+            <div class="masthead">
+                <h3 class="text-muted">@Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</h3>
+                <h4>@Html.Partial("_LoginPartial")</h4>
+                <ul class="nav nav-justified">
+                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                </ul>
+               
+           </div>
+           
+
+    </div>
+    <div class="pull-right">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <label class="sr-only" for="search-text">Buscar producto</label>
+                <input type="text" class="form-control" id="search-text" placeholder="">
+            </div>
+            <button type="button" class="btn btn-success" id="search-btn">Buscar</button>
+        </form>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - TSI.NET</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

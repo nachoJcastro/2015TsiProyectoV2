@@ -1,0 +1,50 @@
+﻿@model Backend.Models.RegisterViewModel
+@{
+    Layout = "~/Views/Account/_LayoutAccount.cshtml";
+    ViewBag.Title = "Registrarse";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 login-contenedor">
+            <div class="row">
+                <div class="contenido-login">
+                    <img src="~/img/logo2.png" alt="" class="img-responsive center-block">
+                    <h1 class="text-center"><strong>Bienvenido!</strong></h1>
+                    <h5 class="text-center">Registrese</h5>
+                    <div class="text-center"><a href="/" class="btn-home"><i class="fa fa-home fa-2x"></i></a></div>
+                </div>
+                <div class="col-md-12">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal form-login", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control user", @placeholder = "Correo" }) 
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-key"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control pass", @placeholder = "Password" })
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-unlock"></i></span>
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control pass", @placeholder = "Confirmar password" })
+                        </div>
+
+                        <div class="form-group sector_enviar text-center">
+                            <input type="submit" class="btn btn-default btn-login" value="Registrarse" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

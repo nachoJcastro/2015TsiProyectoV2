@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+}
+
+<h2 style="text-align:center;">Componentes</h2>
+<br />
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#cat" data-toggle="tab">Categorias</a></li>
+    <li><a href="#tp" data-toggle="tab">Tipos de Productos</a></li>
+    <li><a href="#atributos" data-toggle="tab">Atributos</a></li>
+    @*<li><a href="#imagenes" data-toggle="tab">Imagenes</a></li>*@
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="cat">
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <a id="btnCategoria" href="#myModal" class="btn btn-primary btn-lg" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Categorias</a>
+            </div>
+        </div>
+        <br />
+        <h2>Categorias</h2>
+
+        <table class="table">
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in ViewBag.ListaCategorias)
+            {
+                <tr class="texto_table">
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        <a href="#myModal" class="btnEditarCat btn btn-info" data-toggle="modal" data-id="@item.CategoriaId"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
+                        <a href="#myModal" class="btnDeleteCat btn btn-danger" data-toggle="modal" data-id="@item.CategoriaId"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <br />
+        <br />
+    </div>
+    <div class="tab-pane" id="tp">
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <a id="btnTiposP" href="#myModal" class="btn btn-primary btn-lg" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Tipos de Productos</a>
+            </div>
+        </div>
+        <br />
+        <h2>Tipo de Producto</h2>
+        <table class="table">
+            <tr>
+                <th>
+                    Titulo
+                </th>
+                <th>
+                    Descripcion
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var itemT in ViewBag.ListaTipos)
+            {
+                <tr>
+                    <td>
+                        @itemT.Titulo
+                    </td>
+                    <td>
+                        @itemT.Descripcion
+                    </td>
+                    <td>
+                        <a href="#myModal" class="btnEditarT btn btn-info" data-toggle="modal" data-id="@itemT.TipoProductoId"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
+                        <a href="#myModal" class="btnDeleteT btn btn-danger" data-toggle="modal" data-id="@itemT.TipoProductoId"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <br />
+        <br />
+    </div>
+    <div class="tab-pane" id="atributos">
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <a id="btnAtributos" href="#myModal" class="btn btn-primary btn-lg" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Atributos</a>
+            </div>
+        </div>
+        <br />
+        <h2>Atributos</h2>
+        <table class="table">
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var itemA in ViewBag.ListaAtri)
+            {
+                <tr>
+                    <td>
+                        @itemA.Nombre
+                    </td>
+                    <td>
+                        <a href="#myModal" class="btnEditarA btn btn-info" data-toggle="modal" data-id="@itemA.AtributoId"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
+                        <a href="#myModal" class="btnDeleteA btn btn-danger" data-toggle="modal" data-id="@itemA.AtributoId"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+        <br />
+    </div>
+
+</div>
+
+<!-- Modal-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loading">
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/componentes.js"></script>
+}
+
+
+
+
+
+@*@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TipoProductoId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TipoProductoId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TipoProductoId })
+        </td>
+    </tr>
+}
+
+</table>*@
