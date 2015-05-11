@@ -30,9 +30,11 @@ namespace Site.App_Start
             }
 
             var subdominio = host.Substring(0, index);
+            System.Diagnostics.Debug.WriteLine(subdominio.ToString());
+
             string[] lista_negra = { "backend", "www", "sitio","chebay" };
             IBLTenant _ibl = new BLTenant();
-            _ibl.ExisteSitio(subdominio);
+            _ibl.ExisteSitio(subdominio.ToString());
 
             if (lista_negra.Contains(subdominio))
             {
@@ -44,15 +46,20 @@ namespace Site.App_Start
              string controlador = (segmentos_URL.Length > 0) ? segmentos_URL[0] : "Tenant";
              string accion = (segmentos_URL.Length > 1) ? segmentos_URL[1] : "Index";
 
+             if (controlador.Length==0) controlador = "Tenant";
+             if (accion.Length == 0) accion = "Index";
+
+             System.Diagnostics.Debug.WriteLine("CONTROLADOR: "+ controlador + " ACCION " + accion + " SUBDOMINIO " + subdominio );
+
             if (_ibl.ExisteSitio(subdominio)){
-                routeData.Values.Add("controller", "Tenant"); // Va al controlador correspondiente
-                routeData.Values.Add("action", "Index"); //Va a la accion correspondiente al controlador
+                routeData.Values.Add("controller", controlador); // Va al controlador correspondiente
+                routeData.Values.Add("action", accion); //Va a la accion correspondiente al controlador
                 routeData.Values.Add("id", subdominio); //pasa el subdominio           
             }
             else{
                 routeData.Values.Add("controller", "Tenant"); // Va al controlador correspondiente
                 routeData.Values.Add("action", "Error"); //Va a la accion correspondiente al controlador
-                routeData.Values.Add("id", subdominio); //pasa el subdominio
+                routeData.Values.Add("id", subdominio.ToString()); //pasa el subdominio
             }
             return routeData;
         }
