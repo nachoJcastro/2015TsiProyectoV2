@@ -45,8 +45,8 @@ namespace Site.App_Start
              string accion = (segmentos_URL.Length > 1) ? segmentos_URL[1] : "Index";
 
             if (_ibl.ExisteSitio(subdominio)){
-               routeData.Values.Add("controller", controlador); // Va al controlador correspondiente
-                routeData.Values.Add("action", accion); //Va a la accion correspondiente al controlador
+                routeData.Values.Add("controller", "Tenant"); // Va al controlador correspondiente
+                routeData.Values.Add("action", "Index"); //Va a la accion correspondiente al controlador
                 routeData.Values.Add("id", subdominio); //pasa el subdominio           
             }
             else{
