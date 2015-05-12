@@ -11,8 +11,8 @@ using Microsoft.Owin.Security;
 using Site.Models;
 using Crosscutting.EntityTenant;
 using System.Threading;
-using BusinessLogicLayer.TenantInterfaces.User;
-using BusinessLogicLayer.TenantControllers.User;
+using BusinessLogicLayer.TenantInterfaces;
+using BusinessLogicLayer.TenantControllers;
 
 
 
