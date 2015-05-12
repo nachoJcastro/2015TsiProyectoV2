@@ -49,7 +49,7 @@ namespace DAL
             try
             {
                 listaCat = db.Categorias.ToList();
-
+                
                 return listaCat;
 
             }

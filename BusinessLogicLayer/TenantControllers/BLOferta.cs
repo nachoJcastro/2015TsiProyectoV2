@@ -11,7 +11,6 @@ namespace BusinessLogicLayer.TenantControllers
 {
     public class BLOferta : IBLOferta
     {
-
         private IDALOferta _dal = new DALOfertaEF();
 
 
@@ -51,5 +50,11 @@ namespace BusinessLogicLayer.TenantControllers
         {
             _dal.EliminarOferta(ofertaId);
         }
+
+        public List<Oferta> ObtenerOfertasByProducto(int id_subasta)
+        {
+            return _dal.ObtenerOfertasByProducto(id_subasta);
+        }
+
     }
 }

@@ -11,7 +11,7 @@ using Site.Models;
 
 namespace Site.Controllers
 {
-    [Authorize]
+   /* [Authorize]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -384,5 +384,5 @@ namespace Site.Controllers
         }
 
 #endregion
-    }
+    }*/
 }

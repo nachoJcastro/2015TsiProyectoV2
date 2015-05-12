@@ -3,9 +3,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading;
 
 namespace Site.Models
 {
+    
     // Puede agregar datos del perfil del usuario agregando más propiedades a la clase ApplicationUser. Para más información, visite http://go.microsoft.com/fwlink/?LinkID=317594.
     public class ApplicationUser : IdentityUser
     {
@@ -20,9 +22,16 @@ namespace Site.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        
+
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("Data Source=.;database=" + Thread.CurrentThread.Name + ";Integrated Security=True", throwIfV1Schema: false)
+
+           
         {
+
+            Thread t = Thread.CurrentThread;
+            System.Diagnostics.Debug.WriteLine(t.Name);
         }
 
         public static ApplicationDbContext Create()

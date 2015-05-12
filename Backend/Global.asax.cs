@@ -22,7 +22,7 @@ namespace Backend
            
         }
 
-        protected void Session_Start()
+       /* protected void Session_Start()
         {
 
             //var user = new ApplicationUser()
@@ -40,6 +40,6 @@ namespace Backend
             
             //var user2 = new ApplicationUser() { UserName = "gbg933", SesionActual = Guid.NewGuid() };
          
-        }
+        }*/
     }
 }

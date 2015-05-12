@@ -15,5 +15,7 @@ namespace BusinessLogicLayer.TenantInterfaces
         List<Oferta> ObtenerOfertas();//FindAllAs
         void ActualizarOferta(Oferta oferta); //Update
         void EliminarOferta(int ofertaId); //Delete
+
+        List<Oferta> ObtenerOfertasByProducto(int id_subasta);
     }
 }

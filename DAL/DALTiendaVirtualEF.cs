@@ -117,6 +117,26 @@ namespace DAL
             }
         }
 
+        public void EditarCss(int id,string css)
+        { 
+            try
+            {
+                var tienda = db.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == id);
+
+                if (tienda != null)
+                {
+                    tienda.Css = css;
+
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+
         public void EliminarTienda(int tiendaId) 
         {
             try

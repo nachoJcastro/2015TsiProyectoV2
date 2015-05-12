@@ -58,6 +58,8 @@ namespace Site.Models
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
+
+
         [Display(Name = "¿Recordar cuenta?")]
         public bool RememberMe { get; set; }
     }
@@ -68,6 +70,25 @@ namespace Site.Models
         [EmailAddress]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Nick")]
+        public string Nick { get; set; }
+
+
+        [Display(Name = "Nombre")]
+        public string Nombre { get; set; }
+
+        [Display(Name = "Apellido")]
+        public string Apellido { get; set; }
+
+        [Display(Name = "Fecha nacimiento")]
+        [DataType(DataType.Date)]
+        public string Fecha { get; set; }
+
+        [Display(Name = "Direccion")]
+        public string Direccion { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]

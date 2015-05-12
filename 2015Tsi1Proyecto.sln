@@ -26,6 +26,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNSManager", "Hosts\DNSManager.csproj", "{2D716E29-9980-4BA5-9382-668509DE5EE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Site", "Site\Site.csproj", "{BB144E08-9D52-4D21-A742-B85340C7EFAC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0284F4C-BEF1-4C7E-97DE-C6EA9CFA912E} = {C0284F4C-BEF1-4C7E-97DE-C6EA9CFA912E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

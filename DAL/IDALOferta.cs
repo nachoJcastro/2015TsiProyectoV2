@@ -14,5 +14,7 @@ namespace DAL
         List<Oferta> ObtenerOfertas();
         void ActualizarOferta(Oferta oferta); //Update
         void EliminarOferta(int ofertaId); //Delete
+
+        List<Oferta> ObtenerOfertasByProducto(int id_subasta);
     }
 }

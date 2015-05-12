@@ -3,9 +3,16 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
-    <h3 class="text-center">@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</h3>
-    <h5 class="text-center"><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off"></i></a></h5>
+        @Html.AntiForgeryToken()
+        <a href="#" class="dropdown-toggle datos-user" data-toggle="dropdown" role="button" aria-expanded="false"> @User.Identity.GetUserName()</a>
+        <ul class="dropdown-menu drop-right-user wow fadeInUp" role="menu" data-wow-duration="0.5s" data-wow-delay="0s">
+            <li class="drop-titulo-user center-block">
+                <img class="img-responsive img-circle center-block" src="~/img/admin.png" />
+                <p class="text-center">@User.Identity.GetUserName()</p>
+            </li>
+            <li><a href="@Url.Action("Index", "Manage")"><span class="fa fa-user fa-lg"></span> Perfil</a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="fa fa-power-off fa-lg"></span> Cerrar Sesion</a></li>
+        </ul>
     }
 }
 @*else

@@ -11,7 +11,6 @@ namespace BusinessLogicLayer.TenantControllers
 {
     public class BLProducto : IBLProducto
     {
-
         private IDALProducto _dal = new DALProductoEF();
 
 
