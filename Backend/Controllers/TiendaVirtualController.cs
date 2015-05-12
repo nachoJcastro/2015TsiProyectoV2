@@ -13,6 +13,7 @@ using BusinessLogicLayer.Controllers;
 using System.IO;
 using System.Security.AccessControl;
 using Microsoft.AspNet.Identity;
+using System.Web.Hosting;
 
 namespace Backend.Controllers
 {
@@ -208,6 +209,47 @@ namespace Backend.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: TiendaVirtual/Estilo
+       [Authorize]
+        public ActionResult Estilo()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Estilo([Bind(Include = "texto")] Estilo css)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                return RedirectToAction("Index");
+            }
+
+            return View(css);
+        }
+
+        public ActionResult Download()
+        {
+
+            //Response.ContentType = "text/css"; 
+            //Response.AppendHeader("Content", "CSS; filename=Site.css");
+            //Response.TransmitFile(Server.MapPath("~/Content/Site.css")); 
+            //Response.End();
+
+            //var path = Path.Combine(Server.MapPath("~/Content/Images/"));
+            //Response.
+            ////Set the content type
+            var contentType = "text/css";
+            //Get the bootstrap.less contents
+            var cssContent = System.IO.File.ReadAllText(
+                    HostingEnvironment.MapPath("~/Content/Site.css")
+                );
+            //return FileStyleUriParser(cssContent);
+            return File(cssContent, contentType);
+        }
         //protected override void Dispose(bool disposing)
         //{
         //    if (disposing)

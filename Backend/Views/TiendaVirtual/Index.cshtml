@@ -1,54 +1,65 @@
 ﻿@model IEnumerable<Crosscutting.Entity.TiendaVirtualDTO>
-
 @{
-    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+    Layout = "~/Views/Shared/_LayoutBackUser.cshtml";
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="col-md-12 contendor-admin-user">
+    <div class="col-md-6 imagen-logo-user jumbotron wow bounceInLeft" data-wow-duration="0.5s" data-wow-delay="0s">
+        <img class="img-responsive" src="img/logo2.png" alt="">
+        <h2 class="text-center">Bienvenido</h2>
+        <h4 class="text-center">Administrador</h4>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12 panel-info-user wow bounceInRight" data-wow-duration="0.5s" data-wow-delay="0.5s">
+            <h3>En el panel de administracion, el usuario puede realizar la ceracion de tiendas virtuales y realizar todas las configuraciones disponibles para la misma.</h3>
+        </div>
+        <div class="col-md-6 btn-creartienda wow zoomIn" data-wow-duration="0.5s" data-wow-delay="0.7s">
+            <a id="btnTiendaV" href="#myModal" data-toggle="modal" class="btn btn-default"><span class="fa fa-cart-plus fa-3x"></span> <p>Tienda</p></a>
+        </div>
+    </div>
+    <div class="col-md-12 shop-user">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 shop-user wow zoomIn" data-wow-duration="0.5s" data-wow-delay="1s">
+            @foreach (var item in Model)
+            {
+                <div class="offer offer-danger">
+                    <div class="shape">
+                        <div class="shape-text">
+                            <!-- @*Url.Action(" delete",new { id=item.TiendaVitualId })*@ -->
+                            <a href="#myModal" data-toggle="modal" class="close btnDeleteTienda" data-id="@item.TiendaVitualId" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+                        </div>
+                    </div>
+                    <div class="offer-content">
+                        <img src="@Url.Content(item.Logo)" alt="Muestra de la Imagen" width="100" />
+                        <h3 class="">
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </h3>
+                        <h5><small>@Html.DisplayFor(modelItem => item.Css)</small></h5>
+                        <h5><small>@Html.DisplayFor(modelItem => item.Dominio)</small></h5>
+                    </div>
+                    <div class="offer-footer text-right">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dominio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Logo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Css)
-        </th>
-        <th></th>
-    </tr>
+                        <a class="" href="@Url.Action("estilo")"><span class="fa fa-pencil fa-2x"></span></a>
+                        <a class="" href="@Url.Action("index", "Componentes" , new { id=item.TiendaVitualId}, null)"><span class="fa fa-arrow-circle-o-right fa-2x"></span></a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dominio)
-        </td>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.Logo)*@
-            <img src="@Url.Content(item.Logo)" alt="Muestra de la Imagen" width="50" height="50" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Css)
-        </td>
-        <td>
-            @Html.ActionLink("Componentes", "Index", "Componentes", new { id = item.TiendaVitualId }, null) |
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.TiendaVitualId }) |*@
-            @*@Html.ActionLink("Details", "Details", new { id=item.TiendaVitualId }) |*@
-            @Html.ActionLink("Delete", "Delete", new { id=item.TiendaVitualId })
-        </td>
-    </tr>
+<!-- Modal-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/componentes.js"></script>
+    <script src="~/Scripts/wow.min.js"></script>
 }
-
-</table>

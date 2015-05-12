@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Controllers;
+﻿using Backend.Models;
+using BusinessLogicLayer.Controllers;
 using BusinessLogicLayer.Interfaces;
 using Crosscutting.Entity;
 using System;
@@ -23,7 +24,8 @@ namespace Backend.Controllers
             this._bltipo = blt;
         }
 
-        public  ComponentesController() : this(new BLCategoria(), new BLAtributo(), new BLTipoProducto())
+        public ComponentesController()
+            : this(new BLCategoria(), new BLAtributo(), new BLTipoProducto())
         {
 
         }
@@ -37,7 +39,7 @@ namespace Backend.Controllers
 
             var listaT = new List<TipoProductoDTO>();
             var listaA = new List<AtributosDTO>();
-             
+
             foreach (var cat in listaCat)
             {
                 foreach (var atributo in _blatributo.ObtenerAtributosPorCategoria(cat.CategoriaId))
@@ -50,7 +52,7 @@ namespace Backend.Controllers
                     listaT.Add(tipo);
                 }
             }
-            
+
             ViewBag.ListaAtri = listaA;
             ViewBag.ListaTipos = listaT;
 
@@ -60,7 +62,7 @@ namespace Backend.Controllers
             return View();
         }
 
-/*-------------------------------------CATEGORIAS-------------------------------------*/
+        /*-------------------------------------CATEGORIAS-------------------------------------*/
         #region Categorias
 
         // GET: Categorias/Create
@@ -130,99 +132,99 @@ namespace Backend.Controllers
         }
 
         #endregion
-/*-------------------------------------/CATEGORIAS-------------------------------------*/
+        /*-------------------------------------/CATEGORIAS-------------------------------------*/
 
-///*-------------------------------------IMAGENES-------------------------------------*/
-//        #region Imagenes
+        ///*-------------------------------------IMAGENES-------------------------------------*/
+        //        #region Imagenes
 
-//        // GET: Imagenes/Create
-//        public ActionResult Create()
-//        {
-//            return View();
-//        }
+        //        // GET: Imagenes/Create
+        //        public ActionResult Create()
+        //        {
+        //            return View();
+        //        }
 
-//        // POST: Imagenes/Create
-//        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-//        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult CreateImagen([Bind(Include = "ImageneId,TiendaId,UrlImagenMediana,EsPortada,ImagenEliminada")] ImagenesDTO imagenesDTO)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                db.ImagenesDTOes.Add(imagenesDTO);
-//                db.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
+        //        // POST: Imagenes/Create
+        //        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        //        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        //        [HttpPost]
+        //        [ValidateAntiForgeryToken]
+        //        public ActionResult CreateImagen([Bind(Include = "ImageneId,TiendaId,UrlImagenMediana,EsPortada,ImagenEliminada")] ImagenesDTO imagenesDTO)
+        //        {
+        //            if (ModelState.IsValid)
+        //            {
+        //                db.ImagenesDTOes.Add(imagenesDTO);
+        //                db.SaveChanges();
+        //                return RedirectToAction("Index");
+        //            }
 
-//            return View(imagenesDTO);
-//        }
+        //            return View(imagenesDTO);
+        //        }
 
-//        // GET: Imagenes/Edit/5
-//        public ActionResult EditImagen(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            ImagenesDTO imagenesDTO = db.ImagenesDTOes.Find(id);
-//            if (imagenesDTO == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(imagenesDTO);
-//        }
+        //        // GET: Imagenes/Edit/5
+        //        public ActionResult EditImagen(int? id)
+        //        {
+        //            if (id == null)
+        //            {
+        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //            }
+        //            ImagenesDTO imagenesDTO = db.ImagenesDTOes.Find(id);
+        //            if (imagenesDTO == null)
+        //            {
+        //                return HttpNotFound();
+        //            }
+        //            return View(imagenesDTO);
+        //        }
 
-//        // POST: Imagenes/Edit/5
-//        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-//        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult EditImagen([Bind(Include = "ImageneId,TiendaId,UrlImagenMediana,EsPortada,ImagenEliminada")] ImagenesDTO imagenesDTO)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                db.Entry(imagenesDTO).State = EntityState.Modified;
-//                db.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
-//            return View(imagenesDTO);
-//        }
+        //        // POST: Imagenes/Edit/5
+        //        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        //        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        //        [HttpPost]
+        //        [ValidateAntiForgeryToken]
+        //        public ActionResult EditImagen([Bind(Include = "ImageneId,TiendaId,UrlImagenMediana,EsPortada,ImagenEliminada")] ImagenesDTO imagenesDTO)
+        //        {
+        //            if (ModelState.IsValid)
+        //            {
+        //                db.Entry(imagenesDTO).State = EntityState.Modified;
+        //                db.SaveChanges();
+        //                return RedirectToAction("Index");
+        //            }
+        //            return View(imagenesDTO);
+        //        }
 
-//        // GET: Imagenes/Delete/5
-//        public ActionResult DeleteImagen(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            ImagenesDTO imagenesDTO = db.ImagenesDTOes.Find(id);
-//            if (imagenesDTO == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(imagenesDTO);
-//        }
+        //        // GET: Imagenes/Delete/5
+        //        public ActionResult DeleteImagen(int? id)
+        //        {
+        //            if (id == null)
+        //            {
+        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //            }
+        //            ImagenesDTO imagenesDTO = db.ImagenesDTOes.Find(id);
+        //            if (imagenesDTO == null)
+        //            {
+        //                return HttpNotFound();
+        //            }
+        //            return View(imagenesDTO);
+        //        }
 
-//        // POST: Imagenes/Delete/5
-//        [HttpPost, ActionName("Delete")]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult DeleteConfirmedImagen(int id)
-//        {
-//            ImagenesDTO imagenesDTO = db.ImagenesDTOes.Find(id);
-//            db.ImagenesDTOes.Remove(imagenesDTO);
-//            db.SaveChanges();
-//            return RedirectToAction("Index");
-//        }
+        //        // POST: Imagenes/Delete/5
+        //        [HttpPost, ActionName("Delete")]
+        //        [ValidateAntiForgeryToken]
+        //        public ActionResult DeleteConfirmedImagen(int id)
+        //        {
+        //            ImagenesDTO imagenesDTO = db.ImagenesDTOes.Find(id);
+        //            db.ImagenesDTOes.Remove(imagenesDTO);
+        //            db.SaveChanges();
+        //            return RedirectToAction("Index");
+        //        }
 
-//        #endregion
-///*-------------------------------------/IMAGENES-------------------------------------*/
+        //        #endregion
+        ///*-------------------------------------/IMAGENES-------------------------------------*/
 
-///*-------------------------------------ATRIBUTOS-------------------------------------*/
+        ///*-------------------------------------ATRIBUTOS-------------------------------------*/
         #region Atributos
 
         // GET: Atributos/Create
-        public ActionResult Create()
+        public ActionResult CreateAtributo()
         {
             ViewBag.CategoriaId = new SelectList(_blcategoria.ObtenerCategorias(), "CategoriaId", "Nombre");
             return View();
@@ -292,9 +294,9 @@ namespace Backend.Controllers
         }
 
         #endregion
-///*-------------------------------------/ATRIBUTOS-------------------------------------*/
+        ///*-------------------------------------/ATRIBUTOS-------------------------------------*/
 
-///*-------------------------------------TIPOPRODUCTOS-------------------------------------*/
+        ///*-------------------------------------TIPOPRODUCTOS-------------------------------------*/
         #region TipoProductos
 
         // GET: TipoProducto/Create
@@ -367,7 +369,8 @@ namespace Backend.Controllers
         }
 
         #endregion
-///*-------------------------------------/TIPOPRODUCTOS-------------------------------------*/
+        ///*-------------------------------------/TIPOPRODUCTOS-------------------------------------*/
+
 
     }
 }
