@@ -15,6 +15,7 @@ namespace Site.Controllers
     public class TenantController : Controller
     {
         IBLTenant _ibl = new BLTenant();
+        IBLSubasta _sub = new BLSubasta();
         //[ThreadStatic]
         static LocalDataStoreSlot local;
 
@@ -28,7 +29,7 @@ namespace Site.Controllers
             {
                 System.Diagnostics.Debug.WriteLine("ID tenant :" + id);
                 System.Diagnostics.Debug.WriteLine("Tenant");
-                ViewBag.Message = " Entre al Tenant : " + id;
+                ViewBag.Message = " Estoy en el Sitio : " + id;
                 //Session["sitio"] = new Sitio { dominio =id };
 
                 //System.Threading.ThreadLocal<String> tenant;
@@ -55,6 +56,11 @@ namespace Site.Controllers
                 System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());
                 //Thread t = Thread.CurrentThread;
                 System.Diagnostics.Debug.WriteLine(" Tenant Controller . desde el thread: "+ valor_Tenant);
+
+
+                var lista_Subastas = _sub.ObtenerSubastas(valor_Tenant);
+                ViewBag.ListarSubastas = lista_Subastas;
+                
                 return View();
             }
             else

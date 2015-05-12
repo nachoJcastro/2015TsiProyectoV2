@@ -44,11 +44,12 @@ namespace DAL
         }
 
 
-        public List<Subasta> ObtenerSubastas()
+        public List<Subasta> ObtenerSubastas(String tenant)
         {
             var listaSub = new List<Subasta>();
             try
             {
+                db = new TenantDB(tenant);
                 listaSub = db.Subasta.ToList();
                 return listaSub;
             }

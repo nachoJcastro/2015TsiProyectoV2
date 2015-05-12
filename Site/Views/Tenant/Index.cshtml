@@ -3,4 +3,40 @@
 }
 
 
+<div class="panel-body">
+    <table class="table">
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Comprador
+            </th>
+            <th>
+                Vendedor
+            </th>
+        </tr>
+        @foreach (var item in ViewBag.ListarSubastas)
+        {
+            <tr class="texto_table">
+                <td>
+                    @item.id
+                </td>
+                <td>
+                    @item.id_Comprador
+                </td>
+                <td>
+                    @item.id_Vendedor
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+
+
+
+
+
 <h1>@ViewBag.Message</h1>
