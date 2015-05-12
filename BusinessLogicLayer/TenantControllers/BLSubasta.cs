@@ -37,9 +37,9 @@ namespace BusinessLogicLayer.TenantControllers
         }
 
 
-        public List<Subasta> ObtenerSubastas()
+        public List<Subasta> ObtenerSubastas(string tenant)
         {
-            return _dal.ObtenerSubastas();
+            return _dal.ObtenerSubastas(tenant);
         }
 
 
