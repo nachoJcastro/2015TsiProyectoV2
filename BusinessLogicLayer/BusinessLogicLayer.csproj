@@ -56,7 +56,6 @@
     <Compile Include="TenantControllers\BLSubasta.cs" />
     <Compile Include="TenantControllers\BLTenant.cs" />
     <Compile Include="TenantControllers\BLUsuario.cs" />
-    <Compile Include="TenantInterfaces\IBLUsuario.cs" />
     <Compile Include="TenantInterfaces\IBLAtributo.cs" />
     <Compile Include="TenantInterfaces\IBLCategoria.cs" />
     <Compile Include="TenantInterfaces\IBLComentario.cs" />
@@ -64,6 +63,7 @@
     <Compile Include="TenantInterfaces\IBLProducto.cs" />
     <Compile Include="TenantInterfaces\IBLSubasta.cs" />
     <Compile Include="TenantInterfaces\IBLTenant.cs" />
+    <Compile Include="TenantInterfaces\IBLUsuario.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

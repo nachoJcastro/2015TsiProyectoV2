@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Crosscutting.Entity;
 using Crosscutting.EntityTenant;
 
-namespace BusinessLogicLayer.TenantInterfaces
+namespace BusinessLogicLayer.TenantInterfaces.User
 {
     public interface IBLUsuario
     {
