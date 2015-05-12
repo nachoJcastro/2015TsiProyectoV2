@@ -1,12 +1,13 @@
 using System;
-using System.Data.Entity;
+
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Crosscutting.EntityTenant;
-using Microsoft.AspNet.Identity.EntityFramework;
+
 using System.Security.Claims;
-using Microsoft.AspNet.Identity;
+
 using System.Threading.Tasks;
+using System.Data.Entity;
  
 
 namespace DAL.Contextos
