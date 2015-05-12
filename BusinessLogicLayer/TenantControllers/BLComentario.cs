@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.TenantControllers
 {
-    class BLComentario : IBLComentario
+    public class BLComentario : IBLComentario
     {
         private IDALComentario _dal = new DALComentarioEF();
 

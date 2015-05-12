@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.TenantControllers
 {
-    class BLOferta : IBLOferta
+    public class BLOferta : IBLOferta
     {
 
         private IDALOferta _dal = new DALOfertaEF();
