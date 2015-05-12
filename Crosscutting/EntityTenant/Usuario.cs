@@ -18,7 +18,8 @@ namespace Crosscutting.EntityTenant
             Subasta1 = new HashSet<Subasta>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [Required]
@@ -35,6 +36,7 @@ namespace Crosscutting.EntityTenant
         [StringLength(50)]
         public string apellido { get; set; }
 
+        [DataType(DataType.DateTime)]
         public DateTime? fecha_Nacimiento { get; set; }
 
         [Required]
@@ -45,7 +47,7 @@ namespace Crosscutting.EntityTenant
 
         public string imagen { get; set; }
 
-        [Column(TypeName = "date")]
+        [DataType(DataType.DateTime)]
         public DateTime? fecha_Alta { get; set; }
 
         [StringLength(50)]

@@ -54,12 +54,14 @@ namespace Site.App_Start
             if (_ibl.ExisteSitio(subdominio)){
                 routeData.Values.Add("controller", controlador); // Va al controlador correspondiente
                 routeData.Values.Add("action", accion); //Va a la accion correspondiente al controlador
-                routeData.Values.Add("id", subdominio); //pasa el subdominio           
+                routeData.Values.Add("id", subdominio); //pasa el subdominio    
+       
+                
             }
             else{
                 routeData.Values.Add("controller", "Tenant"); // Va al controlador correspondiente
                 routeData.Values.Add("action", "Error"); //Va a la accion correspondiente al controlador
-                routeData.Values.Add("id", subdominio.ToString()); //pasa el subdominio
+                routeData.Values.Add("id", subdominio); //pasa el subdominio
             }
             return routeData;
         }
