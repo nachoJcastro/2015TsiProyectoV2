@@ -3,18 +3,22 @@ using System.Data.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Crosscutting.EntityTenant;
-
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
+ 
 
 namespace DAL.Contextos
 {
-    public  class TenantDB : DbContext
+    public class TenantDB : DbContext
     {
         public TenantDB(string database)
             : base("Data Source=.;database=" + database + ";Integrated Security=True")
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<TenantDB>());
         }
-
+        
         public virtual DbSet<Atributo> Atributo { get; set; }
         public virtual DbSet<Atributo_Subasta> Atributo_Subasta { get; set; }
         public virtual DbSet<Calificacion> Calificacion { get; set; }
@@ -118,6 +122,8 @@ namespace DAL.Contextos
                 .WithRequired(e => e.Usuario1)
                 .HasForeignKey(e => e.id_Vendedor)
                 .WillCascadeOnDelete(false);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -182,6 +182,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Sitio.cs" />
+    <Compile Include="Models\UsuarioSite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -243,7 +245,6 @@
     <Content Include="Views\Tenant\Index.cshtml" />
     <Content Include="Views\Account\_LayoutAccount.cshtml" />
     <Content Include="Views\Tenant\Error.cshtml" />
-    <Content Include="Models\_LayoutAccount - Copia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -259,6 +260,10 @@
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
       <Project>{14705bc5-96bb-4f1f-8eb1-ba1019cf6f97}</Project>
       <Name>BusinessLogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crosscutting\Crosscutting.csproj">
+      <Project>{c0284f4c-bef1-4c7e-97de-c6ea9cfa912e}</Project>
+      <Name>Crosscutting</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,24 +1,25 @@
-﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+﻿@using Site.Models
+@{
+    var user = Session["usuario"] as UsuarioSite;
+}
+@if (user!=null && user.Email!=null)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
     @Html.AntiForgeryToken()
-
-    
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Hola " + user.Nombre + "!", "Index", "Manage")
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+        <li>
+            @Html.ActionLink("Logout", "Otro", "Account")
+    </li>
     </ul>
-    }
+    
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Registrarse", "Register", "Account")</li>
+        <li>@Html.ActionLink("Iniciar sesión", "Login", "Account")</li>
     </ul>
 }
 

@@ -53,11 +53,13 @@
     <Compile Include="TenantControllers\BLProducto.cs" />
     <Compile Include="TenantControllers\BLSubasta.cs" />
     <Compile Include="TenantControllers\BLTenant.cs" />
+    <Compile Include="TenantControllers\User\BLUsuario.cs" />
     <Compile Include="TenantInterfaces\IBLComentario.cs" />
     <Compile Include="TenantInterfaces\IBLOferta.cs" />
     <Compile Include="TenantInterfaces\IBLProducto.cs" />
     <Compile Include="TenantInterfaces\IBLSubasta.cs" />
     <Compile Include="TenantInterfaces\IBLTenant.cs" />
+    <Compile Include="TenantInterfaces\User\IBLUsuario.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
