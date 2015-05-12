@@ -226,7 +226,7 @@ namespace Backend.Controllers
         // GET: Atributos/Create
         public ActionResult CreateAtributo()
         {
-            ViewBag.CategoriaId = new SelectList(_blcategoria.ObtenerCategorias(), "CategoriaId", "Nombre");
+            ViewBag.CategoriaId = new SelectList(_blcategoria.ObtenerCategoriasPorTienda(Int32.Parse(this.Session["_tiendaSesion"].ToString())), "CategoriaId", "Nombre");
             return View();
         }
 
@@ -302,7 +302,7 @@ namespace Backend.Controllers
         // GET: TipoProducto/Create
         public ActionResult CreateTipoProducto()
         {
-            ViewBag.CategoriaId = new SelectList(_blcategoria.ObtenerCategorias(), "CategoriaId", "Nombre");
+            ViewBag.CategoriaId = new SelectList(_blcategoria.ObtenerCategoriasPorTienda(Int32.Parse(this.Session["_tiendaSesion"].ToString())), "CategoriaId", "Nombre");
             return View();
         }
 

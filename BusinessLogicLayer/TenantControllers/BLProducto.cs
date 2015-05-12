@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.TenantControllers
 {
-    class BLProducto : IBLProducto
+    public class BLProducto : IBLProducto
     {
-
         private IDALProducto _dal = new DALProductoEF();
 
 

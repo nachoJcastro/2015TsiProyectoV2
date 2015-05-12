@@ -76,6 +76,9 @@
                                 <table class="table">
                                     <tr>
                                         <th>
+                                            Categoria
+                                        </th>
+                                        <th>
                                             Titulo
                                         </th>
                                         <th>
@@ -86,6 +89,9 @@
                                     @foreach (var itemT in ViewBag.ListaTipos)
                                     {
                                         <tr>
+                                            <td>
+                                                @(@itemT.Categoria == null ? @itemT.CategoriaId : itemT.Categoria.Nombre)
+                                            </td>
                                             <td>
                                                 @itemT.Titulo
                                             </td>
@@ -120,6 +126,9 @@
                                 <table class="table">
                                     <tr>
                                         <th>
+                                            Categoria
+                                        </th>
+                                        <th>
                                             Nombre
                                         </th>
                                         <th></th>
@@ -127,6 +136,9 @@
                                     @foreach (var itemA in ViewBag.ListaAtri)
                                     {
                                         <tr>
+                                            <td>
+                                                @(@itemA.Categoria == null ? @itemA.CategoriaId : itemA.Categoria.Nombre)
+                                            </td>
                                             <td>
                                                 @itemA.Nombre
                                             </td>

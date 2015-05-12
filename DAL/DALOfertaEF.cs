@@ -93,5 +93,20 @@ namespace DAL
                 throw;
             }
         }
+
+
+        public List<Oferta> ObtenerOfertasByProducto(int id_subasta)
+        {
+            var listaOfer = new List<Oferta>();
+            try
+            {
+                listaOfer = db.Oferta.Where(o => o.id_Subasta == id_subasta).ToList();
+                return listaOfer;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

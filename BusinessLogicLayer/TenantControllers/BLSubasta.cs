@@ -11,9 +11,8 @@ using Crosscutting.Enum;
 
 namespace BusinessLogicLayer.TenantControllers
 {
-    class BLSubasta : IBLSubasta{
-
-
+    public class BLSubasta : IBLSubasta
+    {
         private IDALSubasta _dal = new DALSubastaEF();
 
 
