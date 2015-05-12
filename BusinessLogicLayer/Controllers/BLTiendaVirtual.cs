@@ -61,6 +61,12 @@ namespace BusinessLogicLayer.Controllers
             _dal.ActualizarTiendas(tiendaDTO);
         }
 
+
+        public void EditarCss(int id,string css) 
+        {
+            _dal.EditarCss(id,css);
+        }
+
         public void EliminarTienda(int tiendaId) 
         {
             _dal.EliminarTienda(tiendaId);

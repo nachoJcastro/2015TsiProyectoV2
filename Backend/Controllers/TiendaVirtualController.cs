@@ -116,7 +116,7 @@ namespace Backend.Controllers
                         Console.WriteLine("The process failed: {0}", e.ToString());
                     }
 
-               
+                    tiendaVirtualDTO.Css = "Site.css";
                     tiendaVirtualDTO.Fecha_creacion = System.DateTime.Now;
                     tiendaVirtualDTO.Estado = true;
                     tiendaVirtualDTO.StringConection = "StringConection";
@@ -211,20 +211,30 @@ namespace Backend.Controllers
 
         // GET: TiendaVirtual/Estilo
        [Authorize]
-        public ActionResult Estilo()
+        public ActionResult Estilo(int id)
         {
-            return View();
+            var model = new Estilo();
+            model.idTienda = id;
+            return View(model);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Estilo([Bind(Include = "texto")] Estilo css)
+       public ActionResult Estilo([Bind(Include = "texto,idTienda")] Estilo css)
         {
             if (ModelState.IsValid)
             {
-                
+                //
+
+                //CREAR CSS EN DIRECTORIO
+
+                //
+
+                var tienda = _bl.ObtenerTienda(css.idTienda);
+                string ruta = tienda.Nombre+".css";
+                _bl.EditarCss(css.idTienda,ruta);
                 return RedirectToAction("Index");
             }
 

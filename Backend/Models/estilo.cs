@@ -8,5 +8,6 @@ namespace Backend.Models
     public class Estilo
     {
         public string texto { get; set; }
+        public int idTienda { get; set; }
     }
 }

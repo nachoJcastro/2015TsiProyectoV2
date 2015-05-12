@@ -48,9 +48,7 @@ namespace Crosscutting.Entity
 
         public bool Estado { get; set; }
 
-        [Required(ErrorMessage = "Ingrese el estilo de la tienda virtural")]
-        [Display(Name = "Estilo Visual")]
-        public Estilos Css { get; set; }
+        public string Css { get; set; }
 
         public string StringConection { get; set; }
 
