@@ -17,5 +17,7 @@ namespace DAL
         void EliminarTienda(int tiendaId); //Delete
         void EliminarTiendaVirtual(int tiendaId);
 
+
+        void EditarCss(int id,string css);
     }
 }

@@ -117,7 +117,32 @@
 
     /*------------- TIENDA INDEX -------------*/
 
+    $('.btnDeleteTienda').click(function () {
+        $(".modal-dialog").hide();
+        $('.modal-body').load("/tiendavirtual/delete/" + $(this).data("id"));
 
+        setTimeout(function () {
+            $(".modal-dialog").fadeIn();
+        }, 100);
+    });
+    $('#btnTiendaV').click(function () {
+        $(".modal-dialog").hide();
+        $('.modal-body').load("/tiendavirtual/create");
+
+        setTimeout(function () {
+            $(".modal-dialog").fadeIn();
+        }, 100);
+    });
+
+    $('.btnEstiloCss').click(function () {
+        $(".modal-dialog").hide();
+        $('.modal-body').load("/tiendavirtual/estilo");
+
+        setTimeout(function () {
+            $(".modal-dialog").fadeIn();
+        }, 100);
+    });
+    
     /*$('.btnEliminarJuegoAdmin').click(function () {
         $(".modal-dialog").hide();
         $("#loading").fadeIn();

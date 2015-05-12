@@ -88,6 +88,10 @@
     <Compile Include="Migrations\201505021645209_init.Designer.cs">
       <DependentUpon>201505021645209_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505121200082_init1.cs" />
+    <Compile Include="Migrations\201505121200082_init1.Designer.cs">
+      <DependentUpon>201505121200082_init1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,6 +108,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505021645209_init.resx">
       <DependentUpon>201505021645209_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505121200082_init1.resx">
+      <DependentUpon>201505121200082_init1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

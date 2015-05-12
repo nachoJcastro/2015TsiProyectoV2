@@ -1,13 +1,15 @@
 ﻿@model Crosscutting.Entity.TiendaVirtualDTO
 
 @{
-    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+    Layout = null;
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
-
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Crear Tienda Virtual</h4>
+</div>
+<br />
 @using (Html.BeginForm("Create", "TiendaVirtual", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
@@ -52,13 +54,13 @@
             </div>
         </div>*@
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Css, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.Css,  new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.Css, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         @*<div class="form-group">
             @Html.LabelFor(model => model.StringConection, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -68,18 +70,12 @@
             </div>
         </div>*@
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <div class="modal-footer">
+            <input type="submit" value="Crear" class="btn btn-default" />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@Scripts.Render("~/bundles/jqueryval")
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
