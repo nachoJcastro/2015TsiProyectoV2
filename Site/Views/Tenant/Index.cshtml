@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index tenant ";
 }
-
+<h1>@ViewBag.Message</h1>
 
 <div class="panel-body">
     <table class="table">
@@ -33,10 +33,7 @@
     </table>
 </div>
 
-
-
-
-
-
-
-<h1>@ViewBag.Message</h1>
+<div class="jumbotron">
+    <h1>SITIO WEB</h1>
+    <button type="button" onclick="location.href='@Url.Action("Index", "Subastas")'" class="btn btn-default">Alta Subasta</button>
+</div>

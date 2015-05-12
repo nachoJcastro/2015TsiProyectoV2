@@ -18,7 +18,7 @@ namespace Crosscutting.EntityTenant
             Oferta = new HashSet<Oferta>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         public int id_Comprador { get; set; }

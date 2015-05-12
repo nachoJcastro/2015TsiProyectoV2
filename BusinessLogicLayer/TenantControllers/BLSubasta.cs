@@ -25,9 +25,9 @@ namespace BusinessLogicLayer.TenantControllers
         public BLSubasta() { }
 
 
-        public void AgregarSubasta(Subasta subasta)
+        public void AgregarSubasta(String tenant,Subasta subasta)
         {
-            _dal.AgregarSubasta(subasta);
+            _dal.AgregarSubasta(tenant,subasta);
         }
 
 

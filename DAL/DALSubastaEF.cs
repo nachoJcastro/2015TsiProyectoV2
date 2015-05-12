@@ -16,10 +16,11 @@ namespace DAL
         public DALSubastaEF() { }
 
 
-        public void AgregarSubasta(Subasta subasta)
+        public void AgregarSubasta(String tenant, Subasta subasta)
         {
             try
             {
+                db = new TenantDB(tenant);
                 db.Subasta.Add(subasta);
                 db.SaveChanges();
             }

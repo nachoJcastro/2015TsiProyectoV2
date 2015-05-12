@@ -8,7 +8,7 @@ namespace Crosscutting.EntityTenant
     [Table("Oferta")]
     public partial class Oferta
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         public double Monto { get; set; }

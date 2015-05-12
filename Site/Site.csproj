@@ -176,6 +176,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OfertaController.cs" />
+    <Compile Include="Controllers\SubastasController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -248,6 +249,12 @@
     <Content Include="Views\Account\_LayoutAccount.cshtml" />
     <Content Include="Views\Tenant\Error.cshtml" />
     <Content Include="Views\Oferta\Index.cshtml" />
+    <Content Include="Views\Index.cshtml" />
+    <Content Include="Views\Subasta\Create.cshtml" />
+    <Content Include="Views\Subasta\Delete.cshtml" />
+    <Content Include="Views\Subasta\Details.cshtml" />
+    <Content Include="Views\Subasta\Edit.cshtml" />
+    <Content Include="Views\Subasta\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

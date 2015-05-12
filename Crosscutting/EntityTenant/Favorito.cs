@@ -16,7 +16,7 @@ namespace Crosscutting.EntityTenant
         [Column("favorito")]
         public bool favorito1 { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         public virtual Producto Producto { get; set; }

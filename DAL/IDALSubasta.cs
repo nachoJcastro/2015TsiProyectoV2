@@ -9,7 +9,7 @@ namespace DAL
 {
     public interface IDALSubasta
     {
-        void AgregarSubasta(Subasta subasta); //Create
+        void AgregarSubasta(String tenant,Subasta subasta); //Create
         Subasta ObtenerSubasta(int subastaId); //Read
         List<Subasta> ObtenerSubastas(String tenant);
         void ActualizarSubasta(Subasta subasta); //Update
