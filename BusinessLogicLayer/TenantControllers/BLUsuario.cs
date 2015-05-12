@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer.TenantInterfaces.User;
+﻿using BusinessLogicLayer.TenantInterfaces;
 using DAL.DAL_Tenant;
 using DAL.IDAL_Tenant;
 using System;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Crosscutting.EntityTenant;
 
-namespace BusinessLogicLayer.TenantControllers.User
+namespace BusinessLogicLayer.TenantControllers
 {
     public class BLUsuario : IBLUsuario
     {

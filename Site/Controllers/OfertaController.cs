@@ -43,7 +43,9 @@ namespace Site.Controllers
         // GET: Oferta/Create
         public ActionResult CreateOferta()
         {
+            ViewBag.id_subasta = 0;//hay que conseguir el id subasta
             ViewBag.idTienda = this.Session["_tiendaSesion"];
+
             return View();
         }
 
@@ -54,15 +56,13 @@ namespace Site.Controllers
         {
             if (ModelState.IsValid)
             {
-                //oferta.TiendaId = Int32.Parse(this.Session["_tiendaSesion"].ToString());
                 _bloferta.AgregarOferta(oferta);
                 return RedirectToAction("Index", new { id = this.Session["_tiendaSesion"] });
             }
-
             return View(oferta);
         }
 
         #endregion
-
+        
     }
 }
