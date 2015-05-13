@@ -17,7 +17,7 @@ namespace Crosscutting.EntityTenant
             Subasta = new HashSet<Subasta>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [Required]

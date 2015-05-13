@@ -22,10 +22,12 @@ namespace Site.Controllers
         IBLOferta ofeIBL;
         IBLCategoria catIBL;
         IBLAtributo atrIBL;
+        private UsuarioSite user_sitio;
+        private string valor_tenant;
 
+        public SubastasController() { }
 
-
-        public SubastasController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl,IBLOferta ofebl, IBLCategoria catbl, IBLAtributo atrbl)
+       /* public SubastasController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl,IBLOferta ofebl, IBLCategoria catbl, IBLAtributo atrbl)
         {
             this.subIBL = subbl;
             this.comIBL = combl;
@@ -33,12 +35,14 @@ namespace Site.Controllers
             this.ofeIBL = ofebl;
             this.catIBL = catbl;
             this.atrIBL = atrbl;
-        }
+        }*/
         //ME DA ERROR CONSTRUCTOR X DEFECTO. DESCOMENTAR!!!!
         //public SubastasController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLCategoria(), new BLAtributo())
         //{
 
         //}
+
+       
         // GET: Subastas
         public ActionResult Index()
         {
@@ -65,7 +69,7 @@ namespace Site.Controllers
         //}
 
         // GET: Subastas/Create
-        public ActionResult Create(int id)
+        public ActionResult Create()
         {
            
             return View();
@@ -76,11 +80,18 @@ namespace Site.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,id_Comprador,id_Vendedor,id_Producto,estado,valor_Actual,finalizado,fecha_Inicio,fecha_Cierre")] Subasta subasta)
+        public ActionResult Create([Bind(Include ="id_Comprador,id_Vendedor,id_Producto,estado,valor_Actual,finalizado,fecha_Inicio,fecha_Cierre")] Subasta subasta)
         {
             if (ModelState.IsValid)
             {
-                subIBL.AgregarSubasta(subasta);
+                user_sitio = Session["usuario"] as UsuarioSite;
+
+                if (user_sitio.Dominio != null)
+                {
+                    System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
+                    valor_tenant = user_sitio.Dominio.ToString();
+                }
+                subIBL.AgregarSubasta(valor_tenant,subasta);
                 //db.Subastas.Add(subasta);
                 //db.SaveChanges();
                 return RedirectToAction("Index");

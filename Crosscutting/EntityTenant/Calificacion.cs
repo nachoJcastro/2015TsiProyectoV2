@@ -9,7 +9,7 @@ namespace Crosscutting.EntityTenant
     [Table("Calificacion")]
     public partial class Calificacion
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [StringLength(50)]

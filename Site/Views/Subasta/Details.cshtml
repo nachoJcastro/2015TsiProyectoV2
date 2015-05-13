@@ -1,0 +1,84 @@
+﻿@model Crosscutting.EntityTenant.Subasta
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Subasta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_Comprador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_Comprador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.id_Vendedor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_Vendedor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.id_Producto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_Producto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valor_Actual)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valor_Actual)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.finalizado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finalizado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_Inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_Inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_Cierre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_Cierre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<button type="button" onclick="location.href='@Url.Action("CreateOferta", "Oferta")'" class="btn btn-default" data-dismiss="modal">Ofertar</button>

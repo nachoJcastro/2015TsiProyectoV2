@@ -14,7 +14,7 @@ namespace Crosscutting.EntityTenant
             Producto = new HashSet<Producto>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [Required]

@@ -9,7 +9,7 @@ namespace Crosscutting.EntityTenant
     [Table("Comentario")]
     public partial class Comentario
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [Required]

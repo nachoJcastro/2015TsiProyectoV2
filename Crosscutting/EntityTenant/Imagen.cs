@@ -10,7 +10,7 @@ namespace Crosscutting.EntityTenant
     [Table("Imagen")]
     public partial class Imagen
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         public int id_Subasta { get; set; }

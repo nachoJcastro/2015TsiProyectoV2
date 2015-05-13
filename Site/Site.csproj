@@ -51,11 +51,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -248,8 +250,13 @@
     <Content Include="Views\Tenant\Index.cshtml" />
     <Content Include="Views\Account\_LayoutAccount.cshtml" />
     <Content Include="Views\Tenant\Error.cshtml" />
-    <Content Include="Views\Oferta\Index.cshtml" />
     <Content Include="Views\Oferta\CreateOferta.cshtml" />
+    <Content Include="Views\Index.cshtml" />
+    <Content Include="Views\Subasta\Create.cshtml" />
+    <Content Include="Views\Subasta\Delete.cshtml" />
+    <Content Include="Views\Subasta\Details.cshtml" />
+    <Content Include="Views\Subasta\Edit.cshtml" />
+    <Content Include="Views\Subasta\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
