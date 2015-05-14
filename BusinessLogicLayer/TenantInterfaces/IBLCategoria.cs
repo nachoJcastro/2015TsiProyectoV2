@@ -1,5 +1,4 @@
-﻿//using Crosscutting.Entity;
-using Crosscutting.EntityTenant;
+﻿using Crosscutting.EntityTenant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +9,7 @@ namespace BusinessLogicLayer.TenantInterfaces
 {
     public interface IBLCategoria
     {
-        void AgregarCategoria(Categoria categoriaDTO); //Insert
         Categoria ObtenerCategoria(int categoriaId); //FindONe
-        List<Categoria> ObtenerCategorias();//FindAll
-        List<Categoria> ObtenerCategoriasPorTienda(int idTienda);
-        void ActualizarCategoria(Categoria categoriaDTO); //Update
-        void EliminarCategoria(int categoriaId); //Delete
+        List<Categoria> ObtenerCategorias(String valor_tenant);//FindAll
     }
 }

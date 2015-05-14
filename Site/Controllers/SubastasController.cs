@@ -85,12 +85,13 @@ namespace Site.Controllers
             if (ModelState.IsValid)
             {
                 user_sitio = Session["usuario"] as UsuarioSite;
-
+                
                 if (user_sitio.Dominio != null)
                 {
                     System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
                     valor_tenant = user_sitio.Dominio.ToString();
                 }
+               
                 subIBL.AgregarSubasta(valor_tenant,subasta);
                 //db.Subastas.Add(subasta);
                 //db.SaveChanges();

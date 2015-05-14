@@ -1,5 +1,5 @@
-﻿using BusinessLogicLayer.Interfaces;
-using Crosscutting.Entity;
+﻿using BusinessLogicLayer.TenantInterfaces;
+using Crosscutting.EntityTenant;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ namespace BusinessLogicLayer.TenantControllers
 {
     public class BLCategoria : IBLCategoria
     {
-        private IDALCategoria _dal = new DALCategoriaEF();
+        private IDALCategoriaTenant _dal = new DALCategoriaTenantEF();
 
-        public BLCategoria(IDALCategoria dal)
+        public BLCategoria(IDALCategoriaTenant dal)
         {
             this._dal = dal;
         }
@@ -21,37 +21,16 @@ namespace BusinessLogicLayer.TenantControllers
         public BLCategoria() { }
 
 
-        public void AgregarCategoria(CategoriasDTO categoriaDTO)
-        {
-            _dal.AgregarCategoria(categoriaDTO);
-        }
-
-
-        public CategoriasDTO ObtenerCategoria(int categoriaId)
+        public Categoria ObtenerCategoria(int categoriaId)
         {
             return _dal.ObtenerCategoria(categoriaId);
         }
 
 
-        public List<CategoriasDTO> ObtenerCategorias()
+        public List<Categoria> ObtenerCategorias(String valor_tenant)
         {
-            return _dal.ObtenerCategorias();
+            return _dal.ObtenerCategorias(valor_tenant);
         }
 
-        public List<CategoriasDTO> ObtenerCategoriasPorTienda(int idTienda)
-        {
-            return _dal.ObtenerCategoriasPorTienda(idTienda);
-        }
-
-        public void ActualizarCategoria(CategoriasDTO categoriaDTO)
-        {
-            _dal.ActualizarCategoria(categoriaDTO);
-        }
-
-
-        public void EliminarCategoria(int categoriaId)
-        {
-            _dal.EliminarCategoria(categoriaId);
-        }
     }
 }
