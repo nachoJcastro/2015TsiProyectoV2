@@ -60,8 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DALCategoriaTenantEF.cs" />
-    <Compile Include="IDALCategoriaTenant.cs" />
     <Compile Include="Configuration\AtributoMap.cs" />
     <Compile Include="Configuration\CategoriasMap.cs" />
     <Compile Include="Configuration\ImagenesMap.cs" />

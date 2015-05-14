@@ -32,6 +32,11 @@ namespace BusinessLogicLayer.TenantControllers
             return _dal.ExisteSitio(dominio);
         
         }
+
+        public int ObtenerIdTenant(String tenant)
+        {
+            return _dal.ObtenerIdTenant(tenant);
+        }
         
     }
 }

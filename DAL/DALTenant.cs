@@ -48,5 +48,22 @@ namespace DAL
 
             return retorno;
         }
+
+        public int ObtenerIdTenant(String tenant)
+        {
+            int tiendaID;
+           try
+            {
+                BackendDB back = new BackendDB();
+                var tienda = back.TiendaVirtual.FirstOrDefault(r => r.Dominio == tenant);
+                tiendaID = tienda.TiendaVitualId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+           return tiendaID;
+        }
     }
 }

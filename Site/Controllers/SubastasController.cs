@@ -10,6 +10,7 @@ using Crosscutting.EntityTenant;
 using Site.Models;
 using BusinessLogicLayer.TenantInterfaces;
 using BusinessLogicLayer.TenantControllers;
+using BusinessLogicLayer.Interfaces;
 
 namespace Site.Controllers
 {
@@ -21,7 +22,7 @@ namespace Site.Controllers
         IBLProducto proIBL;
         IBLOferta ofeIBL;
         IBLCategoria catIBL;
-        IBLAtributo atrIBL;
+        BusinessLogicLayer.Interfaces.IBLAtributo atrIBL;
         private UsuarioSite user_sitio;
         private string valor_tenant;
 

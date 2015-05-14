@@ -15,5 +15,6 @@ namespace BusinessLogicLayer.TenantInterfaces
         void AgregarHost (String dominio);
         // Existe Sitio
         Boolean ExisteSitio (String dominio);
+        int ObtenerIdTenant(String tenant);
     }
 }
