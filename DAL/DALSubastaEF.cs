@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DALSubastaEF : IDALSubasta
     {
-        static TenantDB db = new TenantDB("falta pasarle el string database");
+        static TenantDB db = new TenantDB("database");
 
 
         public DALSubastaEF() { }

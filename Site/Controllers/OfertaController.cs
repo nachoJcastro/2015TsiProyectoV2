@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Site.Controllers
 {
@@ -25,13 +26,13 @@ namespace Site.Controllers
 
 
         // GET: Oferta
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
             int id_subasta = 0;//hay que conseguir el id subasta
             var listaOfer = _bloferta.ObtenerOfertasByProducto(id_subasta);
             ViewBag.ListaOfertas = listaOfer;
 
-            this.Session["_tiendaSesion"] = id;
+            //this.Session["_tiendaSesion"] = id;
             ViewBag.idT = this.Session["_tiendaSesion"];
 
             return View();
@@ -43,7 +44,9 @@ namespace Site.Controllers
         // GET: Oferta/Create
         public ActionResult CreateOferta()
         {
+            ViewBag.id_subasta = 1;//hay que conseguir el id subasta
             ViewBag.idTienda = this.Session["_tiendaSesion"];
+
             return View();
         }
 
@@ -54,15 +57,17 @@ namespace Site.Controllers
         {
             if (ModelState.IsValid)
             {
-                //oferta.TiendaId = Int32.Parse(this.Session["_tiendaSesion"].ToString());
+                oferta.id = 10;
+                //oferta.id_Subasta = Id_subasta;
+                //oferta.fecha = fecha actual;
+                oferta.id_Usuario = Int32.Parse(User.Identity.GetUserId());
                 _bloferta.AgregarOferta(oferta);
                 return RedirectToAction("Index", new { id = this.Session["_tiendaSesion"] });
             }
-
             return View(oferta);
         }
 
         #endregion
-
+        
     }
 }
