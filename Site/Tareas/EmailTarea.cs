@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Site.Tareas
 {
-    public class EmailTarea: IJob
+   /* public class EmailTarea: IJob
     {
         public void EnviarMail (IJobExecutionContext context, Correo correo)
         {
@@ -29,7 +29,7 @@ namespace Site.Tareas
                 }
             }
         }
-    }
+    }*/
 
 
 }

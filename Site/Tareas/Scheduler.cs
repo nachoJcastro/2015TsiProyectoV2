@@ -9,7 +9,7 @@ namespace Site.Tareas
 {
     public class JobScheduler
     {
-        public static void Start()
+       /* public static void Start()
         {
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
@@ -26,6 +26,6 @@ namespace Site.Tareas
                 .Build();
 
             scheduler.ScheduleJob(job, trigger);
-        }
+        }*/
     }
 }
