@@ -10,7 +10,9 @@
     <h4 class="modal-title" id="myModalLabel">Eliminar Categoria</h4>
 </div>
 <br />
+<h3>ADVERTENCIA: Esto eliminará todos los productos y atributos asociados</h3>
 <h3>Estas seguro de eliminar la categoria?</h3>
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -22,19 +24,22 @@
             @Html.DisplayFor(model => model.TiendaId)
         </dd>*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
+        <dt><strong style="font-size:20px">
+    @Html.DisplayNameFor(model => model.Nombre)
+        </strong>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Nombre)
+            <strong style="font-size:20px">
+                @Html.DisplayFor(model => model.Nombre)
+            </strong>
         </dd>
 
     </dl>
-
+    
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-
+    
     <div class="modal-footer">
         <input type="submit" value="Eliminar" class="btn btn-default" />
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> 

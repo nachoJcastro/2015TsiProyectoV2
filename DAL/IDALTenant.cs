@@ -12,5 +12,6 @@ namespace DAL
         //Operaciones 
         void AgregarTenant (String dominio); //Create
         Boolean ExisteSitio (String dominio); //Create
+        int ObtenerIdTenant(String tenant);
     }
 }

@@ -12,7 +12,7 @@ namespace DAL
         void AgregarCategoria(CategoriasDTO categoriaDTO); //Create
         CategoriasDTO ObtenerCategoria(int categoriaId); //Read
         List<CategoriasDTO> ObtenerCategorias();
-        List<CategoriasDTO> ObtenerCategoriasPorTienda(int idTienda);
+        List<CategoriasDTO> ObtenerCategoriasPorTienda(int Tienda);
         void ActualizarCategoria(CategoriasDTO categoriaDTO); //Update
         void EliminarCategoria(int categoriaId); //Delete
     }

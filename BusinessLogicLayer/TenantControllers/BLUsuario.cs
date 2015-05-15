@@ -1,4 +1,4 @@
-﻿
+﻿using BusinessLogicLayer.TenantInterfaces;
 using DAL.DAL_Tenant;
 using DAL.IDAL_Tenant;
 using System;
@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Crosscutting.EntityTenant;
-using BusinessLogicLayer.TenantInterfaces;
 
 namespace BusinessLogicLayer.TenantControllers
 {

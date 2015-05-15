@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Crosscutting.EntityTenant.Categoria>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Categorias</h2>
+
+<div class="panel-body">
+    <table class="table">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nombre
+            </th>
+        </tr>
+        @foreach (var item in ViewBag.ListaCategorias)
+        {
+            <tr class="texto_table">
+                <td>
+                    @item.CategoriaId
+                </td>
+                <td>
+                    @item.Nombre
+                </td>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("CreateProducto", "Producto")'" class="btn btn-default">Seleccionar</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

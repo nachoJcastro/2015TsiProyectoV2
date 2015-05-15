@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DALProductoEF : IDALProducto
     {
-        static TenantDB db = new TenantDB("falta pasarle el string database");
+        static TenantDB db = new TenantDB("cuevitas");
 
         public DALProductoEF() { }
 

@@ -59,12 +59,12 @@ namespace DAL
                 throw e;
             }
         }
-        public List<CategoriasDTO> ObtenerCategoriasPorTienda(int idTienda) 
+        public List<CategoriasDTO> ObtenerCategoriasPorTienda(int Tienda) 
         {
             var listaCat = new List<CategoriasDTO>();
             try
             {
-                listaCat = db.Categorias.Where(t => t.TiendaId == idTienda).ToList();
+                listaCat = db.Categorias.Where(t => t.TiendaId == Tienda).ToList();
                 return listaCat;
             }
             catch (Exception e)
