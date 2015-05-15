@@ -21,7 +21,7 @@ namespace Crosscutting.EntityTenant
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
-        public int id_Comprador { get; set; }
+        public int? id_Comprador { get; set; }
 
         public int id_Vendedor { get; set; }
 

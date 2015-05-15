@@ -13,19 +13,19 @@ using BusinessLogicLayer.TenantControllers;
 
 namespace Site.Controllers
 {
-    public class SubastasController : Controller
+    public class SubastaController : Controller
     {
         //private SiteContext db = new SiteContext();
-        IBLSubasta subIBL;
+       /* IBLSubasta subIBL;
         IBLComentario comIBL;
         IBLProducto proIBL;
         IBLOferta ofeIBL;
         IBLCategoria catIBL;
-        IBLAtributo atrIBL;
+        IBLAtributo atrIBL;*/
         private UsuarioSite user_sitio;
         private string valor_tenant;
 
-        public SubastasController() { }
+        public SubastaController() { }
 
        /* public SubastasController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl,IBLOferta ofebl, IBLCategoria catbl, IBLAtributo atrbl)
         {
@@ -91,7 +91,7 @@ namespace Site.Controllers
                     System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
                     valor_tenant = user_sitio.Dominio.ToString();
                 }
-                subIBL.AgregarSubasta(valor_tenant,subasta);
+                //subIBL.AgregarSubasta(valor_tenant,subasta);
                 //db.Subastas.Add(subasta);
                 //db.SaveChanges();
                 return RedirectToAction("Index");

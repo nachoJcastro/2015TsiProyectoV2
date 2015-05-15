@@ -1,0 +1,76 @@
+﻿@model Crosscutting.EntityTenant.Producto
+
+<div>
+    <h4>Producto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tags)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tags)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.precio_Base)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.precio_Base)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.precio_Compra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.precio_Compra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.garantia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.garantia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.coordenadas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.coordenadas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.id_Categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_Categoria)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

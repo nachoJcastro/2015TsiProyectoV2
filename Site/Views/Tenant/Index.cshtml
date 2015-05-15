@@ -15,6 +15,9 @@
             <th>
                 Vendedor
             </th>
+            <th>
+                Link
+            </th>
         </tr>
         @foreach (var item in ViewBag.ListarSubastas)
         {
@@ -28,12 +31,25 @@
                 <td>
                     @item.id_Vendedor
                 </td>
+                <td>
+                   @Html.ActionLink("1", "DetalleProducto", "Oferta")
+                </td>
             </tr>
         }
     </table>
 </div>
 
+@using Site.Models
+@{
+    var user = Session["usuario"] as UsuarioSite;
+}
+@if (user!=null && user.Email!=null)
+{
 <div class="jumbotron">
-    <h1>SITIO WEB</h1>
-    <button type="button" onclick="location.href='@Url.Action("Index", "Subastas")'" class="btn btn-default">Alta Subasta</button>
+    <button type="button" onclick="location.href='@Url.Action("Index", "Subasta")'" class="btn btn-default">Subastar</button>
+</div>
+}
+
+<div class="jumbotron">
+    <button type="button" onclick="location.href='@Url.Action("Index", "Oferta")'" class="btn btn-default">Comprar</button>
 </div>
