@@ -7,11 +7,10 @@
     <link rel="icon" type="image/x-icon" href="~/img/favicon.ico" />
     <title>@ViewBag.Title</title>
     
-    
-    <link href="~/Scripts/codemirror-2.37/lib/codemirror.css" rel="stylesheet" />
-    <link href="~/Scripts/codemirror-2.37/theme/monokai.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Scripts/codemirror-2.37/lib/codemirror.css" rel="stylesheet" />
+    <link href="~/Scripts/codemirror-2.37/theme/monokai.css" rel="stylesheet" />
 
 
 </head>
@@ -60,11 +59,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/otros")
-
-    <script src="~/Scripts/codemirror-2.37/lib/codemirror.js"></script>
-    <script src="~/Scripts/codemirror-2.37/mode/css/css.js"></script>
-
-    <script src="~/Scripts/editor_conf.js"></script>
+    @Scripts.Render("~/bundles/admin")
     @RenderSection("scripts", required: false)
 </body>
 </html>

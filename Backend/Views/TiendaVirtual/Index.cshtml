@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="offer-content">
-                        <img src="@Url.Content(item.Logo)" alt="Muestra de la Imagen" width="100" />
+                        <img src="@item.Logo" alt="Muestra de la Imagen" width="100" />
                         <h3 class="">
                             @Html.DisplayFor(modelItem => item.Nombre)
                         </h3>
@@ -38,9 +38,9 @@
                         <h5><small>@Html.DisplayFor(modelItem => item.Dominio)</small></h5>
                     </div>
                     <div class="offer-footer text-right">
-
-                        <a class="" href="@Url.Action("estilo", new { id=item.TiendaVitualId})"><span class="fa fa-pencil fa-2x"></span></a>
-                        <a class="" href="@Url.Action("index", "Componentes" , new { id=item.TiendaVitualId}, null)"><span class="fa fa-arrow-circle-o-right fa-2x"></span></a>
+                        <a class="" href="@Url.Action("cssdownload", new { id = item.TiendaVitualId })" data-toggle="tooltip" data-placement="top" title="Download Css Site"><span class="fa fa-arrow-circle-o-down fa-2x"></span></a>
+                        <a class="" href="@Url.Action("estilo", new { id=item.TiendaVitualId})" data-toggle="tooltip" data-placement="top" title="Editar Css"><span class="fa fa-pencil fa-2x"></span></a>
+                        <a class="" href="@Url.Action("index", "Componentes" , new { id=item.TiendaVitualId}, null)" data-toggle="tooltip" data-placement="top" title="Componentes"><span class="fa fa-arrow-circle-o-right fa-2x"></span></a>
                     </div>
                 </div>
             }

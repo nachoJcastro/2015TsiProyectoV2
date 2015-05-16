@@ -60,7 +60,10 @@ namespace BusinessLogicLayer.Controllers
         {
             _dal.ActualizarTiendas(tiendaDTO);
         }
-
+        public void ActualizarCSS(TiendaVirtualDTO tiendaDTO) 
+        {
+            _dal.ActualizarCSS(tiendaDTO);
+        }
 
         public void EditarCss(int id,string css) 
         {

@@ -14,6 +14,7 @@ namespace DAL
         List<TiendaVirtualDTO> ObtenerTiendas();
         List<TiendaVirtualDTO> ObtenerTiendaDelUsuario(string idUsuario);
         void ActualizarTiendas(TiendaVirtualDTO tiendaDTO); //Update
+        void ActualizarCSS(TiendaVirtualDTO tiendaDTO); //Update
         void EliminarTienda(int tiendaId); //Delete
         void EliminarTiendaVirtual(int tiendaId);
 

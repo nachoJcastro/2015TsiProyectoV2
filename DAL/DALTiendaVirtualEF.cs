@@ -117,6 +117,29 @@ namespace DAL
             }
         }
 
+        public void ActualizarCSS(TiendaVirtualDTO tiendaDTO) 
+        {
+            try
+            {
+                var tienda = db.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == tiendaDTO.TiendaVitualId);
+
+                if (tienda != null)
+                {
+
+                    tienda.Css = tiendaDTO.Css;
+                    tienda.ListaImagenes = tiendaDTO.ListaImagenes;
+                    //Mapper.Map(tiendaDTO, tienda);
+                    //Mapper.Map(tiendaDTO.ListaImagenes, tienda.Imagenes);
+
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void EditarCss(int id,string css)
         { 
             try
