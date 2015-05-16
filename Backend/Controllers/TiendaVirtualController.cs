@@ -14,8 +14,6 @@ using System.IO;
 using System.Security.AccessControl;
 using Microsoft.AspNet.Identity;
 using System.Web.Hosting;
-using System.Diagnostics;
-using System.Text;
 
 namespace Backend.Controllers
 {
@@ -65,6 +63,23 @@ namespace Backend.Controllers
         [Authorize]
         public ActionResult Create()
         {
+            try
+            {
+                 var idUser = User.Identity.GetUserId();
+                 var tienda= _bl.ObtenerTiendaDelUsuario(User.Identity.GetUserName());
+                 if (tienda != null) {
+                     ViewBag.Message = "El usuario ya tiene una tienda!";
+                     return null;
+                 }
+                    
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+            
             return View();
         }
 
@@ -83,45 +98,44 @@ namespace Backend.Controllers
                 if (ModelState.IsValid)
                 {
                     //string strMappath = "~/imagenes/" + tiendaVirtualDTO.Nombre;
-                    String rutaCarpetafull = @"C:\contenidoSite\img\";
-                    String rutaCarpetafullcss = @"C:\contenidoSite\css\";
-
+                    string strMappath = "~/imagenes/";
                     try
                     {
-                        //Si no existe el directorio se crea
-                        if (!Directory.Exists(rutaCarpetafull))
-                        {
-                            DirectoryInfo di = Directory.CreateDirectory(rutaCarpetafull);
+                        //if (!Directory.Exists(strMappath))
+                        //{
+                        //    DirectoryInfo di = Directory.CreateDirectory(strMappath);
 
-                        }
+                        //    DirectorySecurity dSecurity = di.GetAccessControl();
 
-                        if (!Directory.Exists(rutaCarpetafullcss))
-                        {
-                            DirectoryInfo di = Directory.CreateDirectory(rutaCarpetafullcss);
+                        //    // Add the FileSystemAccessRule to the security settings. 
+                        //    dSecurity.AddAccessRule(new FileSystemAccessRule(@"DomainName\AccountName", FileSystemRights.ReadData, AccessControlType.Allow));
 
-                        }
+                        //    // Set the new access settings.
+                        //    di.SetAccessControl(dSecurity);
+                        //}
 
                         // guardar imagen
                         if (logo != null)
                         {
                             //var nombreFoto = juego.Nombre + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(foto.FileName);
                             var nombreFoto = tiendaVirtualDTO.Nombre + Guid.NewGuid().ToString() + Path.GetExtension(logo.FileName);
-                            var rutaFoto = Path.Combine(rutaCarpetafull, nombreFoto);
+                            var rutaFoto = Path.Combine(Server.MapPath(strMappath), nombreFoto);
                             logo.SaveAs(rutaFoto);
-                            tiendaVirtualDTO.Logo = rutaCarpetafull + nombreFoto;
+                            tiendaVirtualDTO.Logo = strMappath + nombreFoto;
                         }
                         else
                         {
-                            tiendaVirtualDTO.Logo = @"C:\contenidoSite\tiendadefault.png";
+                            tiendaVirtualDTO.Logo = "~/Imagenes/tiendadefault.png";
                         }
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine("The process failed: {0}", e.ToString());
                     }
-                    
 
-                    tiendaVirtualDTO.Css = @"C:\contenidoSite\Site.css";
+                    var fileContents = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/Site.css"));
+
+                    tiendaVirtualDTO.Css = fileContents.ToString();
                     tiendaVirtualDTO.Fecha_creacion = System.DateTime.Now;
                     tiendaVirtualDTO.Estado = true;
                     tiendaVirtualDTO.StringConection = "StringConection";
@@ -158,29 +172,26 @@ namespace Backend.Controllers
         {
             if (ModelState.IsValid)
             {
-                 String rutaCarpetafull = @"C:\contenidoSite\img\";
-                  
-                //Si no existe el directorio se crea
-                if (!Directory.Exists(rutaCarpetafull))
-                {
-                    DirectoryInfo di = Directory.CreateDirectory(rutaCarpetafull);
+                //string strMappath = "~/imagenes/" + tiendaVirtualDTO.Nombre;
+                string strMappath = "~/imagenes/";
 
-                }
-                        
+                //if (!Directory.Exists(strMappath))
+                //{
+                //    DirectoryInfo di = Directory.CreateDirectory(strMappath);
+                //}
 
                 // guardar imagen
                 if (logo != null)
                 {
                     //var nombreFoto = juego.Nombre + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(foto.FileName);
                     var nombreFoto = tiendaVirtualDTO.Nombre + Guid.NewGuid().ToString() + Path.GetExtension(logo.FileName);
-                    var rutaFoto = Path.Combine(rutaCarpetafull, nombreFoto);
+                    var rutaFoto = Path.Combine(Server.MapPath(strMappath), nombreFoto);
                     logo.SaveAs(rutaFoto);
-                    tiendaVirtualDTO.Logo = rutaCarpetafull + nombreFoto;
+                    tiendaVirtualDTO.Logo = strMappath + nombreFoto;
                 }
                 else
                 {
-                    //tiendaVirtualDTO.Logo = "~/Imagenes/tiendadefault.png";
-                    tiendaVirtualDTO.Logo = @"C:\contenidoSite\tiendadefault.png";
+                    tiendaVirtualDTO.Logo = "~/Imagenes/tiendadefault.png";
                 }
 
                 _bl.ActualizarTiendas(tiendaVirtualDTO);
@@ -221,87 +232,79 @@ namespace Backend.Controllers
        [Authorize]
         public ActionResult Estilo(int id)
         {
-
-            this.Session["_tvid"] = id;
-            ViewBag.TiendaV = this.Session["_tvid"];
             
-            return View();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("ID tienda :" + id);
+                var tienda = _bl.ObtenerTienda(id);
+                var model = new Estilo();
+                model.idTienda = id;
+                model.texto = tienda.Css;
+                return View(model);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+           
         }
 
-       [HttpPost]
-       [Authorize]
-       public ActionResult Estilo(Estilo css, HttpPostedFileBase texto)
-       {
-           if (ModelState.IsValid)
-           {
-               var idTienda = int.Parse(this.Session["_tvid"].ToString());
-               TiendaVirtualDTO tienda = _bl.ObtenerTienda(idTienda);
 
-               String rutaCarpetafull = @"C:\contenidoSite\css\";
-               //Si no existe el directorio se crea
-               if (!Directory.Exists(rutaCarpetafull))
-               {
-                   DirectoryInfo di = Directory.CreateDirectory(rutaCarpetafull);
-                   
-               }
-
-
-               if (texto != null)
-               {
-                   var nombre = tienda.Nombre + Path.GetFileName(texto.FileName);
-                   var ruta = Path.Combine(rutaCarpetafull,nombre);
-                   
-                   //Se crea el archivo css
-                   texto.SaveAs(ruta);
-
-                   //Se guarda en la base
-                   _bl.EditarCss(idTienda, ruta);
-               }
-
-
-               return RedirectToAction("Index");
-           }
-
-
-           return RedirectToAction("Index", "Home");
-       }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
-        public FileContentResult CssDownload(int id)
+       public ActionResult Estilo([Bind(Include = "texto,idTienda")] Estilo css)
         {
-            var idTienda = int.Parse(this.Session["_tvid"].ToString());
-            TiendaVirtualDTO tienda = _bl.ObtenerTienda(idTienda);
-            var contentType = "text/css";
-
-            if (System.IO.File.Exists(tienda.Css))
+            if (ModelState.IsValid)
             {
-                String dir = tienda.Css;
-                using (StreamReader sr = new StreamReader(dir))
+                 //CREAR CSS EN DIRECTORIO
+                try
                 {
-                    String line = sr.ReadToEnd();
-                    var bytes = Encoding.UTF8.GetBytes(line);
-                    var result = new FileContentResult(bytes, contentType);
-                    result.FileDownloadName = "Site.css";
-                    return result;
+                    System.Diagnostics.Debug.WriteLine("ID tienda :" + css.idTienda);
+                    System.Diagnostics.Debug.WriteLine("Ruta :" + css.texto);
+                    
+                    //string ruta = tienda.Nombre+ ".css";
+                    _bl.EditarCss(css.idTienda, css.texto);
+                    return RedirectToAction("Index", "TiendaVirtual");
                 }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+               
             }
-            else
-            {
 
-                var content = "/*SOLO MODIFICAR EL CSS DENTRO DE LOS ID Y CLASES*/"
-                                + "/*NO MODIFICAR LOS NOMBRES DE LAS CLASES*/"
-                                + "/*NO MODIFICAR LOS NOMBRES DE LOS ID*/"
-                                + "body { background-color : #FFF; }"
-                                + "h1,h2 { color: red; }"
-                                + "p { color:blue; }";
-                var bytes = Encoding.UTF8.GetBytes(content);
-                var result = new FileContentResult(bytes, contentType);
-                result.FileDownloadName = "Site.css";
-                return result;
-            }
-            
+            return View(css);
         }
 
+        public ActionResult Download()
+        {
 
+            //Response.ContentType = "text/css"; 
+            //Response.AppendHeader("Content", "CSS; filename=Site.css");
+            //Response.TransmitFile(Server.MapPath("~/Content/Site.css")); 
+            //Response.End();
+
+            //var path = Path.Combine(Server.MapPath("~/Content/Images/"));
+            //Response.
+            ////Set the content type
+            var contentType = "text/css";
+            //Get the bootstrap.less contents
+            var cssContent = System.IO.File.ReadAllText(
+                    HostingEnvironment.MapPath("~/Content/Site.css")
+                );
+            //return FileStyleUriParser(cssContent);
+            return File(cssContent, contentType);
+        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

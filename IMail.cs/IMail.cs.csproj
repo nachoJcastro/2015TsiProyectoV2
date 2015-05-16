@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C0284F4C-BEF1-4C7E-97DE-C6EA9CFA912E}</ProjectGuid>
+    <ProjectGuid>{CE2DA304-8735-4CD0-ABEB-ABC55CBEB738}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Crosscutting</RootNamespace>
-    <AssemblyName>Crosscutting</AssemblyName>
+    <RootNamespace>IMail.cs</RootNamespace>
+    <AssemblyName>IMail.cs</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,30 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityTareas\Correo.cs" />
-    <Compile Include="EntityTenant\Atributo.cs" />
-    <Compile Include="EntityTenant\Atributo_Subasta.cs" />
-    <Compile Include="EntityTenant\Calificacion.cs" />
-    <Compile Include="EntityTenant\Categoria.cs" />
-    <Compile Include="EntityTenant\Comentario.cs" />
-    <Compile Include="Enum\EstadoTransaccion.cs" />
-    <Compile Include="EntityTenant\Favorito.cs" />
-    <Compile Include="EntityTenant\Imagen.cs" />
-    <Compile Include="EntityTenant\Oferta.cs" />
-    <Compile Include="EntityTenant\Producto.cs" />
-    <Compile Include="EntityTenant\Subasta.cs" />
-    <Compile Include="Enum\TipoFinalizacion.cs" />
-    <Compile Include="EntityTenant\Usuario.cs" />
-    <Compile Include="Entity\AtributosDTO.cs" />
-    <Compile Include="Entity\CategoriasDTO.cs" />
-    <Compile Include="Entity\ImagenesDTO.cs" />
-    <Compile Include="Entity\TiendaVirtualDTO.cs" />
-    <Compile Include="Entity\TipoProductoDTO.cs" />
-    <Compile Include="Enum\Estilos.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Security\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

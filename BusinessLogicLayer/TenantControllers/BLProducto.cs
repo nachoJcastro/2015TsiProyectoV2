@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.TenantInterfaces;
+using Crosscutting.Entity;
 using Crosscutting.EntityTenant;
 using DAL;
 using System;
@@ -12,6 +13,7 @@ namespace BusinessLogicLayer.TenantControllers
     public class BLProducto : IBLProducto
     {
         private IDALProducto _dal = new DALProductoEF();
+        private IDALCategoria _cat = new DALCategoriaEF();
 
 
         public BLProducto(IDALProducto dal)
@@ -22,25 +24,36 @@ namespace BusinessLogicLayer.TenantControllers
         public BLProducto() { }
 
 
-        public void AgregarProducto(Producto producto)
+       /* public void AgregarProducto(Producto producto)
         {
             _dal.AgregarProducto(producto);
-        }
+        }*/
 
 
-        public Producto ObtenerProducto(int productoId)
+        public TipoProductoDTO ObtenerProducto(int productoId)
         {
             return _dal.ObtenerProducto(productoId);
         }
 
 
-        public List<Producto> ObtenerProductos()
+        public List<TipoProductoDTO> ObtenerProductos()
         {
             return _dal.ObtenerProductos();
         }
 
 
-        public void ActualizarProducto(Producto producto)
+        public List<TipoProductoDTO> ObtenerTipoProdCategoria(int idCategoria)
+        {
+            return _dal.ObtenerTipoProdCategoria(idCategoria);
+        }
+
+
+        public List<CategoriasDTO> ObtenerCategoriasPorTienda(int idTienda)
+        {
+            return _cat.ObtenerCategoriasPorTienda(idTienda);
+        }
+
+        /*public void ActualizarProducto(Producto producto)
         {
             _dal.ActualizarProducto(producto);
         }
@@ -49,6 +62,13 @@ namespace BusinessLogicLayer.TenantControllers
         public void EliminarProducto(int productoId)
         {
             _dal.EliminarProducto(productoId);
+        }*/
+
+       // List<AtributosDTO> ObtenerAtributosTipoProd(int idCategoria);
+
+        public List<AtributosDTO> ObtenerAtributosTipoProd(int idCategoria)
+        {
+            return _dal.ObtenerAtributosTipoProd(idCategoria);
         }
     }
 }

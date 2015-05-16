@@ -4,7 +4,10 @@
     Layout = "~/Views/Shared/_LayoutBackUser.cshtml";
     ViewBag.Title = "Estilo";
 }
-
+@*<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Editar Estilo</h4>
+    </div>*@
 
 <div class="col-md-12 contendor-admin-user">
 
@@ -12,42 +15,23 @@
         <a href="@Url.Action("index", "TiendaVirtual")" class="btn btn-default"><span class="fa fa-arrow-left fa-2x"></span></a><h1>Editor Estilo</h1>
     </div>
     <div class="col-md-12 contenido-componentes-user">
-        @using (Html.BeginForm("Estilo", "TiendaVirtual", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-                <div class="form-group">
-                    @*Html.LabelFor(model => model.texto, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                    <div class="col-md-10">
-                        <div class="form-control">
-                            <input type="file" id="texto" name="texto"/>
-                            @Html.ValidationMessageFor(model => model.texto, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-
-                @*<textarea id="code" name="texto">
-body {
-background: black;
-padding-top: 50px;
-padding-bottom: 20px;
-}
-
-h1 {
-font-size: 14px;
-}
-                </textarea>*@
-            <div class="col-md-10">
-                <div class="form-group">
-                    <input type="submit" value="Editar" class="btn btn-default btn-estilo-1" />
-                </div>
+            <div class="form-horizontal">
+                @Html.HiddenFor(x => x.idTienda)
+                @Html.TextAreaFor(x => x.texto, 30, 100, null)
             </div>
+                @*<div class="modal-footer">
+                    <a href="@Url.Action("download", "TiendaVirtual", null,null)" class="btn btn-default">Download Css Default</a>*@
+                <input type="submit" value="Guardar" class="btn btn-default" />
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>*@
+            
         }
     </div>
-    </div>
+</div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
-
-<script src="~/Scripts/codemirror-2.37/lib/codemirror.js"></script>
-<script src="~/Scripts/codemirror-2.37/mode/css/css.js"></script>

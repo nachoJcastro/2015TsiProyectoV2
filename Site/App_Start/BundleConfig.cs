@@ -19,6 +19,9 @@ namespace Site
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/modern-business").Include(
+                       "~/Scripts/modern-business.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
@@ -27,6 +30,11 @@ namespace Site
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/justified-nav.css"));
+
+            bundles.Add(new StyleBundle("~/Content/modern-business").Include(
+                      "~/css/bootstrap.css",
+                     "~/css/modern-business.css"));
+
         }
     }
 }
