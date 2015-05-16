@@ -1,67 +1,68 @@
 ﻿@using Site.Models
 @model LoginViewModel
 @{
-    Layout = "~/Views/Account/_LayoutAccount.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Iniciar sesión";
 }
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4 login-contenedor">
-            <div class="row">
-                <div class="contenido-login">
-                    <img src="~/img/logo2.png" alt="" class="img-responsive center-block">
-                    <h1 class="text-center"><strong>Bienvenido!</strong></h1>
-                    <h5 class="text-center">Inicie sesion con su Cuenta</h5>
-                    <div class="text-center"><a href="/" class="btn-home"><i class="fa fa-home fa-2x"></i></a></div>
-                </div>
-                <div class="col-md-12">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-login", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
+<div class="cuerpo">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 login-contenedor">
+                <div class="row">
+                    <div class="contenido-login">
+                        <img src="~/img/logo2.png" alt="" class="img-responsive center-block">
+                        <h1 class="text-center"><strong>Bienvenido!</strong></h1>
+                        <h5 class="text-center">Inicie sesion con su Cuenta</h5>
+                        <div class="text-center"><a href="/" class="btn-home"><i class="fa fa-home fa-2x"></i></a></div>
+                    </div>
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-login", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
 
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        <div class="input-group">
-                            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control user", @placeholder = "Correo" })
-                        </div>
-                        <div class="text-center">@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger text-center" })</div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-key"></i></span>
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control pass", @placeholder = "Password" })
-                        </div>
-                        <div class="text-center">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control user", @placeholder = "Correo" })
+                            </div>
+                            <div class="text-center">@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger text-center" })</div>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-key"></i></span>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control pass", @placeholder = "Password" })
+                            </div>
+                            <div class="text-center">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div>
 
-                        <div class="checklogin">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
+                            <div class="checklogin">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
 
-                        <div class="form-group sector_enviar text-center">
-                            <!--<div class="col-md-offset-2 col-md-10">-->
-                            <input type="submit" value="Iniciar sesión" class="btn btn-default btn-login" />
-                            <!--</div>-->
-                        </div>
-                        <p class="text-center">
-                            @Html.ActionLink("Registrar como nuevo usuario", "Register", null, new { @class = "btn-reg-login" })
-                        </p>
-                        @* Habilite esta opción después de habilitar la confirmación de la cuenta para la función de restablecimiento de contraseña
-                            <p>
-                                @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
-                            </p>*@
-                    }
+                            <div class="form-group sector_enviar text-center">
+                                <!--<div class="col-md-offset-2 col-md-10">-->
+                                <input type="submit" value="Iniciar sesión" class="btn btn-default btn-login" />
+                                <!--</div>-->
+                            </div>
+                            <p class="text-center">
+                                @Html.ActionLink("Registrar como nuevo usuario", "Register", null, new { @class = "btn-reg-login" })
+                            </p>
+                            @* Habilite esta opción después de habilitar la confirmación de la cuenta para la función de restablecimiento de contraseña
+                                <p>
+                                    @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
+                                </p>*@
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!--<div class="col-md-4">
-            <section id="socialLoginForm">
-                @*Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
-            </section>
-        </div>-->
+            <!--<div class="col-md-4">
+                <section id="socialLoginForm">
+                    @*Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
+                </section>
+            </div>-->
+        </div>
     </div>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

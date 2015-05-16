@@ -10,20 +10,23 @@ using Crosscutting.EntityTenant;
 using Site.Models;
 using BusinessLogicLayer.TenantInterfaces;
 using BusinessLogicLayer.TenantControllers;
+using BusinessLogicLayer.Interfaces;
 
 namespace Site.Controllers
 {
     public class SubastaController : Controller
     {
         //private SiteContext db = new SiteContext();
-       /* IBLSubasta subIBL;
-        IBLComentario comIBL;
+        IBLSubasta subIBL= new BLSubasta();
+        IBLProducto proIBL= new BLProducto();
+       /* IBLComentario comIBL;
         IBLProducto proIBL;
         IBLOferta ofeIBL;
         IBLCategoria catIBL;
         IBLAtributo atrIBL;*/
-        private UsuarioSite user_sitio;
+        public UsuarioSite user_sitio;
         private string valor_tenant;
+        public UsuarioSite user;
 
         public SubastaController() { }
 
@@ -46,6 +49,8 @@ namespace Site.Controllers
         // GET: Subastas
         public ActionResult Index()
         {
+            user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+
             //ViewBag.CategoriaId = new SelectList(catIBL.ObtenerCategorias(), "CategoriaId", "Nombre");
             //ViewBag.TipoId = new SelectList(proIBL.ObtenerProductos(), "TipoId", "Titulo");
             //ViewBag.Atributo = new SelectList(atrBL.)
@@ -69,8 +74,35 @@ namespace Site.Controllers
         //}
 
         // GET: Subastas/Create
-        public ActionResult Create()
+        public ActionResult Create(string id)
         {
+            try
+            {
+                user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+
+                if (user.idTienda == 0) { System.Diagnostics.Debug.WriteLine("Usuario nulo"); }
+                else System.Diagnostics.Debug.WriteLine(user.idTienda.ToString());
+                
+                
+                List<string> tipo =new List<string>();
+                tipo.Add("Subasta");
+                tipo.Add("Compra Directa");
+                ViewData["Tipo"] = tipo;
+                ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
+                ViewData["Productos"] = proIBL.ObtenerTipoProdCategoria(user.idTienda);
+                ViewData["Atributos"] = proIBL.ObtenerAtributosTipoProd(user.idTienda);
+
+
+                
+
+
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
            
             return View();
         }
@@ -91,7 +123,7 @@ namespace Site.Controllers
                     System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
                     valor_tenant = user_sitio.Dominio.ToString();
                 }
-                //subIBL.AgregarSubasta(valor_tenant,subasta);
+                subIBL.AgregarSubasta(valor_tenant,subasta);
                 //db.Subastas.Add(subasta);
                 //db.SaveChanges();
                 return RedirectToAction("Index");

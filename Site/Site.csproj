@@ -193,9 +193,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Atributo.cs" />
+    <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Sitio.cs" />
+    <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\UsuarioSite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -206,10 +209,19 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\justified-nav.css" />
+    <Content Include="css\bootstrap-theme.css" />
+    <Content Include="css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\modern-business.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\img1.jpg" />
+    <Content Include="img\img2.jpg" />
+    <Content Include="img\img3.jpg" />
+    <Content Include="img\img4.jpg" />
     <Content Include="img\logo1.png" />
     <Content Include="img\logo2.png" />
     <Content Include="Scripts\bootstrap.js" />
@@ -272,6 +284,7 @@
     <Content Include="Views\Subasta\Edit.cshtml" />
     <Content Include="Views\Subasta\Index.cshtml" />
     <Content Include="Views\Oferta\DetalleProducto.cshtml" />
+    <Content Include="Views\Shared\_Layout - Copia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

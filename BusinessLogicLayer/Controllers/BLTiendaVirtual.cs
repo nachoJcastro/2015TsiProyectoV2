@@ -25,10 +25,11 @@ namespace BusinessLogicLayer.Controllers
 
         public void AgregarTienda(TiendaVirtualDTO tiendaDTO)
         {
-            _dal.AgregarTienda(tiendaDTO);
+           
 
             try
             {
+                _dal.AgregarTienda(tiendaDTO);
                 _tenant.AgregarTenant(tiendaDTO.Dominio.ToString());
                 _tenant.AgregarHost(tiendaDTO.Dominio.ToString());
                 //Console.WriteLine("Paso crear Tenant");

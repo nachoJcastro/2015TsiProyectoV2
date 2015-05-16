@@ -466,6 +466,10 @@
       <Project>{c0284f4c-bef1-4c7e-97de-c6ea9cfa912e}</Project>
       <Name>Crosscutting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hosts\DNSManager.csproj">
+      <Project>{2d716e29-9980-4ba5-9382-668509de5ee6}</Project>
+      <Name>DNSManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505022055254_init.resx">
