@@ -11,6 +11,8 @@ using Site.Models;
 using BusinessLogicLayer.TenantInterfaces;
 using BusinessLogicLayer.TenantControllers;
 using BusinessLogicLayer.Interfaces;
+using Crosscutting.Enum;
+using Crosscutting.Entity;
 
 namespace Site.Controllers
 {
@@ -51,6 +53,8 @@ namespace Site.Controllers
         {
             user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
 
+
+
             //ViewBag.CategoriaId = new SelectList(catIBL.ObtenerCategorias(), "CategoriaId", "Nombre");
             //ViewBag.TipoId = new SelectList(proIBL.ObtenerProductos(), "TipoId", "Titulo");
             //ViewBag.Atributo = new SelectList(atrBL.)
@@ -80,6 +84,27 @@ namespace Site.Controllers
             {
                 user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
 
+                 
+
+                Subasta subasta = new Subasta();
+                //subasta.id_Categoria = 1;
+                //subasta.id_Producto = 1;
+                subasta.id_Vendedor = 1;
+                subasta.titulo = "Prueba";
+                subasta.valor_Actual = 111;
+                subasta.estado = EstadoTransaccion.Activa;
+                subasta.finalizado = TipoFinalizacion.Subasta;
+
+                 user_sitio = Session["usuario"] as UsuarioSite;
+
+                if (user_sitio.Dominio != null)
+                {
+                    System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
+                    valor_tenant = user_sitio.Dominio.ToString();
+                }
+
+                subIBL.AltaSubasta(valor_tenant, subasta);
+
                 if (user.idTienda == 0) { System.Diagnostics.Debug.WriteLine("Usuario nulo"); }
                 else System.Diagnostics.Debug.WriteLine(user.idTienda.ToString());
                 
@@ -88,16 +113,12 @@ namespace Site.Controllers
                 tipo.Add("Subasta");
                 tipo.Add("Compra Directa");
                 ViewData["Tipo"] = tipo;
-                ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
-                ViewData["Productos"] = proIBL.ObtenerTipoProdCategoria(user.idTienda);
-                ViewData["Atributos"] = proIBL.ObtenerAtributosTipoProd(user.idTienda);
+               // ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
+               // ViewData["Productos"] = proIBL.ObtenerTipoProdCategoria(user.idTienda);
+               // ViewData["Atributos"] = proIBL.ObtenerAtributosTipoProd(user.idTienda);
 
-
-                
-
-
-
-            }
+                ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user.idTienda), "CategoriaId", "Nombre");
+        }
             catch (Exception)
             {
                 
@@ -106,6 +127,47 @@ namespace Site.Controllers
            
             return View();
         }
+
+        
+        public JsonResult TipoProdList(int idCategoria)
+        {
+
+            System.Diagnostics.Debug.WriteLine("Entro en obtener producto. :" + proIBL.ObtenerTipoProdCategoria(user.idTienda, idCategoria).ToString());
+
+            return Json(new SelectList(proIBL.ObtenerTipoProdCategoria(user.idTienda, idCategoria),"TipoProductoId","CategoriaId","Titulo" ), JsonRequestBehavior.AllowGet);
+        
+		}
+
+        public JsonResult ArticuloList(int idTipoProd)
+        {
+            System.Diagnostics.Debug.WriteLine("Entro en obtener articulos. :" + proIBL.ObtenerAtributosTipoProd(user.idTienda, idTipoProd).ToString());
+
+            return Json (new SelectList (proIBL.ObtenerAtributosTipoProd(user.idTienda,idTipoProd),"AtributoId","CategoriaId","Nombre"), JsonRequestBehavior.AllowGet);
+        }
+
+        public IList<TipoProductoDTO> ObtenerProducto(int CategoriaId)
+        {
+            System.Diagnostics.Debug.WriteLine("Entro en obtener producto. Id Categoria:" + CategoriaId);
+            return proIBL.ObtenerTipoProdCategoria(user.idTienda, CategoriaId);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult CargarCategoriaId(string CategoriaId)
+        {
+            var listaTipoProd = this.ObtenerProducto(Convert.ToInt32(CategoriaId));
+            var tiposProd = listaTipoProd.Select(m => new SelectListItem()
+            {
+                Text = m.Descripcion,
+                Value = m.CategoriaId.ToString(),
+            });
+            return Json(tiposProd, JsonRequestBehavior.AllowGet);
+        }
+        
+
+
+
+
+
 
         // POST: Subastas/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 

@@ -24,6 +24,13 @@ namespace BusinessLogicLayer.TenantControllers
 
         public BLSubasta() { }
 
+        //********************
+        public void AltaSubasta(string tenant, Subasta subasta) {
+
+            _dal.AltaSubasta (tenant, subasta);
+        }
+
+
 
         public void AgregarSubasta(String tenant,Subasta subasta)
         {
@@ -80,7 +87,7 @@ namespace BusinessLogicLayer.TenantControllers
             var subasta = ObtenerSubasta(subastaId);
             subasta.estado = EstadoTransaccion.Cerrada;
             //subasta.id_Comprador = USUARIO LOGUEADO;
-            subasta.valor_Actual = subasta.Producto.precio_Compra.Value;
+            subasta.valor_Actual = subasta.precio_Compra.Value;
             subasta.finalizado = TipoFinalizacion.Compra_directa;
             _dal.ActualizarSubasta(subasta);
 

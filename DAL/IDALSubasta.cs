@@ -16,5 +16,7 @@ namespace DAL
         void EliminarSubasta(int subastaId); //Delete
 
         List<Oferta> ObtenerOfertas(int subastaId);
+
+        void AltaSubasta(string tenant, Subasta subasta);
     }
 }

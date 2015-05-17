@@ -16,6 +16,23 @@ namespace DAL
         public DALSubastaEF() { }
 
 
+        //************************
+        public void AltaSubasta(string tenant, Subasta subasta) {
+            try
+            {
+                db = new TenantDB(tenant);
+                db.Subasta.Add(subasta);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        
+        
+        }
+        //************************
+
         public void AgregarSubasta(String tenant, Subasta subasta)
         {
             try
