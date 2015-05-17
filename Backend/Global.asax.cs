@@ -13,8 +13,8 @@ namespace Backend
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        internal const string roleNombre = "Admin";
-        internal const string roleNombreUser = "Usuario";
+        //internal const string roleNombre = "Admin";
+        //internal const string roleNombreUser = "Usuario";
 
         protected void Application_Start()
         {
@@ -23,30 +23,30 @@ namespace Backend
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
            
         }
 
-        protected void Session_Start()
-        {
+        //protected void Session_Start()
+        //{
 
-            IdentityManager manager = new IdentityManager();
+        //    IdentityManager manager = new IdentityManager();
 
-            if (!manager.RoleExists(roleNombre))
-            {
+        //    if (!manager.RoleExists(roleNombre))
+        //    {
 
-                manager.CreateRole(roleNombre);
-                manager.CreateRole(roleNombreUser);
+        //        manager.CreateRole(roleNombre);
+        //        manager.CreateRole(roleNombreUser);
 
-                var user = new ApplicationUser() { Email = "admin@chebay.com", UserName = "Administrador", Nombre = "Admin", Apellido = "Global"};
+        //        var user = new ApplicationUser() { Email = "admin@chebay.com", UserName = "Administrador", Nombre = "Admin", Apellido = "Global"};
 
-                if (manager.CreateUser(user, "Chebay2015"))
-                {
-                    manager.AddUserToRole(user.Id, roleNombre);
+        //        if (manager.CreateUser(user, "Chebay2015"))
+        //        {
+        //            manager.AddUserToRole(user.Id, roleNombre);
 
-                }
+        //        }
 
-            }
-        }
+        //    }
+        //}
     }
 }
