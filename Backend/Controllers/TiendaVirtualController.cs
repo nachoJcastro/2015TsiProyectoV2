@@ -72,10 +72,10 @@ namespace Backend.Controllers
             {
                  var idUser = User.Identity.GetUserId();
                  var tienda= _bl.ObtenerTiendaDelUsuario(User.Identity.GetUserName());
-                 if (tienda != null) {
+                 /*if (tienda != null) {
                      ViewBag.Message = "El usuario ya tiene una tienda!";
                      return null;
-                 }
+                 }*/
                     
             }
             catch (Exception)

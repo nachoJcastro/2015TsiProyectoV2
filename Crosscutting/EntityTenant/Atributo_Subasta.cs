@@ -23,8 +23,6 @@ namespace Crosscutting.EntityTenant
         [Required]
         public string valor { get; set; }
 
-        public virtual Atributo Atributo { get; set; }
-
         public virtual Subasta Subasta { get; set; }
     }
 }

@@ -20,10 +20,10 @@ namespace Crosscutting.EntityTenant
 
         public int id_Usuario { get; set; }
 
-        public int id_Producto { get; set; }
+        public int id_Subasta { get; set; }
 
         public virtual Usuario Usuario { get; set; }
 
-        public virtual Producto producto { get; set; }
+        public virtual Subasta Subasta { get; set; }
     }
 }

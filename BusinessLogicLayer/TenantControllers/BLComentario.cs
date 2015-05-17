@@ -22,20 +22,22 @@ namespace BusinessLogicLayer.TenantControllers
         public BLComentario() { }
 
 
-        public void AgregarComentario(Comentario comentario)
+        public void AgregarComentario(String tenant,Comentario comentario)
         {
-            _dal.AgregarComentario(comentario);
+            _dal.AgregarComentario(tenant,comentario);
         }
 
 
-        public Comentario ObtenerComentario(int comentarioId)
+        public Comentario ObtenerComentario(String tenant ,int comentarioId)
         {
-            return _dal.ObtenerComentario(comentarioId);
+            return _dal.ObtenerComentario(tenant,comentarioId);
         }
 
-        public List<Comentario> ComentariosByProducto(int productoId)
+        public List<Comentario> ComentariosByProducto(String tenant, int productoId)
         {
-            return _dal.ComentariosByProducto(productoId);
+            return new List<Comentario>();
+            
+            //return _dal.ComentariosByProducto(productoId);
         }
 
     }

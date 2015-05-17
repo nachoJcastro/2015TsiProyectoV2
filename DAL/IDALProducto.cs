@@ -16,8 +16,8 @@ namespace DAL
         List<TipoProductoDTO> ObtenerProductos();
         //void ActualizarProducto(Producto producto); //Update
         //void EliminarProducto(int productoId); //Delete
-        List<TipoProductoDTO>   ObtenerTipoProdCategoria(int idCategoria);
-        List<AtributosDTO> ObtenerAtributosTipoProd(int idCategoria);
+        List<TipoProductoDTO>   ObtenerTipoProdCategoria(int idTienda ,int idCategoria);
+        List<AtributosDTO> ObtenerAtributosTipoProd(int idTienda,int idCategoria);
         
     }
 }

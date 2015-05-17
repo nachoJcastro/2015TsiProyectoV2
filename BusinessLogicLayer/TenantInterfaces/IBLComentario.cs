@@ -9,9 +9,9 @@ namespace BusinessLogicLayer.TenantInterfaces
 {
     public interface IBLComentario
     {
-        void AgregarComentario(Comentario comentario); //Insert
-        Comentario ObtenerComentario(int comentarioId); //FindOne
+        void AgregarComentario(String tenant,Comentario comentario); //Insert
+        Comentario ObtenerComentario(String tenant, int comentarioId); //FindOne
 
-        List<Comentario> ComentariosByProducto(int productoId); 
+        List<Comentario> ComentariosByProducto(String tenant, int productoId); 
     }
 }
