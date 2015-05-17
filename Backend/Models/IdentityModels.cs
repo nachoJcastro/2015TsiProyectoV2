@@ -25,21 +25,21 @@ namespace Backend.Models
         }
     }
 
-    public class ApplicationRole : IdentityRole
-    {
-        public ApplicationRole() { }
-        public ApplicationRole(string name)
-        {
-            this.Name = name;
-        }
-    }
+    //public class ApplicationRole : IdentityRole
+    //{
+    //    public ApplicationRole() { }
+    //    public ApplicationRole(string name)
+    //    {
+    //        this.Name = name;
+    //    }
+    //}
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("BackendDB", throwIfV1Schema: false)
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
+            
         }
 
         public static ApplicationDbContext Create()
@@ -50,43 +50,43 @@ namespace Backend.Models
         
     }
 
-    public class IdentityManager
-    {
+    //public class IdentityManager
+    //{
 
-        RoleManager<ApplicationRole> _roleManager = new RoleManager<ApplicationRole>(
-            new RoleStore<ApplicationRole>(new ApplicationDbContext()));
+    //    RoleManager<ApplicationRole> _roleManager = new RoleManager<ApplicationRole>(
+    //        new RoleStore<ApplicationRole>(new ApplicationDbContext()));
 
-        UserManager<ApplicationUser> _userManager = new UserManager<ApplicationUser>(
-            new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    //    UserManager<ApplicationUser> _userManager = new UserManager<ApplicationUser>(
+    //        new UserStore<ApplicationUser>(new ApplicationDbContext()));
 
-        ApplicationDbContext _db = new ApplicationDbContext();
+    //    ApplicationDbContext _db = new ApplicationDbContext();
 
-        public bool RoleExists(string nombre)
-        {
-            return _roleManager.RoleExists(nombre);
-        }
+    //    public bool RoleExists(string nombre)
+    //    {  
+    //        return _roleManager.RoleExists(nombre);
+    //    }
 
-        public bool CreateRole(string name)
-        {
-            var idResult = _roleManager.Create(new ApplicationRole(name));
-            return idResult.Succeeded;
-        }
-
-
-        public bool CreateUser(ApplicationUser user, string password)
-        {
-
-            var idResult = _userManager.Create(user, password);
-            return idResult.Succeeded;
-        }
+    //    public bool CreateRole(string name)
+    //    {
+    //        var idResult = _roleManager.Create(new ApplicationRole(name));
+    //        return idResult.Succeeded;
+    //    }
 
 
-        public bool AddUserToRole(string userId, string roleName)
-        {
-            var idResult = _userManager.AddToRole(userId, roleName);
-            return idResult.Succeeded;
-        }
+    //    public bool CreateUser(ApplicationUser user, string password)
+    //    {
+
+    //        var idResult = _userManager.Create(user, password);
+    //        return idResult.Succeeded;
+    //    }
 
 
-    }
+    //    public bool AddUserToRole(string userId, string roleName)
+    //    {
+    //        var idResult = _userManager.AddToRole(userId, roleName);
+    //        return idResult.Succeeded;
+    //    }
+
+
+    //}
 }

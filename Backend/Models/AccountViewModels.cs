@@ -86,6 +86,18 @@ namespace Backend.Models
         [Display(Name = "Confirmar contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
+
+        public ApplicationUser GetUser()
+        {
+            var user = new ApplicationUser()
+            {
+                Email = this.Email,
+                PasswordHash = this.Password,
+                Nombre = this.Nombre,
+                Apellido = this.Apellido
+            };
+            return user;
+        }
     }
 
     public class ResetPasswordViewModel
@@ -117,26 +129,5 @@ namespace Backend.Models
         public string Email { get; set; }
     }
 
-    public class RoleViewModel
-    {
-        private IdentityRole role;
-
-        public string RoleName { get; set; }
-
-
-        public RoleViewModel() { }
-
-        public RoleViewModel(ApplicationRole role)
-        {
-            this.RoleName = role.Name;
-
-        }
-
-        public RoleViewModel(IdentityRole role)
-        {
-            // TODO: Complete member initialization
-            this.RoleName = role.Name;
-        }
-
-    }
+    
 }
