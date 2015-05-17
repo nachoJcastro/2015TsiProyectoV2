@@ -103,7 +103,14 @@ namespace DAL
 
                 if (tienda != null)
                 {
-                    tienda = tiendaDTO;
+                    tienda.Nombre = tiendaDTO.Nombre;
+                    tienda.Dominio = tiendaDTO.Dominio;
+                    tienda.StringConection = tiendaDTO.StringConection;
+                    tienda.Logo = tiendaDTO.Logo;
+                    tienda.Estado = tienda.Estado;
+                    tienda.Css = tiendaDTO.Css;
+                    tienda.Dominio = tiendaDTO.Descripcion;
+                    tienda.Descripcion = tiendaDTO.Descripcion;
                     tienda.ListaImagenes = tiendaDTO.ListaImagenes;
                     //Mapper.Map(tiendaDTO, tienda);
                     //Mapper.Map(tiendaDTO.ListaImagenes, tienda.Imagenes);

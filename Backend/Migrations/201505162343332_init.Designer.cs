@@ -13,12 +13,12 @@ namespace Backend.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201505022055254_init"; }
+            get { return "201505162343332_init"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target
