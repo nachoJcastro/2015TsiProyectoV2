@@ -15,7 +15,7 @@ namespace Backend.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        //public RoleManager<ApplicationRole> UserRole { get; private set; }
+        public RoleManager<ApplicationRole> UserRole { get; private set; }
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -69,8 +69,8 @@ namespace Backend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            //var user = await UserManager.FindAsync(model.Email, model.Password);
-            //var rol = user.Roles.ToString();
+            var user = await UserManager.FindAsync(model.Email, model.Password);
+            var rol = user.Roles.ToString();
 
             if (!ModelState.IsValid)
             {
@@ -83,10 +83,10 @@ namespace Backend.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    //if (rol != "Admin") 
+                    if (rol != "Admin") 
                         return RedirectToAction("Index","TiendaVirtual");
-                    //else
-                    //    return RedirectToAction("Admin", "TiendaVirtual");
+                    else
+                        return RedirectToAction("Admin", "TiendaVirtual");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -161,7 +161,7 @@ namespace Backend.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Nombre=model.Nombre, Apellido=model.Apellido};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 
-                //UserManager.AddToRole(user.Id, "Usuario");
+                UserManager.AddToRole(user.Id, "Usuario");
 
                 if (result.Succeeded)
                 {

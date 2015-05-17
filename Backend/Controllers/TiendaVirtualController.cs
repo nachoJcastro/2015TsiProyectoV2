@@ -16,7 +16,7 @@ using Microsoft.AspNet.Identity;
 using System.Web.Hosting;
 
 namespace Backend.Controllers
-{
+{   
     public class TiendaVirtualController : Controller
     {
         //IBLTiendaVirtual _bl = new BLTiendaVirtual();
@@ -32,14 +32,19 @@ namespace Backend.Controllers
 
         }
 
-       //var idDesarrollador = User.Identity.GetUserId();
-
         // GET: TiendaVirtual
         [Authorize]
         public ActionResult Index()
         {
             var idUser = User.Identity.GetUserId();
             var tiendas = _bl.ObtenerTiendaDelUsuario(idUser);
+            return View(tiendas);
+        }
+
+        [Authorize]
+        public ActionResult Admin()
+        {
+            var tiendas = _bl.ObtenerTiendas();
             return View(tiendas);
         }
 
@@ -254,7 +259,7 @@ namespace Backend.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-       public ActionResult Estilo([Bind(Include = "texto,idTienda")] Estilo css)
+        public ActionResult Estilo([Bind(Include = "texto,idTienda")] Estilo css)
         {
             if (ModelState.IsValid)
             {
