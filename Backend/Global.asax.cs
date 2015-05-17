@@ -1,6 +1,8 @@
-﻿using Backend.Models;
+﻿using Backend.Migrations;
+using Backend.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +14,7 @@ namespace Backend
     public class MvcApplication : System.Web.HttpApplication
     {
         //internal const string roleNombre = "Admin";
+        //internal const string roleNombreUser = "Usuario";
 
         protected void Application_Start()
         {
@@ -19,27 +22,31 @@ namespace Backend
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
            
         }
 
-       /* protected void Session_Start()
-        {
+        //protected void Session_Start()
+        //{
 
-            //var user = new ApplicationUser()
-            //{
-            //    UserName = "Admin",
-            //    Email = "admin@admin.com",
-            //    PasswordHash = "123456",
-            //    Nombre = "Administrador",
-            //    Apellido = "Administrador",
-            //    FechaNacimiento = DateTime.Now,
-            //    Imagen = "~/Imagenes/userdefault.png",
-            //    Estado = true,
-            //    Es_Admin = true
-            //};
-            
-            //var user2 = new ApplicationUser() { UserName = "gbg933", SesionActual = Guid.NewGuid() };
-         
-        }*/
+        //    IdentityManager manager = new IdentityManager();
+
+        //    if (!manager.RoleExists(roleNombre))
+        //    {
+
+        //        manager.CreateRole(roleNombre);
+        //        manager.CreateRole(roleNombreUser);
+
+        //        var user = new ApplicationUser() { Email = "admin@chebay.com", UserName = "Administrador", Nombre = "Admin", Apellido = "Global"};
+
+        //        if (manager.CreateUser(user, "Chebay2015"))
+        //        {
+        //            manager.AddUserToRole(user.Id, roleNombre);
+
+        //        }
+
+        //    }
+        //}
     }
 }

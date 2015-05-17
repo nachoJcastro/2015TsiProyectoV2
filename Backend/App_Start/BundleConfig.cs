@@ -29,8 +29,7 @@ namespace Backend
                       "~/Scripts/jquery.backstretch.min.js",
                       "~/Scripts/jquery.dcjqaccordion.js",
                       "~/Scripts/jquery.nicescroll.js",
-                      "~/Scripts/wow.min.js",                     
-                      "~/Scripts/editor_conf.js"));
+                      "~/Scripts/wow.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/admin").Include(
                         "~/Scripts/admin.js"));
@@ -41,6 +40,7 @@ namespace Backend
                       "~/Content/nifty.min.css",
                       "~/Content/font-awesome.css",
                       "~/Content/estilo.css"));
+
         }
     }
 }

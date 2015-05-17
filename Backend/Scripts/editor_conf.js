@@ -8,7 +8,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     theme: "monokai"
 });
 
-alert(editor.getValue());
+//alert(editor.getValue());
 
 /* editor.on("change", function() {
    clearTimeout(delay);

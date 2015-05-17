@@ -125,6 +125,7 @@
             $(".modal-dialog").fadeIn();
         }, 100);
     });
+
     $('#btnTiendaV').click(function () {
         $(".modal-dialog").hide();
         $('.modal-body').load("/tiendavirtual/create");
@@ -134,14 +135,15 @@
         }, 100);
     });
 
-    $('.btnEstiloCss').click(function () {
+    $('.btnEditTienda').click(function () {
         $(".modal-dialog").hide();
-        $('.modal-body').load("/tiendavirtual/estilo");
+        $('.modal-body').load("/tiendavirtual/edit/" + $(this).data("id"));
 
         setTimeout(function () {
             $(".modal-dialog").fadeIn();
         }, 100);
     });
+
     
     /*$('.btnEliminarJuegoAdmin').click(function () {
         $(".modal-dialog").hide();
