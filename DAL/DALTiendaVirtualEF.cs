@@ -103,7 +103,37 @@ namespace DAL
 
                 if (tienda != null)
                 {
-                    tienda = tiendaDTO;
+                    tienda.Nombre = tiendaDTO.Nombre;
+                    tienda.Dominio = tiendaDTO.Dominio;
+                    tienda.StringConection = tiendaDTO.StringConection;
+                    tienda.Logo = tiendaDTO.Logo;
+                    tienda.Estado = tienda.Estado;
+                    tienda.Css = tiendaDTO.Css;
+                    tienda.Dominio = tiendaDTO.Descripcion;
+                    tienda.Descripcion = tiendaDTO.Descripcion;
+                    tienda.ListaImagenes = tiendaDTO.ListaImagenes;
+                    //Mapper.Map(tiendaDTO, tienda);
+                    //Mapper.Map(tiendaDTO.ListaImagenes, tienda.Imagenes);
+
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ActualizarCSS(TiendaVirtualDTO tiendaDTO) 
+        {
+            try
+            {
+                var tienda = db.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == tiendaDTO.TiendaVitualId);
+
+                if (tienda != null)
+                {
+
+                    tienda.Css = tiendaDTO.Css;
                     tienda.ListaImagenes = tiendaDTO.ListaImagenes;
                     //Mapper.Map(tiendaDTO, tienda);
                     //Mapper.Map(tiendaDTO.ListaImagenes, tienda.Imagenes);

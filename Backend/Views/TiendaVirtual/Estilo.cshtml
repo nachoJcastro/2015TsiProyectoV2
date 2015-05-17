@@ -21,7 +21,7 @@
 
             <div class="form-horizontal">
                 @Html.HiddenFor(x => x.idTienda)
-                @Html.TextAreaFor(x => x.texto, 30, 100, null)
+                @Html.TextAreaFor(x => x.texto, 4, 15, htmlAttributes: new { @id = "code" })
             </div>
                 @*<div class="modal-footer">
                     <a href="@Url.Action("download", "TiendaVirtual", null,null)" class="btn btn-default">Download Css Default</a>*@
@@ -34,4 +34,8 @@
 </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+
     }
+    <script src="~/Scripts/codemirror-2.37/lib/codemirror.js"></script>
+    <script src="~/Scripts/codemirror-2.37/mode/css/css.js"></script>
+    <script src="~/Scripts/editor_conf.js"></script>

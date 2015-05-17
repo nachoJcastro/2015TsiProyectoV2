@@ -87,7 +87,9 @@ namespace DAL
 
                 if (tipo != null)
                 {
-                    tipo = tipoProductoDTO;
+                    tipo.CategoriaId = tipoProductoDTO.CategoriaId;
+                    tipo.Descripcion = tipoProductoDTO.Descripcion;
+                    tipo.Titulo = tipoProductoDTO.Titulo;
                     db.SaveChanges();
                 }
 

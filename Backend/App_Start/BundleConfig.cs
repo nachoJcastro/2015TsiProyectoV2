@@ -25,19 +25,14 @@ namespace Backend
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/otros").Include(
-                      "~/Scripts/codemirror-2.37/lib/codemirror.js",
-                      "~/Scripts/codemirror-2.37/mode/css/css.js",
-                      "~/Scripts/codemirror-2.37/addon/hint/show-hint.js",
-                      "~/Scripts/codemirror-2.37/addon/hint/css-hint.js",
-                      "~/Scripts/editor_conf.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/editor").Include(
                       "~/Scripts/nifty.min.js",
                       "~/Scripts/jquery.backstretch.min.js",
                       "~/Scripts/jquery.dcjqaccordion.js",
                       "~/Scripts/jquery.nicescroll.js",
-                      "~/Scripts/wow.min.js",
-                      "~/Scripts/admin.js"));
+                      "~/Scripts/wow.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/admin").Include(
+                        "~/Scripts/admin.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -46,9 +41,6 @@ namespace Backend
                       "~/Content/font-awesome.css",
                       "~/Content/estilo.css"));
 
-            bundles.Add(new StyleBundle("~/Content/editor").Include(
-                      "~/Scripts/codemirror-2.37/lib/codemirror.css",
-                      "~/Scripts/codemirror-2.37/theme/monokai.css"));
         }
     }
 }

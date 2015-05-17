@@ -1,10 +1,6 @@
-﻿body {
-    background: black;
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-h1 {
-    font-size: 14px;
-}
-
+﻿/*SOLO MODIFICAR EL CSS DENTRO DE LOS ID Y CLASES*/
+/*NO MODIFICAR LOS NOMBRES DE LAS CLASES*/
+/*NO MODIFICAR LOS NOMBRES DE LOS ID*/
+body { background-color : #FFF; }
+h1,h2 { color: red; }
+p { color:blue; }
