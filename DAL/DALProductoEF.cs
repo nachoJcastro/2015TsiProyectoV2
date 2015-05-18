@@ -81,28 +81,19 @@ namespace DAL
         }*/
 
         //***************************************
-         public List<TipoProductoDTO>   ObtenerTipoProdCategoria(int idTienda){
+         public List<TipoProductoDTO>   ObtenerTipoProdCategoria(int idTienda, int idCategoria){
              var listaProd = new List<TipoProductoDTO>();
              try
              {
-                 List<CategoriasDTO> categorias = db.Categorias.Where(t => t.TiendaId == idTienda).ToList();
-                 List<int> categorias_id = new List<int>();
-                 foreach (var item in categorias)
-                 {
-                     categorias_id.Add(item.CategoriaId);
-                 }
-
-                 foreach (var item in categorias_id)
-                 {
-
-                     List<TipoProductoDTO> listaProd_temp = db.TiposProductos.Where(t => t.CategoriaId == item).ToList();
+                 
+                     List<TipoProductoDTO> listaProd_temp = db.TiposProductos.Where(t => t.CategoriaId == idCategoria).ToList();
 
                      foreach (var item2 in listaProd_temp)
                      {
                          listaProd.Add(item2);
                      }
 
-                 }
+                 
              }
              catch (Exception e)
              {
@@ -114,30 +105,12 @@ namespace DAL
 
         //************************************************
          //***************************************
-         public List<AtributosDTO> ObtenerAtributosTipoProd(int idTienda)
+         public List<AtributosDTO> ObtenerAtributosTipoProd(int idTienda, int idCategoria)
          {
-             var listaAtrib = new List<AtributosDTO>();
-             try
-             {
-                 List<CategoriasDTO> categorias = db.Categorias.Where(t => t.TiendaId == idTienda).ToList();
-                 List<int> categorias_id = new List<int>();
-                 foreach (var item in categorias)
-                 {
-                     categorias_id.Add(item.CategoriaId);
-                 }
+            try{
 
-                 foreach (var item in categorias_id)
-                 {
-                    
-                     List <AtributosDTO> listaAtrib_temp = db.Atributos.Where(t => t.CategoriaId == item).ToList();
-                     
-                     foreach (var item2 in listaAtrib_temp)
-	                {
-                        listaAtrib.Add(item2);
-	                }
-                     
-                 }
-                 return listaAtrib;
+                List<AtributosDTO> listaAtrib = db.Atributos.Where(t => t.CategoriaId == idCategoria).ToList();
+                return listaAtrib;
              }
              catch (Exception e)
              {

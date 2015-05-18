@@ -9,9 +9,9 @@ namespace DAL
 {
     public interface IDALComentario
     {
-        void AgregarComentario(Comentario comenario); //Create
-        Comentario ObtenerComentario(int comentarioId); //Read
+        void AgregarComentario(String tenant, Comentario comenario); //Create
+        Comentario ObtenerComentario(String tenant,int comentarioId); //Read
 
-        List<Comentario> ComentariosByProducto(int productoId);
+        //List<Comentario> ComentariosByProducto(String tenant ,int productoId);
     }
 }

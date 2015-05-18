@@ -19,5 +19,7 @@ namespace BusinessLogicLayer.TenantInterfaces
         List<Oferta> ObtenerOfertas(int subastaId);
         void FinalizarSubastaPorTiempo(int subastaId);
         void FinalizarSubastaCompraDirecta(int subastaId);
+
+        void AltaSubasta(string valor_tenant, Subasta subasta);
     }
 }

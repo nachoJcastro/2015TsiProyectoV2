@@ -18,7 +18,7 @@ namespace BusinessLogicLayer.TenantInterfaces
        //       void EliminarProducto(int productoId); //Delete
 
         List<CategoriasDTO> ObtenerCategoriasPorTienda(int idTienda);
-        List<TipoProductoDTO> ObtenerTipoProdCategoria(int idCategoria);
-        List<AtributosDTO> ObtenerAtributosTipoProd(int idCategoria);
+        List<TipoProductoDTO> ObtenerTipoProdCategoria(int idTienda, int idCategoria);
+        List<AtributosDTO> ObtenerAtributosTipoProd(int idTienda, int idCategoria);
     }
 }

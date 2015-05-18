@@ -58,30 +58,68 @@
                 </div>
             </div>*@
 
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.DropDownList("Tipo de Subasta", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]))
-            </div>
-        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.DropDownList("Categoria", ViewBag.CategoriaId as SelectList, "Seleccione una Categoria", new { id = "Categoria" })<br />
+            <select id="TipoProd" name="tipoProd"></select><br />
+            <select id="Articulo" name="articulo"></select><br />
+        }
+
+   
+    <script type="text/jscript">
+    $(function () {
+        $('#Categoria').change(function () {
+            $.getJSON('/Subasta/TipoProdList/' + $('#Categoria').val(), function (data) {
+                var items = '<option>Seleccione un Tipo de Producto</option>';
+                $.each(data, function (i, tipoProd) {
+                    items += "<option value='" + tipoProd.Value + "'>" + tipoProd.Text + "</option>";
+                });
+                $('#TipoProd').html(items);
+            });
+        });
+
+        $('#TipoProd').change(function () {
+            $.getJSON('/Subasta/ArticuloList/' + $('#TipoProd').val(), function (data) {
+                var items = '<option>Select un Articulo</option>';
+                $.each(data, function (i, articulo) {
+                    items += "<option value='" + articulo.Value + "'>" + articulo.Text + "</option>";
+                });
+                $('#Articulo').html(items);
+            });
+        });
+    });
+        </script>
 
 
-        <div class="form-group">
-           <div class="col-md-10">
-               @Html.DropDownList("Categorias", new SelectList((System.Collections.IEnumerable)ViewData["Categorias"], "CategoriaId", "Nombre"))
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.DropDownList("Productos", new SelectList((System.Collections.IEnumerable)ViewData["Productos"], "Titulo","Descripcion"))
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.DropDownList("Atributos", new SelectList((System.Collections.IEnumerable)ViewData["Atributos"], "CategoriaId","Nombre"))
-            </div>
+
+       @* <div class="form-group">
+        <div class="col-md-10">
+            @Html.DropDownList("Tipo de Subasta", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]))
         </div>
+    </div>
+
+
+    <div class="form-group">
+       <div class="col-md-10">
+           @Html.DropDownList("Categorias", new SelectList((System.Collections.IEnumerable)ViewData["Categorias"], "CategoriaId", "Nombre"))
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.DropDownList("Productos", new SelectList((System.Collections.IEnumerable)ViewData["Productos"], "Titulo","Descripcion"))
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.DropDownList("Atributos", new SelectList((System.Collections.IEnumerable)ViewData["Atributos"], "CategoriaId","Nombre"))
+        </div>
+    </div>
+
+    *@
 
         <div class="form-group">
                 @Html.Label("Valor")

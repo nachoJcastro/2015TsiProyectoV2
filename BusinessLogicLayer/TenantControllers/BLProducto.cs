@@ -42,15 +42,20 @@ namespace BusinessLogicLayer.TenantControllers
         }
 
 
-        public List<TipoProductoDTO> ObtenerTipoProdCategoria(int idCategoria)
+        public List<TipoProductoDTO> ObtenerTipoProdCategoria(int idTienda,int idCategoria)
         {
-            return _dal.ObtenerTipoProdCategoria(idCategoria);
+            return _dal.ObtenerTipoProdCategoria(idTienda,idCategoria);
         }
 
 
         public List<CategoriasDTO> ObtenerCategoriasPorTienda(int idTienda)
         {
             return _cat.ObtenerCategoriasPorTienda(idTienda);
+        }
+
+        public List<AtributosDTO> ObtenerAtributosTipoProd(int idTienda,int idCategoria)
+        {
+            return _dal.ObtenerAtributosTipoProd(idTienda,idCategoria);
         }
 
         /*public void ActualizarProducto(Producto producto)
@@ -66,9 +71,6 @@ namespace BusinessLogicLayer.TenantControllers
 
        // List<AtributosDTO> ObtenerAtributosTipoProd(int idCategoria);
 
-        public List<AtributosDTO> ObtenerAtributosTipoProd(int idCategoria)
-        {
-            return _dal.ObtenerAtributosTipoProd(idCategoria);
-        }
+      
     }
 }
