@@ -10,15 +10,16 @@ namespace DAL
 {
     public class DALOfertaEF : IDALOferta
     {
-        static TenantDB db = new TenantDB("falta pasarle el string database");
+        static TenantDB db;
 
         public DALOfertaEF() { }
 
 
-        public void AgregarOferta(Oferta oferta)
+        public void AgregarOferta(String tenant,Oferta oferta)
         {
             try
             {
+                db = new TenantDB(tenant);
                 db.Oferta.Add(oferta);
                 db.SaveChanges();
             }
@@ -95,8 +96,9 @@ namespace DAL
         }
 
 
-        public List<Oferta> ObtenerOfertasByProducto(int id_subasta)
+        public List<Oferta> ObtenerOfertasByProducto(String tenant, int id_subasta)
         {
+            db = new TenantDB(tenant);
             var listaOfer = new List<Oferta>();
             try
             {

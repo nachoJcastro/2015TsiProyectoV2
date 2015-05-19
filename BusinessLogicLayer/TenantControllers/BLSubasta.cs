@@ -38,9 +38,9 @@ namespace BusinessLogicLayer.TenantControllers
         }
 
 
-        public Subasta ObtenerSubasta(int subastaId)
+        public Subasta ObtenerSubasta(String tenant,int subastaId)
         {
-            return _dal.ObtenerSubasta(subastaId);
+            return _dal.ObtenerSubasta(tenant,subastaId);
         }
 
 
@@ -68,9 +68,9 @@ namespace BusinessLogicLayer.TenantControllers
         }
 
 
-        public void FinalizarSubastaPorTiempo(int subastaId)
+        public void FinalizarSubastaPorTiempo(String tenant,int subastaId)
         {
-            var subasta = ObtenerSubasta(subastaId);
+            var subasta = ObtenerSubasta(tenant,subastaId);
             var ofertaGanadora = subasta.Oferta.LastOrDefault();
             subasta.id_Comprador = ofertaGanadora.id_Usuario;
             subasta.valor_Actual = ofertaGanadora.Monto;
@@ -82,9 +82,9 @@ namespace BusinessLogicLayer.TenantControllers
         }
 
 
-        public void FinalizarSubastaCompraDirecta(int subastaId)
+        public void FinalizarSubastaCompraDirecta(String tenant, int subastaId)
         {
-            var subasta = ObtenerSubasta(subastaId);
+            var subasta = ObtenerSubasta(tenant,subastaId);
             subasta.estado = EstadoTransaccion.Cerrada;
             //subasta.id_Comprador = USUARIO LOGUEADO;
             subasta.valor_Actual = subasta.precio_Compra.Value;

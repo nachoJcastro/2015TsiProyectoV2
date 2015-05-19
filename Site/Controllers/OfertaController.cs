@@ -14,35 +14,36 @@ namespace Site.Controllers
     public class OfertaController : Controller
     {
         IBLOferta _bloferta;
-        private UsuarioSite user_sitio;
+        IBLSubasta _blsubasta;
+        IBLUsuario _blusuario;
         private string valor_tenant;
+        public UsuarioSite user;
+        static int idSub;
 
-        public OfertaController(IBLOferta bl)
+        public OfertaController(IBLOferta bl, IBLSubasta blS, IBLUsuario blU)
         {
             this._bloferta = bl;
+            this._blsubasta = blS;
+            this._blusuario = blU;
         }
 
-        public OfertaController() : this(new BLOferta())
+        public OfertaController() : this(new BLOferta(), new BLSubasta(), new BLUsuario())
         {
 
         }
 
 
-        public ActionResult DetalleProducto(int? id)
+        public ActionResult DetalleProducto(int idSubasta)
         {
-            if (id == null)
+            var user = Session["usuario"] as UsuarioSite;
+            valor_tenant = user.Dominio;
+
+            Subasta subasta = _blsubasta.ObtenerSubasta(valor_tenant,idSubasta);
+            if (subasta == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return HttpNotFound();
             }
-
-            else {
-
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-           
-
-            //return View("Error");
+            return View(subasta);
         }
 
 
@@ -63,55 +64,75 @@ namespace Site.Controllers
 
 
 
-
-
         // GET: Oferta
         public ActionResult Index()
         {
-            int id_subasta = 0;//hay que conseguir el id subasta
-            var listaOfer = _bloferta.ObtenerOfertasByProducto(id_subasta);
-            ViewBag.ListaOfertas = listaOfer;
-
-            user_sitio = Session["usuario"] as UsuarioSite;
-
-            if (user_sitio.Dominio != null)
-            {
-                System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
-                valor_tenant = user_sitio.Dominio.ToString();
-            }
-
-            /*var lista_Subastas = _sub.ObtenerSubastas(valor_Tenant);
-                ViewBag.ListarSubastas = lista_Subastas;*/
-
             return View();
         }
 
 
-        #region Ofertas
 
         // GET: Oferta/Create
-        public ActionResult CreateOferta()
+        public ActionResult CreateOferta(int idSubasta)
         {
+            idSub = idSubasta;
             ViewBag.idTienda = this.Session["_tiendaSesion"];
             return View();
         }
-
         // POST: Oferta/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateOferta([Bind(Include = "id,Monto,id_Usuario,fecha,id_Subasta")] Oferta oferta)
+        public ActionResult CreateOferta([Bind(Include = "id,Monto")] Oferta oferta)//,id_Usuario,fecha
         {
-            if (ModelState.IsValid)
-            {
-                //oferta.TiendaId = Int32.Parse(this.Session["_tiendaSesion"].ToString());
-                _bloferta.AgregarOferta(oferta);
-                return RedirectToAction("Index", new { id = this.Session["_tiendaSesion"] });
-            }
+            user = Session["usuario"] as UsuarioSite;
+            valor_tenant = user.Dominio;
+            oferta.id_Subasta = idSub;
+            oferta.fecha = DateTime.UtcNow.Date;
+            oferta.id_Usuario = _blusuario.ObtenerIdByEmail(valor_tenant, user.Email);
 
-            return View(oferta);
+            _bloferta.AgregarOferta(valor_tenant, oferta);
+
+            var listaOfer = _bloferta.ObtenerOfertasByProducto(valor_tenant, idSub);
+            ViewBag.ListaOfertas = listaOfer;
+
+
+            return View("Index");
         }
 
-        #endregion
+
+        //public ActionResult Create(string id)
+        //{
+        //    try
+        //    {
+        //        user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+        //        Oferta oferta = new Oferta();
+        //        subasta.id_Vendedor = 1;
+        //        subasta.titulo = "Prueba";
+        //        subasta.valor_Actual = 111;
+        //        subasta.estado = EstadoTransaccion.Activa;
+        //        subasta.finalizado = TipoFinalizacion.Subasta;
+        //        user_sitio = Session["usuario"] as UsuarioSite;
+        //        if (user_sitio.Dominio != null)
+        //        {
+        //            System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
+        //            valor_tenant = user_sitio.Dominio.ToString();
+        //        }
+        //        subIBL.AltaSubasta(valor_tenant, subasta);
+        //        List<string> tipo = new List<string>();
+        //        tipo.Add("Subasta");
+        //        tipo.Add("Compra Directa");
+        //        ViewData["Tipo"] = tipo;
+        //        // ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
+        //        // ViewData["Productos"] = proIBL.ObtenerTipoProdCategoria(user.idTienda);
+        //        // ViewData["Atributos"] = proIBL.ObtenerAtributosTipoProd(user.idTienda);
+        //        ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user.idTienda), "CategoriaId", "Nombre");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    return View();
+        //}
 
     }
 }

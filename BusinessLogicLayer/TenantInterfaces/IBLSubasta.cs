@@ -11,14 +11,14 @@ namespace BusinessLogicLayer.TenantInterfaces
     {
         //Operaciones CRUD
         void AgregarSubasta(String tenant,Subasta subasta); //Insert
-        Subasta ObtenerSubasta(int subastaId); //FindOne
+        Subasta ObtenerSubasta(String tenant, int subastaId); //FindOne
         List<Subasta> ObtenerSubastas(String tenant);//FindAllAs
         void ActualizarSubasta(Subasta subasta); //Update
         void EliminarSubasta(int subastaId); //Delete
 
         List<Oferta> ObtenerOfertas(int subastaId);
-        void FinalizarSubastaPorTiempo(int subastaId);
-        void FinalizarSubastaCompraDirecta(int subastaId);
+        void FinalizarSubastaPorTiempo(String tenant,int subastaId);
+        void FinalizarSubastaCompraDirecta(String tenant, int subastaId);
 
         void AltaSubasta(string valor_tenant, Subasta subasta);
     }

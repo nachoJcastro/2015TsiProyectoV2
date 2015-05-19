@@ -10,10 +10,10 @@
     <table class="table">
         <tr>
             <th>
-                Nombre
+                Id
             </th>
             <th>
-                Comprador
+                Titulo
             </th>
             <th>
                 Vendedor
@@ -29,13 +29,13 @@
                     @item.id
                 </td>
                 <td>
-                    @item.id_Comprador
+                    @item.titulo
                 </td>
                 <td>
                     @item.id_Vendedor
                 </td>
                 <td>
-                   @Html.ActionLink("1", "DetalleProducto", "Oferta")
+                    @Html.ActionLink("Seleccionar", "DetalleProducto/", "Oferta", new { idSubasta = item.id }, false)
                 </td>
             </tr>
         }

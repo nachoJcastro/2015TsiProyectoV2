@@ -12,5 +12,6 @@ namespace DAL.IDAL_Tenant
          Boolean ExisteUsuario(String tenant, String email);
          void RegistrarUsuario(String tenant, Usuario usr);
          Usuario LoginUsuario(String tenant, String email, String password);
+         int obtenerIdByEmail(String tenant, String email);
     }
 }

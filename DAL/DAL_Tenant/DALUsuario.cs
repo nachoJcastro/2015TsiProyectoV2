@@ -73,6 +73,26 @@ namespace DAL.DAL_Tenant
 
             return usr;
         }
+
+        public int obtenerIdByEmail(String tenant, String email)
+        {
+            int id = 0;
+            try
+            {
+                TenantDB sitio = new TenantDB(tenant);
+                if (sitio != null)
+                {
+                    var usuario = sitio.Usuario.FirstOrDefault(r => r.email == email);
+                    if (usuario != null) id = usuario.id;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return id;
+        }
     }
 }
 

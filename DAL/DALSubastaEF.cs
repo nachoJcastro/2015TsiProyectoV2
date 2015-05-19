@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DALSubastaEF : IDALSubasta
     {
-        static TenantDB db = new TenantDB("database");
+        static TenantDB db = new TenantDB(" ");
 
 
         public DALSubastaEF() { }
@@ -48,10 +48,11 @@ namespace DAL
         }
 
 
-        public Subasta ObtenerSubasta(int subastaId)
+        public Subasta ObtenerSubasta(String tenant, int subastaId)
         {
             try
             {
+                db = new TenantDB(tenant);
                 var subasta = db.Subasta.FirstOrDefault(s => s.id == subastaId);
                 return subasta;
             }

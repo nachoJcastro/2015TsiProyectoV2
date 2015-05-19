@@ -19,42 +19,37 @@ namespace Site.Controllers
     public class SubastaController : Controller
     {
         //private SiteContext db = new SiteContext();
-        IBLSubasta subIBL= new BLSubasta();
-        IBLProducto proIBL= new BLProducto();
-       /* IBLComentario comIBL;
+        IBLSubasta subIBL;
         IBLProducto proIBL;
+        IBLComentario comIBL;
         IBLOferta ofeIBL;
-        IBLCategoria catIBL;
-        IBLAtributo atrIBL;*/
+        //IBLCategoria catIBL;
+        //IBLAtributo atrIBL;
         public UsuarioSite user_sitio;
         private string valor_tenant;
         public UsuarioSite user;
 
-        public SubastaController() { }
-
-       /* public SubastasController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl,IBLOferta ofebl, IBLCategoria catbl, IBLAtributo atrbl)
+        public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl,IBLOferta ofebl)
         {
             this.subIBL = subbl;
             this.comIBL = combl;
             this.proIBL = probl;
             this.ofeIBL = ofebl;
-            this.catIBL = catbl;
-            this.atrIBL = atrbl;
-        }*/
-        //ME DA ERROR CONSTRUCTOR X DEFECTO. DESCOMENTAR!!!!
-        //public SubastasController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLCategoria(), new BLAtributo())
-        //{
+            //this.catIBL = catbl;
+           // this.atrIBL = atrbl;
+        }
 
-        //}
+        public SubastaController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta())
+        {
+
+        }
 
        
         // GET: Subastas
         public ActionResult Index()
         {
             user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
-
-
-
+            
             //ViewBag.CategoriaId = new SelectList(catIBL.ObtenerCategorias(), "CategoriaId", "Nombre");
             //ViewBag.TipoId = new SelectList(proIBL.ObtenerProductos(), "TipoId", "Titulo");
             //ViewBag.Atributo = new SelectList(atrBL.)
@@ -62,20 +57,20 @@ namespace Site.Controllers
             
         }
 
-        //// GET: Subastas/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Subasta subasta = db.Subastas.Find(id);
-        //    if (subasta == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(subasta);
-        //}
+        // GET: Subastas/Details/5
+        public ActionResult Details(int idSubasta)
+        {
+            if (idSubasta == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+            if (subasta == null)
+            {
+                return HttpNotFound();
+            }
+            return View(subasta);
+        }
 
         // GET: Subastas/Create
         public ActionResult Create(string id)
@@ -83,9 +78,7 @@ namespace Site.Controllers
             try
             {
                 user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
-
-                 
-
+                
                 Subasta subasta = new Subasta();
                 //subasta.id_Categoria = 1;
                 //subasta.id_Producto = 1;

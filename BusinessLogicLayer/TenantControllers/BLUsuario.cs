@@ -27,5 +27,11 @@ namespace BusinessLogicLayer.TenantControllers
 
             return _dal.LoginUsuario(valor_tenant, email, password);
         }
+
+        public int ObtenerIdByEmail(String tenant, String email)
+        {
+
+            return _dal.obtenerIdByEmail(tenant,email);
+        }
     }
 }

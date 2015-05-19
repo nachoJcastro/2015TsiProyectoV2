@@ -10,12 +10,12 @@ namespace BusinessLogicLayer.TenantInterfaces
     public interface IBLOferta
     {
         //Operaciones CRUD
-        void AgregarOferta(Oferta oferta); //Insert
+        void AgregarOferta(String tenant,Oferta oferta); //Insert
         Oferta ObtenerOferta(int ofertaId); //FindOne
         List<Oferta> ObtenerOfertas();//FindAllAs
         void ActualizarOferta(Oferta oferta); //Update
         void EliminarOferta(int ofertaId); //Delete
 
-        List<Oferta> ObtenerOfertasByProducto(int id_subasta);
+        List<Oferta> ObtenerOfertasByProducto(String tenant,int id_subasta);
     }
 }
