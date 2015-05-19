@@ -160,7 +160,7 @@ namespace Site.Controllers
             
 
             //System.Threading.
-            //var user = Session["usuario"] as UsuarioSite;
+           // var user = Session["usuario"] as UsuarioSite;
             //if (user.Dominio != null) valor_tenant = user.Dominio;
 
            /* local = Thread.GetNamedDataSlot("tenant");
@@ -191,14 +191,14 @@ namespace Site.Controllers
                 try
                 {
                     //Thread t = System.Threading.Thread.CurrentThread;
-                    local =Thread.GetNamedDataSlot("tenant");
+                    /*local =Thread.GetNamedDataSlot("tenant");
                     if (local == null)
                     {
                         System.Diagnostics.Debug.WriteLine("Valor tenant nulo");
                         return View("Error");
                     }
                     else
-                    {
+                    {*/
 
                         user_sitio = Session["usuario"] as UsuarioSite;
 
@@ -234,7 +234,7 @@ namespace Site.Controllers
                         {
                             return View("Error");
                         }
-                    }
+                    
 
                 }
                 catch (Exception)

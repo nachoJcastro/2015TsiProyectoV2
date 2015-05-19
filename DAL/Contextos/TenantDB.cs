@@ -20,56 +20,19 @@ namespace DAL.Contextos
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<TenantDB>());
         }
         
-        public virtual DbSet<Atributo> Atributo { get; set; }
         public virtual DbSet<Atributo_Subasta> Atributo_Subasta { get; set; }
         public virtual DbSet<Calificacion> Calificacion { get; set; }
-        public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<Comentario> Comentario { get; set; }
         public virtual DbSet<Favorito> Favorito { get; set; }
         public virtual DbSet<Imagen> Imagen { get; set; }
         public virtual DbSet<Oferta> Oferta { get; set; }
-        public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<Subasta> Subasta { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Atributo>()
-                .HasMany(e => e.Atributo_Subasta)
-                .WithRequired(e => e.Atributo)
-                .HasForeignKey(e => e.id_Atributo)
-                .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Categoria>()
-                .HasMany(e => e.Atributo)
-                .WithRequired(e => e.Categoria)
-                .HasForeignKey(e => e.id_Categoria)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Categoria>()
-                .HasMany(e => e.Producto)
-                .WithRequired(e => e.Categoria)
-                .HasForeignKey(e => e.id_Categoria)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Producto>()
-                .HasMany(e => e.Atributo)
-                .WithRequired(e => e.Producto)
-                .HasForeignKey(e => e.id_Producto)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Producto>()
-                .HasMany(e => e.Favorito)
-                .WithRequired(e => e.Producto)
-                .HasForeignKey(e => e.id_Producto)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Producto>()
-                .HasMany(e => e.Subasta)
-                .WithRequired(e => e.Producto)
-                .HasForeignKey(e => e.id_Producto)
-                .WillCascadeOnDelete(false);
-
+            // dependencias de la Subasta
             modelBuilder.Entity<Subasta>()
                 .HasMany(e => e.Atributo_Subasta)
                 .WithRequired(e => e.Subasta)
@@ -94,6 +57,14 @@ namespace DAL.Contextos
                 .HasForeignKey(e => e.id_Subasta)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Subasta>()
+               .HasMany(e => e.Comentario)
+               .WithRequired(e => e.Subasta)
+               .HasForeignKey(e => e.id_Subasta)
+               .WillCascadeOnDelete(false);
+
+
+            // dependencias del Usuario
             modelBuilder.Entity<Usuario>()
                 .HasMany(e => e.Calificacion)
                 .WithRequired(e => e.Usuario)
@@ -114,16 +85,11 @@ namespace DAL.Contextos
 
             modelBuilder.Entity<Usuario>()
                 .HasMany(e => e.Subasta)
-                .WithRequired(e => e.Usuario)
-                .HasForeignKey(e => e.id_Comprador)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Usuario>()
-                .HasMany(e => e.Subasta1)
-                .WithRequired(e => e.Usuario1)
+                .WithRequired(e => e.Vendedor)
                 .HasForeignKey(e => e.id_Vendedor)
                 .WillCascadeOnDelete(false);
 
+            
             base.OnModelCreating(modelBuilder);
         }
     }

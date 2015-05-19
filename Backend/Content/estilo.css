@@ -1158,11 +1158,11 @@ ul.sidebar-menu-fixed li a.active i {
   overflow:hidden;
 }
 .offer:hover {
-    -webkit-transform: scale(1.1); 
+    /*-webkit-transform: scale(1.1); 
     -moz-transform: scale(1.1); 
     -ms-transform: scale(1.1); 
     -o-transform: scale(1.1); 
-    transform:rotate scale(1.1); 
+    transform:rotate scale(1.1);*/ 
     -webkit-transition: all 0.4s ease-in-out; 
     -moz-transition: all 0.4s ease-in-out; 
     -o-transition: all 0.4s ease-in-out;
@@ -1313,10 +1313,12 @@ ul.sidebar-menu-fixed li a.active i {
     margin-top: 10px;
 }
 .CodeMirror { 
-  min-height: 600px !important; 
+  
 }
 
-
+.btn-estilo-1 {
+    margin-top:10px;
+}
 
 .panel.with-nav-tabs .panel-heading{
     padding: 5px 5px 0 5px;

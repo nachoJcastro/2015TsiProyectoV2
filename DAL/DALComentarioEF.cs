@@ -10,14 +10,14 @@ namespace DAL
 {
     public class DALComentarioEF : IDALComentario
     {
-        static TenantDB db = new TenantDB("falta pasarle el string database");
+        //static TenantDB db = new TenantDB("falta pasarle el string database");
 
         public DALComentarioEF() { }
 
-        public void AgregarComentario(Comentario comentario)
+        public void AgregarComentario(String tenant, Comentario comentario)
         {
             try
-            {
+            {   TenantDB db = new TenantDB(tenant);
                 db.Comentario.Add(comentario);
                 db.SaveChanges();
             }
@@ -27,10 +27,11 @@ namespace DAL
             }
         }
 
-        public Comentario ObtenerComentario(int comentarioId)
+        public Comentario ObtenerComentario(String tenant,int comentarioId)
         {
             try
             {
+                TenantDB db = new TenantDB(tenant);
                 var comentario = db.Comentario.FirstOrDefault(c => c.id == comentarioId);
 
                 return comentario;
@@ -41,14 +42,15 @@ namespace DAL
             }
         }
 
-
-        public List<Comentario> ComentariosByProducto(int productoId)
+        
+       /* public List<Comentario> ComentariosByProducto(String tenant, productoId)
         {
+            TenantDB db = new TenantDB(tenant);
             var listaCom = new List<Comentario>();
 
             try
             {
-                listaCom = db.Comentario.Where(c => c.producto.id == productoId).ToList();
+                listaCom = db.Comentario.Where(c => c.subasta.id == productoId).ToList();
 
                 return listaCom;
 
@@ -57,6 +59,6 @@ namespace DAL
             {
                 throw e;
             }
-        }
+        }*/
     }
 }

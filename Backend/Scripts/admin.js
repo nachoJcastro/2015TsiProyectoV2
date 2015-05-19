@@ -103,6 +103,7 @@ var Script = function () {
         }
     });
 
+    $('[data-toggle="tooltip"]').tooltip();
 // custom scrollbar
     $("#sidebar").niceScroll({styler:"fb",cursorcolor:"#4ECDC4", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled:false, cursorborder: ''});
 

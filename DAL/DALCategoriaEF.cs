@@ -83,7 +83,7 @@ namespace DAL
 
                 if (categoria != null)
                 {
-                    categoria = categoriaDTO;
+                    categoria.Nombre = categoriaDTO.Nombre;
                     db.SaveChanges();
                 }
 

@@ -1,5 +1,5 @@
 ﻿
-var delay;
+//var delay;
 var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     lineNumbers: true,
     styleActiveLine: true,
@@ -7,6 +7,8 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     extraKeys: { "Ctrl-Space": "autocomplete" },
     theme: "monokai"
 });
+
+//alert(editor.getValue());
 
 /* editor.on("change", function() {
    clearTimeout(delay);

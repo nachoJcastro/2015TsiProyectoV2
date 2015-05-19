@@ -1,47 +1,136 @@
 ﻿@{
     ViewBag.Title = "Index tenant ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>@ViewBag.Message</h1>
+<h1 align="center">@ViewBag.Message</h1>
 
-<div class="panel-body">
-    <table class="table">
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Comprador
-            </th>
-            <th>
-                Vendedor
-            </th>
-        </tr>
-        @foreach (var item in ViewBag.ListarSubastas)
-        {
-            <tr class="texto_table">
-                <td>
-                    @item.id
-                </td>
-                <td>
-                    @item.id_Comprador
-                </td>
-                <td>
-                    @item.id_Vendedor
-                </td>
-            </tr>
-        }
-    </table>
-</div>
+@if (ViewBag.ListarSubastas != null)
+{
+    <div class="container">
 
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Articulos Destacados</h2>
+                <hr>
+            </div>
+            @foreach (var item in ViewBag.ListarSubastas)
+            {
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <a>
+                        <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
+                        @Html.ActionLink("Seleccionar", "DetalleProducto/", "Oferta", new { idSubasta = item.id }, false)
+                    </a>
+
+                </div>
+            }
+        </div>
+    </div>
+
+}
+@using Site.Models
+@{
+    var user = Session["usuario"] as UsuarioSite;
+}
+@if (user!=null && user.Email!=null)
+{
 <div class="jumbotron">
-    <h1>SITIO WEB</h1>
-    <button type="button" onclick="location.href='@Url.Action("Index", "Subastas")'" class="btn btn-default">Alta Subasta</button>
+    <button type="button" onclick="location.href='@Url.Action("Create", "Subasta")'" class="btn btn-default">Subastar</button>
+</div>
+<div class="jumbotron">
+    <button type="button" onclick="location.href='@Url.Action("Index", "Oferta")'" class="btn btn-default">Comprar</button>
+</div>
+}
+else
+{
+    <h1 align="center">Para vender o comprar debe estar logueado</h1>
+}
+
+
+
+
+<div id="myCarousel" class="carousel slide">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="fill" style="background-image:url('../img/img1.jpg');"></div>
+            <div class="carousel-caption">
+                <h1>Publicacion de Productos</h1>
+            </div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('../img/img2.jpg');"></div>
+            <div class="carousel-caption">
+                <h1>Venta de Productos</h1>
+            </div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('../img/img4.jpg');"></div>
+            <div class="carousel-caption">
+                <h1>
+                    Compra de Productos
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
 </div>
 
-<div>
-<button type="button" onclick="location.href='@Url.Action("CreateOferta", "Oferta")'" class="btn btn-default">Ofertar</button>
-</div>
+<div class="section">
 
-<div>
-    <button type="button" onclick="location.href='@Url.Action("Index", "Categoria")'" class="btn btn-default">Publicar Productos</button>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <h3><i class="fa fa-check-circle"></i> Producto 1</h3>
+                <p>Detalle de producto 1</p>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <h3><i class="fa fa-check-circle"></i> Producto 2</h3>
+                <p>Detalle de producto 1</p>   
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <h3><i class="fa fa-check-circle"></i> Producto 3</h3>
+                <p>Detalle de producto 3</p>    
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
 </div>
+<!-- /.section -->
+
+<div class="section-colored text-center">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Espacio de Favoritos</h2>
+                <p>Descripcion correspondiente</p>
+                <hr>
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.section-colored -->

@@ -185,9 +185,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505022055254_init.cs" />
-    <Compile Include="Migrations\201505022055254_init.Designer.cs">
-      <DependentUpon>201505022055254_init.cs</DependentUpon>
+    <Compile Include="Migrations\201505170153202_init.cs" />
+    <Compile Include="Migrations\201505170153202_init.Designer.cs">
+      <DependentUpon>201505170153202_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505170224375_init1.cs" />
+    <Compile Include="Migrations\201505170224375_init1.Designer.cs">
+      <DependentUpon>201505170224375_init1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -449,6 +453,7 @@
     <Content Include="Views\Componentes\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutBackUser.cshtml" />
     <Content Include="Views\TiendaVirtual\Estilo.cshtml" />
+    <Content Include="Views\TiendaVirtual\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -466,10 +471,17 @@
       <Project>{c0284f4c-bef1-4c7e-97de-c6ea9cfa912e}</Project>
       <Name>Crosscutting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hosts\DNSManager.csproj">
+      <Project>{2d716e29-9980-4ba5-9382-668509de5ee6}</Project>
+      <Name>DNSManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505022055254_init.resx">
-      <DependentUpon>201505022055254_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505170153202_init.resx">
+      <DependentUpon>201505170153202_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505170224375_init1.resx">
+      <DependentUpon>201505170224375_init1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

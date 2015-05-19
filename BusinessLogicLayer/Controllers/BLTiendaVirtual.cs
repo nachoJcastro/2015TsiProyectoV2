@@ -25,10 +25,11 @@ namespace BusinessLogicLayer.Controllers
 
         public void AgregarTienda(TiendaVirtualDTO tiendaDTO)
         {
-            _dal.AgregarTienda(tiendaDTO);
+           
 
             try
             {
+                _dal.AgregarTienda(tiendaDTO);
                 _tenant.AgregarTenant(tiendaDTO.Dominio.ToString());
                 _tenant.AgregarHost(tiendaDTO.Dominio.ToString());
                 //Console.WriteLine("Paso crear Tenant");
@@ -60,7 +61,10 @@ namespace BusinessLogicLayer.Controllers
         {
             _dal.ActualizarTiendas(tiendaDTO);
         }
-
+        public void ActualizarCSS(TiendaVirtualDTO tiendaDTO) 
+        {
+            _dal.ActualizarCSS(tiendaDTO);
+        }
 
         public void EditarCss(int id,string css) 
         {
@@ -75,6 +79,11 @@ namespace BusinessLogicLayer.Controllers
         public void EliminarTiendaVirtual(int tiendaId)
         {
             _dal.EliminarTiendaVirtual(tiendaId);
+        }
+
+        public List<String> ObtenerTenants() {
+
+            return _dal.ObtenerTenants();
         }
     }
 }

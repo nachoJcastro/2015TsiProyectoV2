@@ -5,8 +5,7 @@ using Site.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading;
+
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,52 +15,54 @@ namespace Site.Controllers
     {
         IBLTenant _ibl = new BLTenant();
         IBLSubasta _sub = new BLSubasta();
-        //[ThreadStatic]
-        static LocalDataStoreSlot local;
-
-        /* private String tenantID;
+        
+        public UsuarioSite user;
+        public string tenantID;
+        /*static LocalDataStoreSlot local;
+        private String tenantID;
         static LocalDataStoreSlot tenant = Thread.AllocateNamedDataSlot("Tenant");*/
         // GET: Tenant
         public ActionResult Index(string id)
         {
-
-            if (_ibl.ExisteSitio(id))
+            tenantID = id;
+            System.Diagnostics.Debug.WriteLine("ID tenant :" + tenantID);
+            if (_ibl.ExisteSitio(tenantID))
             {
-                System.Diagnostics.Debug.WriteLine("ID tenant :" + id);
+                /*System.Diagnostics.Debug.WriteLine("ID tenant :" + id);
                 System.Diagnostics.Debug.WriteLine("Tenant");
-                ViewBag.Message = " Estoy en el Sitio : " + id;
-                //Session["sitio"] = new Sitio { dominio =id };
+                ViewBag.Message = id;
+                Session["sitio"] = new Sitio { dominio =id };
 
-                //System.Threading.ThreadLocal<String> tenant;
+                System.Threading.ThreadLocal<String> tenant;
 
-               /* ThreadLocal<string> tenant_thread = new ThreadLocal<string>(() =>
+               ThreadLocal<string> tenant_thread = new ThreadLocal<string>(() =>
                 {
                     return id;
                 });
 
                 tenant_thread.Value.ToString(); */
-                local = Thread.GetNamedDataSlot("tenant");
+                /*local = Thread.GetNamedDataSlot("tenant");
                 if (local == null) { 
                 
                     local = Thread.AllocateNamedDataSlot("tenant");
                 }
                 Thread.SetData(local, id);
-                string valor_Tenant = System.Threading.Thread.GetData(local).ToString();
+                string valor_Tenant = System.Threading.Thread.GetData(local).ToString();*/
+                if ( System.Web.HttpContext.Current.Session["usuario"] == null)
+                    System.Web.HttpContext.Current.Session["usuario"] =new UsuarioSite();
+                //if (user == null) Session["usuario"] = new UsuarioSite();
+                //System.Web.HttpContext.Current.Session["usuario"] = user; 
 
-                var user = Session["usuario"] as UsuarioSite;
-
-                if (user == null) Session["usuario"] = new UsuarioSite { Dominio = id };
-
-                user = Session["usuario"] as UsuarioSite;
-                System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());
-                //Thread t = Thread.CurrentThread;
-                System.Diagnostics.Debug.WriteLine(" Tenant Controller . desde el thread: "+ valor_Tenant);
-
-
-                var lista_Subastas = _sub.ObtenerSubastas(valor_Tenant);
+                user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                user.Dominio = tenantID;
+                user.idTienda = _ibl.ObtenerIdTenant(tenantID);
+                System.Web.HttpContext.Current.Session["usuario"] = user;
+                var lista_Subastas = _sub.ObtenerSubastas(tenantID);
                 ViewBag.ListarSubastas = lista_Subastas;
-                
                 return View();
+                //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());
+                //Thread t = Thread.CurrentThread;
+                //System.Diagnostics.Debug.WriteLine(" Tenant Controller . desde el thread: "+ valor_Tenant);
             }
             else
             {

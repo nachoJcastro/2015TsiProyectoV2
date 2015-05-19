@@ -16,7 +16,7 @@ using Microsoft.AspNet.Identity;
 using System.Web.Hosting;
 
 namespace Backend.Controllers
-{
+{   
     public class TiendaVirtualController : Controller
     {
         //IBLTiendaVirtual _bl = new BLTiendaVirtual();
@@ -32,14 +32,19 @@ namespace Backend.Controllers
 
         }
 
-       //var idDesarrollador = User.Identity.GetUserId();
-
         // GET: TiendaVirtual
         [Authorize]
         public ActionResult Index()
         {
             var idUser = User.Identity.GetUserId();
             var tiendas = _bl.ObtenerTiendaDelUsuario(idUser);
+            return View(tiendas);
+        }
+
+        [Authorize]
+        public ActionResult Admin()
+        {
+            var tiendas = _bl.ObtenerTiendas();
             return View(tiendas);
         }
 
@@ -63,6 +68,23 @@ namespace Backend.Controllers
         [Authorize]
         public ActionResult Create()
         {
+            try
+            {
+                 var idUser = User.Identity.GetUserId();
+                 var tienda= _bl.ObtenerTiendaDelUsuario(User.Identity.GetUserName());
+                 /*if (tienda != null) {
+                     ViewBag.Message = "El usuario ya tiene una tienda!";
+                     return null;
+                 }*/
+                    
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+            
             return View();
         }
 
@@ -116,7 +138,9 @@ namespace Backend.Controllers
                         Console.WriteLine("The process failed: {0}", e.ToString());
                     }
 
-                    tiendaVirtualDTO.Css = "Site.css";
+                    var fileContents = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/Site.css"));
+
+                    tiendaVirtualDTO.Css = fileContents.ToString();
                     tiendaVirtualDTO.Fecha_creacion = System.DateTime.Now;
                     tiendaVirtualDTO.Estado = true;
                     tiendaVirtualDTO.StringConection = "StringConection";
@@ -217,29 +241,48 @@ namespace Backend.Controllers
        [Authorize]
         public ActionResult Estilo(int id)
         {
-            var model = new Estilo();
-            model.idTienda = id;
-            return View(model);
+            
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("ID tienda :" + id);
+                var tienda = _bl.ObtenerTienda(id);
+                var model = new Estilo();
+                model.idTienda = id;
+                model.texto = tienda.Css;
+                return View(model);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+           
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-       public ActionResult Estilo([Bind(Include = "texto,idTienda")] Estilo css)
+        public ActionResult Estilo([Bind(Include = "texto,idTienda")] Estilo css)
         {
             if (ModelState.IsValid)
             {
-                //
-
-                //CREAR CSS EN DIRECTORIO
-
-                //
-
-                var tienda = _bl.ObtenerTienda(css.idTienda);
-                string ruta = tienda.Nombre+".css";
-                _bl.EditarCss(css.idTienda,ruta);
-                return RedirectToAction("Index");
+                 //CREAR CSS EN DIRECTORIO
+                try
+                {
+                    System.Diagnostics.Debug.WriteLine("ID tienda :" + css.idTienda);
+                    System.Diagnostics.Debug.WriteLine("Ruta :" + css.texto);
+                    
+                    //string ruta = tienda.Nombre+ ".css";
+                    _bl.EditarCss(css.idTienda, css.texto);
+                    return RedirectToAction("Index", "TiendaVirtual");
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+               
             }
 
             return View(css);

@@ -125,6 +125,7 @@
             $(".modal-dialog").fadeIn();
         }, 100);
     });
+
     $('#btnTiendaV').click(function () {
         $(".modal-dialog").hide();
         $('.modal-body').load("/tiendavirtual/create");
@@ -134,65 +135,16 @@
         }, 100);
     });
 
-    $('.btnEstiloCss').click(function () {
+    $('.btnEditTienda').click(function () {
         $(".modal-dialog").hide();
-        $('.modal-body').load("/tiendavirtual/estilo");
+        $('.modal-body').load("/tiendavirtual/edit/" + $(this).data("id"));
 
         setTimeout(function () {
             $(".modal-dialog").fadeIn();
         }, 100);
     });
-    
-    /*$('.btnEliminarJuegoAdmin').click(function () {
-        $(".modal-dialog").hide();
-        $("#loading").fadeIn();
-        $('.modal-body').load("/juego/delete/" + $(this).data("id"));
-        var opts = {
-            lines: 12, // The number of lines to draw
-            length: 7, // The length of each line
-            width: 4, // The line thickness
-            radius: 10, // The radius of the inner circle
-            color: '#000', // #rgb or #rrggbb
-            speed: 1, // Rounds per second
-            trail: 60, // Afterglow percentage
-            shadow: false, // Whether to render a shadow
-            hwaccel: false // Whether to use hardware acceleration
-        };
-        var target = document.getElementById('loading');
-        var spinner = new Spinner(opts).spin(target);
 
-        setTimeout(function () {
-            $("#loading").fadeOut(1000);
-            $(".modal-dialog").slideToggle();
-
-        }, 3000);
-    });
-    
-    //MIS JUEGOS
-    $('.btnEditarMisJuegos').click(function () {
-        $(".modal-dialog").hide();
-        $("#loading").fadeIn();
-        $('.modal-body').load("/juego/edit/" + $(this).data("id"));
-        var opts = {
-            lines: 12, // The number of lines to draw
-            length: 7, // The length of each line
-            width: 4, // The line thickness
-            radius: 10, // The radius of the inner circle
-            color: '#000', // #rgb or #rrggbb
-            speed: 1, // Rounds per second
-            trail: 60, // Afterglow percentage
-            shadow: false, // Whether to render a shadow
-            hwaccel: false // Whether to use hardware acceleration
-        };
-        var target = document.getElementById('loading');
-        var spinner = new Spinner(opts).spin(target);
-
-        setTimeout(function () {
-            $("#loading").fadeOut(1000);
-            $(".modal-dialog").slideToggle();
-
-        }, 3000);
-    });
-    */
+   
+  
 
 });

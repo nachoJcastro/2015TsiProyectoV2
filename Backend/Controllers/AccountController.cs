@@ -15,6 +15,7 @@ namespace Backend.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        //public RoleManager<ApplicationRole> UserRole { get; private set; }
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -22,7 +23,7 @@ namespace Backend.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +35,9 @@ namespace Backend.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -68,6 +69,9 @@ namespace Backend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            //var user = await UserManager.FindAsync(model.Email, model.Password);
+            //var rol = user.Roles.ToString();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -79,7 +83,10 @@ namespace Backend.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index","TiendaVirtual");
+                    //if (rol != "Admin") 
+                    return RedirectToAction("Index", "TiendaVirtual");
+                //else
+                //    return RedirectToAction("Admin", "TiendaVirtual");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -120,7 +127,7 @@ namespace Backend.Controllers
             // Si un usuario introduce códigos incorrectos durante un intervalo especificado de tiempo, la cuenta del usuario 
             // se bloqueará durante un período de tiempo especificado. 
             // Puede configurar el bloqueo de la cuenta en IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,12 +158,15 @@ namespace Backend.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Nombre = model.Nombre, Apellido = model.Apellido };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                //UserManager.AddToRole(user.Id, "Usuario");
+
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // Para obtener más información sobre cómo habilitar la confirmación de cuenta y el restablecimiento de contraseña, visite http://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar correo electrónico con este vínculo
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

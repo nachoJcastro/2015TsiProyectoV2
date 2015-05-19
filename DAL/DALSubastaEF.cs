@@ -10,11 +10,28 @@ namespace DAL
 {
     public class DALSubastaEF : IDALSubasta
     {
-        static TenantDB db = new TenantDB("database");
+        static TenantDB db = new TenantDB(" ");
 
 
         public DALSubastaEF() { }
 
+
+        //************************
+        public void AltaSubasta(string tenant, Subasta subasta) {
+            try
+            {
+                db = new TenantDB(tenant);
+                db.Subasta.Add(subasta);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        
+        
+        }
+        //************************
 
         public void AgregarSubasta(String tenant, Subasta subasta)
         {
@@ -31,10 +48,11 @@ namespace DAL
         }
 
 
-        public Subasta ObtenerSubasta(int subastaId)
+        public Subasta ObtenerSubasta(String tenant, int subastaId)
         {
             try
             {
+                db = new TenantDB(tenant);
                 var subasta = db.Subasta.FirstOrDefault(s => s.id == subastaId);
                 return subasta;
             }
@@ -136,5 +154,27 @@ namespace DAL
                 throw e;
             }
         }
+
+
+        public Boolean ActualizarMonto(string tenant, int id_subasta, double monto)
+        {
+
+             try
+            {
+                db = new TenantDB(tenant);
+                var subasta = db.Subasta.FirstOrDefault(s => s.id == id_subasta);
+                subasta.valor_Actual = monto;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+        
+        }
+
     }
 }

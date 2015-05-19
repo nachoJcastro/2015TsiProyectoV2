@@ -15,7 +15,7 @@ namespace Crosscutting.EntityTenant
             Comentario = new HashSet<Comentario>();
             Favorito = new HashSet<Favorito>();
             Subasta = new HashSet<Subasta>();
-            Subasta1 = new HashSet<Subasta>();
+            Oferta = new HashSet<Oferta>();
         }
 
         
@@ -64,6 +64,6 @@ namespace Crosscutting.EntityTenant
 
         public virtual ICollection<Subasta> Subasta { get; set; }
 
-        public virtual ICollection<Subasta> Subasta1 { get; set; }
+        public virtual ICollection<Oferta> Oferta { get; set; }
     }
 }

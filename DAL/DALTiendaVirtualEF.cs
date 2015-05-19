@@ -103,7 +103,37 @@ namespace DAL
 
                 if (tienda != null)
                 {
-                    tienda = tiendaDTO;
+                    tienda.Nombre = tiendaDTO.Nombre;
+                    tienda.Dominio = tiendaDTO.Dominio;
+                    tienda.StringConection = tiendaDTO.StringConection;
+                    tienda.Logo = tiendaDTO.Logo;
+                    tienda.Estado = tienda.Estado;
+                    tienda.Css = tiendaDTO.Css;
+                    tienda.Dominio = tiendaDTO.Descripcion;
+                    tienda.Descripcion = tiendaDTO.Descripcion;
+                    tienda.ListaImagenes = tiendaDTO.ListaImagenes;
+                    //Mapper.Map(tiendaDTO, tienda);
+                    //Mapper.Map(tiendaDTO.ListaImagenes, tienda.Imagenes);
+
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ActualizarCSS(TiendaVirtualDTO tiendaDTO) 
+        {
+            try
+            {
+                var tienda = db.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == tiendaDTO.TiendaVitualId);
+
+                if (tienda != null)
+                {
+
+                    tienda.Css = tiendaDTO.Css;
                     tienda.ListaImagenes = tiendaDTO.ListaImagenes;
                     //Mapper.Map(tiendaDTO, tienda);
                     //Mapper.Map(tiendaDTO.ListaImagenes, tienda.Imagenes);
@@ -192,6 +222,34 @@ namespace DAL
             {
                 throw ex;
             }
+        }
+
+
+
+        public List<String> ObtenerTenants() {
+           System.Diagnostics.Debug.WriteLine("obtengo tenants");
+
+            var tiendas = new List<TiendaVirtualDTO>();
+            List<String> tenants = new List<String>();
+            try
+            {
+                 tiendas =db.TiendaVirtual.ToList();
+
+                foreach (var item in tiendas)
+                {
+                    System.Diagnostics.Debug.WriteLine(item.Dominio);
+                    tenants.Add(item.Dominio);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return tenants;
+            
+        
         }
 
     }

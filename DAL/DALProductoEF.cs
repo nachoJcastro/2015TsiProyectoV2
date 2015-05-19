@@ -1,4 +1,5 @@
-﻿using Crosscutting.EntityTenant;
+﻿using Crosscutting.Entity;
+using Crosscutting.EntityTenant;
 using DAL.Contextos;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,13 @@ namespace DAL
 {
     public class DALProductoEF : IDALProducto
     {
-        static TenantDB db = new TenantDB("cuevitas");
+      //static TenantDB db = new TenantDB("cuevitas");
+
+        BackendDB db = new BackendDB();
 
         public DALProductoEF() { }
 
-        public void AgregarProducto(Producto producto)
+       /* public void AgregarProducto(Producto producto)
         {
             try
             {
@@ -25,13 +28,13 @@ namespace DAL
             {
                 throw e;
             }
-        }
+        }*/
 
-        public Producto ObtenerProducto(int productoId)
+        public TipoProductoDTO ObtenerProducto(int productoId)
         {
             try
             {
-                var producto = db.Producto.FirstOrDefault(p => p.id == productoId);
+                var producto = db.TiposProductos.FirstOrDefault(p => p.TipoProductoId == productoId);
 
                 return producto;
 
@@ -42,13 +45,13 @@ namespace DAL
             }
         }
 
-        public List<Producto> ObtenerProductos()
+        public List<TipoProductoDTO> ObtenerProductos()
         {
-            var listaProd = new List<Producto>();
+            var listaProd = new List<TipoProductoDTO>();
 
             try
             {
-                listaProd = db.Producto.ToList();
+                listaProd = db.TiposProductos.ToList();
 
                 return listaProd;
 
@@ -59,7 +62,7 @@ namespace DAL
             }
         }
 
-        public void ActualizarProducto(Producto producto)
+        /*public void ActualizarProducto(TipoProductoDTO producto)
         {
             try
             {
@@ -75,9 +78,52 @@ namespace DAL
             {
                 throw e;
             }
-        }
+        }*/
 
-        public void EliminarProducto(int productoId)
+        //***************************************
+         public List<TipoProductoDTO>   ObtenerTipoProdCategoria(int idTienda, int idCategoria){
+             var listaProd = new List<TipoProductoDTO>();
+             try
+             {
+                 
+                     List<TipoProductoDTO> listaProd_temp = db.TiposProductos.Where(t => t.CategoriaId == idCategoria).ToList();
+
+                     foreach (var item2 in listaProd_temp)
+                     {
+                         listaProd.Add(item2);
+                     }
+
+                 
+             }
+             catch (Exception e)
+             {
+                 throw e;
+             }
+
+             return listaProd;
+         }
+
+        //************************************************
+         //***************************************
+         public List<AtributosDTO> ObtenerAtributosTipoProd(int idTienda, int idCategoria)
+         {
+            try{
+
+                List<AtributosDTO> listaAtrib = db.Atributos.Where(t => t.CategoriaId == idCategoria).ToList();
+                return listaAtrib;
+             }
+             catch (Exception e)
+             {
+                 throw e;
+             }
+         }
+
+         //************************************************
+
+
+
+
+       /*public void EliminarProducto(int productoId)
         {
             try
             {
@@ -112,6 +158,6 @@ namespace DAL
             {
                 throw;
             }
-        }
+        }*/
     }
 }

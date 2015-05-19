@@ -15,8 +15,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TiendaVirtual</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -35,6 +34,8 @@
             </div><p ><h4><strong>.chebay.com</strong></h4></p>
         </div>
 
+     
+
         <div class="form-group">
             @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -43,6 +44,15 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-control">
+                    <input type="file" id="Logo" name="Logo" accept="image/*" />
+                    @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
        
 
         @*<div class="form-group">

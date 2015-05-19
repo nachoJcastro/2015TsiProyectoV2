@@ -26,6 +26,14 @@
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control user", @placeholder = "Correo" }) 
                         </div>
                         <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control user", @placeholder = "Nombre" })
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
+                            @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control user", @placeholder = "Apellido" })
+                        </div>
+                        <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-key"></i></span>
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control pass", @placeholder = "Password" })
                         </div>

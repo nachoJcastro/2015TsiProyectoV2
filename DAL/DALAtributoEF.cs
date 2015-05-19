@@ -81,7 +81,8 @@ namespace DAL
                 var atributo = db.Atributos.FirstOrDefault(r => r.AtributoId == atributoDTO.AtributoId);
                 if (atributo!=null)
                 {
-                    atributo = atributoDTO;
+                    atributo.CategoriaId = atributoDTO.CategoriaId;
+                    atributo.Nombre = atributoDTO.Nombre;
                     db.SaveChanges();
                 }
 

@@ -40,16 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityTenant\Atributo.cs" />
+    <Compile Include="EntityTareas\Correo.cs" />
     <Compile Include="EntityTenant\Atributo_Subasta.cs" />
     <Compile Include="EntityTenant\Calificacion.cs" />
-    <Compile Include="EntityTenant\Categoria.cs" />
     <Compile Include="EntityTenant\Comentario.cs" />
     <Compile Include="Enum\EstadoTransaccion.cs" />
     <Compile Include="EntityTenant\Favorito.cs" />
     <Compile Include="EntityTenant\Imagen.cs" />
     <Compile Include="EntityTenant\Oferta.cs" />
-    <Compile Include="EntityTenant\Producto.cs" />
     <Compile Include="EntityTenant\Subasta.cs" />
     <Compile Include="Enum\TipoFinalizacion.cs" />
     <Compile Include="EntityTenant\Usuario.cs" />
