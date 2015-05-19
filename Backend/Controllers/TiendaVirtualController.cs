@@ -125,6 +125,10 @@ namespace Backend.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            else
+            {
+                return RedirectToAction("Index");
+            }
 
             return View(tiendaVirtualDTO);
         }
