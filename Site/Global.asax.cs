@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Site.Tareas;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +20,11 @@ namespace Site
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-           
 
-           // JobScheduler.Start();
+
+            SchedulerMail.Start();
+            SchedulerSubasta.Start();
+
         }
 
        

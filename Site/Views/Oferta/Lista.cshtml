@@ -1,8 +1,9 @@
-﻿@using Site.Models
+﻿
+@using Site.Models
 @model OfertaModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Listado";
 }
 
 <h2>Historial de Ofertas</h2>
@@ -22,7 +23,7 @@
                     Fecha
                 </th>
             </tr>
-           
+
             @foreach (var item in ViewBag.ListaOfertas)
             {
                 <tr class="texto_table">
@@ -39,10 +40,9 @@
             }
         </table>
     </div>
-    
+
     <div class="jumbotron">
         <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
     </div>
-    
-}
 
+}

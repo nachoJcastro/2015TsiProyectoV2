@@ -4,43 +4,29 @@
 }
 <h1 align="center">@ViewBag.Message</h1>
 
-@if (ViewBag.ListarSubastas!=null)
-{ 
-<div class="panel-body">
-    <table class="table">
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Titulo
-            </th>
-            <th>
-                Vendedor
-            </th>
-            <th>
-                Link
-            </th>
-        </tr>
-        @foreach (var item in ViewBag.ListarSubastas)
-        {
-            <tr class="texto_table">
-                <td>
-                    @item.id
-                </td>
-                <td>
-                    @item.titulo
-                </td>
-                <td>
-                    @item.id_Vendedor
-                </td>
-                <td>
-                    @Html.ActionLink("Seleccionar", "DetalleProducto/", "Oferta", new { idSubasta = item.id }, false)
-                </td>
-            </tr>
-        }
-    </table>
-</div>
+@if (ViewBag.ListarSubastas != null)
+{
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Articulos Destacados</h2>
+                <hr>
+            </div>
+            @foreach (var item in ViewBag.ListarSubastas)
+            {
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <a>
+                        <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
+                        @Html.ActionLink("Seleccionar", "DetalleProducto/", "Oferta", new { idSubasta = item.id }, false)
+                    </a>
+
+                </div>
+            }
+        </div>
+    </div>
+
 }
 @using Site.Models
 @{
@@ -148,112 +134,3 @@ else
 
 </div>
 <!-- /.section-colored -->
-
-<div class="section">
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2>Articulos Destacados</h2>
-                <hr>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-        </div>
-        <!-- /.row -->
-
-    </div>
-    <!-- /.container -->
-
-</div>
-<!-- /.section -->
-
-<div class="section-colored">
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <h2>Producto Destacado</h2>
-                <ul>
-                    <li>Atributo 1</li>
-                    <li>Atributo 2</li>
-                    <li>Atributo 3</li>
-                    <li>Atributo 4</li>
-                    <li>Atributo 5</li>
-                    <li>Atributo 6</li>
-                    <li>Atributo 7</li>
-                    <li>Atributo 8</li>
-                    <li>Atributo 9</li>
-                </ul>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <img class="img-responsive" src="http://placehold.it/700x450/ffffff/cccccc">
-            </div>
-        </div>
-        <!-- /.row -->
-
-    </div>
-    <!-- /.container -->
-
-</div>
-<!-- /.section-colored -->
-
-<div class="section">
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <img class="img-responsive" src="http://placehold.it/700x450">
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <h2>Otro Producto Destacado</h2>
-                <ul>
-                    <li>Atributo 1</li>
-                    <li>Atributo 2</li>
-                    <li>Atributo 3</li>
-                    <li>Atributo 4</li>
-                    <li>Atributo 5</li>
-                    <li>Atributo 6</li>
-                    <li>Atributo 7</li>
-                    <li>Atributo 8</li>
-                    <li>Atributo 9</li>
-                </ul>
-            </div>
-        </div>
-        <!-- /.row -->
-
-    </div>
-    <!-- /.container -->
-
-</div>

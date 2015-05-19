@@ -154,5 +154,27 @@ namespace DAL
                 throw e;
             }
         }
+
+
+        public Boolean ActualizarMonto(string tenant, int id_subasta, double monto)
+        {
+
+             try
+            {
+                db = new TenantDB(tenant);
+                var subasta = db.Subasta.FirstOrDefault(s => s.id == id_subasta);
+                subasta.valor_Actual = monto;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+        
+        }
+
     }
 }

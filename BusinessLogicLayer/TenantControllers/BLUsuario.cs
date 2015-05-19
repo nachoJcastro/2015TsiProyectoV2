@@ -33,5 +33,10 @@ namespace BusinessLogicLayer.TenantControllers
 
             return _dal.obtenerIdByEmail(tenant,email);
         }
+
+        public string GetNombreUsuario(string valor_tenant, int idUsuario) {
+
+            return _dal.GetNombreUsuario(valor_tenant, idUsuario);
+        }
     }
 }

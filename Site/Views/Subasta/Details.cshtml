@@ -4,7 +4,40 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalles del producto</h2>
+
+<<div class="table-responsive">
+     <table class="table">
+         <thead>
+             <tr>
+                 Comprador
+                 <th>First Name@Html.DisplayFor(model => model.id_Comprador)</th>
+             </tr>
+             <tr>
+                 Vendedor
+                 <th>First Name@Html.DisplayFor(model => model.id_Vendedor)</th>
+             </tr>
+             <tr>
+                 Producto
+                 <th>First Name@Html.DisplayFor(model => model.id_Producto)</th>
+             </tr>
+            <tr>
+                 Precio Venta
+                 <th>First Name@Html.DisplayFor(model => model.valor_Actual)</th>
+             </tr>
+             <tr>
+                 Fecha inicio
+                 <th>First Name@Html.DisplayFor(model => model.fecha_Inicio)</th>
+             </tr>
+             <tr>
+                 Fecha cierre
+                 <th>First Name@Html.DisplayFor(model => model.fecha_Cierre)</th>
+             </tr>
+</thead>
+     </table>
+</div>
+
+
 
 <div>
     <h4>Subasta</h4>

@@ -85,6 +85,10 @@ namespace Site.Controllers
                 subasta.id_Vendedor = 1;
                 subasta.titulo = "Prueba";
                 subasta.valor_Actual = 111;
+                subasta.fecha_Inicio = DateTime.Now;
+                System.Diagnostics.Debug.WriteLine(" fecha inicio " + subasta.fecha_Inicio.ToString());
+                subasta.fecha_Cierre = DateTime.Now.AddMinutes(5);
+                System.Diagnostics.Debug.WriteLine(" fecha fin " + subasta.fecha_Cierre.ToString());
                 subasta.estado = EstadoTransaccion.Activa;
                 subasta.finalizado = TipoFinalizacion.Subasta;
 

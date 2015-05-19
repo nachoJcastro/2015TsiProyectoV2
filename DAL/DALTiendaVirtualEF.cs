@@ -224,5 +224,33 @@ namespace DAL
             }
         }
 
+
+
+        public List<String> ObtenerTenants() {
+           System.Diagnostics.Debug.WriteLine("obtengo tenants");
+
+            var tiendas = new List<TiendaVirtualDTO>();
+            List<String> tenants = new List<String>();
+            try
+            {
+                 tiendas =db.TiendaVirtual.ToList();
+
+                foreach (var item in tiendas)
+                {
+                    System.Diagnostics.Debug.WriteLine(item.Dominio);
+                    tenants.Add(item.Dominio);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return tenants;
+            
+        
+        }
+
     }
 }

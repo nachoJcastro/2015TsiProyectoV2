@@ -72,10 +72,13 @@ namespace Crosscutting.EntityTenant
 
         // Atributos de fecha
 
-        [Column(TypeName = "date")]
+     
+
+
+        [DataType(DataType.DateTime)]
         public DateTime? fecha_Inicio { get; set; }
 
-        [Column(TypeName = "date")]
+        [DataType(DataType.DateTime)]
         public DateTime? fecha_Cierre { get; set; }
 
         public virtual ICollection<Calificacion> Calificacion { get; set; }

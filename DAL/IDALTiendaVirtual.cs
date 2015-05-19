@@ -20,5 +20,7 @@ namespace DAL
 
 
         void EditarCss(int id,string css);
+
+        List<string> ObtenerTenants();
     }
 }

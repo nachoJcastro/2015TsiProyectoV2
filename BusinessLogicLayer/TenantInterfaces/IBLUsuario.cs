@@ -14,5 +14,7 @@ namespace BusinessLogicLayer.TenantInterfaces
         void RegistrarUsuario(String tenant, Usuario usr);
         Usuario LoginUsuario(String valor_tenant, String email, String password);
         int ObtenerIdByEmail(String tenant, String email);
+
+        string GetNombreUsuario(string valor_tenant, int idUsuario);
     }
 }

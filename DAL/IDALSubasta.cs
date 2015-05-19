@@ -18,5 +18,6 @@ namespace DAL
         List<Oferta> ObtenerOfertas(int subastaId);
 
         void AltaSubasta(string tenant, Subasta subasta);
+        Boolean ActualizarMonto(string valor_tenant, int id_subasta, double monto);
     }
 }

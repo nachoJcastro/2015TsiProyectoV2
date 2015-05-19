@@ -13,5 +13,7 @@ namespace DAL.IDAL_Tenant
          void RegistrarUsuario(String tenant, Usuario usr);
          Usuario LoginUsuario(String tenant, String email, String password);
          int obtenerIdByEmail(String tenant, String email);
+
+         string GetNombreUsuario(string valor_tenant, int idUsuario);
     }
 }

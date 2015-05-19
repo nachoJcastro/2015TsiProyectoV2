@@ -187,6 +187,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OfertaController.cs" />
+    <Compile Include="Models\OfertaModel.cs" />
     <Compile Include="Controllers\SubastaController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
     <Compile Include="Global.asax.cs">
@@ -202,8 +203,10 @@
     <Compile Include="Models\UsuarioSite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Tareas\FinalizarTarea.cs" />
     <Compile Include="Tareas\EmailTarea.cs" />
-    <Compile Include="Tareas\Scheduler.cs" />
+    <Compile Include="Tareas\SchedulerSubasta.cs" />
+    <Compile Include="Tareas\SchedulerMail.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -285,6 +288,7 @@
     <Content Include="Views\Shared\_Layout - Copia.cshtml" />
     <Content Include="Views\Oferta\CreateOferta.cshtml" />
     <Content Include="Views\Oferta\Index.cshtml" />
+    <Content Include="Views\Oferta\Lista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

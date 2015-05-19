@@ -93,6 +93,30 @@ namespace DAL.DAL_Tenant
 
             return id;
         }
+
+
+        public string GetNombreUsuario(string tenant, int idUsuario) {
+
+            String nombre = "";    
+            try
+            {
+                TenantDB sitio = new TenantDB(tenant);
+                if (sitio != null)
+                {
+                    var usuario = sitio.Usuario.FirstOrDefault(r => r.id == idUsuario);
+                    if (usuario != null) nombre = usuario.nick;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return nombre;
+        
+        
+        
+        }
     }
 }
 

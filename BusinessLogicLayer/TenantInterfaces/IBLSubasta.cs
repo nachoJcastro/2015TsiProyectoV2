@@ -21,5 +21,11 @@ namespace BusinessLogicLayer.TenantInterfaces
         void FinalizarSubastaCompraDirecta(String tenant, int subastaId);
 
         void AltaSubasta(string valor_tenant, Subasta subasta);
+
+        Boolean ActualizarMonto(string valor_tenant, int id_subasta, double monto);
+
+        //void FinalizarSubastaTiempo();
+
+        void FinalizarSubastasTarea(String tenant);
     }
 }
