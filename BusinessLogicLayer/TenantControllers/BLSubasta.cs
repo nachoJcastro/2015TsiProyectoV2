@@ -51,9 +51,9 @@ namespace BusinessLogicLayer.TenantControllers
         }
 
 
-        public void ActualizarSubasta(Subasta subasta)
+        public void ActualizarSubasta(String tenant, Subasta subasta)
         {
-            _dal.ActualizarSubasta(subasta);
+            _dal.ActualizarSubasta(tenant, subasta);
         }
 
 
@@ -69,31 +69,31 @@ namespace BusinessLogicLayer.TenantControllers
         }
 
 
-        public void FinalizarSubastaPorTiempo(String tenant,int subastaId)
-        {
-            var subasta = ObtenerSubasta(tenant,subastaId);
-            var ofertaGanadora = subasta.Oferta.LastOrDefault();
-            subasta.id_Comprador = ofertaGanadora.id_Usuario;
-            subasta.valor_Actual = ofertaGanadora.Monto;
-            subasta.estado = EstadoTransaccion.Cerrada;
-            subasta.finalizado = TipoFinalizacion.Subasta;
-            _dal.ActualizarSubasta(subasta);
+        //public void FinalizarSubastaPorTiempo(String tenant,int subastaId)
+        //{
+        //    var subasta = ObtenerSubasta(tenant,subastaId);
+        //    var ofertaGanadora = subasta.Oferta.LastOrDefault();
+        //    subasta.id_Comprador = ofertaGanadora.id_Usuario;
+        //    subasta.valor_Actual = ofertaGanadora.Monto;
+        //    subasta.estado = EstadoTransaccion.Cerrada;
+        //    subasta.finalizado = TipoFinalizacion.Subasta;
+        //    _dal.ActualizarSubasta(subasta);
 
-            //enviarMails(Uvendedor, Ucomprador);
-        }
+        //    //enviarMails(Uvendedor, Ucomprador);
+        //}
 
 
-        public void FinalizarSubastaCompraDirecta(String tenant, int subastaId)
-        {
-            var subasta = ObtenerSubasta(tenant,subastaId);
-            subasta.estado = EstadoTransaccion.Cerrada;
-            //subasta.id_Comprador = USUARIO LOGUEADO;
-            subasta.valor_Actual = subasta.precio_Compra.Value;
-            subasta.finalizado = TipoFinalizacion.Compra_directa;
-            _dal.ActualizarSubasta(subasta);
+        //public void FinalizarSubastaCompraDirecta(String tenant, int subastaId)
+        //{
+        //    var subasta = ObtenerSubasta(tenant,subastaId);
+        //    subasta.estado = EstadoTransaccion.Cerrada;
+        //    //subasta.id_Comprador = USUARIO LOGUEADO;
+        //    subasta.valor_Actual = subasta.precio_Compra.Value;
+        //    subasta.finalizado = TipoFinalizacion.Compra_directa;
+        //    _dal.ActualizarSubasta(subasta);
 
-            //enviarMails(Uvendedor, Ucomprador);
-        }
+        //    //enviarMails(Uvendedor, Ucomprador);
+        //}
         public Boolean ActualizarMonto(string tenant, int id_subasta, double monto)
         {
 
@@ -152,7 +152,7 @@ namespace BusinessLogicLayer.TenantControllers
                     {
                         System.Diagnostics.Debug.WriteLine("ACTUALIZO por JOB");
                         item.estado = EstadoTransaccion.Cerrada;
-                         _dal.ActualizarSubasta(item);
+                         _dal.ActualizarSubasta(tenant, item);
                     }
 
                 }

@@ -12,7 +12,7 @@ namespace DAL
         void AgregarSubasta(String tenant,Subasta subasta); //Create
         Subasta ObtenerSubasta(String tenant,int subastaId); //Read
         List<Subasta> ObtenerSubastas(String tenant);
-        void ActualizarSubasta(Subasta subasta); //Update
+        void ActualizarSubasta(String tenant, Subasta subasta); //Update
         void EliminarSubasta(int subastaId); //Delete
 
         List<Oferta> ObtenerOfertas(int subastaId);

@@ -1,0 +1,49 @@
+﻿@model Crosscutting.EntityTenant.Subasta
+@{
+    ViewBag.Title = "Transaccion";
+}
+<h2 align ="center">FELICITACIONES!</h2>
+<h3 align="center">Compra efectuada correctamente</h3>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <td align="center"><img src="~/img/img2.jpg"></td>
+            </tr>
+            <tr>
+                <th>Datos del Vendedor</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Nombre @ViewBag.Vendedor.nombre @ViewBag.Vendedor.apellido</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Email @ViewBag.Vendedor.email</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Direccion @ViewBag.Vendedor.direccion</th>
+            </tr>
+            
+            <tr>
+                <th>Datos del Producto</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayFor(model => model.titulo)</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayFor(model => model.descripcion)</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>$ @Html.DisplayFor(model => model.precio_Compra)</th>
+            </tr>
+
+        </thead>
+    </table>
+</div>
+

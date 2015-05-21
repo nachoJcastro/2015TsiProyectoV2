@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DALSubastaEF : IDALSubasta
     {
-        static TenantDB db = new TenantDB(" ");
+        static TenantDB db ;//= new TenantDB(" ")
 
 
         public DALSubastaEF() { }
@@ -79,14 +79,37 @@ namespace DAL
         }
 
 
-        public void ActualizarSubasta(Subasta subasta)
+        public void ActualizarSubasta(String tenant, Subasta subastaNueva)
         {
             try
             {
-                var subastaVieja = db.Subasta.FirstOrDefault(p => p.id == subasta.id);
-                if (subastaVieja != null)
+                db = new TenantDB(tenant);
+                var subasta = db.Subasta.FirstOrDefault(p => p.id == subastaNueva.id);
+                if (subasta != null)
                 {
-                    subastaVieja = subasta;
+                    subasta.Atributo_Subasta = subastaNueva.Atributo_Subasta;
+                    subasta.Calificacion = subastaNueva.Calificacion;
+                    subasta.Comentario = subastaNueva.Comentario;
+                    subasta.coordenadas = subastaNueva.coordenadas;
+                    subasta.descripcion = subastaNueva.descripcion;
+                    subasta.estado = subastaNueva.estado;
+                    subasta.Favorito = subastaNueva.Favorito;
+                    subasta.fecha_Cierre = subastaNueva.fecha_Cierre;
+                    subasta.fecha_Inicio = subastaNueva.fecha_Inicio;
+                    subasta.finalizado = subastaNueva.finalizado;
+                    subasta.garantia = subastaNueva.garantia;
+                    subasta.id = subastaNueva.id;
+                    subasta.id_Categoria = subastaNueva.id_Categoria;
+                    subasta.id_Comprador = subastaNueva.id_Producto;
+                    subasta.id_Vendedor = subastaNueva.id_Vendedor;
+                    subasta.Imagen = subastaNueva.Imagen;
+                    subasta.Oferta = subastaNueva.Oferta;
+                    subasta.precio_Base = subastaNueva.precio_Base;
+                    subasta.precio_Compra = subastaNueva.precio_Compra;
+                    subasta.tags = subastaNueva.tags;
+                    subasta.titulo = subastaNueva.titulo;
+                    subasta.valor_Actual = subastaNueva.valor_Actual;
+
                     db.SaveChanges();
                 }
             }

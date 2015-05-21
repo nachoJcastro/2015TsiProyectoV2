@@ -33,7 +33,6 @@ namespace Site.Controllers
         }
 
 
-
         public ActionResult Lista(int idSubasta)
         {
             try
@@ -71,6 +70,7 @@ namespace Site.Controllers
                 }
 
                 ViewBag.ListaOfertas = listOfer;
+                ViewBag.idSubasta = idSubasta;
 
             }
             catch (Exception)
@@ -147,11 +147,12 @@ namespace Site.Controllers
             System.Diagnostics.Debug.WriteLine(" Monto inicial " + monto_actual.ToString());
             System.Diagnostics.Debug.WriteLine(" Monto ofertado " + oferta.Monto.ToString());
 
-            /*if (monto_actual>=oferta.Monto) {
-                  ModelState.AddModelError("", "La Oferta debe ser mayor");*/
-           // }
+            if (monto_actual>=oferta.Monto) {
+                ModelState.AddModelError("", "La Oferta debe ser mayor a" +monto_actual);
+                  return View();
+            }
            
-            //else {
+            else {
             
             user = Session["usuario"] as UsuarioSite;
             valor_tenant = user.Dominio;
@@ -194,9 +195,8 @@ namespace Site.Controllers
 
                 ViewBag.ListaOfertas = listOfer;
             }
-
            
-             //  }
+            }
             return View("Index");
         }
 

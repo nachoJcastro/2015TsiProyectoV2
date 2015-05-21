@@ -1,11 +1,11 @@
 ﻿using BusinessLogicLayer;
 using BusinessLogicLayer.TenantControllers;
 using BusinessLogicLayer.TenantInterfaces;
+using Crosscutting.EntityTenant;
 using Site.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Web;
 using System.Web.Mvc;
 
@@ -58,7 +58,15 @@ namespace Site.Controllers
                 user.idTienda = _ibl.ObtenerIdTenant(tenantID);
                 System.Web.HttpContext.Current.Session["usuario"] = user;
                 var lista_Subastas = _sub.ObtenerSubastas(tenantID);
+                List<Subasta> lista_Subastas_Activas = new List<Subasta>();
+                foreach (Subasta element in lista_Subastas)
+                {
+                    if(element.estado == Crosscutting.Enum.EstadoTransaccion.Activa){
+                        lista_Subastas_Activas.Add(element);
+                    }
+                }
                 ViewBag.ListarSubastas = lista_Subastas;
+                ViewBag.ListarSubastasActivas = lista_Subastas_Activas;
                 return View();
                 //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());
                 //Thread t = Thread.CurrentThread;

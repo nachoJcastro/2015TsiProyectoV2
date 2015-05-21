@@ -16,5 +16,6 @@ namespace BusinessLogicLayer.TenantInterfaces
         int ObtenerIdByEmail(String tenant, String email);
 
         string GetNombreUsuario(string valor_tenant, int idUsuario);
+        Usuario GetUsuario(string valor_tenant, int idUsuario);
     }
 }

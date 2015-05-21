@@ -23,23 +23,25 @@ namespace Site.Controllers
         IBLProducto proIBL;
         IBLComentario comIBL;
         IBLOferta ofeIBL;
+        IBLUsuario usuIBL;
         //IBLCategoria catIBL;
         //IBLAtributo atrIBL;
         public UsuarioSite user_sitio;
         private string valor_tenant;
         public UsuarioSite user;
 
-        public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl,IBLOferta ofebl)
+        public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl, IBLOferta ofebl, IBLUsuario usubl)
         {
             this.subIBL = subbl;
             this.comIBL = combl;
             this.proIBL = probl;
             this.ofeIBL = ofebl;
+            this.usuIBL = usubl;
             //this.catIBL = catbl;
            // this.atrIBL = atrbl;
         }
 
-        public SubastaController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta())
+        public SubastaController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLUsuario())
         {
 
         }
@@ -60,10 +62,6 @@ namespace Site.Controllers
         // GET: Subastas/Details/5
         public ActionResult Details(int idSubasta)
         {
-            if (idSubasta == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
             if (subasta == null)
             {
@@ -256,5 +254,28 @@ namespace Site.Controllers
         //    }
         //    base.Dispose(disposing);
         //}
+
+
+        public ActionResult FinalizarCompraDirecta(int idSubasta)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+            int idLogueado = usuIBL.ObtenerIdByEmail(valor_tenant, user_sitio.Email);
+            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+
+            if (subasta == null)
+            {
+                return HttpNotFound();
+            }
+
+            subasta.estado = EstadoTransaccion.Cerrada;
+            subasta.finalizado = TipoFinalizacion.Compra_directa;
+            subasta.id_Comprador = idLogueado;
+            //enviar mail
+            subIBL.ActualizarSubasta(valor_tenant, subasta);
+            var vendedor = usuIBL.GetUsuario(valor_tenant, idLogueado);
+            ViewBag.Vendedor = vendedor;
+            return View("Transaccion",subasta);
+        }   
     }
 }

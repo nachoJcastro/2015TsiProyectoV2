@@ -38,5 +38,10 @@ namespace BusinessLogicLayer.TenantControllers
 
             return _dal.GetNombreUsuario(valor_tenant, idUsuario);
         }
+
+        public Usuario GetUsuario(string valor_tenant, int idUsuario)
+        {
+            return _dal.GetUsuario(valor_tenant, idUsuario);
+        }
     }
 }
