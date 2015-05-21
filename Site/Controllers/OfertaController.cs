@@ -52,15 +52,12 @@ namespace Site.Controllers
                     ofert.id = item.id;
                     try
                     {
-
                         ofert.nombre = _blusuario.GetNombreUsuario(valor_tenant, item.id_Usuario);
                     }
                     catch (Exception)
                     {
-
                         throw;
                     }
-
                     ofert.id_Subasta = item.id_Subasta;
                     ofert.id_Usuario = item.id_Usuario;
                     ofert.Monto = item.Monto;
@@ -68,20 +65,14 @@ namespace Site.Controllers
 
                     listOfer.Add(ofert);
                 }
-
                 ViewBag.ListaOfertas = listOfer;
                 ViewBag.idSubasta = idSubasta;
-
             }
             catch (Exception)
             {
-                
                 throw;
             }
-            
-
             return View();
-
         }
 
         public ActionResult DetalleProducto(int idSubasta)

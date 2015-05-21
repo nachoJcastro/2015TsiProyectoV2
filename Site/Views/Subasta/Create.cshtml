@@ -2,7 +2,7 @@
        
 
 @{
-    ViewBag.Title = "Alta Subasta de Producto";
+    ViewBag.Title = "Alta Subasta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -94,11 +94,11 @@
 
 
 
-       @* <div class="form-group">
+        @*<div class="form-group">
         <div class="col-md-10">
             @Html.DropDownList("Tipo de Subasta", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]))
         </div>
-    </div>
+    </div>*@
 
 
     <div class="form-group">
@@ -119,39 +119,84 @@
         </div>
     </div>
 
-    *@
+    <div class="form-group">
+                @Html.Label("Titulo")
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.titulo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.titulo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Descripcion")
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Tags")
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
         <div class="form-group">
-                @Html.Label("Valor")
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.valor_Actual, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.valor_Actual, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                @Html.Label("Inicio Subasta")
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.fecha_Inicio, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.fecha_Inicio, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Finalizacion subasta")
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
+            @Html.Label("Precio inicial de subasta")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.precio_Base, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.precio_Base, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.Label("Precio venta directa")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.precio_Compra, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.precio_Compra, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Fecha de inicio")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fecha_Inicio, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.fecha_Inicio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Fecha finalizacion")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Garantia")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.garantia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.garantia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Coordenadas")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
     }
 
     <div>
