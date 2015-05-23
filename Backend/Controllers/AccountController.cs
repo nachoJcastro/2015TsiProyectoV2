@@ -71,16 +71,22 @@ namespace Backend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            var idrol = "";
             var user = await UserManager.FindAsync(model.Email, model.Password);
-            //System.Diagnostics.Debug.WriteLine("Rol Usuario : " + user.Roles.ToString());
-            var idrol = user.Roles.First().RoleId;           
-            
-            Debug.WriteLine("idRol: "+idrol);
 
+            //System.Diagnostics.Debug.WriteLine("Rol Usuario : " + user.Roles.ToString());
+            if (user != null)
+            {
+                idrol = user.Roles.First().RoleId;
+
+                //Debug.WriteLine("idRol: " + idrol);
+            }
+            
             var rol = roleManager.FindById(idrol);
+
+            //Debug.WriteLine("Rol: " + rol.Name);
             
-            Debug.WriteLine("Rol: " + rol.Name);
-            
+
             if (!ModelState.IsValid)
             {
                 return View(model);
