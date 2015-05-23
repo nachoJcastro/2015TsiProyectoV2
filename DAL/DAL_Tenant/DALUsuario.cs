@@ -73,6 +73,101 @@ namespace DAL.DAL_Tenant
 
             return usr;
         }
+
+        public int obtenerIdByEmail(String tenant, String email)
+        {
+            int id = 0;
+            try
+            {
+                TenantDB sitio = new TenantDB(tenant);
+                if (sitio != null)
+                {
+                    var usuario = sitio.Usuario.FirstOrDefault(r => r.email == email);
+                    if (usuario != null) id = usuario.id;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return id;
+        }
+
+
+        public string GetNombreUsuario(string tenant, int idUsuario) {
+
+            String nombre = "";    
+            try
+            {
+                TenantDB sitio = new TenantDB(tenant);
+                if (sitio != null)
+                {
+                    var usuario = sitio.Usuario.FirstOrDefault(r => r.id == idUsuario);
+                    if (usuario != null) nombre = usuario.nick;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return nombre;
+            }
+
+        public Usuario GetUsuario(string valor_tenant, int idUsuario)
+        {
+            var usuario = new Usuario();
+            try
+            {
+                TenantDB sitio = new TenantDB(valor_tenant);
+                if (sitio != null)
+                {
+                    usuario = sitio.Usuario.FirstOrDefault(r => r.id == idUsuario);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+                return usuario;
+            }
+
+        public void ActualizarUsuario(string tenant, Usuario usuarioNuevo)
+        {
+            try
+            {
+                TenantDB db = new TenantDB(tenant);
+                var usuario = db.Usuario.FirstOrDefault(u => u.id == usuarioNuevo.id);
+                if (usuario != null)
+                {
+                    usuario.apellido = usuarioNuevo.apellido;
+                    usuario.billetera = usuarioNuevo.billetera;
+                    usuario.Calificacion = usuarioNuevo.Calificacion;
+                    usuario.Comentario = usuarioNuevo.Comentario;
+                    usuario.direccion = usuarioNuevo.direccion;
+                    usuario.email = usuarioNuevo.email;
+                    usuario.Favorito = usuarioNuevo.Favorito;
+                    usuario.fecha_Alta = usuarioNuevo.fecha_Alta;
+                    usuario.fecha_Nacimiento = usuarioNuevo.fecha_Nacimiento;
+                    usuario.id = usuarioNuevo.id;
+                    usuario.imagen = usuarioNuevo.imagen;
+                    usuario.nick = usuarioNuevo.nick;
+                    usuario.nombre = usuarioNuevo.nombre;
+                    usuario.Oferta = usuarioNuevo.Oferta;
+                    usuario.password = usuarioNuevo.password;
+                    usuario.reputacion_Compra = usuarioNuevo.reputacion_Compra;
+                    usuario.reputacion_Venta = usuarioNuevo.reputacion_Venta;
+                    //usuario.Subasta = usuarioNuevo.Subasta;
+
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
 

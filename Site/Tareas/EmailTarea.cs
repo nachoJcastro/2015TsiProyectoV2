@@ -1,22 +1,20 @@
-﻿using Crosscutting.EntityTareas;
+﻿
+using Crosscutting.EntityTareas;
 using Quartz;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
 
 namespace Site.Tareas
 {
-   /* public class EmailTarea: IJob
+   public class EmailTarea: IJob
     {
-        public void EnviarMail (IJobExecutionContext context, Correo correo)
+        public void Execute (IJobExecutionContext context)
         {
-            using (var message = new MailMessage("php.inmobiliaria2014@gmail.com","nachoj.castro@gmail.com"))
+            using (var mensaje = new MailMessage("php.inmobiliaria2014@gmail.com","nachoj.castro@gmail.com"))
             {
-                message.Subject = "Pruega";
-                message.Body = "Enviado desde .NET.Hora de prueba " + DateTime.Now;
+                mensaje.Subject = "Pruega";
+                mensaje.Body = "Enviado desde .NET.Hora de prueba " + DateTime.Now;
                 using (SmtpClient client = new SmtpClient
                 {
                     EnableSsl = true,
@@ -25,11 +23,11 @@ namespace Site.Tareas
                     Credentials = new NetworkCredential("php.inmobiliaria2014@gmail.com ", "grupophp")
                 })
                 {
-                    client.Send(message);
+                    client.Send(mensaje);
                 }
             }
         }
-    }*/
+    }
 
 
 }

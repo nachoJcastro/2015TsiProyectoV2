@@ -27,5 +27,26 @@ namespace BusinessLogicLayer.TenantControllers
 
             return _dal.LoginUsuario(valor_tenant, email, password);
         }
+
+        public int ObtenerIdByEmail(String tenant, String email)
+        {
+
+            return _dal.obtenerIdByEmail(tenant,email);
+        }
+
+        public string GetNombreUsuario(string valor_tenant, int idUsuario) {
+
+            return _dal.GetNombreUsuario(valor_tenant, idUsuario);
+        }
+
+        public Usuario GetUsuario(string valor_tenant, int idUsuario)
+        {
+            return _dal.GetUsuario(valor_tenant, idUsuario);
+        }
+
+        public void ActualizarUsuario(string tenant, Usuario usuarioNuevo)
+        {
+            _dal.ActualizarUsuario(tenant, usuarioNuevo);
+        }
     }
 }

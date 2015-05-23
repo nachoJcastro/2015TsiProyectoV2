@@ -9,12 +9,12 @@ namespace DAL
 {
     public interface IDALOferta
     {
-        void AgregarOferta(Oferta oferta); //Create
+        void AgregarOferta(String tenant,Oferta oferta); //Create
         Oferta ObtenerOferta(int ofertaId); //Read
         List<Oferta> ObtenerOfertas();
         void ActualizarOferta(Oferta oferta); //Update
         void EliminarOferta(int ofertaId); //Delete
 
-        List<Oferta> ObtenerOfertasByProducto(int id_subasta);
+        List<Oferta> ObtenerOfertasByProducto(String tenant,int id_subasta);
     }
 }

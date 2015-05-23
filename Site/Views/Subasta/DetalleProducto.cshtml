@@ -1,0 +1,94 @@
+﻿@model Crosscutting.EntityTenant.Subasta
+
+@{
+    ViewBag.Title = "DetalleProducto";
+}
+
+<h2>Detalles</h2>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmacion<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
+            </div>
+            <div class="modal-body">
+                <p>Esta seguro de comprar este producto?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" onclick="location.href='@Url.Action("FinalizarCompraDirecta/", "Subasta", new { idSubasta = Model.id })'" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <td><img src="~/img/img2.jpg"></td>
+            </tr>
+            <tr>
+                <th>Vendedor</th>
+                <th>@Html.DisplayFor(model => model.id_Vendedor)</th>
+            </tr>
+            <tr>
+                <th>Producto</th>
+                <th>@Html.DisplayFor(model => model.id_Producto)</th>
+            </tr>
+            <tr>
+                <th>Valor Actual</th>
+                <th>@Html.DisplayFor(model => model.valor_Actual)</th>
+            </tr>
+            <tr>
+                <th>Fecha Inicio</th>
+                <th>@Html.DisplayFor(model => model.fecha_Inicio)</th>
+            </tr>
+            <tr>
+                <th>Fecha Cierre</th>
+                <th>@Html.DisplayFor(model => model.fecha_Cierre)</th>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <th>@Html.DisplayFor(model => model.estado)</th>
+            </tr>
+
+        </thead>
+    </table>
+</div>
+
+<button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
+
+@using Site.Models
+@{
+    var user = Session["usuario"] as UsuarioSite;
+    var estado = Model.estado.ToString();
+}
+
+@if (estado.Equals("Activa"))
+{
+
+    if (user != null && user.Email != null)
+    {
+        <div class="jumbotron">
+            <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
+        </div>
+    }
+    else
+    {
+        <p>Debe loguarse para poder ofertar</p>
+    }
+}
+else
+{
+    <p>La publicacion está finalizada</p>
+}
+
+<div class="jumbotron">
+    <button type="button" onclick="location.href='@Url.Action("Edit", "Subasta"), new { id = Model.id }'" class="btn btn-default">Editar</button>
+    <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
+</div>
+
+

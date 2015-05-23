@@ -14,35 +14,65 @@ namespace Site.Controllers
     public class OfertaController : Controller
     {
         IBLOferta _bloferta;
-        private UsuarioSite user_sitio;
+        IBLSubasta _blsubasta;
+        IBLUsuario _blusuario;
         private string valor_tenant;
+        public UsuarioSite user;
+        static int idSub;
 
-        public OfertaController(IBLOferta bl)
+        public OfertaController(IBLOferta bl, IBLSubasta blS, IBLUsuario blU)
         {
             this._bloferta = bl;
+            this._blsubasta = blS;
+            this._blusuario = blU;
         }
 
-        public OfertaController() : this(new BLOferta())
+        public OfertaController() : this(new BLOferta(), new BLSubasta(), new BLUsuario())
         {
 
         }
 
 
-        public ActionResult DetalleProducto(int? id)
+        public ActionResult Lista(int idSubasta)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                System.Diagnostics.Debug.WriteLine(" Id subasta " + idSubasta.ToString());
+
+                var user = Session["usuario"] as UsuarioSite;
+                valor_tenant = user.Dominio;
+                
+                //int id_subasta = Convert.ToInt32(idSubasta);
+                var lista = _bloferta.ObtenerOfertasByProducto(valor_tenant, idSubasta);
+                List<OfertaModel> listOfer = new List<OfertaModel>();
+
+                foreach (var item in lista)
+                {
+                    OfertaModel ofert = new OfertaModel();
+                    ofert.id = item.id;
+                    try
+                    {
+                        ofert.nombre = _blusuario.GetNombreUsuario(valor_tenant, item.id_Usuario);
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                    ofert.id_Subasta = item.id_Subasta;
+                    ofert.id_Usuario = item.id_Usuario;
+                    ofert.Monto = item.Monto;
+                    ofert.fecha = item.fecha;
+
+                    listOfer.Add(ofert);
+                }
+                ViewBag.ListaOfertas = listOfer;
+                ViewBag.idSubasta = idSubasta;
             }
-
-            else {
-
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            catch (Exception)
+            {
+                throw;
             }
-
-           
-
-            //return View("Error");
+            return View();
         }
 
 
@@ -63,55 +93,97 @@ namespace Site.Controllers
 
 
 
-
-
         // GET: Oferta
         public ActionResult Index()
         {
-            int id_subasta = 0;//hay que conseguir el id subasta
-            var listaOfer = _bloferta.ObtenerOfertasByProducto(id_subasta);
-            ViewBag.ListaOfertas = listaOfer;
-
-            user_sitio = Session["usuario"] as UsuarioSite;
-
-            if (user_sitio.Dominio != null)
-            {
-                System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
-                valor_tenant = user_sitio.Dominio.ToString();
-            }
-
-            /*var lista_Subastas = _sub.ObtenerSubastas(valor_Tenant);
-                ViewBag.ListarSubastas = lista_Subastas;*/
 
             return View();
         }
 
-
-        #region Ofertas
 
         // GET: Oferta/Create
-        public ActionResult CreateOferta()
+        public ActionResult CreateOferta(int idSubasta, int monto_actual)
         {
+            idSub = idSubasta;
             ViewBag.idTienda = this.Session["_tiendaSesion"];
-            return View();
+            ViewBag.idsub = idSubasta;
+            ViewBag.monto = monto_actual;
+
+            Oferta oferta = new Oferta();
+
+            oferta.id_Subasta = idSubasta;
+            oferta.Monto = monto_actual;
+           
+            return View(oferta);
         }
+
 
         // POST: Oferta/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateOferta([Bind(Include = "id,Monto,id_Usuario,fecha,id_Subasta")] Oferta oferta)
+        public ActionResult CreateOferta([Bind(Include = "id,Monto")] Oferta oferta, double monto_actual)//,id_Usuario,fecha
         {
-            if (ModelState.IsValid)
-            {
-                //oferta.TiendaId = Int32.Parse(this.Session["_tiendaSesion"].ToString());
-                _bloferta.AgregarOferta(oferta);
-                return RedirectToAction("Index", new { id = this.Session["_tiendaSesion"] });
-            }
+            var user = Session["usuario"] as UsuarioSite;
+            valor_tenant = user.Dominio;
 
-            return View(oferta);
+            var idOfertante = _blusuario.ObtenerIdByEmail(valor_tenant, user.Email);
+            var ofertante = _blusuario.GetUsuario(valor_tenant, idOfertante);
+
+            if (monto_actual>=oferta.Monto) {
+                ModelState.AddModelError("", "La Oferta debe ser mayor a " +monto_actual);
+                  return View();
+            }
+            else if(ofertante.billetera < oferta.Monto){
+                ModelState.AddModelError("", "Error usted solo dispone de " + ofertante.billetera);
+                return View();
+            }
+            else {
+            
+            user = Session["usuario"] as UsuarioSite;
+            valor_tenant = user.Dominio;
+            oferta.id_Subasta = idSub;
+            
+           
+            oferta.fecha = DateTime.Now;
+            oferta.id_Usuario = ofertante.id;
+
+            _bloferta.AgregarOferta(valor_tenant, oferta);
+
+            if (_blsubasta.ActualizarMonto(valor_tenant,oferta.id_Subasta, oferta.Monto))
+            {
+                var lista = _bloferta.ObtenerOfertasByProducto(valor_tenant, idSub);
+                List<OfertaModel> listOfer = new  List<OfertaModel>();
+
+                foreach (var item in lista)
+                {
+                    OfertaModel  ofert= new OfertaModel();
+                    ofert.id= item.id;
+                    try 
+	                {	    
+                       
+		               ofert.nombre=_blusuario.GetNombreUsuario(valor_tenant,item.id_Usuario);
+	                }
+	                catch (Exception)
+	                {
+		
+		                throw;
+	                }
+
+                    ofert.id_Subasta= item.id_Subasta;
+                    ofert.id_Usuario= item.id_Usuario;
+                    ofert.Monto= item.Monto;
+                    ofert.fecha= item.fecha;
+
+                    listOfer.Add(ofert);
+                }
+
+                ViewBag.ListaOfertas = listOfer;
+            }
+           
+            }
+            return View("Index");
         }
 
-        #endregion
-
     }
+
 }

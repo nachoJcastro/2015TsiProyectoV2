@@ -80,5 +80,10 @@ namespace BusinessLogicLayer.Controllers
         {
             _dal.EliminarTiendaVirtual(tiendaId);
         }
+
+        public List<String> ObtenerTenants() {
+
+            return _dal.ObtenerTenants();
+        }
     }
 }

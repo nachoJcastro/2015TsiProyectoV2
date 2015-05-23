@@ -15,7 +15,7 @@ namespace Crosscutting.EntityTenant
 
         public int id_Usuario { get; set; }
 
-        [Column(TypeName = "date")]
+        [DataType(DataType.DateTime)]
         public DateTime fecha { get; set; }
 
         public int id_Subasta { get; set; }

@@ -22,9 +22,9 @@ namespace BusinessLogicLayer.TenantControllers
         public BLOferta() { }
 
 
-        public void AgregarOferta(Oferta oferta)
+        public void AgregarOferta(String tenant,Oferta oferta)
         {
-            _dal.AgregarOferta(oferta);
+            _dal.AgregarOferta(tenant,oferta);
         }
 
 
@@ -51,9 +51,9 @@ namespace BusinessLogicLayer.TenantControllers
             _dal.EliminarOferta(ofertaId);
         }
 
-        public List<Oferta> ObtenerOfertasByProducto(int id_subasta)
+        public List<Oferta> ObtenerOfertasByProducto(String tenant,int id_subasta)
         {
-            return _dal.ObtenerOfertasByProducto(id_subasta);
+            return _dal.ObtenerOfertasByProducto(tenant,id_subasta);
         }
 
     }

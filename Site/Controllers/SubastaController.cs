@@ -19,42 +19,40 @@ namespace Site.Controllers
     public class SubastaController : Controller
     {
         //private SiteContext db = new SiteContext();
-        IBLSubasta subIBL= new BLSubasta();
-        IBLProducto proIBL= new BLProducto();
-       /* IBLComentario comIBL;
+        IBLSubasta subIBL;
         IBLProducto proIBL;
+        IBLComentario comIBL;
         IBLOferta ofeIBL;
-        IBLCategoria catIBL;
-        IBLAtributo atrIBL;*/
+        IBLUsuario usuIBL;
+        BusinessLogicLayer.TenantInterfaces.IBLAtributo atrIBL;
+        //IBLCategoria catIBL;
+        //IBLAtributo atrIBL;
         public UsuarioSite user_sitio;
         private string valor_tenant;
-        public UsuarioSite user;
 
-        public SubastaController() { }
-
-       /* public SubastasController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl,IBLOferta ofebl, IBLCategoria catbl, IBLAtributo atrbl)
+        public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl, IBLOferta ofebl, IBLUsuario usubl, BusinessLogicLayer.TenantInterfaces.IBLAtributo atrIBL)
         {
             this.subIBL = subbl;
             this.comIBL = combl;
             this.proIBL = probl;
             this.ofeIBL = ofebl;
-            this.catIBL = catbl;
-            this.atrIBL = atrbl;
-        }*/
-        //ME DA ERROR CONSTRUCTOR X DEFECTO. DESCOMENTAR!!!!
-        //public SubastasController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLCategoria(), new BLAtributo())
-        //{
+            this.usuIBL = usubl;
+            this.atrIBL = atrIBL;
+            //this.catIBL = catbl;
+           // this.atrIBL = atrbl;
+        }
 
-        //}
+        public SubastaController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLUsuario(), new BLAtributo())
+        {
+
+        }
 
        
         // GET: Subastas
         public ActionResult Index()
         {
-            user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
-
-
-
+            user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+            
             //ViewBag.CategoriaId = new SelectList(catIBL.ObtenerCategorias(), "CategoriaId", "Nombre");
             //ViewBag.TipoId = new SelectList(proIBL.ObtenerProductos(), "TipoId", "Titulo");
             //ViewBag.Atributo = new SelectList(atrBL.)
@@ -62,94 +60,82 @@ namespace Site.Controllers
             
         }
 
-        //// GET: Subastas/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Subasta subasta = db.Subastas.Find(id);
-        //    if (subasta == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(subasta);
-        //}
+        // GET: Subastas/Details/5
+        public ActionResult Details(int idSubasta)
+        {
+            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+            if (subasta == null)
+            {
+                return HttpNotFound();
+            }
+            return View(subasta);
+        }
 
+        
         // GET: Subastas/Create
-        public ActionResult Create(string id)
+        public ActionResult Create()
         {
             try
             {
-                user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                //List<string> tipo = new List<string>();
+                //tipo.Add("Subasta");
+                //tipo.Add("Compra Directa");
+                //ViewData["Tipo"] = tipo;
+                ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda);
+                ViewData["Productos"] = proIBL.ObtenerProductos();
+                ViewData["Atributos"] = atrIBL.ObtenerAtributos();
 
-                 
-
-                Subasta subasta = new Subasta();
-                //subasta.id_Categoria = 1;
-                //subasta.id_Producto = 1;
-                subasta.id_Vendedor = 1;
-                subasta.titulo = "Prueba";
-                subasta.valor_Actual = 111;
-                subasta.estado = EstadoTransaccion.Activa;
-                subasta.finalizado = TipoFinalizacion.Subasta;
-
-                 user_sitio = Session["usuario"] as UsuarioSite;
-
-                if (user_sitio.Dominio != null)
-                {
-                    System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
-                    valor_tenant = user_sitio.Dominio.ToString();
-                }
-
-                subIBL.AltaSubasta(valor_tenant, subasta);
-
-                if (user.idTienda == 0) { System.Diagnostics.Debug.WriteLine("Usuario nulo"); }
-                else System.Diagnostics.Debug.WriteLine(user.idTienda.ToString());
-                
-                
-                List<string> tipo =new List<string>();
-                tipo.Add("Subasta");
-                tipo.Add("Compra Directa");
-                ViewData["Tipo"] = tipo;
-               // ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
-               // ViewData["Productos"] = proIBL.ObtenerTipoProdCategoria(user.idTienda);
-               // ViewData["Atributos"] = proIBL.ObtenerAtributosTipoProd(user.idTienda);
-
-                ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user.idTienda), "CategoriaId", "Nombre");
-        }
+                ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda), "CategoriaId", "Nombre");
+            }
             catch (Exception)
             {
-                
                 throw;
             }
-           
             return View();
+        }
+        
+        // POST: Subastas/Create
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre")]Subasta subasta)
+        {
+            user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+            subasta.id_Vendedor = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
+            subasta.estado = EstadoTransaccion.Activa;
+            subasta.valor_Actual = (double)subasta.precio_Base;
+            valor_tenant = user_sitio.Dominio.ToString();
+            subIBL.AgregarSubasta(valor_tenant, subasta);
+
+            return View("DetalleProducto", subasta);
         }
 
         
         public JsonResult TipoProdList(int idCategoria)
         {
 
-            System.Diagnostics.Debug.WriteLine("Entro en obtener producto. :" + proIBL.ObtenerTipoProdCategoria(user.idTienda, idCategoria).ToString());
+            System.Diagnostics.Debug.WriteLine("Entro en obtener producto. :" + proIBL.ObtenerTipoProdCategoria(user_sitio.idTienda, idCategoria).ToString());
 
-            return Json(new SelectList(proIBL.ObtenerTipoProdCategoria(user.idTienda, idCategoria),"TipoProductoId","CategoriaId","Titulo" ), JsonRequestBehavior.AllowGet);
-        
+            return Json(new SelectList(proIBL.ObtenerTipoProdCategoria(user_sitio.idTienda, idCategoria), "TipoProductoId", "CategoriaId", "Titulo"), JsonRequestBehavior.AllowGet);
 		}
+
 
         public JsonResult ArticuloList(int idTipoProd)
         {
-            System.Diagnostics.Debug.WriteLine("Entro en obtener articulos. :" + proIBL.ObtenerAtributosTipoProd(user.idTienda, idTipoProd).ToString());
+            System.Diagnostics.Debug.WriteLine("Entro en obtener articulos. :" + proIBL.ObtenerAtributosTipoProd(user_sitio.idTienda, idTipoProd).ToString());
 
-            return Json (new SelectList (proIBL.ObtenerAtributosTipoProd(user.idTienda,idTipoProd),"AtributoId","CategoriaId","Nombre"), JsonRequestBehavior.AllowGet);
+            return Json(new SelectList(proIBL.ObtenerAtributosTipoProd(user_sitio.idTienda, idTipoProd), "AtributoId", "CategoriaId", "Nombre"), JsonRequestBehavior.AllowGet);
         }
+
 
         public IList<TipoProductoDTO> ObtenerProducto(int CategoriaId)
         {
             System.Diagnostics.Debug.WriteLine("Entro en obtener producto. Id Categoria:" + CategoriaId);
-            return proIBL.ObtenerTipoProdCategoria(user.idTienda, CategoriaId);
+            return proIBL.ObtenerTipoProdCategoria(user_sitio.idTienda, CategoriaId);
         }
+
 
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult CargarCategoriaId(string CategoriaId)
@@ -163,36 +149,6 @@ namespace Site.Controllers
             return Json(tiposProd, JsonRequestBehavior.AllowGet);
         }
         
-
-
-
-
-
-
-        // POST: Subastas/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include ="id_Comprador,id_Vendedor,id_Producto,estado,valor_Actual,finalizado,fecha_Inicio,fecha_Cierre")] Subasta subasta)
-        {
-            if (ModelState.IsValid)
-            {
-                user_sitio = Session["usuario"] as UsuarioSite;
-
-                if (user_sitio.Dominio != null)
-                {
-                    System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
-                    valor_tenant = user_sitio.Dominio.ToString();
-                }
-                subIBL.AgregarSubasta(valor_tenant,subasta);
-                //db.Subastas.Add(subasta);
-                //db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(subasta);
-        }
 
         //// GET: Subastas/Edit/5
         //public ActionResult Edit(int? id)
@@ -259,5 +215,53 @@ namespace Site.Controllers
         //    }
         //    base.Dispose(disposing);
         //}
+
+
+        public ActionResult FinalizarCompraDirecta(int idSubasta)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+            int idLogueado = usuIBL.ObtenerIdByEmail(valor_tenant, user_sitio.Email);
+            var usuario = usuIBL.GetUsuario(valor_tenant, idLogueado);
+
+            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+
+            if (subasta == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (usuario.billetera < subasta.precio_Compra)
+            {
+                return View("SinSaldo", subasta);
+            }
+            else
+            {
+                usuario.billetera = usuario.billetera - (double)subasta.precio_Compra;
+                usuIBL.ActualizarUsuario(valor_tenant, usuario);
+                subasta.estado = EstadoTransaccion.Cerrada;
+                subasta.finalizado = TipoFinalizacion.Compra_directa;
+                subasta.id_Comprador = idLogueado;
+                //enviar mail
+                subIBL.ActualizarSubasta(valor_tenant, subasta);
+                var vendedor = usuIBL.GetUsuario(valor_tenant, idLogueado);
+                ViewBag.Vendedor = vendedor;
+                return View("Transaccion", subasta);
+            }
+        }
+
+
+        public ActionResult DetalleProducto(int idSubasta)
+        {
+            var user = Session["usuario"] as UsuarioSite;
+            valor_tenant = user.Dominio;
+
+            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+            if (subasta == null)
+            {
+                return HttpNotFound();
+            }
+            return View(subasta);
+        }
     }
 }

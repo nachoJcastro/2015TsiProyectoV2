@@ -7,25 +7,25 @@ using System.Web;
 
 namespace Site.Tareas
 {
-    public class JobScheduler
+    public class SchedulerSubasta
     {
-       /* public static void Start()
+        public static void Start()
         {
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
 
-            IJobDetail job = JobBuilder.Create<EmailTarea>().Build();
+            IJobDetail job = JobBuilder.Create<FinalizarTarea>().Build();
 
             ITrigger trigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule
                   (s =>
-                     s.WithIntervalInHours(24)
+                     s.WithIntervalInMinutes(1)
                     .OnEveryDay()
-                    .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
+                     .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(13,16))
                   )
                 .Build();
 
             scheduler.ScheduleJob(job, trigger);
-        }*/
+        }
     }
 }

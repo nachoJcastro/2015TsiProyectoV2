@@ -1,0 +1,48 @@
+﻿@using Site.Models
+@model OfertaModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Historial de Ofertas</h2>
+
+@if (ViewBag.ListaOfertas != null)
+{
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>
+                    Usuario
+                </th>
+                <th>
+                    Monto
+                </th>
+                <th>
+                    Fecha
+                </th>
+            </tr>
+           
+            @foreach (var item in ViewBag.ListaOfertas)
+            {
+                <tr class="texto_table">
+                    <td>
+                        @item.nombre
+                    </td>
+                    <td>
+                        @item.Monto
+                    </td>
+                    <td>
+                        @item.fecha
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    
+    <div class="jumbotron">
+        <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
+    </div>
+    
+}
+
