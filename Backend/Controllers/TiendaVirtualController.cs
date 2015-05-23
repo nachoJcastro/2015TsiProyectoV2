@@ -307,13 +307,6 @@ namespace Backend.Controllers
             //return FileStyleUriParser(cssContent);
             return File(cssContent, contentType);
         }
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+
     }
 }
