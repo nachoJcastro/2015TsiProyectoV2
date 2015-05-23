@@ -58,7 +58,12 @@
                 </div>
             </div>*@
 
-        @using (Html.BeginForm())
+
+
+        @*****|****|*******|**DROPDOWNS DEPENDIENTES****|******@
+        @*****v****v*******v**DROPDOWNS DEPENDIENTES****v******@
+
+        @*@using (Html.BeginForm())
         {
             @Html.DropDownList("Categoria", ViewBag.CategoriaId as SelectList, "Seleccione una Categoria", new { id = "Categoria" })<br />
             <select id="TipoProd" name="tipoProd"></select><br />
@@ -88,9 +93,10 @@
             });
         });
     });
-        </script>
+        </script>*@
 
-
+        @*****^****^*******^**DROPDOWNS DEPENDIENTES****^******@
+        @*****|****|*******|**DROPDOWNS DEPENDIENTES****|******@
 
 
 
@@ -109,15 +115,21 @@
 
     <div class="form-group">
         <div class="col-md-10">
-            @Html.DropDownList("Productos", new SelectList((System.Collections.IEnumerable)ViewData["Productos"], "Titulo","Descripcion"))
+            @Html.DropDownList("Productos", new SelectList((System.Collections.IEnumerable)ViewData["Productos"], "TipoProductoId", "Titulo"))
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-10">
-            @Html.DropDownList("Atributos", new SelectList((System.Collections.IEnumerable)ViewData["Atributos"], "CategoriaId","Nombre"))
+            @Html.DropDownList("Atributos", new SelectList((System.Collections.IEnumerable)ViewData["Atributos"], "AtributoId", "Nombre"))
         </div>
     </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownList("Tipo", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]))
+            </div>
+        </div>
 
     <div class="form-group">
                 @Html.Label("Titulo")
