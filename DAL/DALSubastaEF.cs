@@ -100,7 +100,7 @@ namespace DAL
                     subasta.garantia = subastaNueva.garantia;
                     subasta.id = subastaNueva.id;
                     subasta.id_Categoria = subastaNueva.id_Categoria;
-                    subasta.id_Comprador = subastaNueva.id_Producto;
+                    subasta.id_Producto = subastaNueva.id_Producto;
                     subasta.id_Vendedor = subastaNueva.id_Vendedor;
                     subasta.Imagen = subastaNueva.Imagen;
                     subasta.Oferta = subastaNueva.Oferta;
@@ -181,7 +181,6 @@ namespace DAL
 
         public Boolean ActualizarMonto(string tenant, int id_subasta, double monto)
         {
-
              try
             {
                 db = new TenantDB(tenant);
@@ -192,12 +191,8 @@ namespace DAL
             }
             catch (Exception)
             {
-                
                 throw;
             }
-            
-        
         }
-
     }
 }

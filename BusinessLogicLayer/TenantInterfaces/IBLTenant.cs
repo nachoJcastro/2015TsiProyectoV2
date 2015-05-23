@@ -1,4 +1,5 @@
 ﻿using Crosscutting.Entity;
+using Crosscutting.EntityTenant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace BusinessLogicLayer.TenantInterfaces
         // Existe Sitio
         Boolean ExisteSitio (String dominio);
         int ObtenerIdTenant(String tenant);
+
+        TiendaTenant ObtenerDatosTenant(int idTienda);
     }
 }

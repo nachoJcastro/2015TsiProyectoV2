@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Crosscutting.EntityTenant;
 
 
 namespace DAL
@@ -64,6 +65,26 @@ namespace DAL
             }
 
            return tiendaID;
+        }
+
+        public TiendaTenant ObtenerDatosTenant(int idTienda)
+        {
+            TiendaTenant tiendaInfo = new TiendaTenant();
+            try
+            {
+                BackendDB back = new BackendDB();
+                var tienda = back.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == idTienda);
+                tiendaInfo.Nombre = tienda.Nombre;
+                tiendaInfo.Css = tiendaInfo.Css;
+                tiendaInfo.Descripcion = tiendaInfo.Descripcion;
+                tiendaInfo.Logo = tiendaInfo.Logo;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return tiendaInfo;
         }
     }
 }

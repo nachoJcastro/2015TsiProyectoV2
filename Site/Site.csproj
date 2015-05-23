@@ -209,8 +209,6 @@
     <Compile Include="Tareas\SchedulerMail.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\justified-nav.css" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -218,7 +216,6 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\modern-business.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="img\img1.jpg" />
@@ -279,26 +276,22 @@
     <Content Include="Views\Tenant\Index.cshtml" />
     <Content Include="Views\Account\_LayoutAccount.cshtml" />
     <Content Include="Views\Tenant\Error.cshtml" />
-    <Content Include="Views\Index.cshtml" />
     <Content Include="Views\Subasta\Create.cshtml" />
     <Content Include="Views\Subasta\Delete.cshtml" />
-    <Content Include="Views\Subasta\Details.cshtml" />
+    <Content Include="Views\Subasta\DetalleProducto.cshtml" />
     <Content Include="Views\Subasta\Edit.cshtml" />
     <Content Include="Views\Subasta\Index.cshtml" />
-    <Content Include="Views\Oferta\DetalleProducto.cshtml" />
     <Content Include="Views\Shared\_Layout - Copia.cshtml" />
     <Content Include="Views\Oferta\CreateOferta.cshtml" />
     <Content Include="Views\Oferta\Index.cshtml" />
     <Content Include="Views\Oferta\Lista.cshtml" />
     <Content Include="Views\Subasta\Transaccion.cshtml" />
+    <Content Include="Views\Subasta\SinSaldo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>

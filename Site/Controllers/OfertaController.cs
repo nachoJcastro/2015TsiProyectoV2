@@ -75,19 +75,6 @@ namespace Site.Controllers
             return View();
         }
 
-        public ActionResult DetalleProducto(int idSubasta)
-        {
-            var user = Session["usuario"] as UsuarioSite;
-            valor_tenant = user.Dominio;
-
-            Subasta subasta = _blsubasta.ObtenerSubasta(valor_tenant,idSubasta);
-            if (subasta == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subasta);
-        }
-
 
         //// GET: Subastas/Edit/5
         //public ActionResult Edit(int? id)
@@ -114,7 +101,6 @@ namespace Site.Controllers
         }
 
 
-
         // GET: Oferta/Create
         public ActionResult CreateOferta(int idSubasta, int monto_actual)
         {
@@ -130,19 +116,27 @@ namespace Site.Controllers
            
             return View(oferta);
         }
+
+
         // POST: Oferta/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateOferta([Bind(Include = "id,Monto")] Oferta oferta, double monto_actual)//,id_Usuario,fecha
         {
-            System.Diagnostics.Debug.WriteLine(" Monto inicial " + monto_actual.ToString());
-            System.Diagnostics.Debug.WriteLine(" Monto ofertado " + oferta.Monto.ToString());
+            var user = Session["usuario"] as UsuarioSite;
+            valor_tenant = user.Dominio;
+
+            var idOfertante = _blusuario.ObtenerIdByEmail(valor_tenant, user.Email);
+            var ofertante = _blusuario.GetUsuario(valor_tenant, idOfertante);
 
             if (monto_actual>=oferta.Monto) {
-                ModelState.AddModelError("", "La Oferta debe ser mayor a" +monto_actual);
+                ModelState.AddModelError("", "La Oferta debe ser mayor a " +monto_actual);
                   return View();
             }
-           
+            else if(ofertante.billetera < oferta.Monto){
+                ModelState.AddModelError("", "Error usted solo dispone de " + ofertante.billetera);
+                return View();
+            }
             else {
             
             user = Session["usuario"] as UsuarioSite;
@@ -151,8 +145,7 @@ namespace Site.Controllers
             
            
             oferta.fecha = DateTime.Now;
-            System.Diagnostics.Debug.WriteLine(" fecha oferta " + oferta.fecha.ToString());
-            oferta.id_Usuario = _blusuario.ObtenerIdByEmail(valor_tenant, user.Email);
+            oferta.id_Usuario = ofertante.id;
 
             _bloferta.AgregarOferta(valor_tenant, oferta);
 
@@ -191,42 +184,6 @@ namespace Site.Controllers
             return View("Index");
         }
 
-
-        //public ActionResult Create(string id)
-        //{
-        //    try
-        //    {
-        //        user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
-        //        Oferta oferta = new Oferta();
-        //        subasta.id_Vendedor = 1;
-        //        subasta.titulo = "Prueba";
-        //        subasta.valor_Actual = 111;
-        //        subasta.estado = EstadoTransaccion.Activa;
-        //        subasta.finalizado = TipoFinalizacion.Subasta;
-        //        user_sitio = Session["usuario"] as UsuarioSite;
-        //        if (user_sitio.Dominio != null)
-        //        {
-        //            System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
-        //            valor_tenant = user_sitio.Dominio.ToString();
-        //        }
-        //        subIBL.AltaSubasta(valor_tenant, subasta);
-        //        List<string> tipo = new List<string>();
-        //        tipo.Add("Subasta");
-        //        tipo.Add("Compra Directa");
-        //        ViewData["Tipo"] = tipo;
-        //        // ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
-        //        // ViewData["Productos"] = proIBL.ObtenerTipoProdCategoria(user.idTienda);
-        //        // ViewData["Atributos"] = proIBL.ObtenerAtributosTipoProd(user.idTienda);
-        //        ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user.idTienda), "CategoriaId", "Nombre");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //    return View();
-        //}
-
     }
-
 
 }

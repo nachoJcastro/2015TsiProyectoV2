@@ -216,8 +216,7 @@ namespace Site.Controllers
                         //System.Diagnostics.Debug.WriteLine("Registrando : " + valor_tenant + "Usuario : " + model.Email.ToString());
                         if (!(_bl.ExisteUsuario(valor_tenant, model.Email)))
                         {
-                            
-                            user = new Usuario { email = model.Email, nick = model.Nick, password = model.Password, fecha_Alta = DateTime.Now };
+                            user = new Usuario { email = model.Email, direccion = model.Direccion, fecha_Nacimiento = Convert.ToDateTime(model.Fecha), nombre = model.Nombre, apellido = model.Apellido, nick = model.Nick, password = model.Password, fecha_Alta = DateTime.Now, reputacion_Venta = "0", reputacion_Compra = "0" };
 
                             System.Diagnostics.Debug.WriteLine("Registrando : " + valor_tenant + "Usuario : " + user.ToString());
                             _bl.RegistrarUsuario(valor_tenant, user);
