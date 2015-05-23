@@ -71,10 +71,7 @@ namespace Crosscutting.EntityTenant
         public double valor_Actual { get; set; }
 
         // Atributos de fecha
-
-     
-
-
+        
         [DataType(DataType.DateTime)]
         public DateTime? fecha_Inicio { get; set; }
 

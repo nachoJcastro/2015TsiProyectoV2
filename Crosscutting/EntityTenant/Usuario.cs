@@ -16,6 +16,7 @@ namespace Crosscutting.EntityTenant
             Favorito = new HashSet<Favorito>();
             Subasta = new HashSet<Subasta>();
             Oferta = new HashSet<Oferta>();
+            billetera = 1000;
         }
 
         
@@ -46,6 +47,8 @@ namespace Crosscutting.EntityTenant
         public string direccion { get; set; }
 
         public string imagen { get; set; }
+
+        public double billetera { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime? fecha_Alta { get; set; }

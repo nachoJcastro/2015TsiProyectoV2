@@ -132,6 +132,42 @@ namespace DAL.DAL_Tenant
             }
                 return usuario;
             }
+
+        public void ActualizarUsuario(string tenant, Usuario usuarioNuevo)
+        {
+            try
+            {
+                TenantDB db = new TenantDB(tenant);
+                var usuario = db.Usuario.FirstOrDefault(u => u.id == usuarioNuevo.id);
+                if (usuario != null)
+                {
+                    usuario.apellido = usuarioNuevo.apellido;
+                    usuario.billetera = usuarioNuevo.billetera;
+                    usuario.Calificacion = usuarioNuevo.Calificacion;
+                    usuario.Comentario = usuarioNuevo.Comentario;
+                    usuario.direccion = usuarioNuevo.direccion;
+                    usuario.email = usuarioNuevo.email;
+                    usuario.Favorito = usuarioNuevo.Favorito;
+                    usuario.fecha_Alta = usuarioNuevo.fecha_Alta;
+                    usuario.fecha_Nacimiento = usuarioNuevo.fecha_Nacimiento;
+                    usuario.id = usuarioNuevo.id;
+                    usuario.imagen = usuarioNuevo.imagen;
+                    usuario.nick = usuarioNuevo.nick;
+                    usuario.nombre = usuarioNuevo.nombre;
+                    usuario.Oferta = usuarioNuevo.Oferta;
+                    usuario.password = usuarioNuevo.password;
+                    usuario.reputacion_Compra = usuarioNuevo.reputacion_Compra;
+                    usuario.reputacion_Venta = usuarioNuevo.reputacion_Venta;
+                    //usuario.Subasta = usuarioNuevo.Subasta;
+
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
 

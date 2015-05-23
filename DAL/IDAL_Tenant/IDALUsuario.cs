@@ -16,5 +16,6 @@ namespace DAL.IDAL_Tenant
 
          string GetNombreUsuario(string valor_tenant, int idUsuario);
          Usuario GetUsuario(string valor_tenant, int idUsuario);
+         void ActualizarUsuario(string tenant, Usuario usuarioNuevo);
     }
 }
