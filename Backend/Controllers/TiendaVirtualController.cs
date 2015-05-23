@@ -33,7 +33,7 @@ namespace Backend.Controllers
         }
 
         // GET: TiendaVirtual
-        [Authorize]
+        [Authorize(Roles="Usuario")]
         public ActionResult Index()
         {
             var idUser = User.Identity.GetUserId();
@@ -41,15 +41,15 @@ namespace Backend.Controllers
             return View(tiendas);
         }
 
-        [Authorize]
-        public ActionResult Admin()
+        [Authorize(Roles = "Admin")]
+        public ActionResult AdminUser()
         {
             var tiendas = _bl.ObtenerTiendas();
             return View(tiendas);
         }
 
         // GET: TiendaVirtual/Details/5
-        [Authorize]
+        [Authorize(Roles = "Usuario")]
         public ActionResult Details(int id)
         {
             //if (id == null)
@@ -65,7 +65,7 @@ namespace Backend.Controllers
         }
 
         // GET: TiendaVirtual/Create
-        [Authorize]
+        [Authorize(Roles = "Usuario")]
         public ActionResult Create()
         {
             try
@@ -91,7 +91,7 @@ namespace Backend.Controllers
         // POST: TiendaVirtual/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Usuario")]
         public ActionResult Create([Bind(Include = "TiendaVitualId,Nombre,Dominio,Descripcion,Logo,Fecha_creacion,Estado,Css,StringConection")] TiendaVirtualDTO tiendaVirtualDTO, HttpPostedFileBase logo)
         {
             tiendaVirtualDTO.UsuarioId = User.Identity.GetUserId();
@@ -158,7 +158,7 @@ namespace Backend.Controllers
         }
 
         // GET: TiendaVirtual/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Usuario")]
         public ActionResult Edit(int id)
         {
             //if (id == null)
@@ -176,7 +176,7 @@ namespace Backend.Controllers
         // POST: TiendaVirtual/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Usuario")]
         public ActionResult Edit([Bind(Include = "TiendaVitualId,Nombre,Dominio,Descripcion,Logo,Fecha_creacion,Estado,Css,StringConection")] TiendaVirtualDTO tiendaVirtualDTO, HttpPostedFileBase logo)
         {
             if (ModelState.IsValid)
@@ -210,7 +210,7 @@ namespace Backend.Controllers
         }
 
         // GET: TiendaVirtual/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Usuario")]
         public ActionResult Delete(int id)
         {
             //if (id == null)
@@ -228,7 +228,7 @@ namespace Backend.Controllers
         // POST: TiendaVirtual/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Usuario")]
         public ActionResult DeleteConfirmed(int id)
         {
             //TiendaVirtualDTO tiendaVirtualDTO = _bl.ObtenerTienda(id);
@@ -238,7 +238,7 @@ namespace Backend.Controllers
         }
 
         // GET: TiendaVirtual/Estilo
-       [Authorize]
+       [Authorize(Roles = "Usuario")]
         public ActionResult Estilo(int id)
         {
             
@@ -262,7 +262,7 @@ namespace Backend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Usuario")]
         public ActionResult Estilo([Bind(Include = "texto,idTienda")] Estilo css)
         {
             if (ModelState.IsValid)

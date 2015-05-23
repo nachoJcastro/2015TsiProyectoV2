@@ -8,6 +8,7 @@ using DAL;
 
 using BusinessLogicLayer.TenantInterfaces;
 using DNSManager;
+using Crosscutting.EntityTenant;
 
 namespace BusinessLogicLayer.TenantControllers
 {
@@ -36,6 +37,11 @@ namespace BusinessLogicLayer.TenantControllers
         public int ObtenerIdTenant(String tenant)
         {
             return _dal.ObtenerIdTenant(tenant);
+        }
+
+        public TiendaTenant ObtenerDatosTenant(int idTienda) 
+        {
+            return _dal.ObtenerDatosTenant(idTienda);
         }
         
     }

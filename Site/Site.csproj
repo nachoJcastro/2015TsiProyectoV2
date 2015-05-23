@@ -275,18 +275,17 @@
     <Content Include="Views\Tenant\Index.cshtml" />
     <Content Include="Views\Account\_LayoutAccount.cshtml" />
     <Content Include="Views\Tenant\Error.cshtml" />
-    <Content Include="Views\Index.cshtml" />
     <Content Include="Views\Subasta\Create.cshtml" />
     <Content Include="Views\Subasta\Delete.cshtml" />
-    <Content Include="Views\Subasta\Details.cshtml" />
+    <Content Include="Views\Subasta\DetalleProducto.cshtml" />
     <Content Include="Views\Subasta\Edit.cshtml" />
     <Content Include="Views\Subasta\Index.cshtml" />
-    <Content Include="Views\Oferta\DetalleProducto.cshtml" />
     <Content Include="Views\Shared\_Layout - Copia.cshtml" />
     <Content Include="Views\Oferta\CreateOferta.cshtml" />
     <Content Include="Views\Oferta\Index.cshtml" />
     <Content Include="Views\Oferta\Lista.cshtml" />
     <Content Include="Views\Subasta\Transaccion.cshtml" />
+    <Content Include="Views\Subasta\SinSaldo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

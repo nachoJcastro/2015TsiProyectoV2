@@ -43,5 +43,10 @@ namespace BusinessLogicLayer.TenantControllers
         {
             return _dal.GetUsuario(valor_tenant, idUsuario);
         }
+
+        public void ActualizarUsuario(string tenant, Usuario usuarioNuevo)
+        {
+            _dal.ActualizarUsuario(tenant, usuarioNuevo);
+        }
     }
 }

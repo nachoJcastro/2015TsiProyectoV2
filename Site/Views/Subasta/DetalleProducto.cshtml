@@ -53,7 +53,7 @@
                 <th>Estado</th>
                 <th>@Html.DisplayFor(model => model.estado)</th>
             </tr>
-          
+
         </thead>
     </table>
 </div>
@@ -69,12 +69,12 @@
 @if (estado.Equals("Activa"))
 {
 
-    if (user!=null && user.Email!=null)
+    if (user != null && user.Email != null)
     {
-    <div class="jumbotron">
-        <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
-    </div>
+        <div class="jumbotron">
+            <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
+        </div>
     }
     else
     {
@@ -86,6 +86,9 @@ else
     <p>La publicacion está finalizada</p>
 }
 
-    <div class="jumbotron">
-        <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
-    </div>
+<div class="jumbotron">
+    <button type="button" onclick="location.href='@Url.Action("Edit", "Subasta"), new { id = Model.id }'" class="btn btn-default">Editar</button>
+    <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
+</div>
+
+

@@ -13,7 +13,6 @@ using BusinessLogicLayer.Controllers;
 namespace BusinessLogicLayer.TenantControllers
 {
     public class BLSubasta : IBLSubasta{
-
         
         private IDALSubasta _dal = new DALSubastaEF();
 
@@ -30,7 +29,6 @@ namespace BusinessLogicLayer.TenantControllers
 
             _dal.AltaSubasta (tenant, subasta);
         }
-
 
 
         public void AgregarSubasta(String tenant,Subasta subasta)
@@ -112,11 +110,7 @@ namespace BusinessLogicLayer.TenantControllers
             foreach (var item in tenants)
             {
                 sub.FinalizarSubastasTarea(tenants);
-                
-
             }
-
-        
         }*/
 
         public void FinalizarSubastasTarea(String tenant)
@@ -124,25 +118,17 @@ namespace BusinessLogicLayer.TenantControllers
             System.Diagnostics.Debug.WriteLine("Entro en finalizar tarea por JOB");
             try
             {
-
                 List<Subasta> subastas =this.ObtenerSubastas(tenant);
                 IBLOferta ioferta = new BLOferta();
-
-
-                System.Diagnostics.Debug.WriteLine("ANTES DEL FOR EACH");
-                IBLSubasta ibl= new BLSubasta();
-
+                
                 foreach (var item in subastas)
                 {
 
                    // List<Oferta> ofertas = ibl.ObtenerOfertas(item.id);  
                     
-                   
                     DateTime ahora = DateTime.Now;
 
                     DateTime fecha_subasta = (DateTime)item.fecha_Cierre;
-
-              
 
                     int resultado = DateTime.Compare(fecha_subasta, ahora);
 
@@ -150,6 +136,14 @@ namespace BusinessLogicLayer.TenantControllers
 
                     if(resultado<= 0)
                     {
+                        //Oferta oferta = _dal.ObtenerOfertas(item.id).OrderByDescending(o => o.fecha).First();//corroborrar que retorne el ultimo
+                        //IBLUsuario blUsu = new BLUsuario();
+                        //var ganador = blUsu.GetUsuario(tenant, oferta.id_Usuario);
+                        //if (ganador.billetera < item.valor_Actual)
+                        //{
+                        //    //error, agarrar el 2do capas..
+                        //}
+
                         System.Diagnostics.Debug.WriteLine("ACTUALIZO por JOB");
                         item.estado = EstadoTransaccion.Cerrada;
                          _dal.ActualizarSubasta(tenant, item);
