@@ -7,6 +7,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.ModelConfiguration.Configuration;
+using System.Data.Entity.Validation;
+using System.Globalization;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Backend.Models
 {
@@ -47,12 +56,16 @@ namespace Backend.Models
             return new ApplicationDbContext();
         }
 
+
         
     }
 
+
+
+
     public class IdentityManager
     {
-
+        // Swap ApplicationRole for IdentityRole:
         RoleManager<ApplicationRole> _roleManager = new RoleManager<ApplicationRole>(
             new RoleStore<ApplicationRole>(new ApplicationDbContext()));
 
@@ -61,13 +74,16 @@ namespace Backend.Models
 
         ApplicationDbContext _db = new ApplicationDbContext();
 
-        public bool RoleExists(string nombre)
+
+        public bool RoleExists(string name)
         {
-            return _roleManager.RoleExists(nombre);
+            return _roleManager.RoleExists(name);
         }
+
 
         public bool CreateRole(string name)
         {
+            // Swap ApplicationRole for IdentityRole:
             var idResult = _roleManager.Create(new ApplicationRole(name));
             return idResult.Succeeded;
         }
@@ -75,7 +91,6 @@ namespace Backend.Models
 
         public bool CreateUser(ApplicationUser user, string password)
         {
-
             var idResult = _userManager.Create(user, password);
             return idResult.Succeeded;
         }
@@ -86,7 +101,6 @@ namespace Backend.Models
             var idResult = _userManager.AddToRole(userId, roleName);
             return idResult.Succeeded;
         }
-
 
     }
 }

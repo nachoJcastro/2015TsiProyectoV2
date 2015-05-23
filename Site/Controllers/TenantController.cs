@@ -1,11 +1,11 @@
 ﻿using BusinessLogicLayer;
 using BusinessLogicLayer.TenantControllers;
 using BusinessLogicLayer.TenantInterfaces;
+using Crosscutting.EntityTenant;
 using Site.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,6 +17,7 @@ namespace Site.Controllers
         IBLSubasta _sub = new BLSubasta();
         
         public UsuarioSite user;
+        public TiendaTenant tiendaSesion;
         public string tenantID;
         /*static LocalDataStoreSlot local;
         private String tenantID;
@@ -52,13 +53,28 @@ namespace Site.Controllers
                     System.Web.HttpContext.Current.Session["usuario"] =new UsuarioSite();
                 //if (user == null) Session["usuario"] = new UsuarioSite();
                 //System.Web.HttpContext.Current.Session["usuario"] = user; 
+                if (System.Web.HttpContext.Current.Session["tienda"] == null)
+                    System.Web.HttpContext.Current.Session["tienda"] = new TiendaTenant();
 
                 user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
                 user.Dominio = tenantID;
                 user.idTienda = _ibl.ObtenerIdTenant(tenantID);
+
+                TiendaTenant nueva = _ibl.ObtenerDatosTenant(user.idTienda);
+                tiendaSesion = System.Web.HttpContext.Current.Session["tienda"] as TiendaTenant;
+                
+                tiendaSesion.Nombre = nueva.Nombre;
+                tiendaSesion.Css = nueva.Css;
+                tiendaSesion.Descripcion = nueva.Descripcion;
+
                 System.Web.HttpContext.Current.Session["usuario"] = user;
+                System.Web.HttpContext.Current.Session["tienda"] = tiendaSesion;
+
                 var lista_Subastas = _sub.ObtenerSubastas(tenantID);
                 ViewBag.ListarSubastas = lista_Subastas;
+                
+
+
                 return View();
                 //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());
                 //Thread t = Thread.CurrentThread;
