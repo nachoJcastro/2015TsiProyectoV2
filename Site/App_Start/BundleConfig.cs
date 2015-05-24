@@ -35,6 +35,11 @@ namespace Site
                       "~/css/bootstrap.css",
                      "~/css/modern-business.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/respond.js",
+                      "~/Scripts/site.js"));
+
         }
     }
 }

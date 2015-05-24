@@ -9,13 +9,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Backend.Models;
+using System.Diagnostics;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Backend.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        //public RoleManager<ApplicationRole> UserRole { get; private set; }
+        public RoleManager<ApplicationRole> roleManager = new RoleManager<ApplicationRole>(new RoleStore<ApplicationRole>(new ApplicationDbContext()));
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -23,7 +25,7 @@ namespace Backend.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRole rolManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -69,8 +71,21 @@ namespace Backend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            //var user = await UserManager.FindAsync(model.Email, model.Password);
-            //var rol = user.Roles.ToString();
+            var idrol = "";
+            var user = await UserManager.FindAsync(model.Email, model.Password);
+
+            //System.Diagnostics.Debug.WriteLine("Rol Usuario : " + user.Roles.ToString());
+            if (user != null)
+            {
+                idrol = user.Roles.First().RoleId;
+
+                //Debug.WriteLine("idRol: " + idrol);
+            }
+            
+            var rol = roleManager.FindById(idrol);
+
+            //Debug.WriteLine("Rol: " + rol.Name);
+            
 
             if (!ModelState.IsValid)
             {
@@ -83,10 +98,14 @@ namespace Backend.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    //if (rol != "Admin") 
-                    return RedirectToAction("Index", "TiendaVirtual");
-                //else
-                //    return RedirectToAction("Admin", "TiendaVirtual");
+                    if(rol.Name != "Admin")
+                    {
+                        return RedirectToAction("Index", "TiendaVirtual");
+                    }
+                    else
+                    {
+                        return RedirectToAction("AdminUser", "TiendaVirtual");
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -161,7 +180,7 @@ namespace Backend.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Nombre = model.Nombre, Apellido = model.Apellido };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
-                //UserManager.AddToRole(user.Id, "Usuario");
+                UserManager.AddToRole(user.Id, "Usuario");
 
                 if (result.Succeeded)
                 {

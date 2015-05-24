@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Backend.Controllers
-{
+{   [Authorize(Roles="Usuario")]
     public class ComponentesController : Controller
     {
         //IBLCategoria _bl = new BLCategoria();

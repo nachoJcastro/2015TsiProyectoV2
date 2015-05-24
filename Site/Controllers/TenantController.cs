@@ -58,6 +58,27 @@ namespace Site.Controllers
                 user.idTienda = _ibl.ObtenerIdTenant(tenantID);
                 System.Web.HttpContext.Current.Session["usuario"] = user;
                 var lista_Subastas = _sub.ObtenerSubastas(tenantID);
+
+                List<Subasta> ls_Subastas_Subasta = new List<Subasta>();
+                foreach (Subasta item in lista_Subastas)
+                {
+                    if (item.finalizado == Crosscutting.Enum.TipoFinalizacion.Subasta)
+                    {
+                        ls_Subastas_Subasta.Add(item);
+                    }
+                }
+
+
+                List<Subasta> ls_Subastas_Directa = new List<Subasta>();
+                foreach (Subasta item in lista_Subastas)
+                {
+                    if (item.finalizado == Crosscutting.Enum.TipoFinalizacion.Compra_directa)
+                    {
+                        ls_Subastas_Directa.Add(item);
+                    }
+                }
+
+
                 List<Subasta> lista_Subastas_Activas = new List<Subasta>();
                 foreach (Subasta element in lista_Subastas)
                 {
@@ -65,8 +86,22 @@ namespace Site.Controllers
                         lista_Subastas_Activas.Add(element);
                     }
                 }
+
+                List<Subasta> lista_Subastas_compraDirecta = new List<Subasta>();
+
+                foreach (Subasta element in lista_Subastas_compraDirecta)
+                {
+                    if(element.finalizado == Crosscutting.Enum.TipoFinalizacion.Compra_directa){
+                        lista_Subastas_compraDirecta.Add(element);
+                    }
+                }
+
                 ViewBag.ListarSubastas = lista_Subastas;
                 ViewBag.ListarSubastasActivas = lista_Subastas_Activas;
+
+                ViewBag.ListarSubastasSubasta = lista_Subastas;
+                ViewBag.ListarSubastasDirecta = lista_Subastas_compraDirecta;
+
                 return View();
                 //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());
                 //Thread t = Thread.CurrentThread;

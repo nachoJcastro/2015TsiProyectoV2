@@ -21,7 +21,7 @@ namespace Site.Tareas
                   (s =>
                      s.WithIntervalInMinutes(1)
                     .OnEveryDay()
-                     .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(13,16))
+                     .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(19,58))
                   )
                 .Build();
 
