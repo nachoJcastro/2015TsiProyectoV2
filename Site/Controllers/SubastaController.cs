@@ -233,7 +233,8 @@ namespace Site.Controllers
 
             if (usuario.billetera < subasta.precio_Compra)
             {
-                return View("SinSaldo", subasta);
+                ViewBag.idSubasta = subasta.id;
+                return View("SinSaldo");
             }
             else
             {

@@ -136,13 +136,15 @@ namespace BusinessLogicLayer.TenantControllers
 
                     if(resultado<= 0)
                     {
-                        //Oferta oferta = _dal.ObtenerOfertas(item.id).OrderByDescending(o => o.fecha).First();//corroborrar que retorne el ultimo
-                        //IBLUsuario blUsu = new BLUsuario();
-                        //var ganador = blUsu.GetUsuario(tenant, oferta.id_Usuario);
-                        //if (ganador.billetera < item.valor_Actual)
-                        //{
-                        //    //error, agarrar el 2do capas..
-                        //}
+                        List<Oferta> ofertas = _dal.ObtenerOfertas(item.id);
+                        var ofertasOrdenadas = ofertas.OrderByDescending(o => o.fecha);
+                        var oferta = ofertasOrdenadas.First();
+                        IBLUsuario blUsu = new BLUsuario();
+                        var ganador = blUsu.GetUsuario(tenant, oferta.id_Usuario);
+                        if (ganador.billetera < item.valor_Actual)
+                        {
+                            //error, agarrar el 2do capas..
+                        }
 
                         System.Diagnostics.Debug.WriteLine("ACTUALIZO por JOB");
                         item.estado = EstadoTransaccion.Cerrada;
