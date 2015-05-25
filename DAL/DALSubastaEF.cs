@@ -100,15 +100,17 @@ namespace DAL
                     subasta.garantia = subastaNueva.garantia;
                     subasta.id = subastaNueva.id;
                     subasta.id_Categoria = subastaNueva.id_Categoria;
+                    subasta.id_Comprador = subastaNueva.id_Comprador;
                     subasta.id_Producto = subastaNueva.id_Producto;
                     subasta.id_Vendedor = subastaNueva.id_Vendedor;
                     subasta.Imagen = subastaNueva.Imagen;
-                    subasta.Oferta = subastaNueva.Oferta;
+                    //subasta.Oferta = subastaNueva.Oferta;
                     subasta.precio_Base = subastaNueva.precio_Base;
                     subasta.precio_Compra = subastaNueva.precio_Compra;
                     subasta.tags = subastaNueva.tags;
                     subasta.titulo = subastaNueva.titulo;
                     subasta.valor_Actual = subastaNueva.valor_Actual;
+                    //subasta.Vendedor = subastaNueva.Vendedor;
 
                     db.SaveChanges();
                 }

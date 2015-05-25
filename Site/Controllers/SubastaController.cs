@@ -71,60 +71,7 @@ namespace Site.Controllers
             return View(subasta);
         }
 
-        //// GET: Subastas/Create
-        //public ActionResult Create(string id)
-        //{
-        //    try
-        //    {
-        //        user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
-
-        //        Subasta subasta = new Subasta();
-        //        //subasta.id_Categoria = 1;
-        //        //subasta.id_Producto = 1;
-        //        subasta.id_Vendedor = 1;
-        //        subasta.titulo = "Prueba";
-        //        subasta.valor_Actual = 111;
-        //        subasta.fecha_Inicio = DateTime.Now;
-        //        System.Diagnostics.Debug.WriteLine(" fecha inicio " + subasta.fecha_Inicio.ToString());
-        //        subasta.fecha_Cierre = DateTime.Now.AddMinutes(5);
-        //        System.Diagnostics.Debug.WriteLine(" fecha fin " + subasta.fecha_Cierre.ToString());
-        //        subasta.estado = EstadoTransaccion.Activa;
-        //        subasta.finalizado = TipoFinalizacion.Subasta;
-
-        //        user_sitio = Session["usuario"] as UsuarioSite;
-
-        //        if (user_sitio.Dominio != null)
-        //        {
-        //            System.Diagnostics.Debug.WriteLine(" Dominio en sesion Login " + user_sitio.Dominio.ToString());
-        //            valor_tenant = user_sitio.Dominio.ToString();
-        //        }
-
-        //        subIBL.AltaSubasta(valor_tenant, subasta);
-
-        //        if (user.idTienda == 0) { System.Diagnostics.Debug.WriteLine("Usuario nulo"); }
-        //        else System.Diagnostics.Debug.WriteLine(user.idTienda.ToString());
-
-
-        //        List<string> tipo = new List<string>();
-        //        tipo.Add("Subasta");
-        //        tipo.Add("Compra Directa");
-        //        ViewData["Tipo"] = tipo;
-        //        // ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
-        //        // ViewData["Productos"] = proIBL.ObtenerTipoProdCategoria(user.idTienda);
-        //        // ViewData["Atributos"] = proIBL.ObtenerAtributosTipoProd(user.idTienda);
-
-        //        ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user.idTienda), "CategoriaId", "Nombre");
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-
-        //    return View();
-        //}
-
-        
+                
         // GET: Subastas/Create
         public ActionResult Create()
         {
@@ -183,8 +130,6 @@ namespace Site.Controllers
 
                 valor_tenant = user_sitio.Dominio.ToString();
                 subIBL.AgregarSubasta(valor_tenant, subasta);
-
-                return RedirectToAction("DetalleProducto", subasta);
             }
             else
             {
@@ -193,10 +138,9 @@ namespace Site.Controllers
 
                 valor_tenant = user_sitio.Dominio.ToString();
                 subIBL.AgregarSubasta(valor_tenant, subasta);
-
-
-                return View("DetalleProducto", subasta);
             }
+
+            return View("DetalleProducto", subasta);
        }
 
         

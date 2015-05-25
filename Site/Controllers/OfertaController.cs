@@ -131,10 +131,10 @@ namespace Site.Controllers
 
             if (monto_actual>=oferta.Monto) {
                 ModelState.AddModelError("", "La Oferta debe ser mayor a " +monto_actual);
-                  return View();
+                return View();
             }
             else if(ofertante.billetera < oferta.Monto){
-                ModelState.AddModelError("", "Error usted solo dispone de " + ofertante.billetera);
+                ModelState.AddModelError("", "Error usted solo dispone de $" + ofertante.billetera);
                 return View();
             }
             else {

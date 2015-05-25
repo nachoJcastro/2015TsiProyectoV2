@@ -30,6 +30,10 @@
                 <td><img src="~/img/img2.jpg"></td>
             </tr>
             <tr>
+                <th>Tipo de Finalizacion</th>
+                <th>@Html.DisplayFor(model => model.finalizado)</th>
+            </tr>
+            <tr>
                 <th>Vendedor</th>
                 <th>@Html.DisplayFor(model => model.id_Vendedor)</th>
             </tr>
@@ -58,12 +62,12 @@
     </table>
 </div>
 
-<button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
 
 @using Site.Models
 @{
     var user = Session["usuario"] as UsuarioSite;
     var estado = Model.estado.ToString();
+    var tipoFinalizacion = Model.finalizado.ToString();
 }
 
 @if (estado.Equals("Activa"))
@@ -71,10 +75,20 @@
 
     if (user != null && user.Email != null)
     {
-        <div class="jumbotron">
-            <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
-        </div>
+
+        if (tipoFinalizacion == "Subasta")
+        {
+            <div class="jumbotron">
+                <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
+                <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
+            </div>
+        }
+        else
+        {
+            <div class="jumbotron">
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
+            </div>
+        }
     }
     else
     {

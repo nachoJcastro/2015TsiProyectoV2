@@ -120,12 +120,12 @@ namespace BusinessLogicLayer.TenantControllers
             {
                 List<Subasta> subastas =this.ObtenerSubastas(tenant);
                 IBLOferta ioferta = new BLOferta();
-                
+
                 foreach (var item in subastas)
                 {
 
-                   // List<Oferta> ofertas = ibl.ObtenerOfertas(item.id);  
-                    
+                    // List<Oferta> ofertas = ibl.ObtenerOfertas(item.id);  
+
                     DateTime ahora = DateTime.Now;
 
                     DateTime fecha_subasta = (DateTime)item.fecha_Cierre;
@@ -134,43 +134,39 @@ namespace BusinessLogicLayer.TenantControllers
 
                     System.Diagnostics.Debug.WriteLine("paso fechas y resultado = " + resultado.ToString());
 
-                    if(resultado<= 0)
+                    if (resultado <= 0)
                     {
                         List<Oferta> ofertas = _dal.ObtenerOfertas(item.id);
                         var ofertasOrdenadas = ofertas.OrderByDescending(o => o.fecha);
-                        var oferta = ofertasOrdenadas.First();
+                        //var oferta = ofertasOrdenadas.First();
                         IBLUsuario blUsu = new BLUsuario();
-                        var ganador = blUsu.GetUsuario(tenant, oferta.id_Usuario);
-                        if (ganador.billetera < item.valor_Actual)
+                        Usuario ganador = null;
+                        foreach (var itemOfertas in ofertasOrdenadas)
                         {
-                            //error, agarrar el 2do capas..
+                            if (ganador == null)
+                            {
+                                var usuario = blUsu.GetUsuario(tenant, itemOfertas.id_Usuario);
+                                if (usuario.billetera > item.valor_Actual)
+                                {
+                                    ganador = usuario;
+                                    ganador.billetera = ganador.billetera - itemOfertas.Monto;
+                                    blUsu.ActualizarUsuario(tenant, ganador);
+                                    item.valor_Actual = itemOfertas.Monto;
+                                    item.id_Comprador = ganador.id;
+                                }
+                            }
                         }
-
-                        System.Diagnostics.Debug.WriteLine("ACTUALIZO por JOB");
                         item.estado = EstadoTransaccion.Cerrada;
-                         _dal.ActualizarSubasta(tenant, item);
+                        _dal.ActualizarSubasta(tenant, item);
+
+                        //enviarMails(Uvendedor, Ucomprador);*/
                     }
-
                 }
-
-
-               /* var subasta = ObtenerSubasta(tenant, subastaId);
-                var ofertaGanadora = subasta.Oferta.LastOrDefault();
-                subasta.id_Comprador = ofertaGanadora.id_Usuario;
-                subasta.valor_Actual = ofertaGanadora.Monto;
-                subasta.estado = EstadoTransaccion.Cerrada;
-                subasta.finalizado = TipoFinalizacion.Subasta;
-                _dal.ActualizarSubasta(subasta);
-
-                //enviarMails(Uvendedor, Ucomprador);*/
-
             }
             catch (Exception)
             {
-                
                 throw;
             }
-           
         }
     }
 }
