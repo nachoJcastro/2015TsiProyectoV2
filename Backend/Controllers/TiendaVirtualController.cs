@@ -14,6 +14,8 @@ using System.IO;
 using System.Security.AccessControl;
 using Microsoft.AspNet.Identity;
 using System.Web.Hosting;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System.Drawing;
 
 namespace Backend.Controllers
 {   
@@ -21,6 +23,7 @@ namespace Backend.Controllers
     {
 
         IBLTiendaVirtual _bl;
+        BlobStorageService _bss = new BlobStorageService();
 
         public TiendaVirtualController(IBLTiendaVirtual bl)
         {
@@ -96,28 +99,52 @@ namespace Backend.Controllers
             
                 if (ModelState.IsValid)
                 {
-                    //string strMappath = "~/imagenes/" + tiendaVirtualDTO.Nombre;
-                    string strMappath = "~/imagenes/";
-                    try
+                    CloudBlobContainer blobContainer = _bss.GetContainerTienda(tiendaVirtualDTO.Dominio);
+                    if (logo != null)
                     {
+                        if (logo.ContentLength > 0)
+                        {
+                            var nombreFoto = tiendaVirtualDTO.Dominio + Guid.NewGuid().ToString() + "_logo";
+                            CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+                            blob.UploadFromStream(logo.InputStream);
+                            tiendaVirtualDTO.Logo = blob.Uri.ToString();
+
+                        }
+                    }
+                    else
+                    {
+                        var path = Server.MapPath(@"~/Imagenes/tiendadefault.png");
+                        var nombreFoto = tiendaVirtualDTO.Dominio + Guid.NewGuid().ToString() + "_logo";
+                        //byte[] imgDefault = System.IO.File.ReadAllBytes(path);
+                        FileStream fs = new FileStream(path, FileMode.Create);
+                        CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+                        blob.UploadFromStream(fs);
+                        tiendaVirtualDTO.Logo = blob.Uri.ToString();
+                    }
+
+
+                    ////string strMappath = "~/imagenes/" + tiendaVirtualDTO.Nombre;
+                    //string strMappath = "~/imagenes/";
+                    //try
+                    //{
                         
-                        if (logo != null)
-                        {
-                            //var nombreFoto = juego.Nombre + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(foto.FileName);
-                            var nombreFoto = tiendaVirtualDTO.Nombre + Guid.NewGuid().ToString() + Path.GetExtension(logo.FileName);
-                            var rutaFoto = Path.Combine(Server.MapPath(strMappath), nombreFoto);
-                            logo.SaveAs(rutaFoto);
-                            tiendaVirtualDTO.Logo = strMappath + nombreFoto;
-                        }
-                        else
-                        {
-                            tiendaVirtualDTO.Logo = "~/Imagenes/tiendadefault.png";
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("The process failed: {0}", e.ToString());
-                    }
+                    //    if (logo != null)
+                    //    {
+                    //        //var nombreFoto = juego.Nombre + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(foto.FileName);
+                    //        var nombreFoto = tiendaVirtualDTO.Nombre + Guid.NewGuid().ToString() + Path.GetExtension(logo.FileName);
+                    //        var rutaFoto = Path.Combine(Server.MapPath(strMappath), nombreFoto);
+                    //        logo.SaveAs(rutaFoto);
+                    //        tiendaVirtualDTO.Logo = strMappath + nombreFoto;
+                    //    }
+                    //    else
+                    //    {
+                    //        tiendaVirtualDTO.Logo = "~/Imagenes/tiendadefault.png";
+                    //    }
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    Console.WriteLine("The process failed: {0}", e.ToString());
+                    //}
 
                     var fileContents = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/Site.css"));
 
@@ -159,22 +186,47 @@ namespace Backend.Controllers
         {
             if (ModelState.IsValid)
             {
+                CloudBlobContainer blobContainer = _bss.GetContainerTienda(tiendaVirtualDTO.Dominio);
 
-                string strMappath = "~/imagenes/";
 
-                // guardar imagen
-                if (logo != null)
+                if (logo.ContentLength > 0)
                 {
-                    //var nombreFoto = juego.Nombre + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(foto.FileName);
-                    var nombreFoto = tiendaVirtualDTO.Nombre + Guid.NewGuid().ToString() + Path.GetExtension(logo.FileName);
-                    var rutaFoto = Path.Combine(Server.MapPath(strMappath), nombreFoto);
-                    logo.SaveAs(rutaFoto);
-                    tiendaVirtualDTO.Logo = strMappath + nombreFoto;
+
+                    //Elminar foto anterior
+                    //TiendaVirtualDTO old = _bl.ObtenerTienda(tiendaVirtualDTO.TiendaVitualId);
+                    //CloudBlockBlob blobOld = blobContainer.GetBlockBlobReference("Nombreblob");
+                    //blobOld.Delete();
+
+
+                    var nombreFoto = tiendaVirtualDTO.Dominio + Guid.NewGuid().ToString() + "_logo";
+                    CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+                    blob.UploadFromStream(logo.InputStream);
+                    tiendaVirtualDTO.Logo = blob.Uri.ToString();
+
                 }
                 else
                 {
-                    tiendaVirtualDTO.Logo = "~/Imagenes/tiendadefault.png";
+                    TiendaVirtualDTO old = _bl.ObtenerTienda(tiendaVirtualDTO.TiendaVitualId);
+
+                    tiendaVirtualDTO.Logo = old.Logo;
                 }
+
+
+                //string strMappath = "~/imagenes/";
+
+                //// guardar imagen
+                //if (logo != null)
+                //{
+                //    //var nombreFoto = juego.Nombre + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(foto.FileName);
+                //    var nombreFoto = tiendaVirtualDTO.Nombre + Guid.NewGuid().ToString() + Path.GetExtension(logo.FileName);
+                //    var rutaFoto = Path.Combine(Server.MapPath(strMappath), nombreFoto);
+                //    logo.SaveAs(rutaFoto);
+                //    tiendaVirtualDTO.Logo = strMappath + nombreFoto;
+                //}
+                //else
+                //{
+                //    tiendaVirtualDTO.Logo = "~/Imagenes/tiendadefault.png";
+                //}
 
                 _bl.ActualizarTiendas(tiendaVirtualDTO);
                 return RedirectToAction("Index");
@@ -256,6 +308,64 @@ namespace Backend.Controllers
             }
 
             return View(css);
+        }
+
+
+        [Authorize(Roles = "Usuario")]
+        public ActionResult Upload(int id)
+        {
+            TiendaVirtualDTO tienda = _bl.ObtenerTienda(id);
+            //CloudBlobContainer blobContainer = _bss.GetContainerTienda(tienda.Dominio);
+            //List<string> blobs = new List<string>();
+
+            
+            //foreach (var blob in blobContainer.ListBlobs())
+            //{
+            //    blobs.Add(blob.Uri.ToString());
+            //}
+
+            return View(tienda);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Usuario")]
+        public ActionResult Upload(TiendaVirtualDTO tienda, HttpPostedFileBase image)
+        {
+
+                TiendaVirtualDTO tiendaDTO = _bl.ObtenerTienda(tienda.TiendaVitualId);
+                var nombreFoto = tienda.Dominio + Guid.NewGuid().ToString() + "_portada";
+                CloudBlobContainer blobContainer = _bss.GetContainerTienda(tienda.Dominio);
+                CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+                
+                ImagenesDTO imagen = new ImagenesDTO();
+                imagen.TiendaId = tiendaDTO.TiendaVitualId;
+                imagen.Nombre = nombreFoto;
+                imagen.UrlImagenMediana = blob.Uri.ToString();
+                _bl.AgregarImagenTienda(imagen);
+                
+
+                blob.UploadFromStream(image.InputStream);
+
+                return RedirectToAction("Upload", "TiendaVirtual", new { id = tiendaDTO.TiendaVitualId });
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = "Usuario")]
+        public string DeleteImage(string Name, string Uri, int id)
+        {
+            TiendaVirtualDTO tienda = _bl.ObtenerTienda(id);
+
+            Uri uri = new Uri(Uri);
+            string filename = Path.GetFileName(uri.LocalPath);
+            CloudBlobContainer blobContainer = _bss.GetContainerTienda(tienda.Dominio);
+            CloudBlockBlob blob = blobContainer.GetBlockBlobReference(filename);
+
+            _bl.EliminarImagenTienda(tienda.TiendaVitualId, Name);
+
+            blob.Delete();
+
+            return "File delete";
         }
 
 

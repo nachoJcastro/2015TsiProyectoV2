@@ -19,6 +19,9 @@ namespace BusinessLogicLayer
         void EditarCss(int id,string css);
         void EliminarTienda(int tiendaId); //Delete
         void EliminarTiendaVirtual(int tiendaId);
+        void EliminarImagenTienda(int tiendaId, string nombre);
+
+        void AgregarImagenTienda(ImagenesDTO img);
 
         List<String> ObtenerTenants();
     }

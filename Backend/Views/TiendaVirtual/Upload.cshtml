@@ -1,0 +1,46 @@
+﻿@model  Crosscutting.Entity.TiendaVirtualDTO
+@{
+    Layout = "~/Views/Shared/_LayoutBackUser.cshtml";
+}
+
+<div class="col-md-12 contendor-admin-user">
+    <div class="col-md-12 titulo-componentes-user">
+        <a href="@Url.Action("index", "TiendaVirtual")" class="btn btn-default"><span class="fa fa-arrow-left fa-2x"></span></a><h1>Subir Imagenes</h1>
+    </div>
+
+    <div class="col-md-12 contenido-componentes-user">
+        <p>
+            @using (Html.BeginForm("Upload", "TiendaVirtual", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(x => Model.TiendaVitualId)
+                @Html.HiddenFor(x => Model.Dominio)
+                <input type="file" name="image" />
+                <input type="submit" value="Upload" />
+            }
+
+        </p>
+
+        <ul style="list-style-type:none; padding:0;">
+            @if (Model.ListaImagenes != null) { 
+                foreach (var item in Model.ListaImagenes)
+                {
+                    <li>
+                        <img src="@item.UrlImagenMediana" alt="Alternate Text" width="100" height="100" />
+                        <a id="@item.UrlImagenMediana" href="#" onclick="deleteImage('@item.Nombre','@item.UrlImagenMediana','@item.TiendaId');">Delete</a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<script>
+    function deleteImage(nombre,image,id) {
+        var url = "/TiendaVirtual/DeleteImage";
+        $.post(url, { Name: nombre, Uri: image, id: id }, function (data) {
+            window.location.href = "/TiendaVirtual/Upload/" + id;
+        });
+    }
+</script>
+
+

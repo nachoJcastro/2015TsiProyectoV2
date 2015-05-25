@@ -17,6 +17,7 @@ namespace Crosscutting.Entity
         public int TiendaId { get; set; }
         public virtual TiendaVirtualDTO TiendaVirtual { get; set; }
 
+        public string Nombre { get; set; }
         public string UrlImagenMediana { get; set; }
 
         public bool EsPortada { get; set; }

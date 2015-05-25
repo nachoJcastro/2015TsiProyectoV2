@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="AzureCloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="Backend">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="StorageConnection" value="DefaultEndpointsProtocol=https;AccountName=contenidosite;AccountKey=IEzJoQaeokA8/UT115VSjEPb62RAr/XUODX65YHdCIdFkhcNzsOdSePGExxoOG66STzfPiOd2skLcdcQZ8FoeA==" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>
