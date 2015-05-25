@@ -75,9 +75,9 @@ namespace DAL
                 BackendDB back = new BackendDB();
                 var tienda = back.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == idTienda);
                 tiendaInfo.Nombre = tienda.Nombre;
-                tiendaInfo.Css = tiendaInfo.Css;
-                tiendaInfo.Descripcion = tiendaInfo.Descripcion;
-                tiendaInfo.Logo = tiendaInfo.Logo;
+                tiendaInfo.Css = tienda.Css;
+                tiendaInfo.Descripcion = tienda.Descripcion;
+                tiendaInfo.Logo = tienda.Logo;
             }
             catch (Exception ex)
             {

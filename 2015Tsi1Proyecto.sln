@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Site", "Site\Site.csproj", 
 		{C0284F4C-BEF1-4C7E-97DE-C6EA9CFA912E} = {C0284F4C-BEF1-4C7E-97DE-C6EA9CFA912E}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure", "Azure", "{AE570644-6D52-4E50-9D15-6B86E7A9927D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

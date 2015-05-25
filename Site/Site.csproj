@@ -184,9 +184,11 @@
     <Compile Include="App_Start\RutaSubdominio.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FileReader.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OfertaController.cs" />
+    <Compile Include="Models\EstiloTienda.cs" />
     <Compile Include="Models\OfertaModel.cs" />
     <Compile Include="Controllers\SubastaController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
@@ -290,6 +292,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="contenido\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

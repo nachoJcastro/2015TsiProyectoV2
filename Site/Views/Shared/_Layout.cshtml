@@ -1,7 +1,8 @@
 ﻿@using Site.Models
 @{
     var user = Session["usuario"] as UsuarioSite;
-    var tienda = Session["tienda"] as Crosscutting.EntityTenant.TiendaTenant;
+    var tienda = Session["datosTienda"] as Crosscutting.EntityTenant.TiendaTenant;
+    var estilo = Session["estilo"] as EstiloTienda;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -11,22 +12,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @if (user!=null)
     {    <title>@user.Dominio - @ViewBag.Title</title>
+         <link href="~/Content/@estilo.css" rel="stylesheet" />
     }
     else
     {
         <title>Sitio- @ViewBag.Title</title>
     }
 
+
     @Styles.Render("~/Content/modern-business")
   
-    <style>
-        @if (tienda != null)
-        {
-
-                @tienda.Css
-
-        }
-    </style>
+    
 
 </head>
 <body>
@@ -35,9 +31,8 @@
                 <div class="masthead">
                     @if (tienda != null)
                     { 
-                        <h1>@tienda.Nombre</h1>
+                    <h3 class="text-muted">@Html.ActionLink(@tienda.Nombre, "Index", "Tenant", new { area = "" }, new { @class = "navbar-brand" })</h3>
                     }
-                    <h3 class="text-muted">@Html.ActionLink("Sitio", "Index", "Tenant", new { area = "" }, new { @class = "navbar-brand" })</h3>
                     <h4>@Html.Partial("_LoginPartial")</h4>
 
 

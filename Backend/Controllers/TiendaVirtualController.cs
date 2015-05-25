@@ -19,7 +19,7 @@ namespace Backend.Controllers
 {   
     public class TiendaVirtualController : Controller
     {
-        //IBLTiendaVirtual _bl = new BLTiendaVirtual();
+
         IBLTiendaVirtual _bl;
 
         public TiendaVirtualController(IBLTiendaVirtual bl)
@@ -52,10 +52,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "Usuario")]
         public ActionResult Details(int id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
+
             TiendaVirtualDTO tiendaVirtualDTO = _bl.ObtenerTienda(id);
             if (tiendaVirtualDTO == null)
             {
@@ -72,10 +69,7 @@ namespace Backend.Controllers
             {
                  var idUser = User.Identity.GetUserId();
                  var tienda= _bl.ObtenerTiendaDelUsuario(User.Identity.GetUserName());
-                 /*if (tienda != null) {
-                     ViewBag.Message = "El usuario ya tiene una tienda!";
-                     return null;
-                 }*/
+
                     
             }
             catch (Exception)
@@ -106,20 +100,7 @@ namespace Backend.Controllers
                     string strMappath = "~/imagenes/";
                     try
                     {
-                        //if (!Directory.Exists(strMappath))
-                        //{
-                        //    DirectoryInfo di = Directory.CreateDirectory(strMappath);
-
-                        //    DirectorySecurity dSecurity = di.GetAccessControl();
-
-                        //    // Add the FileSystemAccessRule to the security settings. 
-                        //    dSecurity.AddAccessRule(new FileSystemAccessRule(@"DomainName\AccountName", FileSystemRights.ReadData, AccessControlType.Allow));
-
-                        //    // Set the new access settings.
-                        //    di.SetAccessControl(dSecurity);
-                        //}
-
-                        // guardar imagen
+                        
                         if (logo != null)
                         {
                             //var nombreFoto = juego.Nombre + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(foto.FileName);
@@ -161,10 +142,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "Usuario")]
         public ActionResult Edit(int id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
+
             TiendaVirtualDTO tiendaVirtualDTO = _bl.ObtenerTienda(id);
             if (tiendaVirtualDTO == null)
             {
@@ -181,13 +159,8 @@ namespace Backend.Controllers
         {
             if (ModelState.IsValid)
             {
-                //string strMappath = "~/imagenes/" + tiendaVirtualDTO.Nombre;
-                string strMappath = "~/imagenes/";
 
-                //if (!Directory.Exists(strMappath))
-                //{
-                //    DirectoryInfo di = Directory.CreateDirectory(strMappath);
-                //}
+                string strMappath = "~/imagenes/";
 
                 // guardar imagen
                 if (logo != null)
@@ -213,10 +186,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "Usuario")]
         public ActionResult Delete(int id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
+
             TiendaVirtualDTO tiendaVirtualDTO = _bl.ObtenerTienda(id);
             if (tiendaVirtualDTO == null)
             {
@@ -231,9 +201,9 @@ namespace Backend.Controllers
         [Authorize(Roles = "Usuario")]
         public ActionResult DeleteConfirmed(int id)
         {
-            //TiendaVirtualDTO tiendaVirtualDTO = _bl.ObtenerTienda(id);
+
             _bl.EliminarTienda(id);
-            //await db.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 
@@ -288,32 +258,7 @@ namespace Backend.Controllers
             return View(css);
         }
 
-        public ActionResult Download()
-        {
 
-            //Response.ContentType = "text/css"; 
-            //Response.AppendHeader("Content", "CSS; filename=Site.css");
-            //Response.TransmitFile(Server.MapPath("~/Content/Site.css")); 
-            //Response.End();
 
-            //var path = Path.Combine(Server.MapPath("~/Content/Images/"));
-            //Response.
-            ////Set the content type
-            var contentType = "text/css";
-            //Get the bootstrap.less contents
-            var cssContent = System.IO.File.ReadAllText(
-                    HostingEnvironment.MapPath("~/Content/Site.css")
-                );
-            //return FileStyleUriParser(cssContent);
-            return File(cssContent, contentType);
-        }
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
     }
 }
