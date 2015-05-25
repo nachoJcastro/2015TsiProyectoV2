@@ -5,3 +5,40 @@
 }
 
 <h1>Bienvenido admin!</h1>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>Categorias</h2>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Dominio</th>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Fecha Creacion</th>
+                    @*<th></th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.TiendaVitualId</td>
+                        <td>@item.Dominio</td>
+                        <td>@item.Nombre</td>
+                        <td>@item.UsuarioId</td>
+                        <td>@item.Fecha_creacion</td>
+                        @*<td>
+                            <a href="#myModal" class="btnEditar btn-link btn-info" data-toggle="modal" data-id="@item.TiendaVitualId"><i class="glyphicon glyphicon-pencil"></i>Editar</a>
+                            <a href="#myModal" class="btnEliminar btn-link btn-danger" data-toggle="modal" data-id="@item.TiendaVitualId"><i class="glyphicon glyphicon-trash"></i>Eliminar</a>
+                        </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

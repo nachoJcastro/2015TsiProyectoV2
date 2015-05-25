@@ -5,9 +5,7 @@ using Crosscutting.EntityTenant;
 using Site.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,8 +17,6 @@ namespace Site.Controllers
         IBLSubasta _sub = new BLSubasta();
         
         public UsuarioSite user;
-        public TiendaTenant t;
-        public EstiloTienda estilo;
         public string tenantID;
         /*static LocalDataStoreSlot local;
         private String tenantID;
@@ -54,32 +50,35 @@ namespace Site.Controllers
                 string valor_Tenant = System.Threading.Thread.GetData(local).ToString();*/
                 if ( System.Web.HttpContext.Current.Session["usuario"] == null)
                     System.Web.HttpContext.Current.Session["usuario"] =new UsuarioSite();
-
-                if (System.Web.HttpContext.Current.Session["datosTienda"] == null)
-                    System.Web.HttpContext.Current.Session["datosTienda"] = new TiendaTenant();
-
-                if (System.Web.HttpContext.Current.Session["estilo"] == null)
-                    System.Web.HttpContext.Current.Session["estilo"] = new EstiloTienda();
                 //if (user == null) Session["usuario"] = new UsuarioSite();
                 //System.Web.HttpContext.Current.Session["usuario"] = user; 
 
                 user = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
-                t = System.Web.HttpContext.Current.Session["datosTienda"] as TiendaTenant;
-                estilo = System.Web.HttpContext.Current.Session["estilo"] as EstiloTienda;
-
                 user.Dominio = tenantID;
                 user.idTienda = _ibl.ObtenerIdTenant(tenantID);
-
-                t = _ibl.ObtenerDatosTenant(user.idTienda);
-
-                estilo.css = CrearCss(t.Css,t.Nombre);
-
                 System.Web.HttpContext.Current.Session["usuario"] = user;
-                System.Web.HttpContext.Current.Session["datosTienda"] = t;
-                System.Web.HttpContext.Current.Session["estilo"] = estilo;
-
-
                 var lista_Subastas = _sub.ObtenerSubastas(tenantID);
+
+                List<Subasta> ls_Subastas_Subasta = new List<Subasta>();
+                foreach (Subasta item in lista_Subastas)
+                {
+                    if (item.finalizado == Crosscutting.Enum.TipoFinalizacion.Subasta)
+                    {
+                        ls_Subastas_Subasta.Add(item);
+                    }
+                }
+
+
+                List<Subasta> ls_Subastas_Directa = new List<Subasta>();
+                foreach (Subasta item in lista_Subastas)
+                {
+                    if (item.finalizado == Crosscutting.Enum.TipoFinalizacion.Compra_directa)
+                    {
+                        ls_Subastas_Directa.Add(item);
+                    }
+                }
+
+
                 List<Subasta> lista_Subastas_Activas = new List<Subasta>();
                 foreach (Subasta element in lista_Subastas)
                 {
@@ -88,8 +87,21 @@ namespace Site.Controllers
                     }
                 }
 
+                List<Subasta> lista_Subastas_compraDirecta = new List<Subasta>();
+
+                foreach (Subasta element in lista_Subastas_compraDirecta)
+                {
+                    if(element.finalizado == Crosscutting.Enum.TipoFinalizacion.Compra_directa){
+                        lista_Subastas_compraDirecta.Add(element);
+                    }
+                }
+
                 ViewBag.ListarSubastas = lista_Subastas;
                 ViewBag.ListarSubastasActivas = lista_Subastas_Activas;
+
+                ViewBag.ListarSubastasSubasta = lista_Subastas;
+                ViewBag.ListarSubastasDirecta = lista_Subastas_compraDirecta;
+
                 return View();
                 //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());
                 //Thread t = Thread.CurrentThread;
@@ -109,59 +121,5 @@ namespace Site.Controllers
 
 
         }
-
-        //Estilo css, HttpPostedFileBase texto
-        public String CrearCss(string texto, string nombreT)
-        {   
-            //var contentType = "text/css";    
-
-            String rutaCarpetafull = "~/Content/";
-
-            var nombreCss = nombreT +"_"+Guid.NewGuid().ToString()+".css";
-            var rutaRetorno = rutaCarpetafull + nombreCss;
-            var ruta = Path.Combine(Server.MapPath(rutaCarpetafull), nombreCss);
-            
-            var content = texto;
-            //var bytes = Encoding.UTF8.GetBytes(content);
-
-
-            StreamWriter sw = System.IO.File.CreateText(ruta);
-            sw.WriteLine(content);
-            sw.Close();
-            
-            
-            //var result = new FileContentResult(bytes, contentType);
-
-            //Si no existe el directorio se crea
-            //if (!Directory.Exists(rutaCarpetafull))
-            //{
-            //    DirectoryInfo di = Directory.CreateDirectory(rutaCarpetafull);
-
-            //}
-            //if (System.IO.File.Exists(tienda.Css))
-            //{
-            //    String dir = tienda.Css;
-            //    using (StreamReader sr = new StreamReader(dir))
-            //    {
-            //        String line = sr.ReadToEnd();
-            //        var bytes = Encoding.UTF8.GetBytes(line);
-            //        var result = new FileContentResult(bytes, contentType);
-            //        result.FileDownloadName = "Site.css";
-            //        return result;
-            //    }
-            //}
-
-
-            return nombreCss;
-
-        }
-
-        //public ContentResult GetCss(string id)
-        //{
-        //    string cssBody = GetCssBodyFromDatabase(id);
-        //    return Content(cssBody, "text/css");
-        //}
-
-
     }
 }
