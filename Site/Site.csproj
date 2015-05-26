@@ -211,6 +211,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\RutaSubdominio.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BlobStorage.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FileReader.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Tareas\EmailTarea.cs" />
     <Compile Include="Tareas\SchedulerSubasta.cs" />
     <Compile Include="Tareas\SchedulerMail.cs" />
+    <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\justified-nav.css" />

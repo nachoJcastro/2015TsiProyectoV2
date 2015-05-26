@@ -21,6 +21,7 @@ namespace Site.Controllers
         public string tenantID;
         public TiendaTenant t;
         public EstiloTienda estilo;
+
         /*static LocalDataStoreSlot local;
         private String tenantID;
         static LocalDataStoreSlot tenant = Thread.AllocateNamedDataSlot("Tenant");*/
@@ -72,6 +73,8 @@ namespace Site.Controllers
                 t = _ibl.ObtenerDatosTenant(user.idTienda);
                 estilo.css = CrearCss(t.Css, t.Nombre);
 
+                List<ImagenesTenant> imagenesT = _ibl.ObtenerImgTenant(user.idTienda);
+
                 System.Web.HttpContext.Current.Session["datosTienda"] = t;
                 System.Web.HttpContext.Current.Session["estilo"] = estilo;
                 System.Web.HttpContext.Current.Session["usuario"] = user;
@@ -86,7 +89,6 @@ namespace Site.Controllers
                         ls_Subastas_Subasta.Add(item);
                     }
                 }
-
 
                 List<Subasta> ls_Subastas_Directa = new List<Subasta>();
                 foreach (Subasta item in lista_Subastas)
@@ -114,6 +116,8 @@ namespace Site.Controllers
                         lista_Subastas_compraDirecta.Add(element);
                     }
                 }
+
+                ViewBag.ListaImagenes = imagenesT;
 
                 ViewBag.ListarSubastas = lista_Subastas;
                 ViewBag.ListarSubastasActivas = lista_Subastas_Activas;

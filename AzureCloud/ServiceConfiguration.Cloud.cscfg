@@ -7,4 +7,11 @@
       <Setting name="StorageConnection" value="DefaultEndpointsProtocol=https;AccountName=contenidosite;AccountKey=IEzJoQaeokA8/UT115VSjEPb62RAr/XUODX65YHdCIdFkhcNzsOdSePGExxoOG66STzfPiOd2skLcdcQZ8FoeA==" />
     </ConfigurationSettings>
   </Role>
+  <Role name="Site">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="StorageConnection" value="DefaultEndpointsProtocol=https;AccountName=contenidosite;AccountKey=IEzJoQaeokA8/UT115VSjEPb62RAr/XUODX65YHdCIdFkhcNzsOdSePGExxoOG66STzfPiOd2skLcdcQZ8FoeA==" />
+    </ConfigurationSettings>
+  </Role>
 </ServiceConfiguration>

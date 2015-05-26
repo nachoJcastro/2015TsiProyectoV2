@@ -16,4 +16,20 @@
       <InputEndpoint name="Endpoint1" protocol="http" port="8080" localPort="8081" />
     </Endpoints>
   </WebRole>
+  <WebRole name="Site" vmsize="Small">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="Endpoint1" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="StorageConnection" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="http" port="8082" localPort="8083" />
+    </Endpoints>
+  </WebRole>
 </ServiceDefinition>

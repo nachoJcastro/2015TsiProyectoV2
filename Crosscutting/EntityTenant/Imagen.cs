@@ -15,9 +15,11 @@ namespace Crosscutting.EntityTenant
 
         public int id_Subasta { get; set; }
 
-        [Column("imagen")]
-        [StringLength(50)]
-        public string imagen1 { get; set; }
+        [Column("nombre")]
+        public string nombre { get; set; }
+
+        [Column("uri")]
+        public string uri { get; set; }
 
         public virtual Subasta Subasta { get; set; }
     }

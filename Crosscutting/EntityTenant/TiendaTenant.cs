@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Crosscutting.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace Crosscutting.EntityTenant
 {
     public class TiendaTenant
     {
-        public TiendaTenant() { }
 
         public string Nombre { get; set; }
 
@@ -17,6 +17,7 @@ namespace Crosscutting.EntityTenant
         public string Logo { get; set; }
 
         public string Css { get; set; }
+
 
     }
 }

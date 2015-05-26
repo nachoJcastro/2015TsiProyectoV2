@@ -43,6 +43,10 @@ namespace BusinessLogicLayer.TenantControllers
         {
             return _dal.ObtenerDatosTenant(idTienda);
         }
-        
+
+        public List<ImagenesTenant> ObtenerImgTenant(int idTienda)
+        {
+            return _dal.ObtenerImgTenant(idTienda);
+        }
     }
 }
