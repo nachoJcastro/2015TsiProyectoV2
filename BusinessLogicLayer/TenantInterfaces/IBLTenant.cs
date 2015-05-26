@@ -18,6 +18,8 @@ namespace BusinessLogicLayer.TenantInterfaces
         Boolean ExisteSitio (String dominio);
         int ObtenerIdTenant(String tenant);
 
+
         TiendaTenant ObtenerDatosTenant(int idTienda);
+        List<ImagenesTenant> ObtenerImgTenant(int idTienda);
     }
 }

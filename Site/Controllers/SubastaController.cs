@@ -13,6 +13,7 @@ using BusinessLogicLayer.TenantControllers;
 using BusinessLogicLayer.Interfaces;
 using Crosscutting.Enum;
 using Crosscutting.Entity;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Site.Controllers
 {
@@ -25,6 +26,8 @@ namespace Site.Controllers
         IBLOferta ofeIBL;
         IBLUsuario usuIBL;
         BusinessLogicLayer.TenantInterfaces.IBLAtributo atrIBL;
+
+        BlobStorage _bls = new BlobStorage();
         //IBLCategoria catIBL;
         //IBLAtributo atrIBL;
         public UsuarioSite user_sitio;
@@ -103,14 +106,14 @@ namespace Site.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre")]Subasta subasta, FormCollection form)
+        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre")]Subasta subasta, FormCollection form, HttpPostedFileBase portada)
         {
             user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
             subasta.id_Vendedor = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
             subasta.estado = EstadoTransaccion.Activa;
             subasta.valor_Actual = (double)subasta.precio_Base;
             
-             string tipo = form["Tipo"];
+            string tipo = form["Tipo"];
             string cat = form["Categorias"];
             string prod = form["Productos"];
             string atr = form["Atributos"];
@@ -120,6 +123,26 @@ namespace Site.Controllers
 
             int producto = int.Parse(prod);
             subasta.id_Producto = producto;
+
+            CloudBlobContainer blobContainer = _bls.GetContainerTienda(user_sitio.Dominio);
+
+
+            if (portada.ContentLength > 0)
+            {
+
+                //Elminar foto anterior
+                //TiendaVirtualDTO old = _bl.ObtenerTienda(tiendaVirtualDTO.TiendaVitualId);
+                //CloudBlockBlob blobOld = blobContainer.GetBlockBlobReference("Nombreblob");
+                //blobOld.Delete();
+
+
+                var nombreFoto = user_sitio.Dominio + Guid.NewGuid().ToString() + "_subasta";
+                CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+                blob.UploadFromStream(portada.InputStream);
+                subasta.portada = blob.Uri.ToString();
+
+            }
+           
 
             //FALTA AGREGAR LISTA DE ATRIBUTOS ( Y SUS VALORES)
 

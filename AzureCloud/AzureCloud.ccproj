@@ -45,13 +45,23 @@
       <RoleName>Backend</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+    <ProjectReference Include="..\Site\Site.csproj">
+      <Name>Site</Name>
+      <Project>{bb144e08-9d52-4d21-a742-b85340c7efac}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>Site</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BackendContent\" />
+    <Folder Include="SiteContent\" />
     <Folder Include="WebRole1Content\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="BackendContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SiteContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="WebRole1Content\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->

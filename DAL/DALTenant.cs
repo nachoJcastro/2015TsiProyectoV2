@@ -78,6 +78,7 @@ namespace DAL
                 tiendaInfo.Css = tienda.Css;
                 tiendaInfo.Descripcion = tienda.Descripcion;
                 tiendaInfo.Logo = tienda.Logo;
+               
             }
             catch (Exception ex)
             {
@@ -85,6 +86,35 @@ namespace DAL
             }
 
             return tiendaInfo;
+        }
+
+        public List<ImagenesTenant> ObtenerImgTenant(int idTienda) 
+        {
+            List<ImagenesTenant> img = new List<ImagenesTenant>();
+
+            try
+            {
+                BackendDB back = new BackendDB();
+                var tienda = back.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == idTienda);
+                foreach (var imagen in tienda.ListaImagenes)
+                {
+                    if (!imagen.ImagenEliminada)
+                    {
+                        ImagenesTenant aux = new ImagenesTenant();
+                        aux.Nombre = imagen.Nombre;
+                        aux.Uri = imagen.UrlImagenMediana;
+                        img.Add(aux);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return img;
+        
         }
     }
 }

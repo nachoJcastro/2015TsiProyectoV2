@@ -70,6 +70,8 @@ namespace Crosscutting.EntityTenant
 
         public double valor_Actual { get; set; }
 
+        public string portada { get; set; }
+
         // Atributos de fecha
         
         [DataType(DataType.DateTime)]

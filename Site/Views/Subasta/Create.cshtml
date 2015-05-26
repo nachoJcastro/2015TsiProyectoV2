@@ -8,8 +8,7 @@
 
 <h2>Alta de una Subasta</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Subasta", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     
@@ -178,7 +177,15 @@
                 @Html.ValidationMessageFor(model => model.fecha_Inicio, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.portada, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-control">
+                    <input type="file" id="portada" name="portada" accept="image/*" />
+                    @Html.ValidationMessageFor(model => model.portada, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class='col-sm-6'>

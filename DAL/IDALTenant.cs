@@ -15,5 +15,6 @@ namespace DAL
         Boolean ExisteSitio (String dominio); //Create
         int ObtenerIdTenant(String tenant);
         TiendaTenant ObtenerDatosTenant(int idTienda);
+        List<ImagenesTenant> ObtenerImgTenant(int idTienda);
     }
 }

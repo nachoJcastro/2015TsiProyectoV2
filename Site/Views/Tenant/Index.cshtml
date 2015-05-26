@@ -4,6 +4,70 @@
 }
 <h1 align="center">@ViewBag.Message</h1>
 
+@if (ViewBag.ListaImagenes != null)
+{
+    <div class="container">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="carousel slide" id="carousel-606608">
+                            <ol class="carousel-indicators">
+                                @{
+                                var index = 0;
+
+                                if (ViewBag.ListaImagenes != null)
+                                {
+                                    foreach (var imagen in ViewBag.ListaImagenes)
+                                    {
+                                        if (index == 0)
+                                        {
+                                            <li class="active" data-slide-to="0" data-target="#carousel-606608"></li>
+                                        }
+                                        else
+                                        {
+                                            <li data-slide-to="@index" data-target="#carousel-606608"></li>
+                                        }
+
+                                        index++;
+                                    }
+                                }
+                                }
+
+                            </ol>
+                            <div class="carousel-inner">
+
+                                @if (ViewBag.ListaImagenes != null)
+                                {
+                                    index = 0;
+
+                                    foreach (var imagen in ViewBag.ListaImagenes)
+                                    {
+                                        if (index == 0)
+                                        {
+                                            <div class="item active">
+                                                <img alt="" src="@imagen.Uri" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="item">
+                                                <img alt="" src="@imagen.Uri" />
+                                            </div>
+                                        }
+
+                                        index++;
+                                    }
+                                }
+
+                            </div>
+                            <a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>
+                        </div>
+                    </div>
+                </div>
+    </div>
+}
+
+
 @if (ViewBag.ListarSubastas != null)
 {
     <div class="container">
@@ -18,6 +82,7 @@
 
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <a>
+                        <!--<img class="img-responsive img-home-portfolio" src="item.portada">-->
                         <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
                         @Html.ActionLink("Seleccionar", "DetalleProducto/", "Subasta", new { idSubasta = item.id }, false)
                     </a>
@@ -47,48 +112,6 @@ else
 }
 
 
-
-
-<div id="myCarousel" class="carousel slide">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <div class="fill" style="background-image:url('../img/img1.jpg');"></div>
-            <div class="carousel-caption">
-                <h1>Publicacion de Productos</h1>
-            </div>
-        </div>
-        <div class="item">
-            <div class="fill" style="background-image:url('../img/img2.jpg');"></div>
-            <div class="carousel-caption">
-                <h1>Venta de Productos</h1>
-            </div>
-        </div>
-        <div class="item">
-            <div class="fill" style="background-image:url('../img/img4.jpg');"></div>
-            <div class="carousel-caption">
-                <h1>
-                    Compra de Productos
-                </h1>
-            </div>
-        </div>
-    </div>
-
-    <!-- Controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-        <span class="icon-prev"></span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-        <span class="icon-next"></span>
-    </a>
-</div>
 
 <div class="section">
 
