@@ -5,13 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Crosscutting.EntityTenant;
 using DAL.Contextos;
+using Crosscutting.EntityTareas;
+using DAL.IDAL_Tenant;
+using DAL.DAL_Tenant;
 
 namespace DAL
 {
     public class DALSubastaEF : IDALSubasta
     {
         static TenantDB db ;//= new TenantDB(" ")
-
+        IDALUsuario _idal;
+        
 
         public DALSubastaEF() { }
 
@@ -196,5 +200,102 @@ namespace DAL
                 throw;
             }
         }
+
+        //************************************************************************************
+        public List<Correo> correoCompraDirecta(String tenant,Subasta sub) {
+            List<Correo> lista=new List<Correo>();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Entro correoCompraDirecta DAL ");
+                //Creo los correos a enviar
+                Correo comprador = correoComprador(tenant, sub);
+
+                Correo vendedor = correoVendedor(tenant, sub);
+                
+                //Agrego
+                lista.Add(comprador);
+
+                lista.Add(vendedor);
+
+                System.Diagnostics.Debug.WriteLine("Salgo correoCompraDirecta  DAL ");
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+            
+            
+            return lista;
+        }
+
+        public Correo correoVendedor(String tenant,Subasta sub)
+        {
+            Correo correo = new Correo();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Entro correoVendedor DAL");
+                _idal = new DALUsuario();
+               
+                Usuario vendedor = _idal.GetUsuario(tenant, sub.id_Vendedor);
+                Usuario comprador = _idal.GetUsuario(tenant, (int)sub.id_Comprador);
+                //Subasta subasta = ObtenerSubasta(tenant, idSubasta);
+
+                correo.destinatario = vendedor.email;
+                correo.asunto = "Felicidades " + vendedor.nick + ". El usuario " + comprador.nick +"ha comprado tu articulo " + sub.titulo;
+                correo.mensaje = "Articulo : " + sub.titulo + "Precio venta " + sub.precio_Compra.ToString() +" Fecha : " + DateTime.Now.ToString();
+
+                System.Diagnostics.Debug.WriteLine("Salgo correoVendedor DAL ");
+               
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+           
+
+
+
+
+            return correo;
+        }
+
+        public Correo correoComprador(String tenant , Subasta sub)
+        {
+            Correo correo = new Correo();
+            
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Entro correoComprador DAL");
+
+                _idal= new DALUsuario();
+                Usuario vendedor = _idal.GetUsuario(tenant, sub.id_Vendedor);
+
+
+                Usuario comprador = _idal.GetUsuario(tenant,(int)sub.id_Comprador);
+                
+                correo.destinatario = comprador.email;
+                correo.asunto = "Felicidades " + comprador.nick + ". Has comprado el articulo " + sub.titulo;
+                correo.mensaje = "Articulo : " + sub.titulo + "Precio compra " + sub.precio_Compra.ToString() + " Fecha : " + DateTime.Now.ToString();
+
+                System.Diagnostics.Debug.WriteLine("Salgo correoComprador DAL");
+                
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return correo;
+        }
+
+       
     }
 }
