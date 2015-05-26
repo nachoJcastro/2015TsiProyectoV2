@@ -54,6 +54,7 @@ namespace Crosscutting.Entity
 
         public virtual ICollection<CategoriasDTO> Categorias { get; set; }
         public virtual ICollection<ImagenesDTO> ListaImagenes { get; set; }
-        
+
+
     }
 }

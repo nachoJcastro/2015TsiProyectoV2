@@ -252,5 +252,52 @@ namespace DAL
         
         }
 
+        public void EliminarImagenTienda(int tiendaId, string nombre) 
+        {
+
+            try
+            {
+                var tienda = db.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == tiendaId);
+
+                if (tienda.ListaImagenes != null)
+                {
+                    foreach (var imagen in tienda.ListaImagenes.ToList())
+                    {
+                        if (imagen.Nombre.Equals(nombre)) 
+                        {
+                            imagen.ImagenEliminada = true;
+                           
+                        }
+                        
+                    }
+                  
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        
+        
+        }
+
+        public void AgregarImagenTienda(ImagenesDTO img) 
+        {
+            try
+            {   //var tienda = Mapper.Map<TiendaVirtual>(tiendaDTO);
+                //tiendaDTO.ListaImagenes = Mapper.Map<ICollection<Imagenes>>(tiendaDTO.ListaImagenes);
+
+                db.Imagenes.Add(img);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        
+        }
+
     }
 }

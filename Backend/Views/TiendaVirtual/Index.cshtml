@@ -38,9 +38,10 @@
                         @*<h5><small>@*Html.DisplayFor(modelItem => item.Dominio)</small></h5>*@
                     </div>
                     <div class="offer-footer text-right">
+                        <a class="" href="@Url.Action("upload", new { id=item.TiendaVitualId})" data-toggle="tooltip" data-placement="top" title="Subir Imagenes"><span class="fa fa-picture-o fa-2x"></span></a>
                         <span data-toggle="modal" data-target="#myModal" data-id="@item.TiendaVitualId" class="btnEditTienda">
                             <a data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-pencil fa-2x"></span></a>
-                        </span>    
+                        </span>   
                         <a class="" href="@Url.Action("estilo", new { id=item.TiendaVitualId})" data-toggle="tooltip" data-placement="top" title="Editar Css"><span class="fa fa-css3 fa-2x"></span></a>
                         <a class="" href="@Url.Action("index", "Componentes" , new { id=item.TiendaVitualId}, null)" data-toggle="tooltip" data-placement="top" title="Componentes"><span class="fa fa-arrow-circle-o-right fa-2x"></span></a>
                     </div>

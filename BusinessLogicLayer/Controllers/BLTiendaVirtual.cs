@@ -85,5 +85,15 @@ namespace BusinessLogicLayer.Controllers
 
             return _dal.ObtenerTenants();
         }
+
+        public void EliminarImagenTienda(int tiendaId, string nombre) {
+
+            _dal.EliminarImagenTienda(tiendaId, nombre);
+        }
+
+        public void AgregarImagenTienda(ImagenesDTO img){
+        
+            _dal.AgregarImagenTienda(img);
+        }
     }
 }

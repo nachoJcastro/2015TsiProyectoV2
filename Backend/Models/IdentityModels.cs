@@ -16,6 +16,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Backend.Migrations;
 
 namespace Backend.Models
 {
@@ -42,13 +43,14 @@ namespace Backend.Models
             this.Name = name;
         }
     }
+    
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("BackendDB", throwIfV1Schema: false)
         {
-            
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
         }
 
         public static ApplicationDbContext Create()
@@ -57,6 +59,7 @@ namespace Backend.Models
         }
 
 
+        
         
     }
 

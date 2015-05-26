@@ -15,8 +15,8 @@ namespace Backend
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        internal const string roleNombre = "Admin";
-        internal const string roleNombreUser = "Usuario";
+        //internal const string roleNombre = "Admin";
+        //internal const string roleNombreUser = "Usuario";
 
         protected void Application_Start()
         {
@@ -56,26 +56,26 @@ namespace Backend
         }
 
 
-        protected void Session_Start()
-        {
+        //protected void Session_Start()
+        //{
 
-            IdentityManager manager = new IdentityManager();
+        //    IdentityManager manager = new IdentityManager();
 
-            if (!manager.RoleExists(roleNombre))
-            {
+        //    if (!manager.RoleExists(roleNombre))
+        //    {
 
-                manager.CreateRole(roleNombre);
-                manager.CreateRole(roleNombreUser);
+        //        manager.CreateRole(roleNombre);
+        //        manager.CreateRole(roleNombreUser);
 
-                var user = new ApplicationUser() {UserName = "admin@chebay.com"};
+        //        var user = new ApplicationUser() { UserName = "admin@chebay.com" };
 
-                if (manager.CreateUser(user, "Chebay2015"))
-                {
-                    manager.AddUserToRole(user.Id, roleNombre);
+        //        if (manager.CreateUser(user, "Chebay2015"))
+        //        {
+        //            manager.AddUserToRole(user.Id, roleNombre);
 
-                }
+        //        }
 
-            }
-        }
+        //    }
+        //}
     }
 }
