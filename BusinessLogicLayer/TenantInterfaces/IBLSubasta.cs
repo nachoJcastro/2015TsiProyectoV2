@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Crosscutting.EntityTenant;
+using Crosscutting.EntityTareas;
 
 namespace BusinessLogicLayer.TenantInterfaces
 {
@@ -27,5 +28,7 @@ namespace BusinessLogicLayer.TenantInterfaces
         //void FinalizarSubastaTiempo();
 
         void FinalizarSubastasTarea(String tenant);
+
+        void correoCompraDirecta(String tenant, Subasta sub);
     }
 }

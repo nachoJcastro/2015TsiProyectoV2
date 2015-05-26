@@ -298,9 +298,23 @@ namespace Site.Controllers
                 subasta.estado = EstadoTransaccion.Cerrada;
                 subasta.finalizado = TipoFinalizacion.Compra_directa;
                 subasta.id_Comprador = idLogueado;
-                //enviar mail
+               
                 subIBL.ActualizarSubasta(valor_tenant, subasta);
                 var vendedor = usuIBL.GetUsuario(valor_tenant, idLogueado);
+                //enviar mail
+               /* try
+                {
+                    subIBL.correoCompraDirecta(valor_tenant, subasta);
+
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }*/
+                
+
+                //enviar mail
                 ViewBag.Vendedor = vendedor;
                 return View("Transaccion", subasta);
             }

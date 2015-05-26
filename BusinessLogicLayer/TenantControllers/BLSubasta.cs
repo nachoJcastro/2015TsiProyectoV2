@@ -8,6 +8,8 @@ using BusinessLogicLayer.TenantInterfaces;
 using DAL;
 using Crosscutting.Enum;
 using BusinessLogicLayer.Controllers;
+using Crosscutting.EntityTareas;
+using ServicioCorreo;
 
 
 namespace BusinessLogicLayer.TenantControllers
@@ -168,5 +170,26 @@ namespace BusinessLogicLayer.TenantControllers
                 throw;
             }
         }
+
+
+        public void correoCompraDirecta(String tenant,Subasta sub) {
+            List<Correo> lista = new List<Correo>();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Entro correoCompraDirecta ");
+                
+                lista = _dal.correoCompraDirecta(tenant, sub);
+                IEnvioCorreo _envio = new EnvioCorreo();
+                _envio.enviarCorreos(lista);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+            
+        }
+
     }
 }
