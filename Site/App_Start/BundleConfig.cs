@@ -28,17 +28,21 @@ namespace Site
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/justified-nav.css"));
+                      "~/Content/animate.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/prettyPhoto.css",
+                      "~/Content/price-range.css",
+                      "~/Content/responsive.css",
+                      "~/Content/site.css"));
 
-            bundles.Add(new StyleBundle("~/Content/modern-business").Include(
-                      "~/css/bootstrap.css",
-                     "~/css/modern-business.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/site.js"));
+                      "~/Scripts/site.js",
+                      "~/Scripts/price-range.js",
+                      "~/Scripts/main.js"
+                      ));
 
         }
     }

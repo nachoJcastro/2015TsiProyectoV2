@@ -50,6 +50,7 @@ namespace Backend.Models
         public ApplicationDbContext()
             : base("BackendDB", throwIfV1Schema: false)
         {
+            //this.Configuration.ProxyCreationEnabled = false; 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
         }
 

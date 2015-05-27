@@ -71,18 +71,19 @@ namespace Backend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            var idrol = "";
+            //var idrol = "";
             var user = await UserManager.FindAsync(model.Email, model.Password);
-
+            var estaEnelRol = UserManager.IsInRole(user.Id,"Admin");
             //System.Diagnostics.Debug.WriteLine("Rol Usuario : " + user.Roles.ToString());
-            if (user != null)
-            {
-                idrol = user.Roles.First().RoleId;
+            //if (user != null)
+            //{
+            //    idrol = user.Roles.First().RoleId;
 
-                //Debug.WriteLine("idRol: " + idrol);
-            }
+            //    //Debug.WriteLine("idRol: " + idrol);
+            //}
             
-            var rol = roleManager.FindById(idrol);
+            //var rol = manager.FindById(idrol);
+            //var rol = roleManager.FindById(idrol);
 
             //Debug.WriteLine("Rol: " + rol.Name);
             
@@ -91,14 +92,14 @@ namespace Backend.Controllers
             {
                 return View(model);
             }
-
+            
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    if(rol.Name != "Admin")
+                    if(!estaEnelRol)
                     {
                         return RedirectToAction("Index", "TiendaVirtual");
                     }
