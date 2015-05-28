@@ -112,7 +112,7 @@ namespace Site.Controllers
             subasta.id_Vendedor = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
             subasta.estado = EstadoTransaccion.Activa;
             subasta.valor_Actual = (double)subasta.precio_Base;
-            
+            subasta.fecha_Inicio = System.DateTime.Now;
             string tipo = form["Tipo"];
             string cat = form["Categorias"];
             string prod = form["Productos"];

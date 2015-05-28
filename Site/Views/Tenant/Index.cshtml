@@ -70,7 +70,7 @@
 
 @if (ViewBag.ListarSubastas != null)
 {
-    <div class="container">
+    <div class="container contenedor-listasubasta">
 
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -79,15 +79,26 @@
             </div>
             @foreach (var item in ViewBag.ListarSubastasActivas)
             {
+                <div class="col-sm-3 col-md-3">
+                    <div class="thumbnail">
+                        <img src="@item.portada" style="max-width:150px;max-height:180px;" alt="">
+                        <div class="caption">
+                            <h3>@item.titulo</h3>
+                            <p>@item.descripcion</p>
+                            <p>$ @item.precio_Compra</p>
+                            <p><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-primary" role="button">Detalle</a></p>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="col-lg-4 col-md-4 col-sm-6">
+                @*<div class="col-lg-4 col-md-4 col-sm-6">
                     <a>
-                        <!--<img class="img-responsive img-home-portfolio" src="item.portada">-->
+                       
                         <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
                         @Html.ActionLink("Seleccionar", "DetalleProducto/", "Subasta", new { idSubasta = item.id }, false)
                     </a>
 
-                </div>
+                </div>*@
             }
         </div>
     </div>

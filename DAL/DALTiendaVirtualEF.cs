@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Crosscutting.EntityTenant;
 
 namespace DAL
 {
     public class DALTiendaVirtualEF : IDALTiendaVirtual
     {
+        static TenantDB dbt;
         static BackendDB db = new BackendDB();
 
         public DALTiendaVirtualEF()
@@ -297,6 +299,45 @@ namespace DAL
                 throw ex;
             }
         
+        }
+
+        public List<Usuario> ReportUsers(string dominio, DateTime fechaini, DateTime fechafin) {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            try
+            {
+                dbt = new TenantDB(dominio);
+                usuarios = dbt.Usuario.Where(u => (u.fecha_Alta>= fechaini && u.fecha_Alta <= fechafin)).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+
+
+            return usuarios;
+        }
+
+        public List<Subasta> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin)
+        {
+            List<Subasta> sub = new List<Subasta>();
+
+            try
+            {
+                dbt = new TenantDB(dominio);
+                sub = dbt.Subasta.Where(u => (u.fecha_Inicio >= fechaini && u.fecha_Inicio <= fechafin)).ToList();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+            return sub;
         }
 
     }

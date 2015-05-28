@@ -2,6 +2,7 @@
 using BusinessLogicLayer.TenantControllers;
 using BusinessLogicLayer.TenantInterfaces;
 using Crosscutting.Entity;
+using Crosscutting.EntityTenant;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -94,6 +95,13 @@ namespace BusinessLogicLayer.Controllers
         public void AgregarImagenTienda(ImagenesDTO img){
         
             _dal.AgregarImagenTienda(img);
+        }
+
+        public List<Usuario> ReportUsers(string dominio, DateTime fechaini, DateTime fechafin) {
+            return _dal.ReportUsers(dominio, fechaini, fechafin);
+        }
+        public List<Subasta> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin) {
+            return _dal.ReportSubasta(dominio, fechaini, fechafin);
         }
     }
 }

@@ -368,6 +368,12 @@ namespace Backend.Controllers
             return "File delete";
         }
 
+        public ActionResult Reportes() {
+
+
+            return View();
+        }
+
 
 
     }

@@ -33,11 +33,14 @@ namespace Site
                       "~/Content/prettyPhoto.css",
                       "~/Content/price-range.css",
                       "~/Content/responsive.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/bootstrap-datetimepicker.min.css"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/moment.js",
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/site.js",
                       "~/Scripts/price-range.js",
