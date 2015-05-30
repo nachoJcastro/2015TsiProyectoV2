@@ -106,7 +106,7 @@ namespace Site.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre")]Subasta subasta, FormCollection form, HttpPostedFileBase portada)
+        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre,Atributo_Subasta")]Subasta subasta, FormCollection form, HttpPostedFileBase portada)
         {
             user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
             subasta.id_Vendedor = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
@@ -117,6 +117,8 @@ namespace Site.Controllers
             string cat = form["Categorias"];
             string prod = form["Productos"];
             string atr = form["Atributos"];
+
+            string atr_sub = form["Atributos"];
 
             int id_cat = int.Parse(cat);
             subasta.id_Categoria = id_cat;
