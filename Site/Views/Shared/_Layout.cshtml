@@ -20,12 +20,46 @@
     }
 
 
-    @Styles.Render("~/Content/modern-business")
-  
+    @Styles.Render("~/Content/css")
+
+    @*<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />*@
     
 
 </head>
 <body>
+    @*<header id="header">
+
+
+        <div class="header-middle">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                      @if (tienda != null)
+                      {  <div class="logo pull-left">
+                            <a href="@Url.Action("Index", "Tenant")"><img src="@tienda.Logo" style="display:inline-block" alt="" /></a>
+                        </div>
+                      }
+                    </div>
+                    <div class="col-sm-8">
+
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                                @Html.Partial("_LoginPartial")
+                                <!--<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Usuario">gbg933@gmail.com <i class="fa fa-user"></i></a></li>-->
+                                <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Favoritos"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Publicar"><i class="fa fa-shopping-cart"></i></a></li>
+                                <!--<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Login"><i class="fa fa-lock"></i></a></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>*@
+
+
     <nav class="navbar navbar-inverse" role="navigation">
             <div class="container">
                 <div class="masthead">
@@ -47,7 +81,6 @@
         <!-- /.container -->
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/modern-business")
         @RenderSection("scripts", required: false)
 
 </body>

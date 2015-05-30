@@ -1,4 +1,5 @@
 ﻿using Crosscutting.Entity;
+using Crosscutting.EntityTenant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,7 @@ namespace BusinessLogicLayer
         void AgregarImagenTienda(ImagenesDTO img);
 
         List<String> ObtenerTenants();
+        List<Usuario> ReportUsers(string dominio, DateTime fechaini, DateTime fechafin);
+        List<Subasta> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin);
     }
 }

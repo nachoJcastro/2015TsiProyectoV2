@@ -98,8 +98,7 @@ namespace Site.Controllers
                         ls_Subastas_Directa.Add(item);
                     }
                 }
-
-
+                
                 List<Subasta> lista_Subastas_Activas = new List<Subasta>();
                 foreach (Subasta element in lista_Subastas)
                 {
