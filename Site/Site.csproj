@@ -326,6 +326,7 @@
     <Content Include="Views\Oferta\Lista.cshtml" />
     <Content Include="Views\Subasta\Transaccion.cshtml" />
     <Content Include="Views\Subasta\SinSaldo.cshtml" />
+    <Content Include="Views\Subasta\jonson.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
