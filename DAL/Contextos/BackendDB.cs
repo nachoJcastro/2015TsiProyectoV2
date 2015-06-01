@@ -17,6 +17,7 @@ namespace DAL.Contextos
         {
             //Esta linea lo que haces es que cuando cambia algo en el contexto, autamitacamente cambia la base.
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BackendDB>());
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         public DbSet<TiendaVirtualDTO> TiendaVirtual { get; set; }

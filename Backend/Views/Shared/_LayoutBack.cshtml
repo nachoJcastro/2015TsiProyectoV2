@@ -71,10 +71,31 @@
 
             <ul class="sidebar-menu-fixed" id="nav-accordion2">
                 <li class="mt">
-                    <a class="" href="@Url.Action("Index", "TiendaVirtual")" >
-                        <i class=" fa fa-dashboard">
+                    <a class="" href="@Url.Action("AdminUser", "TiendaVirtual")" >
+                        <i class=" fa fa-shopping-cart">
                         </i>
-                        <span>Tienda Virtual</span>
+                        <span>Tiendas Virtuales</span>
+                    </a>
+                </li>
+                <li class="mt">
+                    <a class="" href="@Url.Action("AdminUser", "TiendaVirtual")">
+                        <i class=" fa fa-shopping-cart">
+                        </i>
+                        <span>Usuarios</span>
+                    </a>
+                </li>
+                <li class="mt">
+                    <a class="" href="@Url.Action("Reportes", "TiendaVirtual")">
+                        <i class=" fa fa-bar-chart">
+                        </i>
+                        <span>Reporte</span>
+                    </a>
+                </li>
+                <li class="mt">
+                    <a class="" href="@Url.Action("Reportes", "TiendaVirtual")">
+                        <i class=" fa fa-pie-chart">
+                        </i>
+                        <span>Charts</span>
                     </a>
                 </li>
             </ul>
@@ -122,6 +143,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/otros")
+    @Scripts.Render("~/bundles/root")
     @RenderSection("scripts", required: false)
 </body>
 </html>

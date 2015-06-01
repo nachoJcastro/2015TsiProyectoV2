@@ -1,5 +1,5 @@
-/*---LEFT BAR ACCORDION----*/
-$(function() {
+﻿/*---LEFT BAR ACCORDION----*/
+$(function () {
     $('#nav-accordion2').dcAccordion({
         eventType: 'click',
         autoClose: true,
@@ -8,14 +8,14 @@ $(function() {
         speed: 'slow',
         showCount: false,
         autoExpand: true,
-//        cookie: 'dcjq-accordion-1',
+        //        cookie: 'dcjq-accordion-1',
         classExpand: 'dcjq-current-parent'
     });
 
 
 });
 
-$(function() {
+$(function () {
     $('#nav-accordion').dcAccordion({
         eventType: 'click',
         autoClose: true,
@@ -24,20 +24,20 @@ $(function() {
         speed: 'slow',
         showCount: false,
         autoExpand: true,
-//        cookie: 'dcjq-accordion-1',
+        //        cookie: 'dcjq-accordion-1',
         classExpand: 'dcjq-current-parent'
     });
 
 });
 
-$(function() {
-  var activoHeader = 50;
-  $(window).scroll(function() {
-    var scroll = getCurrentScroll();
-      if ( scroll >= activoHeader ) {
-           $('.logo-index').addClass('activo');
-           $('.menu-index').addClass('activo');
-           $('.navbar-chebay').addClass('activo');
+$(function () {
+    var activoHeader = 50;
+    $(window).scroll(function () {
+        var scroll = getCurrentScroll();
+        if (scroll >= activoHeader) {
+            $('.logo-index').addClass('activo');
+            $('.menu-index').addClass('activo');
+            $('.navbar-chebay').addClass('activo');
 
         }
         else {
@@ -46,19 +46,19 @@ $(function() {
             $('.navbar-chebay').removeClass('activo');
 
         }
-  });
-  function getCurrentScroll() {
-    return window.pageYOffset || document.documentElement.scrollTop;
-  }
+    });
+    function getCurrentScroll() {
+        return window.pageYOffset || document.documentElement.scrollTop;
+    }
 
 });
 
 var Script = function () {
 
 
-//    sidebar toggle
+    //    sidebar toggle
 
-    $(function() {
+    $(function () {
         function responsiveView() {
             var wSize = $(window).width();
             if (wSize <= 768) {
@@ -104,11 +104,11 @@ var Script = function () {
     });
 
     $('[data-toggle="tooltip"]').tooltip();
-// custom scrollbar
-    $("#sidebar").niceScroll({styler:"fb",cursorcolor:"#4ECDC4", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled:false, cursorborder: ''});
+    // custom scrollbar
+    $("#sidebar").niceScroll({ styler: "fb", cursorcolor: "#4ECDC4", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled: false, cursorborder: '' });
 
-    $("html").niceScroll({styler:"fb",cursorcolor:"#4ECDC4", cursorwidth: '6', cursorborderradius: '10px', background: '#404040', spacebarenabled:false,  cursorborder: '', zindex: '1000'});
-    $("#site").niceScroll({styler:"fb",cursorcolor:"#E22929", cursorwidth: '6', cursorborderradius: '10px', background: '#404040', spacebarenabled:false,  cursorborder: '', zindex: '1000'});
+    $("html").niceScroll({ styler: "fb", cursorcolor: "#4ECDC4", cursorwidth: '6', cursorborderradius: '10px', background: '#404040', spacebarenabled: false, cursorborder: '', zindex: '1000' });
+   
 
     wow = new WOW(
       {
@@ -123,6 +123,10 @@ var Script = function () {
 
 
     $('#datetimepicker1').datetimepicker({
+        format: "YYYY-MM-DD hh:mm:ss",
+    });
+
+    $('#datetimepicker2').datetimepicker({
         format: "YYYY-MM-DD hh:mm:ss",
     });
 }();
