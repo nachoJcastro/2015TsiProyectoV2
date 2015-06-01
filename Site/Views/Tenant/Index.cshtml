@@ -8,64 +8,67 @@
 {
     <div class="container">
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="carousel slide" id="carousel-606608">
-                            <ol class="carousel-indicators">
-                                @{
-                                var index = 0;
+        <div class="row">
+            <div class="col-md-12">
+                <div class="carousel slide" id="carousel-606608">
+                    <ol class="carousel-indicators">
+                        @{
+                        var index = 0;
 
-                                if (ViewBag.ListaImagenes != null)
+                        if (ViewBag.ListaImagenes != null)
+                        {
+                            foreach (var imagen in ViewBag.ListaImagenes)
+                            {
+                                if (index == 0)
                                 {
-                                    foreach (var imagen in ViewBag.ListaImagenes)
-                                    {
-                                        if (index == 0)
-                                        {
-                                            <li class="active" data-slide-to="0" data-target="#carousel-606608"></li>
-                                        }
-                                        else
-                                        {
-                                            <li data-slide-to="@index" data-target="#carousel-606608"></li>
-                                        }
-
-                                        index++;
-                                    }
+                                    <li class="active" data-slide-to="0" data-target="#carousel-606608"></li>
                                 }
-                                }
-
-                            </ol>
-                            <div class="carousel-inner">
-
-                                @if (ViewBag.ListaImagenes != null)
+                                else
                                 {
-                                    index = 0;
-
-                                    foreach (var imagen in ViewBag.ListaImagenes)
-                                    {
-                                        if (index == 0)
-                                        {
-                                            <div class="item active">
-                                                <img alt="" src="@imagen.Uri" />
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="item">
-                                                <img alt="" src="@imagen.Uri" />
-                                            </div>
-                                        }
-
-                                        index++;
-                                    }
+                                    <li data-slide-to="@index" data-target="#carousel-606608"></li>
                                 }
 
-                            </div>
-                            <a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>
-                        </div>
+                                index++;
+                            }
+                        }
+                        }
+
+                    </ol>
+                    <div class="carousel-inner">
+
+                        @if (ViewBag.ListaImagenes != null)
+                        {
+                            index = 0;
+
+                            foreach (var imagen in ViewBag.ListaImagenes)
+                            {
+                                if (index == 0)
+                                {
+                                    <div class="item active">
+                                        <img alt="" src="@imagen.Uri" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="item">
+                                        <img alt="" src="@imagen.Uri" />
+                                    </div>
+                                }
+
+                                index++;
+                            }
+                        }
+
                     </div>
+                    <a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>
                 </div>
+            </div>
+        </div>
     </div>
 }
+
+<input type="search" placeholder="Search">
+<input type="submit" value="Buscar">
 
 
 @if (ViewBag.ListarSubastas != null)

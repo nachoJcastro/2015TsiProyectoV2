@@ -88,7 +88,7 @@ namespace Site.Controllers
                 ViewData["Categorias"] = proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda);
                 ViewData["Productos"] = proIBL.ObtenerProductos();
                 ViewData["Atributos"] = atrIBL.ObtenerAtributos();
-
+                ViewBag.ListaAtributos = atrIBL.ObtenerAtributos();
                 List<String> tipo_subasta = new List<String> { "Subasta", "Compra_directa" };
                 ViewData["Tipo"] = tipo_subasta;
 
@@ -106,7 +106,7 @@ namespace Site.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre")]Subasta subasta, FormCollection form, HttpPostedFileBase portada)
+        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre,Atributo_Subasta")]Subasta subasta, FormCollection form, HttpPostedFileBase portada)
         {
             user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
             subasta.id_Vendedor = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
@@ -118,6 +118,8 @@ namespace Site.Controllers
             string prod = form["Productos"];
             string atr = form["Atributos"];
 
+            string atr_sub = form["Atributos"];
+
             int id_cat = int.Parse(cat);
             subasta.id_Categoria = id_cat;
 
@@ -127,7 +129,7 @@ namespace Site.Controllers
             CloudBlobContainer blobContainer = _bls.GetContainerTienda(user_sitio.Dominio);
 
 
-            if (portada.ContentLength > 0)
+            if (portada != null && portada.ContentLength > 0)
             {
 
                 //Elminar foto anterior
@@ -140,10 +142,14 @@ namespace Site.Controllers
                 CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
                 blob.UploadFromStream(portada.InputStream);
                 subasta.portada = blob.Uri.ToString();
-
             }
-           
 
+
+            string jsonData = Request.Form[0];
+            string jsonData2 = Request.Form[1];
+            
+            
+            
             //FALTA AGREGAR LISTA DE ATRIBUTOS ( Y SUS VALORES)
 
             if (tipo == "Subasta")
@@ -166,7 +172,23 @@ namespace Site.Controllers
             return View("DetalleProducto", subasta);
        }
 
-        
+        [HttpPost]
+        public void jonson(String [] atributos)
+        {
+            List<Atributo_Subasta> atr = new List<Atributo_Subasta>();
+            foreach (var a in atributos)
+            {
+                var at = new Atributo_Subasta();
+                a[1].ToString();
+                a[1].GetTypeCode();
+                a[1].GetType();
+              //  at.id_Atributo = a.id_Atributo;
+              //  at.valor = a.valor;
+                //atr.Add(at);
+            }
+            var o = 9;
+        }
+
         public JsonResult TipoProdList(int idCategoria)
         {
 

@@ -10,6 +10,14 @@ namespace Crosscutting.EntityTenant
 
     public partial class Atributo_Subasta
     {
+        public  Atributo_Subasta() { }
+
+        public  Atributo_Subasta(int idA, string valA)
+        {
+            this.id_Atributo = idA;
+            this.valor = valA;
+        }
+
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
