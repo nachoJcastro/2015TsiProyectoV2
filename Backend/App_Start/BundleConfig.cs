@@ -22,6 +22,7 @@ namespace Backend
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/otros").Include(
@@ -34,12 +35,21 @@ namespace Backend
             bundles.Add(new ScriptBundle("~/bundles/admin").Include(
                         "~/Scripts/admin.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/root").Include(
+                       "~/Scripts/root.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/otros").Include(
+                      "~/Scripts/exporting.js",
+                      "~/Scripts/highchart.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Scripts/moment.js",
                       "~/Content/bootstrap.css",
                       "~/Content/animate.css",
                       "~/Content/nifty.min.css",
                       "~/Content/font-awesome.css",
-                      "~/Content/estilo.css"));
+                      "~/Content/estilo.css",
+                      "~/Content/bootstrap-datetimepicker.min.css"));
 
         }
     }
