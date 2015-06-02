@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "SubastaDirectas tenant ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2>Subastas tipo Compra Directa</h2>
+        <hr>
+    </div>
+    @foreach (var item in ViewBag.ListarSubastasDirecta)
+    {
+
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <a>
+                item.titulo;
+                <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
+                @Html.ActionLink("Seleccionar", "DetalleProducto/", "Subasta", new { idSubasta = item.id }, false)
+            </a>
+
+        </div>
+    }
+</div>
+

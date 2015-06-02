@@ -62,6 +62,7 @@
     <Compile Include="Entity\TiendaVirtualDTO.cs" />
     <Compile Include="Entity\TipoProductoDTO.cs" />
     <Compile Include="Enum\Estilos.cs" />
+    <Compile Include="Enum\TipoReporte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

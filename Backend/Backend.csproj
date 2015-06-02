@@ -222,12 +222,15 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Reporte.cs" />
+    <Compile Include="Models\SubastaReporte.cs" />
+    <Compile Include="Models\UsuarioReporte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estilo.css" />
@@ -264,6 +267,7 @@
     <Content Include="lineicons\index.html" />
     <Content Include="lineicons\lte-ie7.js" />
     <Content Include="lineicons\style.css" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-switch.js" />
     <Content Include="Scripts\codemirror-2.37\keymap\emacs.js" />
     <Content Include="Scripts\codemirror-2.37\keymap\vim.js" />
@@ -376,6 +380,7 @@
     <Content Include="Scripts\codemirror-2.37\theme\xq-dark.css" />
     <Content Include="Scripts\componentes.js" />
     <Content Include="Scripts\editor_conf.js" />
+    <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\gritter\.DS_Store" />
     <Content Include="Scripts\gritter\css\.DS_Store" />
     <Content Include="Scripts\gritter\images\.DS_Store" />
@@ -411,6 +416,7 @@
     <Content Include="Scripts\gritter\images\gritter.png" />
     <Content Include="Scripts\gritter\images\ie-spacer.gif" />
     <Content Include="Scripts\gritter\js\jquery.gritter.js" />
+    <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.backstretch.min.js" />
@@ -422,10 +428,13 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\nifty.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\price-range.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\root.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -481,6 +490,7 @@
     <Content Include="Views\TiendaVirtual\AdminUser.cshtml" />
     <Content Include="Views\Shared\_LoginPartialAdmin.cshtml" />
     <Content Include="Views\TiendaVirtual\Upload.cshtml" />
+    <Content Include="Views\TiendaVirtual\Reportes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
