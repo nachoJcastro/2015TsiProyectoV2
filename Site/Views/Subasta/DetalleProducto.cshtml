@@ -89,6 +89,28 @@
                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
             </div>
         }
+
+        <dl>
+            <dt>Comentarios</dt>
+            <dd>
+                <div>
+                    <textarea id="areaComentario" rows="4" cols="133" placeholder="Ingrese aqui su comentario.."></textarea>
+                </div>
+                <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
+            </dd>
+
+            @{if (ViewBag.ListaComentarios != null)
+            {
+                foreach (var comentario in ViewBag.ListaComentarios)
+                {
+                    <dt>@comentario.fecha.ToString("dd/MM/yyyy") @comentario.id_Usuario</dt>
+                    <dd>
+                        @comentario.texto
+                    </dd>
+                }
+            }
+            }
+        </dl>
     }
     else
     {
@@ -99,6 +121,26 @@ else
 {
     <p>La publicacion está finalizada</p>
 }
+
+
+
+<script>
+    function crearComentario() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("AgregarComentario", "Subasta")',
+            data: {
+                "texto": document.getElementById("areaComentario").value,
+                "idSubasta": @Model.id,
+                "texto": document.getElementById("areaComentario").value
+            },
+            dataType: 'json',
+            async: false,
+            traditional: true
+        });
+    }
+</script>
+
 
 <div class="jumbotron">
     <button type="button" onclick="location.href='@Url.Action("Edit", "Subasta"), new { id = Model.id }'" class="btn btn-default">Editar</button>

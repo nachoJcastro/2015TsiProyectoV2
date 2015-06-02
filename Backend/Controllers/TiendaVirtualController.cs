@@ -16,6 +16,9 @@ using Microsoft.AspNet.Identity;
 using System.Web.Hosting;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Drawing;
+using System.Collections;
+using Crosscutting.EntityTenant;
+using Crosscutting.Enum;
 
 namespace Backend.Controllers
 {   
@@ -368,13 +371,89 @@ namespace Backend.Controllers
             return "File delete";
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Reportes() {
 
+           // ViewData["Tiendas"] = _bl.ObtenerTiendas().ToList();
 
+
+
+            ViewBag.tiendas = _bl.ObtenerTiendas().ToList();
             return View();
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Reportes(Reporte rep)
+        {
+            List<Subasta> subastas;
+            List<Usuario> usuarios;
+            TipoReporte e = (TipoReporte)Enum.Parse(typeof(TipoReporte), "Usuario");
 
+            if (rep.tipo.Equals(e))
+            {
+                usuarios = _bl.ReportUsers(rep.dominio, rep.fechaini, rep.fechafin);
+                //return Json(new { Data = usuarios }, JsonRequestBehavior.AllowGet)
+                ViewBag.listaUser = usuarios;
+                
+            }
+            else {
+                subastas = _bl.ReportSubasta(rep.dominio, rep.fechaini, rep.fechafin);
+                ViewBag.listaSub = subastas;
+                
+
+                //return Json(new { Data = subastas }, JsonRequestBehavior.AllowGet)
+            }
+            return RedirectToAction("Reportes", "TiendaVirtual");
+        }
+
+
+        public ActionResult ReportesAjax(Reporte rep)
+        {
+            List<Subasta> subastas;
+            List<Usuario> usuarios;
+
+            IEnumerable<UsuarioReporte> modelList = new List<UsuarioReporte>();
+            IEnumerable<SubastaReporte> modelList2 = new List<SubastaReporte>();
+
+            TipoReporte e = (TipoReporte)Enum.Parse(typeof(TipoReporte), "Usuario");
+            //DateTime fechai = Convert.ToDateTime(fechaini);
+            //DateTime fechaf = Convert.ToDateTime(fechafin);
+
+            if (rep.tipo.Equals(e))
+            {
+                usuarios = _bl.ReportUsers(rep.dominio, rep.fechaini, rep.fechafin).ToList();
+                modelList = usuarios.Select(x =>
+                                            new UsuarioReporte()
+                                            {
+                                                tipo = "Usuario",
+                                                nick = x.nick,
+                                                nombre = x.nombre,
+                                                apellido = x.apellido,
+                                                email = x.email,
+                                                fecha_Alta = x.fecha_Alta
+                                                
+                                            });
+                return Json(modelList, JsonRequestBehavior.AllowGet);
+                
+
+            }
+            else
+            {
+                subastas = _bl.ReportSubasta(rep.dominio, rep.fechaini, rep.fechafin).ToList();
+                modelList2 = subastas.Select(x =>
+                                            new SubastaReporte()
+                                            {
+                                                tipo = "Subasta",
+                                                titulo = x.titulo,
+                                                precio_Base = x.precio_Base,
+                                                fecha_Inicio = x.fecha_Inicio
+
+                                            });
+                return Json(modelList2, JsonRequestBehavior.AllowGet);
+            }
+            
+        }
 
     }
 }

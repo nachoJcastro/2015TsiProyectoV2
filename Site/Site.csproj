@@ -337,7 +337,8 @@
     <Content Include="Views\Subasta\Transaccion.cshtml" />
     <Content Include="Views\Subasta\SinSaldo.cshtml" />
     <Content Include="Views\Subasta\jonson.cshtml" />
-    <Content Include="Views\Chat\Chat.cshtml" />
+    <Content Include="Views\Subasta\SubastasDirectas.cshtml" />
+    <Content Include="Views\Subasta\SubastaSubastas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
