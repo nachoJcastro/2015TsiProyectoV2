@@ -32,6 +32,7 @@ namespace Site.Controllers
         //IBLAtributo atrIBL;
         public UsuarioSite user_sitio;
         private string valor_tenant;
+        private SubastaSite sub_site;
 
         public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl, IBLOferta ofebl, IBLUsuario usubl, BusinessLogicLayer.TenantInterfaces.IBLAtributo atrIBL)
         {
@@ -66,12 +67,64 @@ namespace Site.Controllers
         // GET: Subastas/Details/5
         public ActionResult Details(int idSubasta)
         {
-            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
-            if (subasta == null)
+            
+            try
             {
-                return HttpNotFound();
+                user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                valor_tenant = user_sitio.Dominio.ToString();
+
+                Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+                sub_site = new SubastaSite();
+                sub_site.id = subasta.id;
+
+
+                if (subasta.id_Comprador != null) {
+                    sub_site.nick_Comprador=usuIBL.GetNombreUsuario(valor_tenant, (int)subasta.id_Comprador);
+                }
+                sub_site.titulo = subasta.titulo;
+                sub_site.nick_Vendedor = usuIBL.GetNombreUsuario(valor_tenant, (int)subasta.id_Vendedor);
+                sub_site.portada = subasta.portada;
+
+                if (subasta.id_Producto != 0)
+                {
+                    var prod = proIBL.ObtenerProductoTenant(user_sitio.idTienda, subasta.id_Categoria, subasta.id_Producto);
+                    sub_site.nombre_producto = prod.Titulo;
+                }
+               
+                sub_site.valor_Actual = subasta.valor_Actual;
+                sub_site.estado = subasta.estado;
+                if (subasta.finalizado.Equals(TipoFinalizacion.Compra_directa))
+                {
+                    sub_site.tipo_venta = "Compra directa";
+                }
+                else 
+                {
+                    sub_site.tipo_venta = "Subasta";
+                }
+                
+                sub_site.finalizado = subasta.finalizado;
+                sub_site.fecha_Inicio = subasta.fecha_Inicio;
+                sub_site.fecha_Cierre = subasta.fecha_Cierre;
+                sub_site.garantia = subasta.garantia;
+                sub_site.Comentario = subasta.Comentario;
+                sub_site.Atributo_Subasta = subasta.Atributo_Subasta;
+               
+                sub_site.Calificacion = subasta.Calificacion;
+                sub_site.Favorito = subasta.Favorito;
+
+                if (subasta == null)
+                {
+                    return HttpNotFound();
+                }
+
             }
-            return View(subasta);
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+            return View(sub_site);
         }
 
                 
@@ -81,6 +134,7 @@ namespace Site.Controllers
             try
             {
                 user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                valor_tenant = user_sitio.Dominio.ToString();
                 //List<string> tipo = new List<string>();
                 //tipo.Add("Subasta");
                 //tipo.Add("Compra Directa");
@@ -89,7 +143,7 @@ namespace Site.Controllers
                 ViewData["Productos"] = proIBL.ObtenerProductos();
                 ViewData["Atributos"] = atrIBL.ObtenerAtributos();
                 ViewBag.ListaAtributos = atrIBL.ObtenerAtributos();
-                List<String> tipo_subasta = new List<String> { "Subasta", "Compra_directa" };
+                List<String> tipo_subasta = new List<String> { "Subasta", "Compra directa" };
                 ViewData["Tipo"] = tipo_subasta;
 
                 ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda), "CategoriaId", "Nombre");
@@ -167,10 +221,73 @@ namespace Site.Controllers
 
                 valor_tenant = user_sitio.Dominio.ToString();
                 subIBL.AgregarSubasta(valor_tenant, subasta);
+
+                sub_site = crearSubastaSite(subasta);
             }
-            
-            return View("DetalleProducto", subasta);
+
+            return View("DetalleProducto", sub_site);
        }
+
+        private SubastaSite crearSubastaSite(Subasta subasta)
+        {
+            sub_site = new SubastaSite();
+            try
+            {
+                user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                valor_tenant = user_sitio.Dominio.ToString();
+
+                
+                
+                sub_site.id = subasta.id;
+
+
+                if (subasta.id_Comprador != null)
+                {
+                    sub_site.nick_Comprador = usuIBL.GetNombreUsuario(valor_tenant, (int)subasta.id_Comprador);
+                }
+                sub_site.titulo = subasta.titulo;
+                sub_site.nick_Vendedor = usuIBL.GetNombreUsuario(valor_tenant, (int)subasta.id_Vendedor);
+                sub_site.portada = subasta.portada;
+
+                if (subasta.id_Producto != 0)
+                {
+                    var prod = proIBL.ObtenerProductoTenant(user_sitio.idTienda, subasta.id_Categoria, subasta.id_Producto);
+                    sub_site.nombre_producto = prod.Titulo;
+                }
+
+                sub_site.valor_Actual = subasta.valor_Actual;
+                sub_site.estado = subasta.estado;
+                if (subasta.finalizado.Equals(TipoFinalizacion.Compra_directa))
+                {
+                    sub_site.tipo_venta = "Compra directa";
+                }
+                else
+                {
+                    sub_site.tipo_venta = "Subasta";
+                }
+
+                sub_site.finalizado = subasta.finalizado;
+                sub_site.fecha_Inicio = subasta.fecha_Inicio;
+                sub_site.fecha_Cierre = subasta.fecha_Cierre;
+                sub_site.garantia = subasta.garantia;
+                sub_site.Comentario = subasta.Comentario;
+                sub_site.Atributo_Subasta = subasta.Atributo_Subasta;
+
+                sub_site.Calificacion = subasta.Calificacion;
+                sub_site.Favorito = subasta.Favorito;
+
+               
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return sub_site;
+            
+        }
 
         //[HttpPost]
         //public void jonson(String [] atributos)
@@ -324,7 +441,7 @@ namespace Site.Controllers
                 subIBL.ActualizarSubasta(valor_tenant, subasta);
                 var vendedor = usuIBL.GetUsuario(valor_tenant, idLogueado);
                 //enviar mail
-               /* try
+                try
                 {
                     subIBL.correoCompraDirecta(valor_tenant, subasta);
 
@@ -333,7 +450,7 @@ namespace Site.Controllers
                 {
                     
                     throw;
-                }*/
+                }
                 
 
                 //enviar mail
@@ -350,15 +467,39 @@ namespace Site.Controllers
 
             ViewBag.ListaComentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
 
-            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+
+            try
+            {
+                user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                valor_tenant = user_sitio.Dominio.ToString();
+
+                Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+                if (subasta == null)
+                {
+                    return HttpNotFound();
+                }
+
+                sub_site = crearSubastaSite(subasta);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            
+            
+            
+            
+            /*Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
             if (subasta == null)
             {
                 return HttpNotFound();
-            }
-            return View(subasta);
+            }*/
+            return View(sub_site);
         }
 
-    [HttpPost]
+        [HttpPost]
         public ActionResult AgregarComentario(int idSubasta, string texto)//int idSubasta, int idSubastaee
         {
             user_sitio = Session["usuario"] as UsuarioSite;

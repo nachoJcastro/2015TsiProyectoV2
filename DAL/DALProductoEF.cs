@@ -30,6 +30,20 @@ namespace DAL
             }
         }*/
 
+        public TipoProductoDTO ObtenerProductoTenant(int idTienda, int categoriaId, int productoId)
+        {
+            try
+            {
+
+                var producto = db.TiposProductos.FirstOrDefault(p => p.TipoProductoId == productoId && p.CategoriaId == categoriaId);
+                return producto;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }   
         public TipoProductoDTO ObtenerProducto(int productoId)
         {
             try

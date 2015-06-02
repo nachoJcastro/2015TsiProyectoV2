@@ -122,11 +122,13 @@ namespace BusinessLogicLayer.TenantControllers
             {
                 List<Subasta> subastas =this.ObtenerSubastas(tenant);
                 IBLOferta ioferta = new BLOferta();
+                _dal = new DALSubastaEF();
 
                 foreach (var item in subastas)
                 {
 
                     // List<Oferta> ofertas = ibl.ObtenerOfertas(item.id);  
+                    List<Correo> lista = new List<Correo>();
 
                     DateTime ahora = DateTime.Now;
 
@@ -139,27 +141,81 @@ namespace BusinessLogicLayer.TenantControllers
                     if (resultado <= 0)
                     {
                         List<Oferta> ofertas = _dal.ObtenerOfertas(item.id);
-                        var ofertasOrdenadas = ofertas.OrderByDescending(o => o.fecha);
-                        //var oferta = ofertasOrdenadas.First();
-                        IBLUsuario blUsu = new BLUsuario();
-                        Usuario ganador = null;
-                        foreach (var itemOfertas in ofertasOrdenadas)
+
+                        if (ofertas != null && item.estado.Equals(EstadoTransaccion.Activa))
                         {
-                            if (ganador == null)
+
+                            var ofertasOrdenadas = ofertas.OrderByDescending(o => o.fecha);
+                            //var oferta = ofertasOrdenadas.First();
+                            IBLUsuario blUsu = new BLUsuario();
+                            Usuario ganador = null;
+                            foreach (var itemOfertas in ofertasOrdenadas)
                             {
-                                var usuario = blUsu.GetUsuario(tenant, itemOfertas.id_Usuario);
-                                if (usuario.billetera > item.valor_Actual)
+                                if (ganador == null)
                                 {
-                                    ganador = usuario;
-                                    ganador.billetera = ganador.billetera - itemOfertas.Monto;
-                                    blUsu.ActualizarUsuario(tenant, ganador);
-                                    item.valor_Actual = itemOfertas.Monto;
-                                    item.id_Comprador = ganador.id;
+                                    var usuario = blUsu.GetUsuario(tenant, itemOfertas.id_Usuario);
+                                    if (usuario.billetera > item.valor_Actual)
+                                    {
+                                        ganador = usuario;
+                                        ganador.billetera = ganador.billetera - itemOfertas.Monto;
+                                        blUsu.ActualizarUsuario(tenant, ganador);
+                                        item.valor_Actual = itemOfertas.Monto;
+                                        item.id_Comprador = ganador.id;
+
+
+                                    }
                                 }
                             }
+                            item.estado = EstadoTransaccion.Cerrada;
+                            _dal.ActualizarSubasta(tenant, item);
+
+                            try
+                            {
+                                 lista = _dal.correoCompraSubasta(tenant, (Subasta)item);
+                                IEnvioCorreo _envio = new EnvioCorreo();
+                                _envio.enviarCorreos(lista);
+                            }
+                            catch (Exception)
+                            {
+                                
+                                throw;
+                            }
+
+
                         }
-                        item.estado = EstadoTransaccion.Cerrada;
-                        _dal.ActualizarSubasta(tenant, item);
+                        else {
+
+                            
+                            try
+                            {
+                                System.Diagnostics.Debug.WriteLine("Entro Finalizar Compra directa sin oferta " + item.titulo);
+                                lista = new List<Correo>();
+
+                                Correo correo = _dal.correoSinOfertas(tenant, (Subasta)item);
+                                System.Diagnostics.Debug.WriteLine("Correo "+ correo.mensaje);
+                                
+                                lista.Add( _dal.correoSinOfertas(tenant, (Subasta)item));
+                                
+                                
+                                IEnvioCorreo _envio = new EnvioCorreo();
+
+                                _envio.enviarCorreos(lista);
+                                System.Diagnostics.Debug.WriteLine("Salgo Finalizar Compra directa sin oferta ");
+                            }
+                            catch (Exception)
+                            {
+
+                                throw;
+                            }
+            
+                        
+                        
+                        
+                        
+                        
+                        }
+
+
 
                         //enviarMails(Uvendedor, Ucomprador);*/
                     }

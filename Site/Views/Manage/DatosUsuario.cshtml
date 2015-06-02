@@ -1,0 +1,46 @@
+﻿@model Site.Models.UsuarioSite
+
+<h3>Datos del Usuario</h3>
+<hr />
+<img src="~/img/user.png" alt="" style=" align-content:center" />
+<div class="form-horizontal">
+    <div class="col-md-8">
+        <div class="form-group"></div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Nombre")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Nombre)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Email")
+            </div>
+
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Email)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Password")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Password)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Tienda")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Dominio)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.ActionLink("Volver", "Index", "Tenant", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+    </div>
+</div>

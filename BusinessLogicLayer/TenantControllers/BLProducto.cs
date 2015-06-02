@@ -29,6 +29,12 @@ namespace BusinessLogicLayer.TenantControllers
             _dal.AgregarProducto(producto);
         }*/
 
+        public TipoProductoDTO ObtenerProductoTenant(int idTienda,int categoriaId,int productoId)
+        {
+            return _dal.ObtenerProductoTenant( idTienda, categoriaId, productoId);
+        }
+
+
 
         public TipoProductoDTO ObtenerProducto(int productoId)
         {

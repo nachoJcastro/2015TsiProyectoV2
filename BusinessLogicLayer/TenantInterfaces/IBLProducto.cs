@@ -20,5 +20,8 @@ namespace BusinessLogicLayer.TenantInterfaces
         List<CategoriasDTO> ObtenerCategoriasPorTienda(int idTienda);
         List<TipoProductoDTO> ObtenerTipoProdCategoria(int idTienda, int idCategoria);
         List<AtributosDTO> ObtenerAtributosTipoProd(int idTienda, int idCategoria);
+
+        TipoProductoDTO ObtenerProductoTenant(int idTienda,int categoriaId,int productoId); //FindOneString tenant
+
     }
 }

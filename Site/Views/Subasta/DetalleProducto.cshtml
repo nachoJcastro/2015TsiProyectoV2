@@ -1,10 +1,10 @@
-﻿@model Crosscutting.EntityTenant.Subasta
+﻿@model Site.Models.SubastaSite
 
 @{
     ViewBag.Title = "DetalleProducto";
 }
 
-<h2>Detalles</h2>
+<h2>Detalles del producto</h2>
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -27,20 +27,34 @@
     <table class="table">
         <thead>
             <tr>
-                <td><img src="@Html.DisplayFor(model => model.portada)"></td>
+                <td><img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;"></td>
             </tr>
             <tr>
-                <th>Tipo de Finalizacion</th>
-                <th>@Html.DisplayFor(model => model.finalizado)</th>
+                <th>Tipo de Venta</th>
+                <th>@Html.DisplayFor(model => model.tipo_venta)</th>
             </tr>
             <tr>
-                <th>Vendedor</th>
-                <th>@Html.DisplayFor(model => model.id_Vendedor)</th>
+                <th>Descripcion</th>
+                <th>@Html.DisplayFor(model => model.titulo)</th>
             </tr>
             <tr>
                 <th>Producto</th>
-                <th>@Html.DisplayFor(model => model.id_Producto)</th>
+                <th>@Html.DisplayFor(model => model.nombre_producto)</th>
             </tr>
+            <tr>
+                <th>Vendedor</th>
+                <th>@Html.DisplayFor(model => model.nick_Vendedor)</th>
+            </tr>
+           @* @{
+
+              if (Model.id_Comprador != null)
+                {
+                <tr>
+                    <th>Comprador</th>
+                    <th>@Html.DisplayFor(model => model.nick_Comprador)</th>
+                </tr>
+                }
+            }*@
             <tr>
                 <th>Valor Actual</th>
                 <th>@Html.DisplayFor(model => model.valor_Actual)</th>
@@ -79,7 +93,11 @@
         if (tipoFinalizacion == "Subasta")
         {
             <div class="jumbotron">
+                if (user != null && user.Email != null && user.Nombre!=Model.nick_Vendedor)
+                {
                 <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
+                
+                }
                 <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
             </div>
         }
@@ -143,7 +161,8 @@ else
 
 
 <div class="jumbotron">
-    <button type="button" onclick="location.href='@Url.Action("Edit", "Subasta"), new { id = Model.id }'" class="btn btn-default">Editar</button>
+    @*<button type="button" onclick="location.href='@Url.Action("Edit", "Subasta"), new { id = Model.id }'" class="btn btn-default">Editar</button>
+    *@
     <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
 </div>
 

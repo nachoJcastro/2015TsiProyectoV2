@@ -7,7 +7,7 @@
     @Html.AntiForgeryToken()
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hola " + user.Nombre + "!", "Index", "Manage")
+            @Html.ActionLink("Hola " + user.Nombre + "!", "DatosUsuario", "Manage")
         </li>
         <li>
             @Html.ActionLink("Chatear!", "Chat", "Chat")

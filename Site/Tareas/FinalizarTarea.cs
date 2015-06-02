@@ -17,7 +17,7 @@ namespace Site.Tareas
         public void Execute (IJobExecutionContext context)
         {
 
-            System.Diagnostics.Debug.WriteLine("entro JOB");
+            System.Diagnostics.Debug.WriteLine("entro Finalizar Subasta por tiempo");
 
             try
             {

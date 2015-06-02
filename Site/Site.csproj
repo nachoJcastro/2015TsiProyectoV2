@@ -239,6 +239,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Sitio.cs" />
     <Compile Include="Models\Producto.cs" />
+    <Compile Include="Models\SubastaSite.cs" />
     <Compile Include="Models\UsuarioSite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -266,6 +267,7 @@
     <Content Include="img\img4.jpg" />
     <Content Include="img\logo1.png" />
     <Content Include="img\logo2.png" />
+    <Content Include="img\user.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -339,10 +341,13 @@
     <Content Include="Views\Subasta\jonson.cshtml" />
     <Content Include="Views\Subasta\SubastasDirectas.cshtml" />
     <Content Include="Views\Subasta\SubastaSubastas.cshtml" />
+    <Content Include="Views\Chat\Chat.cshtml" />
+    <Content Include="Views\Manage\DatosUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="contenido\" />
+    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

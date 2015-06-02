@@ -231,6 +231,40 @@ namespace DAL
             return lista;
         }
 
+
+        //******************************************************
+       
+        public List<Correo> correoCompraSubasta(String tenant, Subasta sub)
+        {
+            List<Correo> lista = new List<Correo>();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Entro Subasta DAL ");
+                //Creo los correos a enviar
+                Correo comprador = correoComprador(tenant, sub);
+
+                Correo vendedor = correoVendedor(tenant, sub);
+
+                //Agrego
+                lista.Add(comprador);
+
+                lista.Add(vendedor);
+
+                System.Diagnostics.Debug.WriteLine("Salgo correoCompraDirecta  DAL ");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+
+            return lista;
+        }
+        //******************************************************
+
         public Correo correoVendedor(String tenant,Subasta sub)
         {
             Correo correo = new Correo();
@@ -244,8 +278,8 @@ namespace DAL
                 //Subasta subasta = ObtenerSubasta(tenant, idSubasta);
 
                 correo.destinatario = vendedor.email;
-                correo.asunto = "Felicidades " + vendedor.nick + ". El usuario " + comprador.nick +"ha comprado tu articulo " + sub.titulo;
-                correo.mensaje = "Articulo : " + sub.titulo + "Precio venta " + sub.precio_Compra.ToString() +" Fecha : " + DateTime.Now.ToString();
+                correo.asunto = "Felicidades " + vendedor.nick + ". El usuario " + comprador.nick +" ha comprado tu articulo " + sub.titulo;
+                correo.mensaje = "Articulo : " + sub.titulo + "Precio venta " + sub.precio_Compra.ToString() + " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
 
                 System.Diagnostics.Debug.WriteLine("Salgo correoVendedor DAL ");
                
@@ -264,6 +298,38 @@ namespace DAL
             return correo;
         }
 
+        public Correo correoSinOfertas(string tenant, Subasta subasta) {
+
+            Correo correo = new Correo();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Entro correoVendedor DAL");
+                _idal = new DALUsuario();
+
+                Usuario vendedor = _idal.GetUsuario(tenant, subasta.id_Vendedor);
+               
+                //Subasta subasta = ObtenerSubasta(tenant, idSubasta);
+
+                correo.destinatario = vendedor.email;
+                correo.asunto = "Lo sentimos " + vendedor.nick + ". El articulo finalizo sin ofertas " ;
+                correo.mensaje = "Articulo : " + subasta.titulo + " .Precio de venta " + subasta.valor_Actual + " .Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant+"chebay.com" ;
+
+                System.Diagnostics.Debug.WriteLine("Salgo correoVendedor DAL ");
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return correo;
+         }
+
+
+
+
+
         public Correo correoComprador(String tenant , Subasta sub)
         {
             Correo correo = new Correo();
@@ -281,7 +347,7 @@ namespace DAL
                 
                 correo.destinatario = comprador.email;
                 correo.asunto = "Felicidades " + comprador.nick + ". Has comprado el articulo " + sub.titulo;
-                correo.mensaje = "Articulo : " + sub.titulo + "Precio compra " + sub.precio_Compra.ToString() + " Fecha : " + DateTime.Now.ToString();
+                correo.mensaje = "Articulo : " + sub.titulo + "Precio compra " + sub.precio_Compra.ToString() + " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
 
                 System.Diagnostics.Debug.WriteLine("Salgo correoComprador DAL");
                 
