@@ -65,6 +65,12 @@
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -213,10 +219,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BlobStorage.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\FileReader.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OfertaController.cs" />
+    <Compile Include="Models\ChatHub.cs" />
     <Compile Include="Models\EstiloTienda.cs" />
     <Compile Include="Models\OfertaModel.cs" />
     <Compile Include="Controllers\SubastaController.cs" />
@@ -271,6 +279,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.prettyPhoto.js" />
     <Content Include="Scripts\jquery.scrollUp.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\main.js" />
@@ -327,6 +337,7 @@
     <Content Include="Views\Subasta\Transaccion.cshtml" />
     <Content Include="Views\Subasta\SinSaldo.cshtml" />
     <Content Include="Views\Subasta\jonson.cshtml" />
+    <Content Include="Views\Chat\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

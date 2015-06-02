@@ -10,6 +10,10 @@
             @Html.ActionLink("Hola " + user.Nombre + "!", "Index", "Manage")
         </li>
         <li>
+            @Html.ActionLink("Chatear!", "Chat", "Chat")
+            <!--<a id="btnChat" href="#myModalChat" data-toggle="modal"><span class="fa fa-cart-plus fa-3x"></span> <p>Chat</p></a>-->
+        </li>
+        <li>
             @Html.ActionLink("Logout", "Otro", "Account")
     </li>
     </ul>
