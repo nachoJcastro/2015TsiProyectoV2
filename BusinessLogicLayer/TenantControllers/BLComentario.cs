@@ -35,9 +35,7 @@ namespace BusinessLogicLayer.TenantControllers
 
         public List<Comentario> ComentariosByProducto(String tenant, int productoId)
         {
-            return new List<Comentario>();
-            
-            //return _dal.ComentariosByProducto(productoId);
+            return _dal.ComentariosByProducto(tenant,productoId);
         }
 
     }

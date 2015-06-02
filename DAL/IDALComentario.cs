@@ -12,6 +12,6 @@ namespace DAL
         void AgregarComentario(String tenant, Comentario comenario); //Create
         Comentario ObtenerComentario(String tenant,int comentarioId); //Read
 
-        //List<Comentario> ComentariosByProducto(String tenant ,int productoId);
+        List<Comentario> ComentariosByProducto(String tenant ,int productoId);
     }
 }

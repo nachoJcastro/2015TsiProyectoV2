@@ -168,26 +168,26 @@ namespace Site.Controllers
                 valor_tenant = user_sitio.Dominio.ToString();
                 subIBL.AgregarSubasta(valor_tenant, subasta);
             }
-
+            
             return View("DetalleProducto", subasta);
        }
 
-        [HttpPost]
-        public void jonson(String [] atributos)
-        {
-            List<Atributo_Subasta> atr = new List<Atributo_Subasta>();
-            foreach (var a in atributos)
-            {
-                var at = new Atributo_Subasta();
-                a[1].ToString();
-                a[1].GetTypeCode();
-                a[1].GetType();
-              //  at.id_Atributo = a.id_Atributo;
-              //  at.valor = a.valor;
-                //atr.Add(at);
-            }
-            var o = 9;
-        }
+        //[HttpPost]
+        //public void jonson(String [] atributos)
+        //{
+        //    List<Atributo_Subasta> atr = new List<Atributo_Subasta>();
+        //    foreach (var a in atributos)
+        //    {
+        //        var at = new Atributo_Subasta();
+        //        a[1].ToString();
+        //        a[1].GetTypeCode();
+        //        a[1].GetType();
+        //      //  at.id_Atributo = a.id_Atributo;
+        //      //  at.valor = a.valor;
+        //        //atr.Add(at);
+        //    }
+        //    var o = 9;
+        //}
 
         public JsonResult TipoProdList(int idCategoria)
         {
@@ -348,6 +348,8 @@ namespace Site.Controllers
             var user = Session["usuario"] as UsuarioSite;
             valor_tenant = user.Dominio;
 
+            ViewBag.ListaComentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
+
             Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
             if (subasta == null)
             {
@@ -355,5 +357,26 @@ namespace Site.Controllers
             }
             return View(subasta);
         }
+
+    [HttpPost]
+        public ActionResult AgregarComentario(int idSubasta, string texto)//int idSubasta, int idSubastaee
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+            int idLogueado = usuIBL.ObtenerIdByEmail(valor_tenant, user_sitio.Email);
+
+            Comentario comentario = new Comentario();
+            comentario.fecha = System.DateTime.Now;
+            comentario.id_Subasta = idSubasta;
+            comentario.id_Usuario = idLogueado;
+            comentario.texto = texto;
+
+            //comentario.Usuario = usuIBL.GetUsuario(valor_tenant, idLogueado);
+            //comentario.Subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+            comIBL.AgregarComentario(valor_tenant,comentario);
+            ViewBag.ListaComentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
+            return View("DetalleProducto", idSubasta);
+        }
+
     }
 }
