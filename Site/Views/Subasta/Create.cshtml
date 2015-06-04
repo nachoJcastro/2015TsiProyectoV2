@@ -181,52 +181,47 @@
 
             <div>Atributos propios de la categoria seleccionada</div>
             @{  var indice = 0;
-                foreach (var atributo in ViewBag.ListaAtributos)
-            {
-                
+              foreach (var atributo in ViewBag.ListaAtributos)
+              {
+
                 <div class="form-group">
-                    
+
                     @atributo.Nombre
                     <div id="index @indice" class="col-md-8" data-idatributo="@atributo.AtributoId">
                         <input type="text" id="@indice" class="form-control">
                         @*@Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control", @id = indice} })
-            @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })*@
+                    @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })*@
 
                     </div>
                 </div>
-               
-                indice++;
+
+                  indice++;
+              }
             }
-}
             <div class="form-group">
                 <div class="col-md-8">
-                    <input type="submit" value="Create" class="btn btn-default" onclick="createJSON(@indice);" />
+                    <input type="submit" value="Create" class="btn btn-default" onclick="agregarAtributos(@indice);" />
                 </div>
             </div>
+
+
             <script>
-                function createJSON(indice) {
-                    jsonArr = [];
-                    for (i = 0 ; i < indice; i++) {
-                        var idat = "index " + i;
-                        var json = { "idAtributo": document.getElementById(idat).getAttribute('data-idatributo'), "valorAtributo": document.getElementById(i).value };
-                        jsonArr.push(json);
-                    }
-                    var i = 0;
-                    while(jsonArr[i] != null){
-                        jsonArr[i] = JSON.stringify(jsonArr[i]);
-                        i++;
-                    }
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("Create", "Subasta")',
-                        data: JSON.stringify(jsonArr),
-                        //contentType: 'application/json',
-                        dataType: 'json',
-                        async: false,
-                        traditional: true,
-                        success: function (data) { if (data.existeRecurso) { control = true; } }
-                    });
+                function agregarAtributos(indice) {
+                    var idS = @Model.id;
+        for (i = 0 ; i < indice; i++) {
+            var idat = "index " + i;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("AgregarAtributos", "Subasta")',
+                data: {
+                    "valor": document.getElementById(i).value,
+                    "idAtributo": document.getElementById(idat).getAttribute('data-idatributo')
+                    //,"idSubasta": idS
                 }
+            });
+        }
+    }
             </script>
         </div>
     </div>

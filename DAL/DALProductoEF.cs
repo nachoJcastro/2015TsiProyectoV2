@@ -11,8 +11,6 @@ namespace DAL
 {
     public class DALProductoEF : IDALProducto
     {
-      //static TenantDB db = new TenantDB("cuevitas");
-
         BackendDB db = new BackendDB();
 
         public DALProductoEF() { }

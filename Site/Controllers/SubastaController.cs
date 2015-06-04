@@ -14,6 +14,7 @@ using BusinessLogicLayer.Interfaces;
 using Crosscutting.Enum;
 using Crosscutting.Entity;
 using Microsoft.WindowsAzure.Storage.Blob;
+using BusinessLogicLayer.Controllers;
 
 namespace Site.Controllers
 {
@@ -25,7 +26,8 @@ namespace Site.Controllers
         IBLComentario comIBL;
         IBLOferta ofeIBL;
         IBLUsuario usuIBL;
-        BusinessLogicLayer.TenantInterfaces.IBLAtributo atrIBL;
+        IBLAtributo atrIBL;
+        IBLAtributo_Subasta atrSubIBL;
 
         BlobStorage _bls = new BlobStorage();
         //IBLCategoria catIBL;
@@ -34,7 +36,7 @@ namespace Site.Controllers
         private string valor_tenant;
         private SubastaSite sub_site;
 
-        public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl, IBLOferta ofebl, IBLUsuario usubl, BusinessLogicLayer.TenantInterfaces.IBLAtributo atrIBL)
+        public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl, IBLOferta ofebl, IBLUsuario usubl, IBLAtributo atrIBL, IBLAtributo_Subasta atrSubIBL)
         {
             this.subIBL = subbl;
             this.comIBL = combl;
@@ -43,10 +45,10 @@ namespace Site.Controllers
             this.usuIBL = usubl;
             this.atrIBL = atrIBL;
             //this.catIBL = catbl;
-           // this.atrIBL = atrbl;
+            this.atrSubIBL = atrSubIBL;
         }
 
-        public SubastaController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLUsuario(), new BLAtributo())
+        public SubastaController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLUsuario(), new BLAtributo(), new BLAtributo_Subasta())
         {
 
         }
@@ -147,6 +149,7 @@ namespace Site.Controllers
                 ViewData["Tipo"] = tipo_subasta;
 
                 ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda), "CategoriaId", "Nombre");
+
             }
             catch (Exception)
             {
@@ -160,7 +163,7 @@ namespace Site.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre,Atributo_Subasta")]Subasta subasta, FormCollection form, HttpPostedFileBase portada)
+        public ActionResult Create([Bind(Include = "titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre")]Subasta subasta, FormCollection form, HttpPostedFileBase portada)
         {
             user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
             subasta.id_Vendedor = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
@@ -202,9 +205,6 @@ namespace Site.Controllers
             string jsonData = Request.Form[0];
             string jsonData2 = Request.Form[1];
             
-            
-            
-            //FALTA AGREGAR LISTA DE ATRIBUTOS ( Y SUS VALORES)
 
             if (tipo == "Subasta")
             {
@@ -289,22 +289,21 @@ namespace Site.Controllers
             
         }
 
-        //[HttpPost]
-        //public void jonson(String [] atributos)
-        //{
-        //    List<Atributo_Subasta> atr = new List<Atributo_Subasta>();
-        //    foreach (var a in atributos)
-        //    {
-        //        var at = new Atributo_Subasta();
-        //        a[1].ToString();
-        //        a[1].GetTypeCode();
-        //        a[1].GetType();
-        //      //  at.id_Atributo = a.id_Atributo;
-        //      //  at.valor = a.valor;
-        //        //atr.Add(at);
-        //    }
-        //    var o = 9;
-        //}
+
+        [HttpPost]
+        public JsonResult AgregarAtributos(String valor, int idAtributo)//, int idSubasta
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+            Atributo_Subasta atributo = new Atributo_Subasta();
+            //atributo.id_Subasta = idSubasta;
+            atributo.valor = valor;
+            atributo.id_Atributo = idAtributo;
+
+            atrSubIBL.AgregarAtributo_Subasta(valor_tenant, atributo);
+            return Json( JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult TipoProdList(int idCategoria)
         {
@@ -465,9 +464,6 @@ namespace Site.Controllers
             var user = Session["usuario"] as UsuarioSite;
             valor_tenant = user.Dominio;
 
-            ViewBag.ListaComentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
-
-
             try
             {
                 user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
@@ -483,24 +479,14 @@ namespace Site.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
 
-            
-            
-            
-            
-            /*Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
-            if (subasta == null)
-            {
-                return HttpNotFound();
-            }*/
             return View(sub_site);
         }
 
         [HttpPost]
-        public ActionResult AgregarComentario(int idSubasta, string texto)//int idSubasta, int idSubastaee
+        public JsonResult AgregarComentario(int idSubasta, string texto)
         {
             user_sitio = Session["usuario"] as UsuarioSite;
             valor_tenant = user_sitio.Dominio.ToString();
@@ -515,9 +501,48 @@ namespace Site.Controllers
             //comentario.Usuario = usuIBL.GetUsuario(valor_tenant, idLogueado);
             //comentario.Subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
             comIBL.AgregarComentario(valor_tenant,comentario);
-            ViewBag.ListaComentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
-            return View("DetalleProducto", idSubasta);
+
+            IEnumerable<Comentario> modelList = new List<Comentario>();
+            List<Comentario> comentarios;
+            comentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
+            comentarios.Reverse();
+            modelList = comentarios.Select(x =>
+                                            new Comentario()
+                                            {
+                                                id_Subasta = x.id_Subasta,
+                                                id_Usuario = x.id_Usuario,
+                                                texto = x.texto,
+                                                fecha = x.fecha
+                                            });
+            return Json(modelList, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult ListarComentario(int idSubasta)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+
+            IEnumerable<Comentario> modelList = new List<Comentario>();
+            List<Comentario> comentarios;
+            comentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
+            comentarios.Reverse();
+            modelList = comentarios.Select(x =>
+                                            new Comentario()
+                                            {
+                                                id_Subasta = x.id_Subasta,
+                                                id_Usuario = x.id_Usuario,
+                                                texto = x.texto,
+                                                fecha = x.fecha
+                                            });
+
+            return Json(modelList, JsonRequestBehavior.AllowGet);
+        }
     }
 }
+
+
+                
+                
+                                                
+

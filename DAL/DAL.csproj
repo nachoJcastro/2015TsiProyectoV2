@@ -54,6 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DALAtributo_SubastaEF.cs" />
+    <Compile Include="IDALAtributo_Subasta.cs" />
     <Compile Include="Configuration\AtributoMap.cs" />
     <Compile Include="Configuration\CategoriasMap.cs" />
     <Compile Include="Configuration\ImagenesMap.cs" />

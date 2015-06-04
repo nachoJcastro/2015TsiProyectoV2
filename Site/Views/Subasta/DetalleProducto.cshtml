@@ -93,7 +93,7 @@
         if (tipoFinalizacion == "Subasta")
         {
             <div class="jumbotron">
-                if (user != null && user.Email != null && user.Nombre!=Model.nick_Vendedor)
+                @if (user != null && user.Email != null && user.Nombre!=Model.nick_Vendedor)
                 {
                 <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
                 
@@ -107,28 +107,15 @@
                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
             </div>
         }
+       
+        <dt>Comentarios</dt>
+        
+        <div>
+            <textarea id="areaComentario" rows="4" cols="133" placeholder="Ingrese aqui su comentario.."></textarea>
+        </div>
+        <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
 
-        <dl>
-            <dt>Comentarios</dt>
-            <dd>
-                <div>
-                    <textarea id="areaComentario" rows="4" cols="133" placeholder="Ingrese aqui su comentario.."></textarea>
-                </div>
-                <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
-            </dd>
-
-            @{if (ViewBag.ListaComentarios != null)
-            {
-                foreach (var comentario in ViewBag.ListaComentarios)
-                {
-                    <dt>@comentario.fecha.ToString("dd/MM/yyyy") @comentario.id_Usuario</dt>
-                    <dd>
-                        @comentario.texto
-                    </dd>
-                }
-            }
-            }
-        </dl>
+    <dl id="retorno"></dl>
     }
     else
     {
@@ -140,25 +127,80 @@ else
     <p>La publicacion está finalizada</p>
 }
 
-
-
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
 <script>
-    function crearComentario() {
+    $(document).ready(function () {
+        listarComentarios();
+    });
+    function listarComentarios(){
+        var retorno = $("#retorno");
         $.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("ListarComentario", "Subasta")',
+            data: {
+                "idSubasta": @Model.id,
+            },
+            success: function (data) {
+                retorno.html('');
+                var result = "";
+                $.each(data, function (id, item) {
+                    result += '<dt>' +
+                                ToJavaScriptDate(item.fecha) + '      ' +
+                                item.id_Usuario +
+                                '</dt>' +
+                                '<dd>' +
+                                item.texto +
+                                '</dd>';
+                })
+                retorno.html(result);
+                document.getElementById("areaComentario").value = '';
+                $("#com").show();
+            }
+        });
+    }
+
+    function crearComentario() {
+        var retorno = $("#retorno");
+        $.ajax({
+            cache: false,
             type: "POST",
             url: '@Url.Action("AgregarComentario", "Subasta")',
             data: {
-                "texto": document.getElementById("areaComentario").value,
                 "idSubasta": @Model.id,
                 "texto": document.getElementById("areaComentario").value
             },
-            dataType: 'json',
-            async: false,
-            traditional: true
+            success: function (data) {
+                retorno.html('');
+                var result = "";
+                $.each(data, function (id, item) {
+                    result += '<dt>' +
+                                ToJavaScriptDate(item.fecha) + '      ' +
+                                item.id_Usuario +
+                                '</dt>' +
+                                '<dd>' +
+                                item.texto +
+                                '</dd>';
+                })
+                retorno.html(result);
+                document.getElementById("areaComentario").value = '';
+                $("#com").show();
+            }
         });
     }
-</script>
 
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+</script>
 
 <div class="jumbotron">
     @*<button type="button" onclick="location.href='@Url.Action("Edit", "Subasta"), new { id = Model.id }'" class="btn btn-default">Editar</button>
