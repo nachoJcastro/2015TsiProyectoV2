@@ -136,6 +136,56 @@ namespace Site.Controllers
             }
 
         }
+
+
+          // FUNCION PARA CARGAR LA VISTA PARCIAL DE RESULTADOS
+        //public PartialViewResult Busqueda(string opcion)
+        //{
+
+
+        //    var user = Session["usuario"] as UsuarioSite;
+        //    var tenantID = user.idTienda.ToString();
+        //    List<Subasta> lista_Subastas = _sub.ObtenerSubastas(tenantID);
+
+
+        //    List<Subasta> ls_Subastas_Subasta = new List<Subasta>();
+        //    foreach (Subasta item in lista_Subastas)
+        //    {
+        //        if (item.finalizado.ToString() == Crosscutting.Enum.TipoFinalizacion.Subasta.ToString())
+        //        {
+        //            ls_Subastas_Subasta.Add(item);
+
+        //            // System.Diagnostics.Trace.WriteLine("DESCRIPCION SUBASTA" + item.descripcion);
+        //        }
+
+        //    }
+
+
+        //    List<Subasta> ls_Subastas_Directa = new List<Subasta>();
+        //    foreach (Subasta item in lista_Subastas)
+        //    {
+        //        if (item.finalizado == Crosscutting.Enum.TipoFinalizacion.Compra_directa)
+        //        {
+        //            ls_Subastas_Directa.Add(item);
+        //        }
+        //    }
+
+
+
+        //    if (opcion == "Subasta")
+        //    {
+        //        ViewBag.Resultado = ls_Subastas_Subasta;
+        //        return PartialView(ls_Subastas_Subasta);
+        //    }
+
+        //    else
+        //    {
+        //        ViewBag.Resultado = ls_Subastas_Directa;
+        //        return PartialView(ls_Subastas_Directa);
+        //    }
+
+        //}
+           
         public ActionResult Error(string id)
         {
             ViewBag.Message = "Pagina de error. No existe el sitio: " + id;

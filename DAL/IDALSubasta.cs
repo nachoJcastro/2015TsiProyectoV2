@@ -23,11 +23,15 @@ namespace DAL
 
         // funciones correo
         List<Correo> correoCompraDirecta(String tenant,Subasta sub);
+
+
+        List<Correo> correoCompraSubasta(String tenant, Subasta sub);
+
+
         Correo correoVendedor(String tenant,Subasta sub);
         Correo correoComprador(String tenant,Subasta sub);
         // funciones correo
 
-        void AgregarImagen(string tenant, Imagen img);
-        List<Imagen> ObtenerImagenes(string tenant, int id);
+        Correo correoSinOfertas(string tenant, Subasta subasta);
     }
 }

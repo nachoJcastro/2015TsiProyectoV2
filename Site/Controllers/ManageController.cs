@@ -11,17 +11,39 @@ using Site.Models;
 
 namespace Site.Controllers
 {
-   /* [Authorize]
+   
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private UsuarioSite usuario;
+       /* private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;*/
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        // GET: Usuario
+        public ActionResult DatosUsuario()
+        {
+            try
+            {
+                 usuario = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+            return View(usuario);
+        }
+        
+
+
+
+
+
+       /* public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -383,6 +405,6 @@ namespace Site.Controllers
             Error
         }
 
-#endregion
-    }*/
+#endregion*/
+    }
 }

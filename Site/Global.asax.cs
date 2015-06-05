@@ -21,10 +21,10 @@ namespace Site
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
+            // tareas
             SchedulerMail.Start();
             SchedulerSubasta.Start();
-
+            //tareas
         }
 
        

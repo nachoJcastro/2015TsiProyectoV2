@@ -11,8 +11,6 @@ namespace DAL
 {
     public class DALProductoEF : IDALProducto
     {
-      //static TenantDB db = new TenantDB("cuevitas");
-
         BackendDB db = new BackendDB();
 
         public DALProductoEF() { }
@@ -30,6 +28,20 @@ namespace DAL
             }
         }*/
 
+        public TipoProductoDTO ObtenerProductoTenant(int idTienda, int categoriaId, int productoId)
+        {
+            try
+            {
+
+                var producto = db.TiposProductos.FirstOrDefault(p => p.TipoProductoId == productoId && p.CategoriaId == categoriaId);
+                return producto;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }   
         public TipoProductoDTO ObtenerProducto(int productoId)
         {
             try

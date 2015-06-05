@@ -10,8 +10,6 @@ namespace DAL
 {
     public class DALComentarioEF : IDALComentario
     {
-        //static TenantDB db = new TenantDB("falta pasarle el string database");
-
         public DALComentarioEF() { }
 
         public void AgregarComentario(String tenant, Comentario comentario)
@@ -42,23 +40,23 @@ namespace DAL
             }
         }
 
-        
-       /* public List<Comentario> ComentariosByProducto(String tenant, productoId)
-        {
-            TenantDB db = new TenantDB(tenant);
-            var listaCom = new List<Comentario>();
 
-            try
-            {
-                listaCom = db.Comentario.Where(c => c.subasta.id == productoId).ToList();
+        public List<Comentario> ComentariosByProducto(String tenant, int productoId)
+         {
+             TenantDB db = new TenantDB(tenant);
+             var listaCom = new List<Comentario>();
 
-                return listaCom;
+             try
+             {
+                 listaCom = db.Comentario.Where(c => c.id_Subasta == productoId).ToList();
 
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }*/
+                 return listaCom;
+
+             }
+             catch (Exception e)
+             {
+                 throw e;
+             }
+         }
     }
 }
