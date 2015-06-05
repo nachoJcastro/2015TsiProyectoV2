@@ -128,7 +128,6 @@ namespace Site.Controllers
 
             CloudBlobContainer blobContainer = _bls.GetContainerTienda(user_sitio.Dominio);
 
-
             if (portada != null && portada.ContentLength > 0)
             {
 
@@ -148,8 +147,7 @@ namespace Site.Controllers
             string jsonData = Request.Form[0];
             string jsonData2 = Request.Form[1];
             
-            
-            
+                   
             //FALTA AGREGAR LISTA DE ATRIBUTOS ( Y SUS VALORES)
 
             if (tipo == "Subasta")
@@ -169,7 +167,8 @@ namespace Site.Controllers
                 subIBL.AgregarSubasta(valor_tenant, subasta);
             }
 
-            return View("DetalleProducto", subasta);
+            //return View("DetalleProducto", subasta);
+            return View("ImagenesSubasta",subasta);
        }
 
         [HttpPost]
@@ -349,11 +348,68 @@ namespace Site.Controllers
             valor_tenant = user.Dominio;
 
             Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+            ViewBag.ListaImg = subIBL.ObtenerImagenes(valor_tenant, idSubasta);
+
             if (subasta == null)
             {
                 return HttpNotFound();
             }
             return View(subasta);
         }
+
+
+        public ActionResult ImagenesSubasta(int id)
+        {
+            
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+            Subasta sub = subIBL.ObtenerSubasta(valor_tenant, id);
+
+            return View(sub);
+        }
+
+        public ActionResult SaveUploadedFile(Subasta sub)
+        {
+            user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+            CloudBlobContainer blobContainer = _bls.GetContainerTienda(user_sitio.Dominio);
+            valor_tenant = user_sitio.Dominio.ToString();
+            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, sub.id);
+            //bool isSavedSuccessfully = true;
+
+            string fName = "";
+            foreach (string fileName in Request.Files)
+            {
+                HttpPostedFileBase file = Request.Files[fileName];
+                //Save file content goes here
+                fName = file.FileName;
+                if (file != null && file.ContentLength > 0)
+                {
+                    var nombreFoto = user_sitio.Dominio + Guid.NewGuid().ToString() + "_subasta";
+                    CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+
+                    Imagen imagen = new Imagen();
+                    imagen.id_Subasta = subasta.id;
+                    imagen.nombre = nombreFoto;
+                    imagen.uri = blob.Uri.ToString();
+
+                    subIBL.AgregarImagen(user_sitio.Dominio, imagen);
+                    blob.UploadFromStream(file.InputStream);
+
+                }
+
+            }
+
+
+            //if (isSavedSuccessfully)
+            //{
+            //    return Json(new { Message = fName });
+            //}
+            //else
+            //{
+            //    return Json(new { Message = "Error in saving file" });
+            //}
+            return View("DetalleProducto",subasta);
+        }
+
     }
 }

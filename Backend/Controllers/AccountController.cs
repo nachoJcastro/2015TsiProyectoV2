@@ -73,7 +73,7 @@ namespace Backend.Controllers
         {
             //var idrol = "";
             var user = await UserManager.FindAsync(model.Email, model.Password);
-            var estaEnelRol = UserManager.IsInRole(user.Id,"Admin");
+            
             //System.Diagnostics.Debug.WriteLine("Rol Usuario : " + user.Roles.ToString());
             //if (user != null)
             //{
@@ -92,7 +92,7 @@ namespace Backend.Controllers
             {
                 return View(model);
             }
-            
+            var estaEnelRol = UserManager.IsInRole(user.Id, "Admin");
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);

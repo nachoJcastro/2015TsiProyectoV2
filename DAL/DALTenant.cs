@@ -95,8 +95,10 @@ namespace DAL
             try
             {
                 BackendDB back = new BackendDB();
-                var tienda = back.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == idTienda);
-                foreach (var imagen in tienda.ListaImagenes)
+                //var tienda = back.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == idTienda);
+                var imagenes = back.Imagenes.Where(t=>t.TiendaId == idTienda);
+
+                foreach (var imagen in imagenes)
                 {
                     if (!imagen.ImagenEliminada)
                     {

@@ -38,7 +38,7 @@ namespace Backend
             bundles.Add(new ScriptBundle("~/bundles/root").Include(
                        "~/Scripts/root.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/otros").Include(
+            bundles.Add(new ScriptBundle("~/bundles/chart").Include(
                       "~/Scripts/exporting.js",
                       "~/Scripts/highchart.js"));
 

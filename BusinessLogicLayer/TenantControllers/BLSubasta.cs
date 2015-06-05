@@ -191,5 +191,13 @@ namespace BusinessLogicLayer.TenantControllers
             
         }
 
+        public void AgregarImagen(string tenant, Imagen img) {
+            _dal.AgregarImagen(tenant, img);
+        }
+
+        public List<Imagen> ObtenerImagenes(string tenant, int id) {
+            return _dal.ObtenerImagenes(tenant, id);
+        }
+
     }
 }

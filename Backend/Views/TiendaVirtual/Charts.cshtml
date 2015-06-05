@@ -1,0 +1,155 @@
+﻿@model  Backend.Models.Reporte
+@{
+    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+    ViewBag.Title = "Reportes";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Charts</h4>
+    </div>
+    <div class="panel-body">
+        @*@using (Html.BeginForm("Reportes", "TiendaVirtual"))
+            {*@
+        <div class="form-horizontal">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.Label("Tienda Virtual", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.dominio, new SelectList((System.Collections.IEnumerable)ViewBag.tiendas, "Dominio", "Dominio"), "Seleccionar Tienda", new { @class = "form-control" })
+                        @*@Html.DropDownList("Tiendas Virtuales", new SelectList((System.Collections.IEnumerable)ViewData["Tiendas"], "TiendaVirtualId", "Dominio"), new { @class = "form-control", @id = "idTienda" })*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                @Html.Label("Fecha Inicio", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class='input-group date' id='datetimepicker3'>
+
+                        @Html.EditorFor(model => model.fechaini, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.fechaini, "", new { @class = "text-danger" })
+                </div>
+
+
+
+                @Html.Label("Fecha Fin", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class='input-group date' id='datetimepicker4'>
+
+                        @Html.EditorFor(model => model.fechafin, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.fechaini, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="col-md-12 text-right">
+                <input type="button" value="Buscar" onclick="ListaPubli();" class="btn btn-default" />
+            </div>
+
+        </div>
+        @*}*@
+
+
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Resultado</h4>
+    </div>
+    <div class="panel-body">
+        <div id="grafico"></div>
+        <script src="~/Scripts/highcharts.js"></script>
+        <script src="~/Scripts/exporting.js"></script>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
+
+<script>
+
+    function ListaPubli() {
+
+        var dominio = $("#dominio").val();
+        var fechaini = $("#fechaini").val();
+        var fechafin = $("#fechafin").val();
+        var myActionUrl = '@Url.Action("GenerarChart", "TiendaVirtual")';
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: myActionUrl,
+            data: {
+                "tipo": "",
+                "dominio": dominio,
+                "fechaini": fechaini,
+                "fechafin": fechafin
+            },
+            dataType: "json",
+            success: function (Result) {
+                Result = Result.d;
+                var data = [];
+                for (var i in Result) {
+                    var serie = new Array(Result[i].name, Result[i].cantidad);
+                    data.push(serie);
+                }
+                DibujaGrafico(data);
+                //DreawChartPubli(data, 'container2');
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
+    }
+
+    function DibujaGrafico(series) {
+        $('#grafico').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 1,//null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Usuarios/Transacciones'
+            },
+            subtitle: {
+                text: 'Chebay'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: {point.y} (<b>{point.percentage:.1f}%</b>)'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.y}',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Usuarios',
+                data: series
+            }]
+        });
+    }
+</script>

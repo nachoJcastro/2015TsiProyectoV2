@@ -26,5 +26,8 @@ namespace DAL
         Correo correoVendedor(String tenant,Subasta sub);
         Correo correoComprador(String tenant,Subasta sub);
         // funciones correo
+
+        void AgregarImagen(string tenant, Imagen img);
+        List<Imagen> ObtenerImagenes(string tenant, int id);
     }
 }

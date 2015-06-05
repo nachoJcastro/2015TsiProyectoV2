@@ -382,30 +382,30 @@ namespace Backend.Controllers
             return View();
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Reportes(Reporte rep)
-        {
-            List<Subasta> subastas;
-            List<Usuario> usuarios;
-            TipoReporte e = (TipoReporte)Enum.Parse(typeof(TipoReporte), "Usuario");
+        //[HttpPost]
+        //[Authorize(Roles = "Admin")]
+        //public ActionResult Reportes(Reporte rep)
+        //{
+        //    List<Subasta> subastas;
+        //    List<Usuario> usuarios;
+        //    TipoReporte e = (TipoReporte)Enum.Parse(typeof(TipoReporte), "Usuario");
 
-            if (rep.tipo.Equals(e))
-            {
-                usuarios = _bl.ReportUsers(rep.dominio, rep.fechaini, rep.fechafin);
-                //return Json(new { Data = usuarios }, JsonRequestBehavior.AllowGet)
-                ViewBag.listaUser = usuarios;
+        //    if (rep.tipo.Equals(e))
+        //    {
+        //        usuarios = _bl.ReportUsers(rep.dominio, rep.fechaini, rep.fechafin);
+        //        //return Json(new { Data = usuarios }, JsonRequestBehavior.AllowGet)
+        //        ViewBag.listaUser = usuarios;
                 
-            }
-            else {
-                subastas = _bl.ReportSubasta(rep.dominio, rep.fechaini, rep.fechafin);
-                ViewBag.listaSub = subastas;
+        //    }
+        //    else {
+        //        subastas = _bl.ReportSubasta(rep.dominio, rep.fechaini, rep.fechafin);
+        //        ViewBag.listaSub = subastas;
                 
 
-                //return Json(new { Data = subastas }, JsonRequestBehavior.AllowGet)
-            }
-            return RedirectToAction("Reportes", "TiendaVirtual");
-        }
+        //        //return Json(new { Data = subastas }, JsonRequestBehavior.AllowGet)
+        //    }
+        //    return RedirectToAction("Reportes", "TiendaVirtual");
+        //}
 
 
         public ActionResult ReportesAjax(Reporte rep)
@@ -453,6 +453,35 @@ namespace Backend.Controllers
                 return Json(modelList2, JsonRequestBehavior.AllowGet);
             }
             
+        }
+
+        public ActionResult Charts() {
+            ViewBag.tiendas = _bl.ObtenerTiendas().ToList();
+            return View();
+        }
+
+        public ActionResult GenerarChart(Reporte rep) {
+
+            int cant_u = _bl.ReportUsers(rep.dominio, rep.fechaini, rep.fechafin).Count();
+            int cant_t = _bl.ReportSubasta(rep.dominio, rep.fechaini, rep.fechafin).Count();
+
+            IEnumerable<Charts> modelList = new List<Charts> 
+            { 
+                new Charts()
+                {
+                    name = "Usuarios",
+                    cantidad = cant_u
+                },
+                new Charts()
+                {
+                    name = "Transacciones",
+                    cantidad = cant_t
+                }
+            
+            };
+
+            return Json(modelList, JsonRequestBehavior.AllowGet);
+  
         }
 
     }
