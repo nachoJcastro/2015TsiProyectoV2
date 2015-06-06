@@ -4,13 +4,10 @@
 }
 
 <div class="col-md-12 contendor-admin-user">
-    <div class="col-md-12 titulo-componentes-user">
-        <a href="@Url.Action("index", "TiendaVirtual")" class="btn btn-default"><span class="fa fa-arrow-left fa-2x"></span></a><h1>Subir Imagenes</h1>
-    </div>
 
-    <div class="col-md-12 contenido-componentes-user">
+    <div class="col-md-12">
         <p>
-            @using (Html.BeginForm("Upload", "TiendaVirtual", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Upload", "Subasta", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.HiddenFor(x => Model.TiendaVitualId)
                 @Html.HiddenFor(x => Model.Dominio)
@@ -36,9 +33,9 @@
 
 <script>
     function deleteImage(nombre,image,id) {
-        var url = "/TiendaVirtual/DeleteImage";
+        var url = "/Subasta/DeleteImage";
         $.post(url, { Name: nombre, Uri: image, id: id }, function (data) {
-            window.location.href = "/TiendaVirtual/Upload/" + id;
+            window.location.href = "/Subasta/Upload/" + id;
         });
     }
 </script>

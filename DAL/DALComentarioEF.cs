@@ -10,8 +10,6 @@ namespace DAL
 {
     public class DALComentarioEF : IDALComentario
     {
-        //static TenantDB db = new TenantDB("falta pasarle el string database");
-
         public DALComentarioEF() { }
 
         public void AgregarComentario(String tenant, Comentario comentario)

@@ -5,70 +5,159 @@
 <h1 align="center">@ViewBag.Message</h1>
 
 @if (ViewBag.ListaImagenes != null)
-{
-    <div class="container">
+{<section id="slider">
+        <div class="container">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="carousel slide" id="carousel-606608">
-                    <ol class="carousel-indicators">
-                        @{
-                        var index = 0;
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="carousel slide" id="slider-carousel" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            @{
+                                var index = 0;
 
-                        if (ViewBag.ListaImagenes != null)
-                        {
-                            foreach (var imagen in ViewBag.ListaImagenes)
-                            {
-                                if (index == 0)
+                                if (ViewBag.ListaImagenes != null)
                                 {
-                                    <li class="active" data-slide-to="0" data-target="#carousel-606608"></li>
-                                }
-                                else
-                                {
-                                    <li data-slide-to="@index" data-target="#carousel-606608"></li>
-                                }
+                                    foreach (var imagen in ViewBag.ListaImagenes)
+                                    {
+                                        if (index == 0)
+                                        {
+                                            <li class="active" data-slide-to="0" data-target="#slider-carousel"></li>
+                                        }
+                                        else
+                                        {
+                                            <li data-slide-to="@index" data-target="#slider-carousel"></li>
+                                        }
 
-                                index++;
+                                        index++;
+                                    }
+                                }
                             }
-                        }
-                        }
 
-                    </ol>
-                    <div class="carousel-inner">
+                        </ol>
+                        <div class="carousel-inner">
 
-                        @if (ViewBag.ListaImagenes != null)
-                        {
-                            index = 0;
-
-                            foreach (var imagen in ViewBag.ListaImagenes)
+                            @if (ViewBag.ListaImagenes != null)
                             {
-                                if (index == 0)
-                                {
-                                    <div class="item active">
-                                        <img alt="" src="@imagen.Uri" />
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="item">
-                                        <img alt="" src="@imagen.Uri" />
-                                    </div>
-                                }
+                                index = 0;
 
-                                index++;
+                                foreach (var imagen in ViewBag.ListaImagenes)
+                                {
+                                    if (index == 0)
+                                    {
+                                        <div class="item active">
+                                            <img alt="" src="@imagen.Uri" />
+                                        </div>
+                                
+                                        
+                                    }
+                                    else
+                                    {
+                                        <div class="item">
+                                            <img alt="" src="@imagen.Uri" />
+                                        </div>
+                                    }
+
+                                    index++;
+                                }
                             }
-                        }
 
+                        </div>
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
                     </div>
-                    <a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>
+
                 </div>
             </div>
         </div>
-    </div>
+  </section>
 }
 
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Categorias</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><a href="#">Subastas</a></h4>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><a href="#">Compra directa</a></h4>
+                            </div>
+                        </div>
 
-@if (ViewBag.ListarSubastas != null)
+                    </div>
+
+                    <div class="price-range">
+                        <h2>Precio</h2>
+                        <div class="well text-center">
+                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
+                            <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">Filtro items</h2>
+
+                    @if (ViewBag.ListarSubastas != null)
+                    {
+
+                        foreach (var item in ViewBag.ListarSubastasActivas)
+                        {
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="@item.portada" alt="" />
+                                            <h2>$@item.precio_Compra</h2>
+                                            <p>@item.titulo</p>
+                                            <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="choose">
+                                        <ul class="nav nav-pills nav-justified">
+                                            <li><a href="#"><i class="fa fa-plus-square"></i> Favoritos</a></li>
+                                            <li><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)"><i class="fa fa-plus-square"></i> Comparar</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="col-sm-3 col-md-3 subastaslista">
+                                <div class="thumbnail">
+                                    <img src="@item.portada" style="max-width:150px;max-height:180px;" alt="">
+                                    <div class="caption">
+                                        <h3>@item.titulo</h3>
+                                        <p>@item.descripcion</p>
+                                        <p>$ @item.precio_Compra</p>
+                                        <p><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-primary" role="button">Detalle</a></p>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        }
+                       
+                    }
+
+                </div><!--features_items-->
+
+            </div>
+        </div>
+    </div>
+</section>
+@*@if (ViewBag.ListarSubastas != null)
 {
     <div class="container contenedor-listasubasta">
 
@@ -79,102 +168,51 @@
             </div>
             @foreach (var item in ViewBag.ListarSubastasActivas)
             {
-                <div class="col-sm-3 col-md-3">
-                    <div class="thumbnail">
-                        <img src="@item.portada" style="max-width:150px;max-height:180px;" alt="">
-                        <div class="caption">
-                            <h3>@item.titulo</h3>
-                            <p>@item.descripcion</p>
-                            <p>$ @item.precio_Compra</p>
-                            <p><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-primary" role="button">Detalle</a></p>
-                        </div>
+            <div class="col-sm-3 col-md-3 subastaslista">
+                <div class="thumbnail">
+                    <img src="@item.portada" style="max-width:150px;max-height:180px;" alt="">
+                    <div class="caption">
+                        <h3>@item.titulo</h3>
+                        <p>@item.descripcion</p>
+                        <p>$ @item.precio_Compra</p>
+                        <p><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-primary" role="button">Detalle</a></p>
                     </div>
                 </div>
+            </div>
 
-                @*<div class="col-lg-4 col-md-4 col-sm-6">
+            @*<div class="col-lg-4 col-md-4 col-sm-6">
                     <a>
-                       
+
                         <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
                         @Html.ActionLink("Seleccionar", "DetalleProducto/", "Subasta", new { idSubasta = item.id }, false)
                     </a>
 
                 </div>*@
-            }
-        </div>
+            @*}
     </div>
-
-}
-@using Site.Models
+</div>
+}*@
+@*@using Site.Models
 @{
     var user = Session["usuario"] as UsuarioSite;
 }
 @if (user!=null && user.Email!=null)
 {
-<div class="jumbotron">
-    <button type="button" onclick="location.href='@Url.Action("Create", "Subasta")'" class="btn btn-default">Subastar</button>
-</div>
-<div class="jumbotron">
-    <button type="button" onclick="location.href='@Url.Action("Index", "Oferta")'" class="btn btn-default">Comprar</button>
-</div>
+    <div class="jumbotron">
+        <button type="button" onclick="location.href='@Url.Action("Create", "Subasta")'" class="btn btn-default">Subastar</button>
+    </div>
+    <div class="jumbotron">
+        <button type="button" onclick="location.href='@Url.Action("Index", "Oferta")'" class="btn btn-default">Comprar</button>
+    </div>
 }
 else
 {
-    <h1 align="center">Para vender o comprar debe estar logueado</h1>
-}
+   <h1 align="center">Para vender o comprar debe estar logueado</h1>
+}*@
 
-
-
-<div class="section">
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-4 col-md-4">
-                <h3><i class="fa fa-check-circle"></i> Producto 1</h3>
-                <p>Detalle de producto 1</p>
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <h3><i class="fa fa-check-circle"></i> Producto 2</h3>
-                <p>Detalle de producto 1</p>   
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <h3><i class="fa fa-check-circle"></i> Producto 3</h3>
-                <p>Detalle de producto 3</p>    
-            </div>
-        </div>
-        <!-- /.row -->
-
-    </div>
-    <!-- /.container -->
-
-</div>
-<!-- /.section -->
-
-<div class="section-colored text-center">
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Espacio de Favoritos</h2>
-                <p>Descripcion correspondiente</p>
-                <hr>
-            </div>
-        </div>
-        <!-- /.row -->
-
-    </div>
-    <!-- /.container -->
-
-</div>
-<!-- /.section-colored -->
-
-
-<!-- Modal-->
-<
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
- }
+}
 

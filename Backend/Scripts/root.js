@@ -129,4 +129,12 @@ var Script = function () {
     $('#datetimepicker2').datetimepicker({
         format: "YYYY-MM-DD hh:mm:ss",
     });
+
+    $('#datetimepicker3').datetimepicker({
+        format: "YYYY-MM-DD hh:mm:ss",
+    });
+
+    $('#datetimepicker4').datetimepicker({
+        format: "YYYY-MM-DD hh:mm:ss",
+    });
 }();

@@ -29,7 +29,7 @@ namespace Site
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/animate.css",
-                      "~/Content/font-awesome.min.css",
+                      "~/Content/font-awesome.css",
                       "~/Content/prettyPhoto.css",
                       "~/Content/price-range.css",
                       "~/Content/responsive.css",
@@ -44,8 +44,16 @@ namespace Site
                       "~/Scripts/respond.js",
                       "~/Scripts/site.js",
                       "~/Scripts/price-range.js",
+                      "~/Scripts/jquery.mixitup.js",
                       "~/Scripts/main.js"
                       ));
+
+            bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
+                    "~/Scripts/dropzone/dropzone.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
+                     "~/Scripts/dropzone/css/basic.css",
+                     "~/Scripts/dropzone/css/dropzone.css"));
 
         }
     }

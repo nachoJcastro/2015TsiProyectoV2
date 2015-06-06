@@ -1,0 +1,73 @@
+﻿@model Crosscutting.EntityTenant.Subasta
+
+@{
+    ViewBag.Title = "ImagenesSubasta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var idSub = Model.id;
+}
+
+<h2>Imagenes Subasta</h2>
+
+<div class="jumbotron">
+    <form action="~/Subasta/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+        @Html.HiddenFor(x => Model.id)
+        <div class="fallback">
+            
+            <input name="file" type="file" multiple />
+            <input type="submit" value="Upload" />
+        </div>
+
+        
+    </form>
+</div>
+
+<a class ="btn btn-default" href="@Url.Action('DetalleProducto/', 'Subasta' , new { id=@idSub}, null)">Crear Subasta</a>
+
+@section scripts{
+    <script type="text/javascript">
+
+        //File Upload response from the server
+        Dropzone.options.dropzoneForm = {
+            uploadMultiple: true,
+            parallelUploads: 100,
+            maxFiles: 8,
+            init: function () {
+                this.on("maxfilesexceeded", function (data) {
+                    var res = eval('(' + data.xhr.responseText + ')');
+
+                });
+                this.on("addedfile", function (file) {
+
+                    // Create the remove button
+                    var removeButton = Dropzone.createElement('<span class="fa fa-times-circle-o" data-dz-remove />');
+
+
+                    // Capture the Dropzone instance as closure.
+                    var _this = this;
+
+                    // Listen to the click event
+                    removeButton.addEventListener("click", function (e) {
+                        // Make sure the button click doesn't submit the form:
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Remove the file preview.
+                        _this.removeFile(file);
+                        // If you want to the delete the file on the server as well,
+                        // you can do the AJAX request here.
+                    });
+
+                    // Add the button to the file preview element.
+                    file.previewElement.appendChild(removeButton);
+                });
+
+            }
+        };
+
+
+
+
+
+
+    </script>
+}
+

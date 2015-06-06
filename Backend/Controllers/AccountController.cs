@@ -73,7 +73,7 @@ namespace Backend.Controllers
         {
             //var idrol = "";
             var user = await UserManager.FindAsync(model.Email, model.Password);
-            var estaEnelRol = UserManager.IsInRole(user.Id,"Admin");
+            
             //System.Diagnostics.Debug.WriteLine("Rol Usuario : " + user.Roles.ToString());
             //if (user != null)
             //{
@@ -92,10 +92,12 @@ namespace Backend.Controllers
             {
                 return View(model);
             }
-            
+           
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+            var estaEnelRol = UserManager.IsInRole(user.Id, "Admin");
             switch (result)
             {
                 case SignInStatus.Success:
@@ -360,6 +362,8 @@ namespace Backend.Controllers
 
             // Si el usuario ya tiene un inicio de sesión, iniciar sesión del usuario con este proveedor de inicio de sesión externo
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            //var user = UserManager.FindByEmail(loginInfo.Email);
+            //user.Id
             switch (result)
             {
                 case SignInStatus.Success:
@@ -399,13 +403,26 @@ namespace Backend.Controllers
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
+
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, "Usuario");
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    
                     if (result.Succeeded)
                     {
+                        
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        var estaEnelRol = UserManager.IsInRole(user.Id, "Admin");
+                        if (!estaEnelRol)
+                        {
+                            return RedirectToAction("Index", "TiendaVirtual");
+                        }
+                        else
+                        {
+                            return RedirectToAction("AdminUser", "TiendaVirtual");
+                        }
+                        //return RedirectToLocal(returnUrl);
                     }
                 }
                 AddErrors(result);

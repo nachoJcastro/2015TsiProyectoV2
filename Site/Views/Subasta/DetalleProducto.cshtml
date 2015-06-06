@@ -3,167 +3,317 @@
 @{
     ViewBag.Title = "DetalleProducto";
 }
-
-<h2>Detalles del producto</h2>
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">Confirmacion<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
-            </div>
-            <div class="modal-body">
-                <p>Esta seguro de comprar este producto?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" onclick="location.href='@Url.Action("FinalizarCompraDirecta/", "Subasta", new { idSubasta = Model.id })'" class="btn btn-primary">Aceptar</button>
+<div class="container">
+    <h2>Detalles del producto</h2>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmacion<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
+                </div>
+                <div class="modal-body">
+                    <p>Esta seguro de comprar este producto?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="location.href='@Url.Action("FinalizarCompraDirecta/", "Subasta", new { idSubasta = Model.id })'" class="btn btn-primary">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr>
-                <td><img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;"></td>
-            </tr>
-            <tr>
-                <th>Tipo de Venta</th>
-                <th>@Html.DisplayFor(model => model.tipo_venta)</th>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <th>@Html.DisplayFor(model => model.titulo)</th>
-            </tr>
-            <tr>
-                <th>Producto</th>
-                <th>@Html.DisplayFor(model => model.nombre_producto)</th>
-            </tr>
-            <tr>
-                <th>Vendedor</th>
-                <th>@Html.DisplayFor(model => model.nick_Vendedor)</th>
-            </tr>
-           @* @{
+    <div class="col-lg-6">
+        <div class="col-md-12">
+            <img src="@Html.DisplayFor(model => model.portada)">
+        </div>
+        <div class="col-md-12">
+            @if (ViewBag.ListaImg != null)
+            {
+                <div class="container">
 
-              if (Model.id_Comprador != null)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="carousel slide" id="carousel-606608">
+                                <ol class="carousel-indicators">
+                                    @{
+                var index = 0;
+
+                if (ViewBag.ListaImg != null)
                 {
-                <tr>
-                    <th>Comprador</th>
-                    <th>@Html.DisplayFor(model => model.nick_Comprador)</th>
-                </tr>
+                    foreach (var imagen in ViewBag.ListaImg)
+                    {
+                        if (index == 0)
+                        {
+                            <li class="active" data-slide-to="0" data-target="#carousel-606608"></li>
+                        }
+                        else
+                        {
+                            <li data-slide-to="@index" data-target="#carousel-606608"></li>
+                        }
+
+                        index++;
+                    }
                 }
-            }*@
-            <tr>
-                <th>Valor Actual</th>
-                <th>@Html.DisplayFor(model => model.valor_Actual)</th>
-            </tr>
-            <tr>
-                <th>Fecha Inicio</th>
-                <th>@Html.DisplayFor(model => model.fecha_Inicio)</th>
-            </tr>
-            <tr>
-                <th>Fecha Cierre</th>
-                <th>@Html.DisplayFor(model => model.fecha_Cierre)</th>
-            </tr>
-            <tr>
-                <th>Estado</th>
-                <th>@Html.DisplayFor(model => model.estado)</th>
-            </tr>
+                                    }
 
-        </thead>
-    </table>
-</div>
+                                </ol>
+                                <div class="carousel-inner">
+
+                                    @if (ViewBag.ListaImg != null)
+                                    {
+                                        index = 0;
+
+                                        foreach (var imagen in ViewBag.ListaImg)
+                                        {
+                                            if (index == 0)
+                                            {
+                                                <div class="item active">
+                                                    <img alt="" src="@imagen.uri" />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="item">
+                                                    <img alt="" src="@imagen.uri" />
+                                                </div>
+                                            }
+
+                                            index++;
+                                        }
+                                    }
+
+                                </div>
+                                <a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
 
 
-@using Site.Models
-@{
-    var user = Session["usuario"] as UsuarioSite;
-    var estado = Model.estado.ToString();
-    var tipoFinalizacion = Model.finalizado.ToString();
-}
+    <div class="col-lg-6">
+        <div class="table-responsive">
 
-@if (estado.Equals("Activa"))
-{
+            <a id="fav" onclick="cambiarFavorito(@Model.id)" data-toggle="tooltip" data-placement="top" title="Favoritos"><span id="iconoFav" class="fa fa-heart-o fa-2x"></span></a>
 
-    if (user != null && user.Email != null)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td><img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;"></td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de Venta</th>
+                        <th>@Html.DisplayFor(model => model.tipo_venta)</th>
+                    </tr>
+                    <tr>
+                        <th>Descripcion</th>
+                        <th>@Html.DisplayFor(model => model.titulo)</th>
+                    </tr>
+                    <tr>
+                        <th>Producto</th>
+                        <th>@Html.DisplayFor(model => model.nombre_producto)</th>
+                    </tr>
+                    <tr>
+                        <th>Vendedor</th>
+                        <th>@Html.DisplayFor(model => model.nick_Vendedor)</th>
+                    </tr>
+                    @* @{
+
+                          if (Model.id_Comprador != null)
+                            {
+                            <tr>
+                                <th>Comprador</th>
+                                <th>@Html.DisplayFor(model => model.nick_Comprador)</th>
+                            </tr>
+                            }
+                        }*@
+                    <tr>
+                        <th>Valor Actual</th>
+                        <th>@Html.DisplayFor(model => model.valor_Actual)</th>
+                    </tr>
+                    <tr>
+                        <th>Fecha Inicio</th>
+                        <th>@Html.DisplayFor(model => model.fecha_Inicio)</th>
+                    </tr>
+                    <tr>
+                        <th>Fecha Cierre</th>
+                        <th>@Html.DisplayFor(model => model.fecha_Cierre)</th>
+                    </tr>
+                    <tr>
+                        <th>Estado</th>
+                        <th>@Html.DisplayFor(model => model.estado)</th>
+                    </tr>
+
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    @using Site.Models
+    @{
+        var user = Session["usuario"] as UsuarioSite;
+        var estado = Model.estado.ToString();
+        var tipoFinalizacion = Model.finalizado.ToString();
+    }
+
+    @if (estado.Equals("Activa"))
     {
 
-        if (tipoFinalizacion == "Subasta")
+        if (user != null && user.Email != null)
         {
-            <div class="jumbotron">
-                if (user != null && user.Email != null && user.Nombre!=Model.nick_Vendedor)
-                {
-                <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
-                
-                }
-                <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
+
+            if (tipoFinalizacion == "Subasta")
+            {
+                <div class="jumbotron">
+                    @if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
+                    {
+                        <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
+
+                    }
+                    <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
+                </div>
+            }
+            else
+            {
+                <div class="jumbotron">
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
+                </div>
+            }
+
+            <dt>Comentarios</dt>
+
+            <div>
+                <textarea id="areaComentario" rows="4" cols="133" placeholder="Ingrese aqui su comentario.."></textarea>
             </div>
+            <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
+
+            <dl id="retorno"></dl>
         }
         else
         {
-            <div class="jumbotron">
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
-            </div>
+            <p>Debe loguarse para poder ofertar</p>
         }
-
-        <dl>
-            <dt>Comentarios</dt>
-            <dd>
-                <div>
-                    <textarea id="areaComentario" rows="4" cols="133" placeholder="Ingrese aqui su comentario.."></textarea>
-                </div>
-                <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
-            </dd>
-
-            @{if (ViewBag.ListaComentarios != null)
-            {
-                foreach (var comentario in ViewBag.ListaComentarios)
-                {
-                    <dt>@comentario.fecha.ToString("dd/MM/yyyy") @comentario.id_Usuario</dt>
-                    <dd>
-                        @comentario.texto
-                    </dd>
-                }
-            }
-            }
-        </dl>
     }
     else
     {
-        <p>Debe loguarse para poder ofertar</p>
+        <p>La publicacion está finalizada</p>
     }
-}
-else
-{
-    <p>La publicacion está finalizada</p>
-}
 
-
-
-<script>
-    function crearComentario() {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("AgregarComentario", "Subasta")',
-            data: {
-                "texto": document.getElementById("areaComentario").value,
-                "idSubasta": @Model.id,
-                "texto": document.getElementById("areaComentario").value
-            },
-            dataType: 'json',
-            async: false,
-            traditional: true
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script>
+        $(document).ready(function () {
+            listarComentarios();
         });
-    }
-</script>
+        function listarComentarios(){
+            var retorno = $("#retorno");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("ListarComentario", "Subasta")',
+                data: {
+                    "idSubasta": @Model.id,
+                },
+                success: function (data) {
+                    retorno.html('');
+                    var result = "";
+                    $.each(data, function (id, item) {
+                        result += '<dt>' +
+                                    ToJavaScriptDate(item.fecha) + '      ' +
+                                    item.id_Usuario +
+                                    '</dt>' +
+                                    '<dd>' +
+                                    item.texto +
+                                    '</dd>';
+                    })
+                    retorno.html(result);
+                    document.getElementById("areaComentario").value = '';
+                    $("#com").show();
+                }
+            });
+        }
 
+        function crearComentario() {
+            var retorno = $("#retorno");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("AgregarComentario", "Subasta")',
+                data: {
+                    "idSubasta": @Model.id,
+                    "texto": document.getElementById("areaComentario").value
+                },
+                success: function (data) {
+                    retorno.html('');
+                    var result = "";
+                    $.each(data, function (id, item) {
+                        result += '<dt>' +
+                                    ToJavaScriptDate(item.fecha) + '      ' +
+                                    item.id_Usuario +
+                                    '</dt>' +
+                                    '<dd>' +
+                                    item.texto +
+                                    '</dd>';
+                    })
+                    retorno.html(result);
+                    document.getElementById("areaComentario").value = '';
+                    $("#com").show();
+                }
+            });
+        }
 
-<div class="jumbotron">
-    @*<button type="button" onclick="location.href='@Url.Action("Edit", "Subasta"), new { id = Model.id }'" class="btn btn-default">Editar</button>
-    *@
-    <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
+        function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results[1]));
+            return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+        }
+
+        function cambiarFavorito(idSubasta){
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("CambiarFavorito", "Subasta")',
+                data: {
+                    "idSubasta": idSubasta,
+                },
+                success: function (data) {
+                    //if false
+
+                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){   
+     
+                        document.querySelector('#fav > span').classList.add('fa-heart');
+                        document.querySelector('#fav > span').classList.remove('fa-heart-o'); 
+                        //document.querySelector('#boton').setAttribute('value','OFF');
+ 
+                        }
+                    else{
+     
+                        document.querySelector('#fav >span').classList.add('fa-heart-o');
+                        document.querySelector('#fav >span').classList.remove('fa-heart');
+                        //document.querySelector('#boton').setAttribute('value','ON');   
+     
+                    }
+                    //document.getElementById("fav").disabled = data;
+
+                }
+            });
+        }
+
+    </script>
+
+    <div class="jumbotron">
+        @*<button type="button" onclick="location.href='@Url.Action("Edit", "Subasta"), new { id = Model.id }'" class="btn btn-default">Editar</button>
+        *@
+        <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
+    </div>
 </div>
-
 

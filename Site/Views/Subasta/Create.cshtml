@@ -5,236 +5,232 @@
     ViewBag.Title = "Alta Subasta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    <h2>Alta de una Subasta</h2>
 
-<h2>Alta de una Subasta</h2>
+    @using (Html.BeginForm("Create", "Subasta", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("Create", "Subasta", FormMethod.Post, new { enctype = "multipart/form-data" })) 
-{
-    @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <h4>Subasta</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-horizontal">
-        <h4>Subasta</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @*****|****|*******|**DROPDOWNS DEPENDIENTES****|******@
+            @*****v****v*******v**DROPDOWNS DEPENDIENTES****v******@
 
-        @*****|****|*******|**DROPDOWNS DEPENDIENTES****|******@
-        @*****v****v*******v**DROPDOWNS DEPENDIENTES****v******@
-
-        @*@using (Html.BeginForm())
-                {
-                    @Html.DropDownList("Categoria", ViewBag.CategoriaId as SelectList, "Seleccione una Categoria", new { id = "Categoria" })<br />
-                    <select id="TipoProd" name="tipoProd"></select><br />
-                    <select id="Articulo" name="articulo"></select><br />
-                }
+            @*@using (Html.BeginForm())
+                    {
+                        @Html.DropDownList("Categoria", ViewBag.CategoriaId as SelectList, "Seleccione una Categoria", new { id = "Categoria" })<br />
+                        <select id="TipoProd" name="tipoProd"></select><br />
+                        <select id="Articulo" name="articulo"></select><br />
+                    }
 
 
-            <script type="text/jscript">
-            $(function () {
-                $('#Categoria').change(function () {
-                    $.getJSON('/Subasta/TipoProdList/' + $('#Categoria').val(), function (data) {
-                        var items = '<option>Seleccione un Tipo de Producto</option>';
-                        $.each(data, function (i, tipoProd) {
-                            items += "<option value='" + tipoProd.Value + "'>" + tipoProd.Text + "</option>";
+                <script type="text/jscript">
+                $(function () {
+                    $('#Categoria').change(function () {
+                        $.getJSON('/Subasta/TipoProdList/' + $('#Categoria').val(), function (data) {
+                            var items = '<option>Seleccione un Tipo de Producto</option>';
+                            $.each(data, function (i, tipoProd) {
+                                items += "<option value='" + tipoProd.Value + "'>" + tipoProd.Text + "</option>";
+                            });
+                            $('#TipoProd').html(items);
                         });
-                        $('#TipoProd').html(items);
+                    });
+
+                    $('#TipoProd').change(function () {
+                        $.getJSON('/Subasta/ArticuloList/' + $('#TipoProd').val(), function (data) {
+                            var items = '<option>Select un Articulo</option>';
+                            $.each(data, function (i, articulo) {
+                                items += "<option value='" + articulo.Value + "'>" + articulo.Text + "</option>";
+                            });
+                            $('#Articulo').html(items);
+                        });
                     });
                 });
+                    </script>*@
 
-                $('#TipoProd').change(function () {
-                    $.getJSON('/Subasta/ArticuloList/' + $('#TipoProd').val(), function (data) {
-                        var items = '<option>Select un Articulo</option>';
-                        $.each(data, function (i, articulo) {
-                            items += "<option value='" + articulo.Value + "'>" + articulo.Text + "</option>";
-                        });
-                        $('#Articulo').html(items);
-                    });
-                });
-            });
-                </script>*@
-
-        @*****^****^*******^**DROPDOWNS DEPENDIENTES****^******@
-        @*****|****|*******|**DROPDOWNS DEPENDIENTES****|******@
+            @*****^****^*******^**DROPDOWNS DEPENDIENTES****^******@
+            @*****|****|*******|**DROPDOWNS DEPENDIENTES****|******@
 
 
-
-        @*<div class="form-group">
-                <div class="col-md-10">
-                    @Html.DropDownList("Tipo de Subasta", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]))
-                </div>
-            </div>*@
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <div class="col-md-8">
-                    @Html.DropDownList("Categorias", new SelectList((System.Collections.IEnumerable)ViewData["Categorias"], "CategoriaId", "Nombre"), new { @class = "form-control" } )
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-8">
-                    @Html.DropDownList("Productos", new SelectList((System.Collections.IEnumerable)ViewData["Productos"], "TipoProductoId", "Titulo"), new { @class = "form-control" } )
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-8">
-                    @Html.DropDownList("Tipo", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]), new { @class = "form-control" } )
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Titulo")
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.titulo, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.titulo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Descripcion")
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Tags")
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Precio inicial de subasta")
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.precio_Base, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.precio_Base, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Precio venta directa")
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.precio_Compra, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.precio_Compra, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
             @*<div class="form-group">
-                    @Html.Label("Fecha de inicio")
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.fecha_Inicio, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.fecha_Inicio, "", new { @class = "text-danger" })
+                        @Html.DropDownList("Tipo de Subasta", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]))
                     </div>
                 </div>*@
-            <div class="form-group">
-                @Html.LabelFor(model => model.portada)
-                <div class="col-md-8">
-                    <div class="form-control">
-                        <input type="file" id="portada" name="portada" accept="image/*" />
-                        @Html.ValidationMessageFor(model => model.portada, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-group">
-                @Html.Label("Fecha finalizacion")
-                <div class="col-md-8">
-                    <div class='input-group date' id='datetimepicker1'>
-                        @*@Html.TextBoxFor(model => model.fecha_Cierre, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
-                @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })*@
-                        @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                    @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            @*<div class="form-group">
-                @Html.Label("Fecha finalizacion")
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-            <div class="form-group">
-                @Html.Label("Garantia")
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.garantia, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.garantia, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Coordenadas")
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div>Atributos propios de la categoria seleccionada</div>
-            @{  var indice = 0;
-                foreach (var atributo in ViewBag.ListaAtributos)
-            {
-                
+            <div class="col-md-6">
                 <div class="form-group">
-                    
-                    @atributo.Nombre
-                    <div id="index @indice" class="col-md-8" data-idatributo="@atributo.AtributoId">
-                        <input type="text" id="@indice" class="form-control">
-                        @*@Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control", @id = indice} })
-            @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })*@
-
+                    <div class="col-md-8">
+                        @Html.DropDownList("Categorias", new SelectList((System.Collections.IEnumerable)ViewData["Categorias"], "CategoriaId", "Nombre"), new { @class = "form-control" })
                     </div>
                 </div>
-               
-                indice++;
-            }
-}
-            <div class="form-group">
-                <div class="col-md-8">
-                    <input type="submit" value="Create" class="btn btn-default" onclick="createJSON(@indice);" />
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        @Html.DropDownList("Productos", new SelectList((System.Collections.IEnumerable)ViewData["Productos"], "TipoProductoId", "Titulo"), new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <script>
-                function createJSON(indice) {
-                    jsonArr = [];
-                    for (i = 0 ; i < indice; i++) {
-                        var idat = "index " + i;
-                        var json = { "idAtributo": document.getElementById(idat).getAttribute('data-idatributo'), "valorAtributo": document.getElementById(i).value };
-                        jsonArr.push(json);
-                    }
-                    var i = 0;
-                    while(jsonArr[i] != null){
-                        jsonArr[i] = JSON.stringify(jsonArr[i]);
-                        i++;
-                    }
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("Create", "Subasta")',
-                        data: JSON.stringify(jsonArr),
-                        //contentType: 'application/json',
-                        dataType: 'json',
-                        async: false,
-                        traditional: true,
-                        success: function (data) { if (data.existeRecurso) { control = true; } }
-                    });
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        @Html.DropDownList("Tipo", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]), new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Titulo")
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.titulo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.titulo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Descripcion")
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Tags")
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Precio inicial de subasta")
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.precio_Base, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.precio_Base, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Precio venta directa")
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.precio_Compra, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.precio_Compra, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        @Html.Label("Fecha de inicio")
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.fecha_Inicio, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.fecha_Inicio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.portada)
+                    <div class="col-md-8">
+                        <div class="form-control">
+                            <input type="file" id="portada" name="portada" accept="image/*" />
+                            @Html.ValidationMessageFor(model => model.portada, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Fecha finalizacion")
+                    <div class="col-md-8">
+                        <div class='input-group date' id='datetimepicker1'>
+                            @*@Html.TextBoxFor(model => model.fecha_Cierre, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+                                @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })*@
+                            @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                @*<div class="form-group">
+                        @Html.Label("Fecha finalizacion")
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.Label("Garantia")
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.garantia, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.garantia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Coordenadas")
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div>Atributos propios de la categoria seleccionada</div>
+                @{  var indice = 0;
+                  foreach (var atributo in ViewBag.ListaAtributos)
+                  {
+
+                    <div class="form-group">
+
+                        @atributo.Nombre
+                        <div id="index @indice" class="col-md-8" data-idatributo="@atributo.AtributoId">
+                            <input type="text" id="@indice" class="form-control">
+                            @*@Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control", @id = indice} })
+                                @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })*@
+
+                        </div>
+                    </div>
+
+                      indice++;
+                  }
                 }
-            </script>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <input type="submit" value="Create" class="btn btn-default" onclick="agregarAtributos(@indice);" />
+                    </div>
+                </div>
+
+
+                <script>
+                    function agregarAtributos(indice) {
+                        //var idS = Model.id;
+                        for (i = 0 ; i < indice; i++) {
+                            var idat = "index " + i;
+                            $.ajax({
+                                cache: false,
+                                type: "POST",
+                                url: '@Url.Action("AgregarAtributos", "Subasta")',
+                                data: {
+                                    "valor": document.getElementById(i).value,
+                                    "idAtributo": document.getElementById(idat).getAttribute('data-idatributo')
+                                    //,"idSubasta": idS
+                                }
+                            });
+                        }
+                    }
+                </script>
+            </div>
         </div>
-    </div>
-}
+    }
 
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
+</div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }

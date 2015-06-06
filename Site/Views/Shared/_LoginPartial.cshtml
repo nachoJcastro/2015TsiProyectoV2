@@ -5,26 +5,32 @@
 @if (user!=null && user.Email!=null)
 {
     @Html.AntiForgeryToken()
-    <ul class="nav navbar-nav navbar-right">
+    @*<ul class="nav navbar-nav navbar-right">*@
         <li>
-            @Html.ActionLink("Hola " + user.Nombre + "!", "DatosUsuario", "Manage")
+            <a href="@Url.Action("DatosUsuario", "Manage")" data-toggle="tooltip" data-placement="bottom" title="Usuario">@user.Nombre <i class="fa fa-user fa-lg"></i></a>
+            @*@Html.ActionLink("Hola " + user.Nombre + "!", "DatosUsuario", "Manage")*@
         </li>
-        <li>
+        @*<li>
             @Html.ActionLink("Chatear!", "Chat", "Chat")
-            <!--<a id="btnChat" href="#myModalChat" data-toggle="modal"><span class="fa fa-cart-plus fa-3x"></span> <p>Chat</p></a>-->
-        </li>
-        <li>
-            @Html.ActionLink("Logout", "Otro", "Account")
-    </li>
-    </ul>
-    
+            <a id="btnChat" href="#myModalChat" data-toggle="modal"><span class="fa fa-cart-plus fa-3x"></span> <p>Chat</p></a>
+        </li>*@
+        <li><a href="@Url.Action("Chat", "Chat")" data-toggle="tooltip" data-placement="bottom" title="Chatear"><i class="fa fa-weixin fa-lg"></i></a></li>
+        <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Favoritos"><i class="fa fa-star fa-lg"></i></a></li>
+        <li><a href="@Url.Action("Create", "Subasta")" data-toggle="tooltip" data-placement="bottom" title="Publicar"><i class="fa fa-shopping-cart fa-lg"></i></a></li>
+        @*<li>
+            @Html.ActionLink("Logout", "Otro", "Account")*@
+            <li><a href="@Url.Action("Otro", "Account")" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesion"><i class="fa fa-unlock fa-lg"></i></a></li>
+        @*</li>*@
+    @*</ul>*@
+
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Registrarse", "Register", "Account")</li>
-        <li>@Html.ActionLink("Iniciar sesión", "Login", "Account")</li>
-    </ul>
+        <li><a href="@Url.Action("Register", "Account")" data-toggle="tooltip" data-placement="bottom" title="Registrarse"><i class="fa fa-user-plus fa-lg"></i></a></li>
+        <li><a href="@Url.Action("Login", "Account")" data-toggle="tooltip" data-placement="bottom" title="Login"><i class="fa fa-lock fa-lg"></i></a></li>
+        @*<li>@Html.ActionLink("Registrarse", "Register", "Account")</li>
+        <li>@Html.ActionLink("Iniciar sesión", "Login", "Account")</li>*@
+     
 }
 
 

@@ -27,7 +27,7 @@
 
 </head>
 <body>
-    @*<header id="header">
+    <header id="header">
 
 
         <div class="header-middle">
@@ -37,7 +37,7 @@
                     <div class="col-sm-4">
                       @if (tienda != null)
                       {  <div class="logo pull-left">
-                            <a href="@Url.Action("Index", "Tenant")"><img src="@tienda.Logo" style="display:inline-block" alt="" /></a>
+                            <a href="@Url.Action("Index", "Tenant")"><img src="@tienda.Logo" style="display:inline-block" alt="" /><h3>@tienda.Nombre.ToUpper()</h3></a>
                         </div>
                       }
                     </div>
@@ -46,10 +46,6 @@
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
                                 @Html.Partial("_LoginPartial")
-                                <!--<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Usuario">gbg933@gmail.com <i class="fa fa-user"></i></a></li>-->
-                                <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Favoritos"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Publicar"><i class="fa fa-shopping-cart"></i></a></li>
-                                <!--<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Login"><i class="fa fa-lock"></i></a></li>-->
                             </ul>
                         </div>
                     </div>
@@ -57,10 +53,10 @@
             </div>
         </div>
 
-    </header>*@
+    </header>
 
 
-    <nav class="navbar navbar-inverse" role="navigation">
+    @*<nav class="navbar navbar-inverse" role="navigation">
             <div class="container">
                 <div class="masthead">
                     @if (tienda != null)
@@ -73,17 +69,31 @@
                 </div>
 
             </div>
-            <!-- /.container -->
-    </nav>
-    <div class="container body-content">
+            
+    </nav>*@
+    <div class="body-content">
         @RenderBody()
     </div>
-
     
-        <!-- /.container -->
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
+    <footer id="footer">
+        <!--Footer-->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <p class="pull-left">Copyright © 2015 - @if (user != null){@user.Dominio} Todos los derechos reservados.</p>
+                    <p class="pull-right">Diseñado por <span><a target="_blank" href="http://backend.chebay.com:49866">Chebay</a></span></p>
+                </div>
+            </div>
+        </div>
+
+    </footer><!--/Footer-->
+    
+    <!-- /.container -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.scrollUp.min.js"></script>
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>
