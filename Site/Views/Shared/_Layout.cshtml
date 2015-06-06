@@ -21,10 +21,9 @@
 
 
     @Styles.Render("~/Content/css")
-
-    @*<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />*@
+    @Styles.Render("~/Content/dropzonescss")
     
-
+  
 </head>
 <body>
     <header id="header">
@@ -92,6 +91,7 @@
     <!-- /.container -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/dropzonescripts")
     <script src="~/Scripts/jquery.scrollUp.min.js"></script>
     @RenderSection("scripts", required: false)
 
