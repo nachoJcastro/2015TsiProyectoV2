@@ -272,8 +272,6 @@ namespace DAL
                         }
                         
                     }
-                  
-
                 }
 
             }
@@ -304,19 +302,31 @@ namespace DAL
         public List<Usuario> ReportUsers(string dominio, DateTime fechaini, DateTime fechafin) {
             List<Usuario> usuarios = new List<Usuario>();
 
-            try
+            if ((dominio == null) || (fechaini == null) || (fechafin == null))
             {
-                dbt = new TenantDB(dominio);
-                usuarios = dbt.Usuario.Where(u => (u.fecha_Alta>= fechaini && u.fecha_Alta <= fechafin)).ToList();
-
-            }
-            catch (Exception ex)
-            {
+                System.Diagnostics.Debug.WriteLine("Dominio nulo");
                 
-                throw ex;
+
             }
+            else {
+                System.Diagnostics.Debug.WriteLine("Chart dom - "+ dominio);
+                System.Diagnostics.Debug.WriteLine("Chart fech inic - "+ fechaini);
+                System.Diagnostics.Debug.WriteLine("Chart fecha fin"+ fechafin);
 
+                try
+                {
+                    dbt = new TenantDB(dominio);
+                    usuarios = dbt.Usuario.Where(u => (u.fecha_Alta >= fechaini && u.fecha_Alta <= fechafin)).ToList();
 
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            
+            }
+            System.Diagnostics.Debug.WriteLine("Usuarios" + usuarios.ToString());
             return usuarios;
         }
 

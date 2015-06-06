@@ -1,6 +1,8 @@
 ﻿using BusinessLogicLayer.TenantInterfaces;
+using Crosscutting.EntityTareas;
 using Crosscutting.EntityTenant;
 using DAL;
+using ServicioCorreo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +26,47 @@ namespace BusinessLogicLayer.TenantControllers
 
         public void AgregarOferta(String tenant,Oferta oferta)
         {
-            _dal.AgregarOferta(tenant,oferta);
+           try 
+	        {	      
+                _dal.AgregarOferta(tenant,oferta);
+               // correoOferta( tenant, oferta);
+		
+	        }
+	        catch (Exception)
+	        {
+		
+		        throw;
+	        }
+
         }
+
+        public void correoOferta(String tenant, Oferta oferta)
+        {
+            List<Correo> lista = new List<Correo>();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Entro correoOferta ");
+
+                lista = _dal.correoNuevaOferta(tenant, oferta);
+                IEnvioCorreo _envio = new EnvioCorreo();
+                _envio.enviarCorreos(lista);
+
+                System.Diagnostics.Debug.WriteLine("Salgo correoOferta ");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+
+
+
+
+
 
 
         public Oferta ObtenerOferta(int ofertaId)

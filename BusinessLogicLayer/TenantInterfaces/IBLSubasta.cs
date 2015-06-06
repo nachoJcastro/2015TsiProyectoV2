@@ -28,6 +28,7 @@ namespace BusinessLogicLayer.TenantInterfaces
         //void FinalizarSubastaTiempo();
 
         void FinalizarSubastasTarea(String tenant);
+        List<Subasta> ObtenerSubastasActivas(String tenant);
 
         void correoCompraDirecta(String tenant, Subasta sub);
 

@@ -148,6 +148,7 @@ namespace Site.Controllers
             oferta.id_Usuario = ofertante.id;
 
             _bloferta.AgregarOferta(valor_tenant, oferta);
+            
 
             if (_blsubasta.ActualizarMonto(valor_tenant,oferta.id_Subasta, oferta.Monto))
             {
@@ -175,6 +176,17 @@ namespace Site.Controllers
                     ofert.fecha= item.fecha;
 
                     listOfer.Add(ofert);
+                }
+
+                try
+                {
+                    _bloferta.correoOferta(valor_tenant, oferta);
+
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
                 }
 
                 ViewBag.ListaOfertas = listOfer;

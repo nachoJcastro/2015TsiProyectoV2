@@ -115,6 +115,15 @@ namespace BusinessLogicLayer.TenantControllers
             }
         }*/
 
+
+        public List<Subasta> ObtenerSubastasActivas(String tenant)
+        {
+            return _dal.ObtenerSubastasActivas(tenant);
+        }
+
+
+
+
         public void FinalizarSubastasTarea(String tenant)
         {
             System.Diagnostics.Debug.WriteLine("Entro en finalizar tarea por JOB");
@@ -138,11 +147,11 @@ namespace BusinessLogicLayer.TenantControllers
 
                     System.Diagnostics.Debug.WriteLine("paso fechas y resultado = " + resultado.ToString());
 
-                    if (resultado <= 0)
+                    if (resultado <= 0 && item.estado==EstadoTransaccion.Activa)
                     {
                         List<Oferta> ofertas = _dal.ObtenerOfertas(item.id);
 
-                        if (ofertas != null && item.estado.Equals(EstadoTransaccion.Activa))
+                        if (ofertas != null)
                         {
 
                             var ofertasOrdenadas = ofertas.OrderByDescending(o => o.fecha);
@@ -161,17 +170,16 @@ namespace BusinessLogicLayer.TenantControllers
                                         blUsu.ActualizarUsuario(tenant, ganador);
                                         item.valor_Actual = itemOfertas.Monto;
                                         item.id_Comprador = ganador.id;
-
-
-                                    }
+                                    }      
                                 }
                             }
+                            item.finalizado = TipoFinalizacion.Subasta;
                             item.estado = EstadoTransaccion.Cerrada;
                             _dal.ActualizarSubasta(tenant, item);
 
                             try
                             {
-                                 lista = _dal.correoCompraSubasta(tenant, (Subasta)item);
+                                lista = _dal.correoCompraSubasta(tenant, (Subasta)item);
                                 IEnvioCorreo _envio = new EnvioCorreo();
                                 _envio.enviarCorreos(lista);
                             }
