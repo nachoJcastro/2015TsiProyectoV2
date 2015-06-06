@@ -7,7 +7,7 @@
 
     <div class="col-md-12">
         <p>
-            @using (Html.BeginForm("Upload", "Subasta", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Upload", "TiendaVirtual", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.HiddenFor(x => Model.TiendaVitualId)
                 @Html.HiddenFor(x => Model.Dominio)
@@ -33,9 +33,9 @@
 
 <script>
     function deleteImage(nombre,image,id) {
-        var url = "/Subasta/DeleteImage";
+        var url = "/TiendaVirtual/DeleteImage";
         $.post(url, { Name: nombre, Uri: image, id: id }, function (data) {
-            window.location.href = "/Subasta/Upload/" + id;
+            window.location.href = "/TiendaVirtual/Upload/" + id;
         });
     }
 </script>
