@@ -4,7 +4,9 @@
 }
 
 <div class="col-md-12 contendor-admin-user">
-
+    <div class="col-md-12 titulo-componentes-user">
+        <a href="@Url.Action("index", "TiendaVirtual")" class="btn btn-default"><span class="fa fa-arrow-left fa-2x"></span></a><h1>Imagenes Tienda</h1>
+    </div>
     <div class="col-md-12">
         <p>
             @using (Html.BeginForm("Upload", "TiendaVirtual", FormMethod.Post, new { enctype = "multipart/form-data" }))
