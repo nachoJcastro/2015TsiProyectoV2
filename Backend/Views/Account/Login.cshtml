@@ -36,7 +36,9 @@
                             @Html.CheckBoxFor(m => m.RememberMe)
                             @Html.LabelFor(m => m.RememberMe)
                         </div>
-                                          
+
+
+
                         <div class="form-group sector_enviar text-center">
                             <!--<div class="col-md-offset-2 col-md-10">-->
                             <input type="submit" value="Iniciar sesión" class="btn btn-default btn-login" />
@@ -50,15 +52,13 @@
                                 @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
                             </p>*@
                     }
+                    <div id="socialLoginForm" class="form-group sector_enviar text-center">
+                        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                    </div>
                 </div>
             </div>
         </div>
-    
-        <!--<div class="col-md-4">
-            <section id="socialLoginForm">
-                @*Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
-            </section>
-        </div>-->
+
     </div>
 </div>
 

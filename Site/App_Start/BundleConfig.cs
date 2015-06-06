@@ -29,7 +29,7 @@ namespace Site
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/animate.css",
-                      "~/Content/font-awesome.min.css",
+                      "~/Content/font-awesome.css",
                       "~/Content/prettyPhoto.css",
                       "~/Content/price-range.css",
                       "~/Content/responsive.css",

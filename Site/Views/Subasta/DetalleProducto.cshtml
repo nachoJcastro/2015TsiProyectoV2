@@ -3,155 +3,155 @@
 @{
     ViewBag.Title = "DetalleProducto";
 }
-
-<h2>Detalles del producto</h2>
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">Confirmacion<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
-            </div>
-            <div class="modal-body">
-                <p>Esta seguro de comprar este producto?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" onclick="location.href='@Url.Action("FinalizarCompraDirecta/", "Subasta", new { idSubasta = Model.id })'" class="btn btn-primary">Aceptar</button>
+<div class="container">
+    <h2>Detalles del producto</h2>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmacion<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
+                </div>
+                <div class="modal-body">
+                    <p>Esta seguro de comprar este producto?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="location.href='@Url.Action("FinalizarCompraDirecta/", "Subasta", new { idSubasta = Model.id })'" class="btn btn-primary">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="col-lg-6">
-    <div class="col-md-12">
-        <img src="@Html.DisplayFor(model => model.portada)">
-    </div>
-    <div class="col-md-12">
-        @if (ViewBag.ListaImg != null)
-        {
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="carousel slide" id="carousel-606608">
-                            <ol class="carousel-indicators">
-                                @{
-            var index = 0;
-
-            if (ViewBag.ListaImg != null)
+    <div class="col-lg-6">
+        <div class="col-md-12">
+            <img src="@Html.DisplayFor(model => model.portada)">
+        </div>
+        <div class="col-md-12">
+            @if (ViewBag.ListaImg != null)
             {
-                foreach (var imagen in ViewBag.ListaImg)
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="carousel slide" id="carousel-606608">
+                                <ol class="carousel-indicators">
+                                    @{
+                var index = 0;
+
+                if (ViewBag.ListaImg != null)
                 {
-                    if (index == 0)
+                    foreach (var imagen in ViewBag.ListaImg)
                     {
-                        <li class="active" data-slide-to="0" data-target="#carousel-606608"></li>
-                    }
-                    else
-                    {
-                        <li data-slide-to="@index" data-target="#carousel-606608"></li>
-                    }
+                        if (index == 0)
+                        {
+                            <li class="active" data-slide-to="0" data-target="#carousel-606608"></li>
+                        }
+                        else
+                        {
+                            <li data-slide-to="@index" data-target="#carousel-606608"></li>
+                        }
 
-                    index++;
+                        index++;
+                    }
                 }
-            }
-                                }
-
-                            </ol>
-                            <div class="carousel-inner">
-
-                                @if (ViewBag.ListaImg != null)
-                                {
-                                    index = 0;
-
-                                    foreach (var imagen in ViewBag.ListaImg)
-                                    {
-                                        if (index == 0)
-                                        {
-                                            <div class="item active">
-                                                <img alt="" src="@imagen.uri" />
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="item">
-                                                <img alt="" src="@imagen.uri" />
-                                            </div>
-                                        }
-
-                                        index++;
                                     }
-                                }
 
+                                </ol>
+                                <div class="carousel-inner">
+
+                                    @if (ViewBag.ListaImg != null)
+                                    {
+                                        index = 0;
+
+                                        foreach (var imagen in ViewBag.ListaImg)
+                                        {
+                                            if (index == 0)
+                                            {
+                                                <div class="item active">
+                                                    <img alt="" src="@imagen.uri" />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="item">
+                                                    <img alt="" src="@imagen.uri" />
+                                                </div>
+                                            }
+
+                                            index++;
+                                        }
+                                    }
+
+                                </div>
+                                <a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>
                             </div>
-                            <a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
 
+        </div>
     </div>
-</div>
 
 
-<div class="col-lg-6">
-    <div class="table-responsive">
+    <div class="col-lg-6">
+        <div class="table-responsive">
 
-        <button type="button" id="fav" onclick="cambiarFavorito(@Model.id)" class=" btn btn-primary">Favorito</button>
+            <a id="fav" onclick="cambiarFavorito(@Model.id)" data-toggle="tooltip" data-placement="top" title="Favoritos"><span id="iconoFav" class="fa fa-heart-o fa-2x"></span></a>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <td><img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;"></td>
-                </tr>
-                <tr>
-                    <th>Tipo de Venta</th>
-                    <th>@Html.DisplayFor(model => model.tipo_venta)</th>
-                </tr>
-                <tr>
-                    <th>Descripcion</th>
-                    <th>@Html.DisplayFor(model => model.titulo)</th>
-                </tr>
-                <tr>
-                    <th>Producto</th>
-                    <th>@Html.DisplayFor(model => model.nombre_producto)</th>
-                </tr>
-                <tr>
-                    <th>Vendedor</th>
-                    <th>@Html.DisplayFor(model => model.nick_Vendedor)</th>
-                </tr>
-                @* @{
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td><img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;"></td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de Venta</th>
+                        <th>@Html.DisplayFor(model => model.tipo_venta)</th>
+                    </tr>
+                    <tr>
+                        <th>Descripcion</th>
+                        <th>@Html.DisplayFor(model => model.titulo)</th>
+                    </tr>
+                    <tr>
+                        <th>Producto</th>
+                        <th>@Html.DisplayFor(model => model.nombre_producto)</th>
+                    </tr>
+                    <tr>
+                        <th>Vendedor</th>
+                        <th>@Html.DisplayFor(model => model.nick_Vendedor)</th>
+                    </tr>
+                    @* @{
 
-                      if (Model.id_Comprador != null)
-                        {
-                        <tr>
-                            <th>Comprador</th>
-                            <th>@Html.DisplayFor(model => model.nick_Comprador)</th>
-                        </tr>
-                        }
-                    }*@
-                <tr>
-                    <th>Valor Actual</th>
-                    <th>@Html.DisplayFor(model => model.valor_Actual)</th>
-                </tr>
-                <tr>
-                    <th>Fecha Inicio</th>
-                    <th>@Html.DisplayFor(model => model.fecha_Inicio)</th>
-                </tr>
-                <tr>
-                    <th>Fecha Cierre</th>
-                    <th>@Html.DisplayFor(model => model.fecha_Cierre)</th>
-                </tr>
-                <tr>
-                    <th>Estado</th>
-                    <th>@Html.DisplayFor(model => model.estado)</th>
-                </tr>
+                          if (Model.id_Comprador != null)
+                            {
+                            <tr>
+                                <th>Comprador</th>
+                                <th>@Html.DisplayFor(model => model.nick_Comprador)</th>
+                            </tr>
+                            }
+                        }*@
+                    <tr>
+                        <th>Valor Actual</th>
+                        <th>@Html.DisplayFor(model => model.valor_Actual)</th>
+                    </tr>
+                    <tr>
+                        <th>Fecha Inicio</th>
+                        <th>@Html.DisplayFor(model => model.fecha_Inicio)</th>
+                    </tr>
+                    <tr>
+                        <th>Fecha Cierre</th>
+                        <th>@Html.DisplayFor(model => model.fecha_Cierre)</th>
+                    </tr>
+                    <tr>
+                        <th>Estado</th>
+                        <th>@Html.DisplayFor(model => model.estado)</th>
+                    </tr>
 
-            </thead>
-        </table>
+                </thead>
+            </table>
+        </div>
     </div>
-</div>
 
     @using Site.Models
     @{
@@ -287,7 +287,22 @@
                 },
                 success: function (data) {
                     //if false
-                    document.getElementById("fav").disabled = data;
+
+                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){   
+     
+                        document.querySelector('#fav > span').classList.add('fa-heart');
+                        document.querySelector('#fav > span').classList.remove('fa-heart-o'); 
+                        //document.querySelector('#boton').setAttribute('value','OFF');
+ 
+                        }
+                    else{
+     
+                        document.querySelector('#fav >span').classList.add('fa-heart-o');
+                        document.querySelector('#fav >span').classList.remove('fa-heart');
+                        //document.querySelector('#boton').setAttribute('value','ON');   
+     
+                    }
+                    //document.getElementById("fav").disabled = data;
 
                 }
             });
@@ -300,5 +315,5 @@
         *@
         <button type="button" onclick="location.href='@Url.Action("Index", "Tenant")'" class="btn btn-default">Volver</button>
     </div>
-
+</div>
 
