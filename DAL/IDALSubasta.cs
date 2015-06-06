@@ -33,5 +33,7 @@ namespace DAL
         // funciones correo
 
         Correo correoSinOfertas(string tenant, Subasta subasta);
+
+        List<Subasta> ObtenerSubastasActivas(string tenant);
     }
 }

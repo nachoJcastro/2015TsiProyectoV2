@@ -210,20 +210,25 @@ namespace Site.Controllers
             {
                 TipoFinalizacion tipoSub = TipoFinalizacion.Subasta;
                 subasta.finalizado = tipoSub;
-
+                //subasta.estado = EstadoTransaccion.Activa;
                 valor_tenant = user_sitio.Dominio.ToString();
                 subIBL.AgregarSubasta(valor_tenant, subasta);
+                
+                
+                
             }
             else
             {
                 TipoFinalizacion tipoSub = TipoFinalizacion.Compra_directa;
                 subasta.finalizado = tipoSub;
-
+                //subasta.estado = EstadoTransaccion.Activa;
                 valor_tenant = user_sitio.Dominio.ToString();
                 subIBL.AgregarSubasta(valor_tenant, subasta);
 
-                sub_site = crearSubastaSite(subasta);
+                
             }
+
+            sub_site = crearSubastaSite(subasta);
 
             return View("DetalleProducto", sub_site);
        }

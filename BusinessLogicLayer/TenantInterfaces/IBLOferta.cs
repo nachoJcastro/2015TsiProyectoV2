@@ -17,5 +17,7 @@ namespace BusinessLogicLayer.TenantInterfaces
         void EliminarOferta(int ofertaId); //Delete
 
         List<Oferta> ObtenerOfertasByProducto(String tenant,int id_subasta);
+
+         void correoOferta(String tenant, Oferta oferta);
     }
 }

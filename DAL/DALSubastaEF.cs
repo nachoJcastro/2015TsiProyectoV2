@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Crosscutting.EntityTenant;
 using DAL.Contextos;
 using Crosscutting.EntityTareas;
+using Crosscutting.Enum;
 using DAL.IDAL_Tenant;
 using DAL.DAL_Tenant;
 
@@ -81,6 +82,25 @@ namespace DAL
                 throw e;
             }
         }
+
+        public List<Subasta> ObtenerSubastasActivas(string tenant) {
+
+            var listaSub = new List<Subasta>();
+            try
+            {
+                db = new TenantDB(tenant);
+                listaSub = db.Subasta.Where(x => x.estado == EstadoTransaccion.Activa).ToList();
+                return listaSub;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        
+        
+        }
+
+
 
 
         public void ActualizarSubasta(String tenant, Subasta subastaNueva)
@@ -362,6 +382,43 @@ namespace DAL
             return correo;
         }
 
-       
+
+
+        internal Correo correoVendedorOferta(string tenant, Subasta sub , Oferta oferta)
+        {
+
+            Correo correo = new Correo();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Entro correoVendedor DAL");
+                _idal = new DALUsuario();
+
+                Usuario vendedor = _idal.GetUsuario(tenant, sub.id_Vendedor);
+                Usuario comprador = _idal.GetUsuario(tenant, (int)oferta.id_Usuario);
+                //Subasta subasta = ObtenerSubasta(tenant, idSubasta);
+
+                correo.destinatario = vendedor.email;
+                correo.asunto = "Novedades " + vendedor.nick + ". El usuario " + comprador.nick + " ha ofertado tu articulo " + sub.titulo;
+                correo.mensaje = "Articulo : " + sub.titulo + "Precio oferta "+oferta.Monto+ " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
+
+                System.Diagnostics.Debug.WriteLine("Salgo correoVendedor DAL ");
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+
+
+
+            return correo;
+
+
+
+        }
     }
 }

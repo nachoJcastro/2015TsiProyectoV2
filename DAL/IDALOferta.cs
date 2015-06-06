@@ -1,4 +1,5 @@
-﻿using Crosscutting.EntityTenant;
+﻿using Crosscutting.EntityTareas;
+using Crosscutting.EntityTenant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace DAL
         void EliminarOferta(int ofertaId); //Delete
 
         List<Oferta> ObtenerOfertasByProducto(String tenant,int id_subasta);
+
+        List<Correo> correoNuevaOferta(string tenant, Oferta oferta);
     }
 }
