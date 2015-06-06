@@ -33,5 +33,8 @@ namespace DAL
         // funciones correo
 
         Correo correoSinOfertas(string tenant, Subasta subasta);
+
+        void AgregarImagen(string tenant, Imagen img);
+        List<Imagen> ObtenerImagenes(string tenant, int id);
     }
 }

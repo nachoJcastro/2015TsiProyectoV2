@@ -225,7 +225,8 @@ namespace Site.Controllers
                 sub_site = crearSubastaSite(subasta);
             }
 
-            return View("DetalleProducto", sub_site);
+            return View("ImagenesSubasta", subasta);
+            //return View("DetalleProducto", sub_site);
        }
 
         private SubastaSite crearSubastaSite(Subasta subasta)
@@ -470,6 +471,7 @@ namespace Site.Controllers
                 valor_tenant = user_sitio.Dominio.ToString();
 
                 Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+                ViewBag.ListaImg = subIBL.ObtenerImagenes(valor_tenant, idSubasta);
                 if (subasta == null)
                 {
                     return HttpNotFound();
@@ -483,6 +485,49 @@ namespace Site.Controllers
             }
 
             return View(sub_site);
+        }
+
+        public ActionResult ImagenesSubasta(int id)
+        {
+
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+            Subasta sub = subIBL.ObtenerSubasta(valor_tenant, id);
+
+            return View(sub);
+        }
+
+        public ActionResult SaveUploadedFile(Subasta sub)
+        {
+            user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+            CloudBlobContainer blobContainer = _bls.GetContainerTienda(user_sitio.Dominio);
+            valor_tenant = user_sitio.Dominio.ToString();
+            Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, sub.id);
+            //bool isSavedSuccessfully = true;
+
+            string fName = "";
+            foreach (string fileName in Request.Files)
+            {
+                HttpPostedFileBase file = Request.Files[fileName];
+                //Save file content goes here
+                fName = file.FileName;
+                if (file != null && file.ContentLength > 0)
+                {
+                    var nombreFoto = user_sitio.Dominio + Guid.NewGuid().ToString() + "_subasta";
+                    CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+
+                    Imagen imagen = new Imagen();
+                    imagen.id_Subasta = subasta.id;
+                    imagen.nombre = nombreFoto;
+                    imagen.uri = blob.Uri.ToString();
+
+                    subIBL.AgregarImagen(user_sitio.Dominio, imagen);
+                    blob.UploadFromStream(file.InputStream);
+
+                }
+
+            }
+            return View("DetalleProducto", subasta);
         }
 
         [HttpPost]
