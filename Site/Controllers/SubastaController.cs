@@ -28,6 +28,7 @@ namespace Site.Controllers
         IBLUsuario usuIBL;
         IBLAtributo atrIBL;
         IBLAtributo_Subasta atrSubIBL;
+        IBLFavorito favIBL;
 
         BlobStorage _bls = new BlobStorage();
         //IBLCategoria catIBL;
@@ -36,7 +37,7 @@ namespace Site.Controllers
         private string valor_tenant;
         private SubastaSite sub_site;
 
-        public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl, IBLOferta ofebl, IBLUsuario usubl, IBLAtributo atrIBL, IBLAtributo_Subasta atrSubIBL)
+        public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl, IBLOferta ofebl, IBLUsuario usubl, IBLAtributo atrIBL, IBLAtributo_Subasta atrSubIBL, IBLFavorito favIBL)
         {
             this.subIBL = subbl;
             this.comIBL = combl;
@@ -44,11 +45,12 @@ namespace Site.Controllers
             this.ofeIBL = ofebl;
             this.usuIBL = usubl;
             this.atrIBL = atrIBL;
-            //this.catIBL = catbl;
+            this.favIBL = favIBL;
             this.atrSubIBL = atrSubIBL;
         }
 
-        public SubastaController() : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLUsuario(), new BLAtributo(), new BLAtributo_Subasta())
+        public SubastaController()
+            : this(new BLSubasta(), new BLComentario(), new BLProducto(), new BLOferta(), new BLUsuario(), new BLAtributo(), new BLAtributo_Subasta(), new BLFavorito())
         {
 
         }
@@ -580,6 +582,32 @@ namespace Site.Controllers
                                                 texto = x.texto,
                                                 fecha = x.fecha
                                             });
+
+            return Json(modelList, JsonRequestBehavior.AllowGet);
+        }
+
+        
+        public JsonResult CambiarFavorito(int idSubasta)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            var idUsuario = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
+            valor_tenant = user_sitio.Dominio.ToString();
+
+            var esfavorito = favIBL.esFavorito(valor_tenant, idSubasta, idUsuario);
+            Boolean modelList;
+            if (esfavorito)
+            {
+               favIBL.EliminarFavorito(valor_tenant, idSubasta, idUsuario);
+                modelList = false;
+            }
+            else{
+                Favorito favorito = new Favorito();
+                favorito.id_Subasta = idSubasta;
+                favorito.id_Usuario = idUsuario;
+
+                favIBL.AgregarFavorito(valor_tenant, favorito);
+                modelList = true;
+            }
 
             return Json(modelList, JsonRequestBehavior.AllowGet);
         }
