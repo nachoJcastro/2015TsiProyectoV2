@@ -420,5 +420,40 @@ namespace DAL
 
 
         }
+
+        public void AgregarImagen(string tenant, Imagen img)
+        {
+
+            try
+            {
+                db = new TenantDB(tenant);
+                db.Imagen.Add(img);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
+
+        public List<Imagen> ObtenerImagenes(string tenant, int id)
+        {
+
+            List<Imagen> imagenes = new List<Imagen>();
+            try
+            {
+                db = new TenantDB(tenant);
+                imagenes = db.Imagen.Where(i => i.id_Subasta == id).ToList();
+                return imagenes;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
+
+
     }
 }

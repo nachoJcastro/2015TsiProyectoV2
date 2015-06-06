@@ -70,14 +70,22 @@
     </div>
     <div class="panel-body">
         <div id="grafico"></div>
-        <script src="~/Scripts/highcharts.js"></script>
-        <script src="~/Scripts/exporting.js"></script>
+       
     </div>
 </div>
+
+
+
+
+<!--<script src="~/Scripts/highcharts.js"></script>
+<script src="~/Scripts/exporting.js"></script>-->
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/moment.js"></script>
 <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+<script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
 
 
 <script>
@@ -101,12 +109,14 @@
             },
             dataType: "json",
             success: function (Result) {
-                Result = Result.d;
+                //Result = Result.d;
                 var data = [];
                 for (var i in Result) {
                     var serie = new Array(Result[i].name, Result[i].cantidad);
                     data.push(serie);
                 }
+                //alert(Result);
+                //alert(data);
                 DibujaGrafico(data);
                 //DreawChartPubli(data, 'container2');
             },
@@ -115,41 +125,47 @@
             }
         });
     }
-
+   </script>
+   <Script>
     function DibujaGrafico(series) {
-        $('#grafico').highcharts({
+
+        chart = new Highcharts.Chart({
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: 1,//null,
-                plotShadow: false
-            },
+                plotShadow: false,
+                renderTo: 'grafico'
+                },
             title: {
-                text: 'Usuarios/Transacciones'
+                    text: 'Usuarios/Transacciones'
             },
             subtitle: {
-                text: 'Chebay'
+                    text: 'Chebay'
             },
             tooltip: {
-                pointFormat: '{series.name}: {point.y} (<b>{point.percentage:.1f}%</b>)'
+                    pointFormat: '{series.name}: {point.y} (<b>{point.percentage:.1f}%</b>)'
             },
             plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.y}',
-                        style: {
-                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.y}',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
                         }
                     }
-                }
             },
             series: [{
                 type: 'pie',
                 name: 'Usuarios',
                 data: series
             }]
-        });
+        }); 
+
+       
     }
+
 </script>

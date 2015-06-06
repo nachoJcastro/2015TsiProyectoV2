@@ -465,6 +465,9 @@ namespace Backend.Controllers
             int cant_u = _bl.ReportUsers(rep.dominio, rep.fechaini, rep.fechafin).Count();
             int cant_t = _bl.ReportSubasta(rep.dominio, rep.fechaini, rep.fechafin).Count();
 
+            System.Diagnostics.Debug.WriteLine("Cantid usuarios" + cant_u.ToString());
+            System.Diagnostics.Debug.WriteLine("Cantid transacciones" + cant_t.ToString());
+
             IEnumerable<Charts> modelList = new List<Charts> 
             { 
                 new Charts()
@@ -480,6 +483,12 @@ namespace Backend.Controllers
             
             };
 
+            foreach (var item in modelList)
+            {
+                System.Diagnostics.Debug.WriteLine("Json que retorno item :" + item.cantidad.ToString() +"--" +item.name.ToString());   
+            }
+
+           
             return Json(modelList, JsonRequestBehavior.AllowGet);
   
         }
