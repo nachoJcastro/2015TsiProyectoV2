@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var idSub = Model.id;
 }
-
+<div class="container">
 <h2>Imagenes Subasta</h2>
 
 <div class="jumbotron">
@@ -21,8 +21,10 @@
     </form>
 </div>
 
-<a class ="btn btn-default" href="@Url.Action('DetalleProducto/', 'Subasta' , new { id=@idSub}, null)">Crear Subasta</a>
-
+<a class ="btn btn-default" href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = idSub }, null)">Crear Subasta</a>
+</div>
+<link href="~/Scripts/dropzone/basic.css" rel="stylesheet" />
+<link href="~/Scripts/dropzone/dropzone.css" rel="stylesheet" />
 @section scripts{
     <script type="text/javascript">
 

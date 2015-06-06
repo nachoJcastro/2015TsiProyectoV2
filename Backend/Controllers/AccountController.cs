@@ -97,11 +97,10 @@ namespace Backend.Controllers
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
 
-            var estaEnelRol = UserManager.IsInRole(user.Id, "Admin");
             switch (result)
             {
                 case SignInStatus.Success:
-                    if(!estaEnelRol)
+                    if(!UserManager.IsInRole(user.Id, "Admin"))
                     {
                         return RedirectToAction("Index", "TiendaVirtual");
                     }

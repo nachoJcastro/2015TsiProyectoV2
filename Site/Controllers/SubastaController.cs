@@ -529,7 +529,9 @@ namespace Site.Controllers
                 }
 
             }
-            return View("DetalleProducto", subasta);
+
+            SubastaSite subSide = crearSubastaSite(subasta);
+            return View("DetalleProducto", subSide);
         }
 
         [HttpPost]
