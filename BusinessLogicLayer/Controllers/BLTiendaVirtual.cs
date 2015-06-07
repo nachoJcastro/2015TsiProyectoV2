@@ -103,5 +103,12 @@ namespace BusinessLogicLayer.Controllers
         public List<Subasta> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin) {
             return _dal.ReportSubasta(dominio, fechaini, fechafin);
         }
+
+        public List<ReporteLineal> ReportSubastaLineal(string dominio, DateTime fechaini, DateTime fechafin) {
+            return _dal.ReportSubastaLineal(dominio, fechaini, fechafin);
+        }
+        public List<ReporteLineal> ReportUsersLineal(string dominio, DateTime fechaini, DateTime fechafin) {
+            return _dal.ReportUsersLineal(dominio, fechaini, fechafin);
+        }
     }
 }

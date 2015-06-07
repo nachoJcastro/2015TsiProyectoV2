@@ -49,6 +49,9 @@
     <Compile Include="EntityTenant\Comentario.cs" />
     <Compile Include="EntityTenant\ImagenesTenant.cs" />
     <Compile Include="EntityTenant\TiendaTenant.cs" />
+    <Compile Include="Entity\ReporteLineal.cs" />
+    <Compile Include="Entity\SubastaAux.cs" />
+    <Compile Include="Entity\UsuarioAux.cs" />
     <Compile Include="Enum\EstadoTransaccion.cs" />
     <Compile Include="EntityTenant\Favorito.cs" />
     <Compile Include="EntityTenant\Imagen.cs" />

@@ -493,5 +493,127 @@ namespace Backend.Controllers
   
         }
 
+        public ActionResult ChartsLineal()
+        {
+            ViewBag.tiendas = _bl.ObtenerTiendas().ToList();
+            return View();
+        }
+
+
+        public ActionResult ReportesAjaxPrueba(Reporte rep)
+        {
+            List<ReporteLineal> subastas;
+            List<ReporteLineal> usuarios;
+
+            IEnumerable<ReporteLineal> modelList = new List<ReporteLineal>();
+            IEnumerable<ReporteLineal> modelList2 = new List<ReporteLineal>();
+
+            TipoReporte e = (TipoReporte)Enum.Parse(typeof(TipoReporte), "Usuario");
+            //DateTime fechai = Convert.ToDateTime(fechaini);
+            //DateTime fechaf = Convert.ToDateTime(fechafin);
+
+            if (rep.tipo.Equals(e))
+            {
+                usuarios = _bl.ReportUsersLineal(rep.dominio, rep.fechaini, rep.fechafin).ToList();
+                modelList = usuarios.Select(x =>
+                                            new ReporteLineal()
+                                            {
+                                                tipo = "Usuario",
+                                                Fecha = x.Fecha,
+                                                cantidad = x.cantidad
+
+                                            });
+                return Json(modelList, JsonRequestBehavior.AllowGet);
+
+
+            }
+            else
+            {
+                subastas = _bl.ReportSubastaLineal(rep.dominio, rep.fechaini, rep.fechafin).ToList();
+                modelList2 = subastas.Select(x =>
+                                            new ReporteLineal()
+                                            {
+                                                tipo = "Subasta",
+                                                Fecha = x.Fecha,
+                                                cantidad = x.cantidad
+
+                                            });
+                return Json(modelList2, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
+        public ActionResult GenerarChartLineal(Reporte rep)
+        {
+            List<ReporteLineal> subastas;
+            List<ReporteLineal> usuarios;
+
+            IEnumerable<ReporteLineal> modelList = new List<ReporteLineal>();
+            IEnumerable<ReporteLineal> modelList2 = new List<ReporteLineal>();
+
+            TipoReporte e = (TipoReporte)Enum.Parse(typeof(TipoReporte), "Usuario");
+            //DateTime fechai = Convert.ToDateTime(fechaini);
+            //DateTime fechaf = Convert.ToDateTime(fechafin);
+
+            if (rep.tipo.Equals(e))
+            {
+                usuarios = _bl.ReportUsersLineal(rep.dominio, rep.fechaini, rep.fechafin).ToList();
+                modelList = usuarios.Select(x =>
+                                            new ReporteLineal()
+                                            {
+                                                
+                                                Fecha = x.Fecha,
+                                                cantidad = x.cantidad
+
+                                            });
+                return Json(modelList, JsonRequestBehavior.AllowGet);
+
+
+            }
+            else
+            {
+                subastas = _bl.ReportSubastaLineal(rep.dominio, rep.fechaini, rep.fechafin).ToList();
+                modelList2 = subastas.Select(x =>
+                                            new ReporteLineal()
+                                            {
+                                                
+                                                Fecha = x.Fecha,
+                                                cantidad = x.cantidad
+
+                                            });
+                return Json(modelList2, JsonRequestBehavior.AllowGet);
+            }
+
+            //int cant_u = _bl.ReportUsers(rep.dominio, rep.fechaini, rep.fechafin).Count();
+            //int cant_t = _bl.ReportSubasta(rep.dominio, rep.fechaini, rep.fechafin).Count();
+
+            //System.Diagnostics.Debug.WriteLine("Cantid usuarios" + cant_u.ToString());
+            //System.Diagnostics.Debug.WriteLine("Cantid transacciones" + cant_t.ToString());
+
+            //IEnumerable<Charts> modelList = new List<Charts> 
+            //{ 
+            //    new Charts()
+            //    {
+            //        name = "Usuarios",
+            //        cantidad = cant_u
+            //    },
+            //    new Charts()
+            //    {
+            //        name = "Transacciones",
+            //        cantidad = cant_t
+            //    }
+            
+            //};
+
+            //foreach (var item in modelList)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("Json que retorno item :" + item.cantidad.ToString() + "--" + item.name.ToString());
+            //}
+
+
+            //return Json(modelList, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
