@@ -220,11 +220,13 @@
     <Compile Include="BlobStorage.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\FavoritosController.cs" />
     <Compile Include="Controllers\FileReader.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OfertaController.cs" />
     <Compile Include="Models\ChatHub.cs" />
+    <Compile Include="Models\Comentario.cs" />
     <Compile Include="Models\EstiloTienda.cs" />
     <Compile Include="Models\OfertaModel.cs" />
     <Compile Include="Controllers\SubastaController.cs" />
@@ -358,10 +360,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Subasta\AgregarComentario.cshtml" />
+    <Content Include="Views\Favoritos\Listar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="contenido\" />
+    <Folder Include="Views\Comentario\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>

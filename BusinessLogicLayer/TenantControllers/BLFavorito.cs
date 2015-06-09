@@ -49,6 +49,19 @@ namespace BusinessLogicLayer.TenantControllers
         {
             _dal.EliminarFavorito(tenant, idSubasta, idUsuario);
         }
+
+
+        public List<Subasta> SubastasFavoritasByUsuario(String tenant, int idUsuario)
+        {
+            IBLSubasta subIBL= new BLSubasta();
+            var favoritos = _dal.FavoritosByUsuario(tenant, idUsuario);
+
+            List<Subasta> subastas = new List<Subasta>();
+            foreach(var fav in favoritos){
+                subastas.Add(subIBL.ObtenerSubasta(tenant, fav.id_Subasta));
+            }
+            return subastas;
+        }
         
     }
 }

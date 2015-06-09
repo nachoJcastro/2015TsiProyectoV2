@@ -13,7 +13,8 @@
                     <h4 class="modal-title" id="myModalLabel">Confirmacion<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
                 </div>
                 <div class="modal-body">
-                    <p>Esta seguro de comprar este producto?</p>
+                    <p>Esta seguro de comprar este producto? </p>
+                    <p> Usted dispone de $ @Model.billeteraUsuario y se le descontaran $ @Model.valor_Actual </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -172,7 +173,7 @@
                     @if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
                     {
                         <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
-
+                        
                     }
                     <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
                 </div>
@@ -214,6 +215,7 @@
             listarComentarios();
         });
         function listarComentarios(){
+
             var retorno = $("#retorno");
             $.ajax({
                 cache: false,
@@ -288,19 +290,19 @@
                 success: function (data) {
                     //if false
 
-                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){   
-     
+                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){
+
                         document.querySelector('#fav > span').classList.add('fa-heart');
-                        document.querySelector('#fav > span').classList.remove('fa-heart-o'); 
+                        document.querySelector('#fav > span').classList.remove('fa-heart-o');
                         //document.querySelector('#boton').setAttribute('value','OFF');
- 
-                        }
+
+                    }
                     else{
-     
+
                         document.querySelector('#fav >span').classList.add('fa-heart-o');
                         document.querySelector('#fav >span').classList.remove('fa-heart');
-                        //document.querySelector('#boton').setAttribute('value','ON');   
-     
+                        //document.querySelector('#boton').setAttribute('value','ON');
+
                     }
                     //document.getElementById("fav").disabled = data;
 

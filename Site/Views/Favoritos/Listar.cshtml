@@ -1,0 +1,57 @@
+﻿@model Site.Models.SubastaSite
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Lista de Subastas favoritas</h2>
+
+@if (ViewBag.favoritas != null)
+{
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>
+                    Producto
+                </th>
+                <th>
+                    Precio
+                </th>
+                <th>
+                    Tipo finalizacion
+                </th>
+                <th>
+                    Fecha de finalizacion
+                </th>
+                <th>
+                    Estado
+                </th>
+            </tr>
+
+            @foreach (var item in ViewBag.favoritas)
+            {
+                var titulo = @item.titulo;
+                <tr class="texto_table">
+                    <td>
+                        <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)">@item.titulo</a>
+                    </td>
+                    <td>
+                        $ @item.valor_Actual
+                    </td>
+                    <td>
+                        @item.finalizado
+                    </td>
+                    <td>
+                        @item.fecha_Cierre
+                    </td>
+                    <td>
+                        @item.estado
+                    </td>
+                    <td>
+                        @item.estado
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+}

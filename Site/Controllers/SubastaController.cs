@@ -471,6 +471,8 @@ namespace Site.Controllers
             {
                 user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
                 valor_tenant = user_sitio.Dominio.ToString();
+                int idLogueado = usuIBL.ObtenerIdByEmail(valor_tenant, user_sitio.Email);
+                var usuario = usuIBL.GetUsuario(valor_tenant, idLogueado);
 
                 Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
                 ViewBag.ListaImg = subIBL.ObtenerImagenes(valor_tenant, idSubasta);
@@ -480,6 +482,7 @@ namespace Site.Controllers
                 }
 
                 sub_site = crearSubastaSite(subasta);
+                sub_site.billeteraUsuario = usuario.billetera;
             }
             catch (Exception)
             {

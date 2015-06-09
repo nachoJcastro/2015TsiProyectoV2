@@ -14,5 +14,6 @@ namespace BusinessLogicLayer.TenantInterfaces
         bool esFavorito(String tenant, int idSbasta, int idUsuario);
         List<Favorito> FavoritosByUsuario(String tenant, int idUsuario);
         void EliminarFavorito(String tenant, int idSubasta, int idUsuario);
+        List<Subasta> SubastasFavoritasByUsuario(String tenant, int idUsuario);
     }
 }
