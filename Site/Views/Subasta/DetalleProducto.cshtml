@@ -211,104 +211,127 @@
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
     <script>
-        $(document).ready(function () {
-            listarComentarios();
+    $(document).ready(function () {
+        listarComentarios();
+        pintarFavorito();
+    });
+    function listarComentarios(){
+
+        var retorno = $("#retorno");
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("ListarComentario", "Subasta")',
+            data: {
+                "idSubasta": @Model.id,
+            },
+            success: function (data) {
+                retorno.html('');
+                var result = "";
+                $.each(data, function (id, item) {
+                    result += '<dt>' +
+                                ToJavaScriptDate(item.fecha) + '      ' +
+                                item.id_Usuario +
+                                '</dt>' +
+                                '<dd>' +
+                                item.texto +
+                                '</dd>';
+                })
+                retorno.html(result);
+                document.getElementById("areaComentario").value = '';
+                $("#com").show();
+            }
         });
-        function listarComentarios(){
+    }
 
-            var retorno = $("#retorno");
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: '@Url.Action("ListarComentario", "Subasta")',
-                data: {
-                    "idSubasta": @Model.id,
-                },
-                success: function (data) {
-                    retorno.html('');
-                    var result = "";
-                    $.each(data, function (id, item) {
-                        result += '<dt>' +
-                                    ToJavaScriptDate(item.fecha) + '      ' +
-                                    item.id_Usuario +
-                                    '</dt>' +
-                                    '<dd>' +
-                                    item.texto +
-                                    '</dd>';
-                    })
-                    retorno.html(result);
-                    document.getElementById("areaComentario").value = '';
-                    $("#com").show();
-                }
-            });
-        }
+    function crearComentario() {
+        var retorno = $("#retorno");
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("AgregarComentario", "Subasta")',
+            data: {
+                "idSubasta": @Model.id,
+                "texto": document.getElementById("areaComentario").value
+            },
+            success: function (data) {
+                retorno.html('');
+                var result = "";
+                $.each(data, function (id, item) {
+                    result += '<dt>' +
+                                ToJavaScriptDate(item.fecha) + '      ' +
+                                item.id_Usuario +
+                                '</dt>' +
+                                '<dd>' +
+                                item.texto +
+                                '</dd>';
+                })
+                retorno.html(result);
+                document.getElementById("areaComentario").value = '';
+                $("#com").show();
+            }
+        });
+    }
 
-        function crearComentario() {
-            var retorno = $("#retorno");
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: '@Url.Action("AgregarComentario", "Subasta")',
-                data: {
-                    "idSubasta": @Model.id,
-                    "texto": document.getElementById("areaComentario").value
-                },
-                success: function (data) {
-                    retorno.html('');
-                    var result = "";
-                    $.each(data, function (id, item) {
-                        result += '<dt>' +
-                                    ToJavaScriptDate(item.fecha) + '      ' +
-                                    item.id_Usuario +
-                                    '</dt>' +
-                                    '<dd>' +
-                                    item.texto +
-                                    '</dd>';
-                    })
-                    retorno.html(result);
-                    document.getElementById("areaComentario").value = '';
-                    $("#com").show();
-                }
-            });
-        }
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
 
-        function ToJavaScriptDate(value) {
-            var pattern = /Date\(([^)]+)\)/;
-            var results = pattern.exec(value);
-            var dt = new Date(parseFloat(results[1]));
-            return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
-        }
+    function cambiarFavorito(idSubasta){
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("CambiarFavorito", "Subasta")',
+            data: {
+                "idSubasta": idSubasta,
+            },
+            success: function (data) {
+                //if false
 
-        function cambiarFavorito(idSubasta){
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: '@Url.Action("CambiarFavorito", "Subasta")',
-                data: {
-                    "idSubasta": idSubasta,
-                },
-                success: function (data) {
-                    //if false
+                if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){
 
-                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){
-
-                        document.querySelector('#fav > span').classList.add('fa-heart');
-                        document.querySelector('#fav > span').classList.remove('fa-heart-o');
-                        //document.querySelector('#boton').setAttribute('value','OFF');
-
-                    }
-                    else{
-
-                        document.querySelector('#fav >span').classList.add('fa-heart-o');
-                        document.querySelector('#fav >span').classList.remove('fa-heart');
-                        //document.querySelector('#boton').setAttribute('value','ON');
-
-                    }
-                    //document.getElementById("fav").disabled = data;
+                    document.querySelector('#fav > span').classList.add('fa-heart');
+                    document.querySelector('#fav > span').classList.remove('fa-heart-o');
+                    //document.querySelector('#boton').setAttribute('value','OFF');
 
                 }
-            });
-        }
+                else{
+
+                    document.querySelector('#fav >span').classList.add('fa-heart-o');
+                    document.querySelector('#fav >span').classList.remove('fa-heart');
+                    //document.querySelector('#boton').setAttribute('value','ON');
+
+                }
+
+            }
+        });
+    }
+
+    function pintarFavorito()
+    {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("esFavorito", "Subasta")',
+            data: {
+                "idSubasta": @Model.id,
+            },
+            success: function (data){
+                if(data)
+                {
+                    document.querySelector('#fav > span').classList.add('fa-heart');
+                    document.querySelector('#fav > span').classList.remove('fa-heart-o');
+
+                }
+                else{
+                    document.querySelector('#fav >span').classList.add('fa-heart-o');
+                    document.querySelector('#fav >span').classList.remove('fa-heart');
+                }
+            }
+        });
+    }
 
     </script>
 

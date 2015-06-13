@@ -482,7 +482,10 @@ namespace Site.Controllers
                 }
 
                 sub_site = crearSubastaSite(subasta);
-                sub_site.billeteraUsuario = usuario.billetera;
+                if(usuario != null){
+                    sub_site.billeteraUsuario = usuario.billetera;
+                }
+                
             }
             catch (Exception)
             {
@@ -614,6 +617,18 @@ namespace Site.Controllers
                 modelList = true;
             }
 
+            return Json(modelList, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult esFavorito(int idSubasta)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            var idUsuario = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
+            valor_tenant = user_sitio.Dominio.ToString();
+
+            Boolean modelList = favIBL.esFavorito(valor_tenant, idSubasta, idUsuario);
+            
             return Json(modelList, JsonRequestBehavior.AllowGet);
         }
     }

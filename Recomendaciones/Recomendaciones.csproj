@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C0284F4C-BEF1-4C7E-97DE-C6EA9CFA912E}</ProjectGuid>
+    <ProjectGuid>{746BBD6F-BD3A-442A-B2A7-E20428A68F8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Crosscutting</RootNamespace>
-    <AssemblyName>Crosscutting</AssemblyName>
+    <RootNamespace>Recomendaciones</RootNamespace>
+    <AssemblyName>Recomendaciones</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,11 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Facebook">
-      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,40 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityTareas\Correo.cs" />
-    <Compile Include="EntityTenant\Atributo_Subasta.cs" />
-    <Compile Include="EntityTenant\Calificacion.cs" />
-    <Compile Include="EntityTenant\Comentario.cs" />
-    <Compile Include="EntityTenant\ImagenesTenant.cs" />
-    <Compile Include="EntityTenant\TiendaTenant.cs" />
-    <Compile Include="Entity\ReporteLineal.cs" />
-    <Compile Include="Entity\SubastaAux.cs" />
-    <Compile Include="Entity\UsuarioAux.cs" />
-    <Compile Include="Enum\EstadoTransaccion.cs" />
-    <Compile Include="EntityTenant\Favorito.cs" />
-    <Compile Include="EntityTenant\Imagen.cs" />
-    <Compile Include="EntityTenant\Oferta.cs" />
-    <Compile Include="EntityTenant\Subasta.cs" />
-    <Compile Include="Enum\TipoFinalizacion.cs" />
-    <Compile Include="EntityTenant\Usuario.cs" />
-    <Compile Include="Entity\AtributosDTO.cs" />
-    <Compile Include="Entity\CategoriasDTO.cs" />
-    <Compile Include="Entity\ImagenesDTO.cs" />
-    <Compile Include="Entity\TiendaVirtualDTO.cs" />
-    <Compile Include="Entity\TipoProductoDTO.cs" />
-    <Compile Include="Enum\Estilos.cs" />
-    <Compile Include="Enum\TipoReporte.cs" />
+    <Compile Include="RamdomRecomendaciones.cs" />
+    <Compile Include="Recomendaciones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Struct\TprodXCant.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Security\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
+      <Project>{14705bc5-96bb-4f1f-8eb1-ba1019cf6f97}</Project>
+      <Name>BusinessLogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crosscutting\Crosscutting.csproj">
+      <Project>{c0284f4c-bef1-4c7e-97de-c6ea9cfa912e}</Project>
+      <Name>Crosscutting</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -20,7 +20,6 @@ namespace Site.Controllers
         BlobStorage _bls = new BlobStorage();
         public UsuarioSite user_sitio;
         private string valor_tenant;
-        private SubastaSite sub_site;
 
         public FavoritosController(IBLSubasta subbl, IBLUsuario usubl, IBLFavorito favIBL)
         {

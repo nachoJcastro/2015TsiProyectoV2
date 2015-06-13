@@ -351,7 +351,6 @@
     <Content Include="Views\Oferta\Lista.cshtml" />
     <Content Include="Views\Subasta\Transaccion.cshtml" />
     <Content Include="Views\Subasta\SinSaldo.cshtml" />
-    <Content Include="Views\Subasta\jonson.cshtml" />
     <Content Include="Views\Subasta\SubastasDirectas.cshtml" />
     <Content Include="Views\Subasta\SubastaSubastas.cshtml" />
     <Content Include="Views\Chat\Chat.cshtml" />
@@ -380,6 +379,10 @@
     <ProjectReference Include="..\Crosscutting\Crosscutting.csproj">
       <Project>{c0284f4c-bef1-4c7e-97de-c6ea9cfa912e}</Project>
       <Name>Crosscutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recomendaciones\Recomendaciones.csproj">
+      <Project>{746bbd6f-bd3a-442a-b2a7-e20428a68f8c}</Project>
+      <Name>Recomendaciones</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
