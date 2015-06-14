@@ -17,7 +17,8 @@
                     <h4 class="modal-title" id="myModalLabel">Confirmacion<a class="anchorjs-link" href="#myModalLabel"><span class="anchorjs-icon"></span></a></h4>
                 </div>
                 <div class="modal-body">
-                    <p>Esta seguro de comprar este producto?</p>
+                    <p>Esta seguro de comprar este producto? </p>
+                    <p> Usted dispone de $ @Model.billeteraUsuario y se le descontaran $ @Model.valor_Actual </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -30,7 +31,7 @@
         <div id="main_area">
             @if (ViewBag.ListaImg != null)
             {
-                
+
                 <div class="col-sm-3" id="slider-thumbs">
                     <!-- Bottom switcher of slider -->
                     <ul class="hide-bullets">
@@ -39,13 +40,13 @@
                                 <img src="@Html.DisplayFor(model => model.portada)">
                             </a>
                         </li>*@
-                        @{
-                            var index = 0;
+                                    @{
+                var index = 0;
 
-                            if (ViewBag.ListaImg != null)
-                            {
-                                foreach (var imagen in ViewBag.ListaImg)
-                                {
+                if (ViewBag.ListaImg != null)
+                {
+                    foreach (var imagen in ViewBag.ListaImg)
+                    {
 
                                     <li class="col-sm-12 contenedor_slider_t">
                                         <a class="thumbnail" id="carousel-selector-@index">
@@ -53,10 +54,10 @@
                                         </a>
                                     </li>
 
-                                    index++;
-                                }
-                            }
-                        }
+                        index++;
+                    }
+                }
+                                    }
 
                     </ul>
                 </div>
@@ -140,7 +141,7 @@
                     @Html.DisplayFor(model => model.nick_Comprador)
 
                 }
-            }
+                            }
         </div>
 
         
@@ -150,53 +151,53 @@
 
         <div class="col-md-12">
             @Html.DisplayFor(model => model.estado)
-        </div>
+    </div>
 
         <div class="col-md-12">
-            @using Site.Models
-            @{
-                var user = Session["usuario"] as UsuarioSite;
-                var estado = Model.estado.ToString();
-                var tipoFinalizacion = Model.finalizado.ToString();
-            }
+    @using Site.Models
+    @{
+        var user = Session["usuario"] as UsuarioSite;
+        var estado = Model.estado.ToString();
+        var tipoFinalizacion = Model.finalizado.ToString();
+    }
 
-            @if (estado.Equals("Activa"))
+    @if (estado.Equals("Activa"))
+    {
+
+        if (user != null && user.Email != null)
+        {
+
+            if (tipoFinalizacion == "Subasta")
             {
 
-                if (user != null && user.Email != null)
-                {
-
-                    if (tipoFinalizacion == "Subasta")
-                    {
-
                         if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
-                        {
-                            <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
-
-                        }
-                        <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
-
-                    }
-                    else
                     {
-
-                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
+                        <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
 
                     }
-                    <a id="fav" onclick="cambiarFavorito(@Model.id)" data-toggle="tooltip" data-placement="top" title="Favoritos"><span id="iconoFav" class="fa fa-heart-o fa-2x"></span></a>
-                }
-                else
-                {
-                    <p>Debe loguarse para poder ofertar</p>
-
-                }
-
+                    <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
 
             }
             else
             {
-                <p>La publicacion está finalizada</p>
+
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
+
             }
+                    <a id="fav" onclick="cambiarFavorito(@Model.id)" data-toggle="tooltip" data-placement="top" title="Favoritos"><span id="iconoFav" class="fa fa-heart-o fa-2x"></span></a>
+        }
+        else
+        {
+            <p>Debe loguarse para poder ofertar</p>
+
+        }
+
+
+    }
+    else
+    {
+        <p>La publicacion está finalizada</p>
+    }
         </div>
 
     </div>
@@ -239,8 +240,10 @@
     <script>
         $(document).ready(function () {
             listarComentarios();
+        pintarFavorito();
         });
         function listarComentarios(){
+
             var retorno = $("#retorno");
             $.ajax({
                 cache: false,
@@ -315,23 +318,45 @@
                 success: function (data) {
                     //if false
 
-                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){
-
+                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){   
+     
                         document.querySelector('#fav > span').classList.add('fa-heart');
-                        document.querySelector('#fav > span').classList.remove('fa-heart-o');
+                        document.querySelector('#fav > span').classList.remove('fa-heart-o'); 
                         //document.querySelector('#boton').setAttribute('value','OFF');
-
-                    }
+ 
+                        }
                     else{
-
+     
                         document.querySelector('#fav >span').classList.add('fa-heart-o');
                         document.querySelector('#fav >span').classList.remove('fa-heart');
-                        //document.querySelector('#boton').setAttribute('value','ON');
-
+                        //document.querySelector('#boton').setAttribute('value','ON');   
+     
                     }
-                    //document.getElementById("fav").disabled = data;
+
+            }
+        });
+    }
+
+    function pintarFavorito()
+    {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("esFavorito", "Subasta")',
+            data: {
+                "idSubasta": @Model.id,
+            },
+            success: function (data){
+                if(data)
+                {
+                    document.querySelector('#fav > span').classList.add('fa-heart');
+                    document.querySelector('#fav > span').classList.remove('fa-heart-o');
 
                 }
+                else{
+                    document.querySelector('#fav >span').classList.add('fa-heart-o');
+                    document.querySelector('#fav >span').classList.remove('fa-heart');
+                }
+            }
             });
         }
 

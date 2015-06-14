@@ -471,6 +471,8 @@ namespace Site.Controllers
             {
                 user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
                 valor_tenant = user_sitio.Dominio.ToString();
+                int idLogueado = usuIBL.ObtenerIdByEmail(valor_tenant, user_sitio.Email);
+                var usuario = usuIBL.GetUsuario(valor_tenant, idLogueado);
 
                 Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
                 ViewBag.ListaImg = subIBL.ObtenerImagenes(valor_tenant, idSubasta);
@@ -480,6 +482,10 @@ namespace Site.Controllers
                 }
 
                 sub_site = crearSubastaSite(subasta);
+                if(usuario != null){
+                    sub_site.billeteraUsuario = usuario.billetera;
+            }
+                
             }
             catch (Exception)
             {
@@ -633,6 +639,18 @@ namespace Site.Controllers
            return View();
         }
 
+
+
+        public JsonResult esFavorito(int idSubasta)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            var idUsuario = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
+            valor_tenant = user_sitio.Dominio.ToString();
+
+            Boolean modelList = favIBL.esFavorito(valor_tenant, idSubasta, idUsuario);
+            
+            return Json(modelList, JsonRequestBehavior.AllowGet);
+        }
     }
 }
 

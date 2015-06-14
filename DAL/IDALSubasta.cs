@@ -17,6 +17,7 @@ namespace DAL
         void EliminarSubasta(int subastaId); //Delete
 
         List<Oferta> ObtenerOfertas(int subastaId);
+        List<Subasta> ObtenerSubastasByTipoProducto(String tenant, int idTipoProducto);
 
         void AltaSubasta(string tenant, Subasta subasta);
         Boolean ActualizarMonto(string valor_tenant, int id_subasta, double monto);
