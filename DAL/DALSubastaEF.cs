@@ -37,19 +37,48 @@ namespace DAL
         
         }
         //************************
-
         public void AgregarSubasta(String tenant, Subasta subasta)
         {
+            System.Diagnostics.Debug.WriteLine("ID SUBASTA " + subasta.titulo);
+
+            //int id_subasta = 0;
             try
             {
                 db = new TenantDB(tenant);
                 db.Subasta.Add(subasta);
                 db.SaveChanges();
+              
             }
             catch (Exception e)
             {
                 throw e;
             }
+
+            //return id_subasta;
+        }
+
+
+
+        public int AgregarSubasta_ID(String tenant, Subasta subasta)
+        {
+            int id_subasta=-1;
+            try
+            {
+                db = new TenantDB(tenant);
+                db.Subasta.Add(subasta);
+                db.SaveChanges();
+                // read out your newly set IDENTITY value 
+                 
+                 
+                 id_subasta = subasta.id;
+                 System.Diagnostics.Debug.WriteLine("ID SUBASTA " + id_subasta.ToString());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return id_subasta;
         }
 
 

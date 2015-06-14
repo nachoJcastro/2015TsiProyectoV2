@@ -2,6 +2,7 @@
 using Crosscutting.Enum;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -20,7 +21,7 @@ namespace Site.Models
             Comentario = new HashSet<Comentario>();
         }*/
 
-
+        public List<AtributoSite> atributos { get; set; }
         
         public int id { get; set; }
 
@@ -44,13 +45,15 @@ namespace Site.Models
 
         public string tags { get; set; }
 
-        public double? precio_Base { get; set; }
+        public double precio_Base { get; set; }
 
-        public double? precio_Compra { get; set; }
+        public double precio_Compra { get; set; }
 
         public string garantia { get; set; }
 
         public string coordenadas { get; set; }
+
+        public string direccion { get; set; }
 
         public EstadoTransaccion estado { get; set; }
 
@@ -64,7 +67,10 @@ namespace Site.Models
 
         public DateTime? fecha_Inicio { get; set; }
 
-        public DateTime? fecha_Cierre { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        public DateTime fecha_Cierre { get; set; }
 
         public double billeteraUsuario { get; set; }
 

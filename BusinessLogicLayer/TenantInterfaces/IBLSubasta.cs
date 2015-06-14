@@ -32,6 +32,8 @@ namespace BusinessLogicLayer.TenantInterfaces
         void AgregarImagen(string tenant, Imagen img);
         List<Imagen> ObtenerImagenes(string tenant, int id);
 
+        int AgregarSubasta_ID(String tenant, Subasta subasta);
+
         List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat);
         List<Subasta> ObtenerSubastasPorCriterio(string tenant, int idCat, string criterio, int? tipo,string min,string max);
     }

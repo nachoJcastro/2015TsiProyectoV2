@@ -46,6 +46,8 @@ namespace Crosscutting.EntityTenant
 
         public string direccion { get; set; }
 
+        public string coordenadas { get; set; }
+
         public string imagen { get; set; }
 
         public double billetera { get; set; }

@@ -69,19 +69,33 @@
         </div>
 
 
-
-
-
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Direccion, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
+          <!--MAPA-->
+        <h3>Ubicacion</h3>
+        <div id="contenendor_mapa">
+            <div id="map" style="height: 400px; width: 500px ; margin: 10px">
+            </div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <input id="direccion_coord" type="text" value="Montevideo" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <input type="button" value="Buscar Direccion" onclick="buscar_Direccion()" class="btn btn-default" />
+                </div>
             </div>
         </div>
 
+        <div class="form-group">
+            <div class="col-md-6">
+                @Html.Label("Direccion" ,new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!--Escondido Coordenadas-->
+        @Html.HiddenFor(model => model.Coordenadas)
 
 
         <div class="form-group">
@@ -119,3 +133,140 @@
 </script>
 
 
+
+
+<script type="text/javascript">
+    var geocoder = null;
+    var map = null;
+    var latlng = null;
+    // var marker;
+    var markers = [];
+    var image = 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/96/Map-Marker-Marker-Outside-Chartreuse-icon.png';
+    $(function () {
+        latlng = new google.maps.LatLng(-34.895154, -56.164083);
+        var myOptions = {
+            zoom: 13,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map"), myOptions);
+        geocoder = new google.maps.Geocoder();
+        //geocoder=new GClientGeocoder();
+        google.maps.event.addListener(map, 'click', function (event) {
+            agregar_marca(event.latLng, 'Mi direccion');
+        });
+        // Adds a marker at the center of the map.
+        agregar_marca(latlng, 'Mi direccion');
+    });
+
+    // Elimina
+    function borrarMarkers() {
+        limpiarMarkers();
+        markers = [];
+    }
+    function limpiarMarkers() {
+        setAllMap(null);
+    }
+    //*******************************************
+    function agregar_marca(location, direccion) {
+        borrarMarkers();
+        var marker = new google.maps.Marker({
+            position: location,
+            clickable: true,
+            title: direccion,
+            map: map,
+            icon: image
+        });
+        markers.push(marker);
+        document.getElementById("Coordenadas").value =location.lat() + "," + location.lng();
+
+        if (direccion == "Mi direccion") {
+            buscar_Direccion_latlon(location);
+        }
+    }
+    // Sets the map on all markers in the array.
+    function setAllMap(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+    //*********************************************
+    function buscar_Direccion_latlon(point) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ latLng: point }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    document.getElementById("Direccion").value = results[0].formatted_address;
+                }
+            }
+        });
+    }
+    //***************************************************
+    function buscar_Direccion() {
+        var direccion_coord = document.getElementById("direccion_coord").value;
+        geocoder.geocode({ 'address': direccion_coord }, function (resultados, estado) {
+            if (estado == google.maps.GeocoderStatus.OK) {
+                map.setCenter(resultados[0].geometry.location);
+                // direccion
+                //break down the three dimensional array into simpler arrays
+                datos_direccion(resultados);
+                agregar_marca(resultados[0].geometry.location, direccion_coord);
+                //var  marker = new google.maps.Marker({
+                //    map: map,
+                //
+                //    clickable: false,
+                //     icon: image,
+                //     position: resultados[0].geometry.location
+
+                //   });
+                // markers.push(marker);
+            }
+            else {
+                alert('La busqueda no dio resultado: ' + estado);
+            }
+        });
+    }
+
+    //****************************************************
+    function datos_direccion(resultados) {
+        var datos_dir = "";
+        for (i = 0 ; i < resultados.length ; ++i) {
+            var var1 = resultados[i].address_components;
+
+            for (j = 0 ; j < var1.length ; ++j) {
+                var var2 = var1[j].types;
+                for (k = 0 ; k < var2.length ; ++k) {
+                    //BUSCO CIUDAD
+                    if (var2[k] == "locality") {
+                        //CIUDAD
+                        //alert(var1[j].long_name);
+                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
+                    }
+                    //BUSCO PAIS
+                    if (var2[k] == "administrative_area_level_2") {
+                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
+                        //put the county name in the form
+                        //alert(var1[j].long_name);
+                    }
+                    //BUSCO ESTADO
+                    if (var2[k] == "administrative_area_level_1") {
+                        //put the state abbreviation in the form
+                        // alert(var1[j].short_name);
+                    }
+                    //BUSCO CALLE
+                    if (var2[k] == "street_number") {
+                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
+                        // alert(var1[j].long_name);
+                    }
+                    //CODIGO POSTAL
+                    if (var2[k] == "postal_code_prefix") {
+
+                        // alert(var1[j].long_name);
+                    }
+
+                }
+            }
+        }
+        document.getElementById("direccion").value = resultados[0].formatted_address;
+    }
+</script>

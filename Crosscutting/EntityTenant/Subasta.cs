@@ -58,6 +58,9 @@ namespace Crosscutting.EntityTenant
         [StringLength(50)]
         public string garantia { get; set; }
 
+
+        public string direccion { get; set; }
+
         public string coordenadas { get; set; }
        
         // Atributo de estado

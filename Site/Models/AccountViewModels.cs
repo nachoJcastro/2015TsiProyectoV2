@@ -84,11 +84,15 @@ namespace Site.Models
 
         [Display(Name = "Fecha nacimiento")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string Fecha { get; set; }
 
         [Display(Name = "Direccion")]
         public string Direccion { get; set; }
 
+        [Display(Name = "Coordenadas")]
+        public string Coordenadas { get; set; }
+       
 
         [Required]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]

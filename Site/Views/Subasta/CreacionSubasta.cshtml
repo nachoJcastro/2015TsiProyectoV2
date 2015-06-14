@@ -1,0 +1,360 @@
+﻿@model Site.Models.SubastaSite
+
+
+@{
+//ViewBag.Title = "Alta Subasta";
+}
+
+@using (Html.BeginForm("Create", "Subasta", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+     <!--ESCONDIDOS ID CAT PRD-->
+    @Html.HiddenFor(model => model.id_Categoria)
+    @Html.HiddenFor(model => model.id_Producto)
+        <!--TIPO DE SUBASTA -->
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Tipo de venta", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            @Html.DropDownList("Tipo", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]), new { @class = "form-control" })
+        </div>
+    </div>
+        <!--TITULO-->
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Titulo", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.titulo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.titulo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        <!--DESCRIPCION-->
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Descripcion", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            @Html.TextAreaFor(model => model.descripcion,4,10, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <!--ATRIBUTOS-->
+    <div id="atributos">
+        @for (var orderIndex = 0; orderIndex < Model.atributos.Count; orderIndex++)
+        {
+                
+            @Html.HiddenFor(model => model.atributos[orderIndex].IdAtributo)
+            <div class="form-group">
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.atributos[orderIndex].Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.atributos[orderIndex].valor, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        }
+    </div>
+        <!--ATRIBUTOS-->
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Tags",new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        <!--PRECIO FINAL-->
+    <div class="form-group" id="precio_subasta">
+        <div class="col-md-6">
+            @Html.Label("Precio inicial de subasta", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.precio_Base, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.precio_Base, "", new { @class = "text-danger" })
+        </div>
+        </div>
+        <!--ATRIBUTOS-->
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Precio venta directa", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.precio_Compra, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.precio_Compra, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        <!--IMAGEN PORTADA-->
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Imagen de Portada", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            <div class="form-control">
+                <input type="file" id="portada" name="portada" accept="image/*" />
+                @Html.ValidationMessageFor(model => model.portada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+        <!--FECHA FIN-->
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Fecha finalizacion", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            <div class='input-group date' id='datepicker1'>
+                @*@Html.TextBoxFor(model => model.fecha_Cierre, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+            @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })*@
+                @Html.EditorFor(model => model.fecha_Cierre, new { @Value = DateTime.Now.ToString(" yyyy/MM/dd"), @class = "datepicker" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        <!--GARANTIA-->
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Garantia", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            @Html.DropDownList("Garantia", new SelectList((System.Collections.IEnumerable)ViewData["Garantia"]), new { @class = "form-control" })
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.garantia)
+
+        <!--MAPA-->
+    <h3>Ubicacion</h3>
+    <div id="contenendor_mapa">
+        <div id="map" style="height: 400px; width: 500px ; margin: 10px">
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <input id="direccion_coord" type="text" value="Montevideo" class="form-control">
+            </div>   
+            <div class="col-md-6">
+                <input type="button" value="Buscar Direccion" onclick="buscar_Direccion()" class="btn btn-default" />
+            </div>
+         </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Direccion" ,new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!--Escondido Coordenadas-->
+    @Html.HiddenFor(model => model.coordenadas)
+
+    @*<div class="form-group">
+        <div class="col-md-6">
+            @Html.Label("Coordenadas")
+        </div>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+    </div>
+    <div class="form-group">
+        <div class="col-md-8">
+            <input type="submit" value="Crear Subasta" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+<script>
+$(document).ready(function () {
+
+    $("#datepicker1").datetimepicker();
+
+    //*****************************************************************
+    $("#Tipo").change(function () {
+
+        var tipo = document.getElementById('Tipo').value;
+        if (tipo == "Subasta") {
+            document.getElementById('precio_subasta').style.display = 'block';
+        }
+        else {
+            document.getElementById('precio_subasta').style.display = 'none';
+        }
+
+    });
+    $("#Garantia").change(function () {
+
+        document.getElementById('garantia').value= $("#Garantia").val();
+        
+
+
+
+       /*-$("#precio_subasta").html("");
+        document.getElementById('id_Producto').value = $("#Productos").val();
+        var producto = document.getElementById('id_Producto');
+        //alert(producto.value);
+        var categoria = document.getElementById('id_Categoria');
+        //alert(producto.value);
+        $("#subasta").load("/Subasta/CreacionSubasta",
+        { id_cat: categoria.value, id_prod: producto.value });*/
+    });
+    //*****************************************************************
+
+
+
+
+});
+</script>
+
+
+
+<script type="text/javascript">
+    var geocoder = null;
+    var map = null;
+    var latlng = null;
+    // var marker;
+    var markers = [];
+    var image = 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/96/Map-Marker-Marker-Outside-Chartreuse-icon.png';
+    $(function () {
+        latlng = new google.maps.LatLng(-34.895154, -56.164083);
+        var myOptions = {
+            zoom: 13,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map"), myOptions);
+        geocoder = new google.maps.Geocoder();
+        //geocoder=new GClientGeocoder();
+        google.maps.event.addListener(map, 'click', function (event) {
+            agregar_marca(event.latLng, 'Mi direccion');
+        });
+        // Adds a marker at the center of the map.
+        agregar_marca(latlng, 'Mi direccion');
+    });
+
+    // Elimina
+    function borrarMarkers() {
+        limpiarMarkers();
+        markers = [];
+    }
+    function limpiarMarkers() {
+        setAllMap(null);
+    }
+    //*******************************************
+    function agregar_marca(location, direccion) {
+        borrarMarkers();
+        var marker = new google.maps.Marker({
+            position: location,
+            clickable: true,
+            title: direccion,
+            map: map,
+            icon: image
+        });
+        markers.push(marker);
+        document.getElementById("coordenadas").value = "Latitud: "+ location.lat()+" .Longitud: "+location.lng();
+
+        if (direccion == "Mi direccion") {
+            buscar_Direccion_latlon(location);
+        }
+    }
+    // Sets the map on all markers in the array.
+    function setAllMap(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+    //*********************************************
+    function buscar_Direccion_latlon (point) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ latLng: point }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    document.getElementById("direccion").value = results[0].formatted_address;
+                }
+            }
+        });
+    }
+    //***************************************************
+    function buscar_Direccion() {
+        var direccion_coord = document.getElementById("direccion_coord").value;
+        geocoder.geocode({ 'address': direccion_coord }, function (resultados, estado) {
+            if (estado == google.maps.GeocoderStatus.OK) {
+                map.setCenter(resultados[0].geometry.location);
+                // direccion
+                //break down the three dimensional array into simpler arrays
+                datos_direccion(resultados);
+                agregar_marca(resultados[0].geometry.location, direccion_coord);
+                //var  marker = new google.maps.Marker({
+                //    map: map,
+                //
+                //    clickable: false,
+                //     icon: image,
+                //     position: resultados[0].geometry.location
+
+                //   });
+                // markers.push(marker);
+            }
+            else {
+                alert('La busqueda no dio resultado: ' + estado);
+            }
+        });
+    }
+
+    //****************************************************
+    function datos_direccion(resultados) {
+        var datos_dir = "";
+        for (i = 0 ; i < resultados.length ; ++i) {
+            var var1 = resultados[i].address_components;
+
+            for (j = 0 ; j < var1.length ; ++j) {
+                var var2 = var1[j].types;
+                for (k = 0 ; k < var2.length ; ++k) {
+                    //BUSCO CIUDAD
+                    if (var2[k] == "locality") {
+                        //CIUDAD
+                        //alert(var1[j].long_name);
+                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
+                    }
+                    //BUSCO PAIS
+                    if (var2[k] == "administrative_area_level_2") {
+                        datos_dir = datos_dir + "" + var1[j].long_name+". ";
+                        //put the county name in the form
+                        //alert(var1[j].long_name);
+                    }
+                    //BUSCO ESTADO
+                    if (var2[k] == "administrative_area_level_1") {
+                        //put the state abbreviation in the form
+                        // alert(var1[j].short_name);
+                    }
+                    //BUSCO CALLE
+                    if (var2[k] == "street_number") {
+                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
+                        // alert(var1[j].long_name);
+                    }
+                    //CODIGO POSTAL
+                    if (var2[k] == "postal_code_prefix") {
+
+                        // alert(var1[j].long_name);
+                    }
+
+                }
+            }
+        }
+        document.getElementById("direccion").value = resultados[0].formatted_address;
+    }
+</script>
+
+
+
