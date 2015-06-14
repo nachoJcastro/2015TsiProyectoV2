@@ -613,6 +613,26 @@ namespace Site.Controllers
 
             return Json(modelList, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Categoria(int idCat, string SearchString)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+
+            ViewBag.idCat = idCat;
+            var lista = subIBL.ObtenerSubastasActivasxCategoria(user_sitio.Dominio, idCat).ToList();
+            if (String.IsNullOrEmpty(SearchString))
+            {
+                ViewBag.ListaSubastas = lista.ToList();
+            }
+            else 
+            {
+                ViewBag.ListaSubastas = lista.Where(x => x.titulo.Contains(SearchString)).ToList();
+            }
+
+
+           return View();
+        }
+
     }
 }
 

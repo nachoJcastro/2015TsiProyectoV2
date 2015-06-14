@@ -263,5 +263,9 @@ namespace BusinessLogicLayer.TenantControllers
             return _dal.ObtenerImagenes(tenant, id);
         }
 
+        public List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat) {
+            return _dal.ObtenerSubastasActivasxCategoria(tenant, idCat);
+        }
+
     }
 }

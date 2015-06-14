@@ -358,6 +358,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Subasta\AgregarComentario.cshtml" />
+    <Content Include="Views\Subasta\Categoria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

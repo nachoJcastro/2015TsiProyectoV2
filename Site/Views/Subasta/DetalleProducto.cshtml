@@ -4,7 +4,11 @@
     ViewBag.Title = "DetalleProducto";
 }
 <div class="container">
-    <h2>Detalles del producto</h2>
+    <div class="col-md-12 text-center">
+        <h2>@Html.DisplayFor(model =>model.nombre_producto)</h2>
+        <h5>@Html.DisplayFor(model => model.tipo_venta)</h5>
+    </div>
+
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -22,44 +26,50 @@
             </div>
         </div>
     </div>
-
-    <div class="col-lg-6">
-        <div class="col-md-12">
-            <img src="@Html.DisplayFor(model => model.portada)">
-        </div>
-        <div class="col-md-12">
+    <div class="col-md-8">
+        <div id="main_area">
             @if (ViewBag.ListaImg != null)
             {
-                <div class="container">
+                
+                <div class="col-sm-3" id="slider-thumbs">
+                    <!-- Bottom switcher of slider -->
+                    <ul class="hide-bullets">
+                        @*<li class="col-sm-12 contenedor_slider_t">
+                            <a class="thumbnail" id="carousel-selector-0">
+                                <img src="@Html.DisplayFor(model => model.portada)">
+                            </a>
+                        </li>*@
+                        @{
+                            var index = 0;
 
-                    <div class="row">
-                        <div class="col-md-12">
+                            if (ViewBag.ListaImg != null)
+                            {
+                                foreach (var imagen in ViewBag.ListaImg)
+                                {
+
+                                    <li class="col-sm-12 contenedor_slider_t">
+                                        <a class="thumbnail" id="carousel-selector-@index">
+                                            <img src="@imagen.uri">
+                                        </a>
+                                    </li>
+
+                                    index++;
+                                }
+                            }
+                        }
+
+                    </ul>
+                </div>
+
+                <div class="col-sm-9 contenedor_slider">
+                    <div class="col-md-12 contenedor_slider" id="slider">
+
+                        <div class="col-md-12 contenedor_slider" id="carousel-bounding-box">
                             <div class="carousel slide" id="carousel-606608">
-                                <ol class="carousel-indicators">
-                                    @{
-                var index = 0;
-
-                if (ViewBag.ListaImg != null)
-                {
-                    foreach (var imagen in ViewBag.ListaImg)
-                    {
-                        if (index == 0)
-                        {
-                            <li class="active" data-slide-to="0" data-target="#carousel-606608"></li>
-                        }
-                        else
-                        {
-                            <li data-slide-to="@index" data-target="#carousel-606608"></li>
-                        }
-
-                        index++;
-                    }
-                }
-                                    }
-
-                                </ol>
                                 <div class="carousel-inner">
-
+                                    @*<div class="item" data-slide-number="0">
+                                        <img src="@Html.DisplayFor(model => model.portada)">
+                                    </div>*@
                                     @if (ViewBag.ListaImg != null)
                                     {
                                         index = 0;
@@ -68,13 +78,13 @@
                                         {
                                             if (index == 0)
                                             {
-                                                <div class="item active">
+                                                <div class="item active" data-slide-number="@index">
                                                     <img alt="" src="@imagen.uri" />
                                                 </div>
                                             }
                                             else
                                             {
-                                                <div class="item">
+                                                <div class="item" data-slide-number="@index">
                                                     <img alt="" src="@imagen.uri" />
                                                 </div>
                                             }
@@ -83,125 +93,142 @@
                                         }
                                     }
 
+
+
                                 </div>
-                                <a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>
+                                <!--<a data-slide="prev" href="#carousel-606608" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-606608" class="right carousel-control">›</a>-->
                             </div>
                         </div>
+
                     </div>
+
                 </div>
+               
             }
 
         </div>
+
     </div>
 
 
-    <div class="col-lg-6">
-        <div class="table-responsive">
-
-            <a id="fav" onclick="cambiarFavorito(@Model.id)" data-toggle="tooltip" data-placement="top" title="Favoritos"><span id="iconoFav" class="fa fa-heart-o fa-2x"></span></a>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td><img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;"></td>
-                    </tr>
-                    <tr>
-                        <th>Tipo de Venta</th>
-                        <th>@Html.DisplayFor(model => model.tipo_venta)</th>
-                    </tr>
-                    <tr>
-                        <th>Descripcion</th>
-                        <th>@Html.DisplayFor(model => model.titulo)</th>
-                    </tr>
-                    <tr>
-                        <th>Producto</th>
-                        <th>@Html.DisplayFor(model => model.nombre_producto)</th>
-                    </tr>
-                    <tr>
-                        <th>Vendedor</th>
-                        <th>@Html.DisplayFor(model => model.nick_Vendedor)</th>
-                    </tr>
-                    @* @{
-
-                          if (Model.id_Comprador != null)
-                            {
-                            <tr>
-                                <th>Comprador</th>
-                                <th>@Html.DisplayFor(model => model.nick_Comprador)</th>
-                            </tr>
-                            }
-                        }*@
-                    <tr>
-                        <th>Valor Actual</th>
-                        <th>@Html.DisplayFor(model => model.valor_Actual)</th>
-                    </tr>
-                    <tr>
-                        <th>Fecha Inicio</th>
-                        <th>@Html.DisplayFor(model => model.fecha_Inicio)</th>
-                    </tr>
-                    <tr>
-                        <th>Fecha Cierre</th>
-                        <th>@Html.DisplayFor(model => model.fecha_Cierre)</th>
-                    </tr>
-                    <tr>
-                        <th>Estado</th>
-                        <th>@Html.DisplayFor(model => model.estado)</th>
-                    </tr>
-
-                </thead>
-            </table>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            @*<img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;">*@
         </div>
-    </div>
+        <div class="col-md-12">
+            <h2>$ @Html.DisplayFor(model => model.valor_Actual)</h2>
+        </div>
+        <div class="col-md-12">
+            <p><i class="fa fa-clock-o"></i> Finaliza - @Html.DisplayFor(model => model.fecha_Cierre)</p>
+        </div>
+        @*<div class="col-md-12">
+            @Html.DisplayFor(model => model.tipo_venta)
+        </div>*@
+        @*@Html.DisplayFor(model => model.titulo)*@
+        @*<div class="col-md-12">
+            @Html.DisplayFor(model => model.nombre_producto)
+        </div>*@
+        <div class="col-md-12">
+            <p>@Html.DisplayFor(model => model.nick_Vendedor)</p>
+        </div>
+        <div class="col-md-12">
+            @{
 
-    @using Site.Models
-    @{
-        var user = Session["usuario"] as UsuarioSite;
-        var estado = Model.estado.ToString();
-        var tipoFinalizacion = Model.finalizado.ToString();
-    }
+                if (Model.id_Comprador != null)
+                {
 
-    @if (estado.Equals("Activa"))
-    {
+                    @Html.DisplayFor(model => model.nick_Comprador)
 
-        if (user != null && user.Email != null)
-        {
+                }
+            }
+        </div>
 
-            if (tipoFinalizacion == "Subasta")
+        
+        @*<div class="col-md-12">
+            @Html.DisplayFor(model => model.fecha_Inicio)
+        </div>*@
+
+        <div class="col-md-12">
+            @Html.DisplayFor(model => model.estado)
+        </div>
+
+        <div class="col-md-12">
+            @using Site.Models
+            @{
+                var user = Session["usuario"] as UsuarioSite;
+                var estado = Model.estado.ToString();
+                var tipoFinalizacion = Model.finalizado.ToString();
+            }
+
+            @if (estado.Equals("Activa"))
             {
-                <div class="jumbotron">
-                    @if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
+
+                if (user != null && user.Email != null)
+                {
+
+                    if (tipoFinalizacion == "Subasta")
                     {
-                        <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
+
+                        if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
+                        {
+                            <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
+
+                        }
+                        <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
 
                     }
-                    <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
-                </div>
+                    else
+                    {
+
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
+
+                    }
+                    <a id="fav" onclick="cambiarFavorito(@Model.id)" data-toggle="tooltip" data-placement="top" title="Favoritos"><span id="iconoFav" class="fa fa-heart-o fa-2x"></span></a>
+                }
+                else
+                {
+                    <p>Debe loguarse para poder ofertar</p>
+
+                }
+
+
             }
             else
             {
-                <div class="jumbotron">
-                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
-                </div>
+                <p>La publicacion está finalizada</p>
             }
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-md-12 jumbotron" style="margin-top:10px;">
+        <div class="text-center">
+            <h3>Descripción de la publicación</h3>
+        </div>
+        <div class="col-md-12">
+
+            @Html.DisplayFor(model => model.titulo)
+        </div>
+    </div>
+    <div class="col-md-12">
+
+        @if (estado.Equals("Activa"))
+        {
 
             <dt>Comentarios</dt>
 
             <div>
-                <textarea id="areaComentario" rows="4" cols="133" placeholder="Ingrese aqui su comentario.."></textarea>
+                <textarea id="areaComentario" rows="4" cols="133" class="form-control" placeholder="Ingrese aqui su comentario.."></textarea>
             </div>
             <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
+        }
 
-            <dl id="retorno"></dl>
-        }
-        else
-        {
-            <p>Debe loguarse para poder ofertar</p>
-        }
-    }
-    else
-    {
-        <p>La publicacion está finalizada</p>
-    }
+    </div>
+
+
+    <dl id="retorno"></dl>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
@@ -288,19 +315,19 @@
                 success: function (data) {
                     //if false
 
-                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){   
-     
+                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){
+
                         document.querySelector('#fav > span').classList.add('fa-heart');
-                        document.querySelector('#fav > span').classList.remove('fa-heart-o'); 
+                        document.querySelector('#fav > span').classList.remove('fa-heart-o');
                         //document.querySelector('#boton').setAttribute('value','OFF');
- 
-                        }
+
+                    }
                     else{
-     
+
                         document.querySelector('#fav >span').classList.add('fa-heart-o');
                         document.querySelector('#fav >span').classList.remove('fa-heart');
-                        //document.querySelector('#boton').setAttribute('value','ON');   
-     
+                        //document.querySelector('#boton').setAttribute('value','ON');
+
                     }
                     //document.getElementById("fav").disabled = data;
 

@@ -16,6 +16,7 @@ namespace Site.Controllers
     {
         IBLTenant _ibl = new BLTenant();
         IBLSubasta _sub = new BLSubasta();
+        IBLProducto proIBL = new BLProducto();
         
         public UsuarioSite user;
         public string tenantID;
@@ -115,6 +116,8 @@ namespace Site.Controllers
                         lista_Subastas_compraDirecta.Add(element);
                     }
                 }
+
+                ViewBag.ListaCategorias = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
 
                 ViewBag.ListaImagenes = imagenesT;
 

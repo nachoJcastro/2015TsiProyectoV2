@@ -24,7 +24,7 @@ $(document).ready(function(){
 	        scrollTitle: false, // Set a custom <a> title if required.
 	        scrollImg: false, // Set true to use image
 	        activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-	        zIndex: 2147483647 // Z-Index for the overlay
+	        zIndex: 700 // Z-Index for the overlay
 		});
 	});
 
@@ -63,6 +63,26 @@ $(document).ready(function(){
 
 	});
 
+	$('#carousel-606608').carousel({
+	    interval: 5000
+	});
+
+    //Handles the carousel thumbnails
+	$('[id^=carousel-selector-]').click(function () {
+	    var id_selector = $(this).attr("id");
+	    try {
+	        var id = /-(\d+)$/.exec(id_selector)[1];
+	        console.log(id_selector, id);
+	        jQuery('#carousel-606608').carousel(parseInt(id));
+	    } catch (e) {
+	        console.log('Regex failed!', e);
+	    }
+	});
+    // When the carousel slides, auto update the text
+	$('#carousel-606608').on('slid.bs.carousel', function (e) {
+	    var id = $('.item.active').data('slide-number');
+	    $('#carousel-text').html($('#slide-content-' + id).html());
+	});
 
 });
 

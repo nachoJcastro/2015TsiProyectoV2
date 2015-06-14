@@ -100,6 +100,25 @@ namespace DAL
         
         }
 
+        public List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat)
+        {
+
+            var listaSub = new List<Subasta>();
+            try
+            {
+                db = new TenantDB(tenant);
+                var aux = db.Subasta.Where(x => x.estado == EstadoTransaccion.Activa).ToList();
+                listaSub = aux.Where(x => x.id_Categoria == idCat).ToList();
+                return listaSub;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
+        }
+
 
 
 

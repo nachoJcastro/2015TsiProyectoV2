@@ -75,8 +75,22 @@
         </div>
   </section>
 }
-
 <section>
+    <div class="container">
+        @if (ViewBag.ListaCategorias != null)
+        {
+
+            foreach (var item in ViewBag.ListaCategorias)
+            {
+
+                <a href="@Url.Action("Categoria/", "Subasta", new { idCat = item.CategoriaId  }, null)" class="btn btn-default">@item.Nombre</a>
+
+            }
+
+        }
+    </div>
+</section>
+<section style="margin-top:30px;">
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
