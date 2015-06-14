@@ -9,6 +9,8 @@ namespace Backend.Models
     {
         public string tipo { get; set; }
         public string titulo { get; set; }
+        public string nickComprador { get; set; }
+        public string nickVendedor { get; set; }
         public double? precio_Base { get; set; }
         public DateTime? fecha_Inicio { get; set; }
     }

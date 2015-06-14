@@ -151,6 +151,10 @@ namespace Backend.Controllers
 
                     var fileContents = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/Site.css"));
 
+                    //Controlo que el dominio sea en minuscula
+                    var dominio = tiendaVirtualDTO.Dominio.ToLower();
+
+                    tiendaVirtualDTO.Dominio = dominio;
                     tiendaVirtualDTO.Css = fileContents.ToString();
                     tiendaVirtualDTO.Fecha_creacion = System.DateTime.Now;
                     tiendaVirtualDTO.Estado = true;
@@ -192,20 +196,21 @@ namespace Backend.Controllers
                 CloudBlobContainer blobContainer = _bss.GetContainerTienda(tiendaVirtualDTO.Dominio);
 
 
-                if (logo.ContentLength > 0)
+                if (logo!=null)
                 {
+                    if(logo.ContentLength > 0){
 
-                    //Elminar foto anterior
-                    //TiendaVirtualDTO old = _bl.ObtenerTienda(tiendaVirtualDTO.TiendaVitualId);
-                    //CloudBlockBlob blobOld = blobContainer.GetBlockBlobReference("Nombreblob");
-                    //blobOld.Delete();
+                        //Elminar foto anterior
+                        //TiendaVirtualDTO old = _bl.ObtenerTienda(tiendaVirtualDTO.TiendaVitualId);
+                        //CloudBlockBlob blobOld = blobContainer.GetBlockBlobReference("Nombreblob");
+                        //blobOld.Delete();
 
 
-                    var nombreFoto = tiendaVirtualDTO.Dominio + Guid.NewGuid().ToString() + "_logo";
-                    CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
-                    blob.UploadFromStream(logo.InputStream);
-                    tiendaVirtualDTO.Logo = blob.Uri.ToString();
-
+                        var nombreFoto = tiendaVirtualDTO.Dominio + Guid.NewGuid().ToString() + "_logo";
+                        CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+                        blob.UploadFromStream(logo.InputStream);
+                        tiendaVirtualDTO.Logo = blob.Uri.ToString();
+                    }
                 }
                 else
                 {
@@ -410,7 +415,7 @@ namespace Backend.Controllers
 
         public ActionResult ReportesAjax(Reporte rep)
         {
-            List<Subasta> subastas;
+            List<SubastaAux> subastas;
             List<Usuario> usuarios;
 
             IEnumerable<UsuarioReporte> modelList = new List<UsuarioReporte>();
@@ -446,6 +451,8 @@ namespace Backend.Controllers
                                             {
                                                 tipo = "Subasta",
                                                 titulo = x.titulo,
+                                                nickComprador = x.nombreComprador,
+                                                nickVendedor = x.nombreVendedor,
                                                 precio_Base = x.precio_Base,
                                                 fecha_Inicio = x.fecha_Inicio
 

@@ -40,6 +40,8 @@ namespace DAL
         List<Imagen> ObtenerImagenes(string tenant, int id);
 
         List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat);
+
+        List<Subasta> ObtenerSubastasPorCriterio(string tenant, int idCat, string criterio, int? tipo, string min, string max);
     
     }
 }
