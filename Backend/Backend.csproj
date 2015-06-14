@@ -493,6 +493,7 @@
     <Content Include="Views\TiendaVirtual\Upload.cshtml" />
     <Content Include="Views\TiendaVirtual\Reportes.cshtml" />
     <Content Include="Views\TiendaVirtual\Charts.cshtml" />
+    <Content Include="Views\TiendaVirtual\ChartsLineal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

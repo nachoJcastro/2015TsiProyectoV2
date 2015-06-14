@@ -17,6 +17,7 @@ namespace DAL
         void EliminarSubasta(int subastaId); //Delete
 
         List<Oferta> ObtenerOfertas(int subastaId);
+        List<Subasta> ObtenerSubastasByTipoProducto(String tenant, int idTipoProducto);
 
         void AltaSubasta(string tenant, Subasta subasta);
         Boolean ActualizarMonto(string valor_tenant, int id_subasta, double monto);
@@ -38,6 +39,8 @@ namespace DAL
         void AgregarImagen(string tenant, Imagen img);
         List<Imagen> ObtenerImagenes(string tenant, int id);
         int AgregarSubasta_ID(String tenant, Subasta subasta);
+    
+        List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat);
     
     }
 }

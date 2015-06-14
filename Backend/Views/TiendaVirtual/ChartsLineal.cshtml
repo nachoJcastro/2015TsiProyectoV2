@@ -1,0 +1,298 @@
+﻿@model  Backend.Models.Reporte
+@{
+    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+    ViewBag.Title = "Reportes";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Charts</h4>
+    </div>
+    <div class="panel-body">
+        @*@using (Html.BeginForm("Reportes", "TiendaVirtual"))
+            {*@
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Tipo Reporte", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.tipo, new SelectList(Enum.GetValues(typeof(Crosscutting.Enum.TipoReporte))), new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Tienda Virtual", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.dominio, new SelectList((System.Collections.IEnumerable)ViewBag.tiendas, "Dominio", "Dominio"), "Seleccionar Tienda", new { @class = "form-control" })
+                        @*@Html.DropDownList("Tiendas Virtuales", new SelectList((System.Collections.IEnumerable)ViewData["Tiendas"], "TiendaVirtualId", "Dominio"), new { @class = "form-control", @id = "idTienda" })*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                @Html.Label("Fecha Inicio", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class='input-group date' id='datetimepicker5'>
+
+                        @Html.EditorFor(model => model.fechaini, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.fechaini, "", new { @class = "text-danger" })
+                </div>
+
+
+
+                @Html.Label("Fecha Fin", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class='input-group date' id='datetimepicker6'>
+
+                        @Html.EditorFor(model => model.fechafin, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.fechaini, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="col-md-12 text-right">
+                <!--<input type="button" value="Buscar" onclick="ObtenerReporte();" class="btn btn-default" />-->
+                <input type="button" value="Buscar" onclick="ListaPubli();" class="btn btn-default" />
+            </div>
+
+        </div>
+        @*}*@
+
+
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Resultado</h4>
+    </div>
+    <div class="panel-body">
+        <div id="grafico"></div>
+        @*<div id="tabla-usuario">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Usuarios</th>
+                    </tr>
+                </thead>
+                <tbody id="retorno"></tbody>
+
+            </table>
+        </div>
+        <div id="tabla-subasta">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Transacciones</th>
+                    </tr>
+                </thead>
+                <tbody id="retorno2"></tbody>
+
+            </table>
+        </div>*@
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
+<script src="~/Scripts/highcharts.js"></script>
+<script src="~/Scripts/exporting.js"></script>
+
+<script>
+
+    function ListaPubli() {
+
+        var tipo = $("#tipo").val();
+        var dominio = $("#dominio").val();
+        var fechaini = $("#fechaini").val();
+        var fechafin = $("#fechafin").val();
+        var myActionUrl = '@Url.Action("GenerarChartLineal", "TiendaVirtual")';
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: myActionUrl,
+            data: {
+                "tipo": tipo,
+                "dominio": dominio,
+                "fechaini": fechaini,
+                "fechafin": fechafin
+            },
+            dataType: "json",
+            success: function (Result) {
+                //Result = Result.d;
+                var data = [];
+                var data_f = [];
+                for (var i in Result) {
+                    var serie = new Array(ToJavaScriptDate(Result[i].Fecha), Result[i].cantidad);
+                    var fechas = new Array(ToJavaScriptDate(Result[i].Fecha));
+                    data.push(serie);
+                    data_f.push(fechas);
+                }
+                //alert(Result);
+                //alert(data);
+                DibujaGrafico(data,data_f);
+                //DreawChartPubli(data, 'container2');
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
+    }
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    }
+</script>
+<script>
+    function DibujaGrafico(series,fechas) {
+
+        chart = new Highcharts.Chart({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 1,//null,
+                plotShadow: false,
+                renderTo: 'grafico'
+            },
+            title: {
+                text: 'Chart'
+            },
+            subtitle: {
+                text: 'Chebay'
+            },
+            xAxis: {
+                categories: fechas,
+                // Pongo el título para el eje de las 'X'
+                title: {
+                    text: 'Fechas'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            tooltip: {
+                pointFormat: '{series.Fecha}: {point.y} (<b>{point.percentage:.1f}%</b>)'
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [{
+                type: 'line',
+                name: 'prueba',
+                data: series
+            }]
+        });
+
+
+    }
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    }
+</script>
+@*<script>
+
+    $("#tabla-usuario").hide();
+    $("#tabla-subasta").hide();
+    function ObtenerReporte() {
+
+        $("#tabla-usuario").hide();
+        $("#tabla-subasta").hide();
+
+        var tipo = $("#tipo").val();
+        var dominio = $("#dominio").val();
+        var fechaini = $("#fechaini").val();
+        var fechafin = $("#fechafin").val();
+        var myActionUrl = '@Url.Action("ReportesAjaxPrueba", "TiendaVirtual")';
+        var retorno = $("#retorno");
+        var retorno2 = $("#retorno2");
+
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: myActionUrl,
+            data: {
+                "tipo": tipo,
+                "dominio": dominio,
+                "fechaini": fechaini,
+                "fechafin": fechafin
+            },
+            success: function (data) {
+                var result = "";
+                var result2 = "";
+                retorno.html('');
+                retorno2.html('');
+                $.each(data, function (id, item) {
+                    if (item.tipo == "Usuario") {
+                        //var date = new Date(item.fecha_Alta)
+
+                        result += '<tr>' +
+                                  '<td>' + ToJavaScriptDate(item.Fecha) + '</td>' +
+                                  '<td>' + item.cantidad + '</td>' +
+                                  '</tr>';
+                    } else {
+                        //var date = new Date(item.fecha_Inicio)
+
+                        result2 += '<tr>' +
+                                  '<td>' + ToJavaScriptDate(item.Fecha) + '</td>' +
+                                  '<td>' + item.cantidad + '</td>' +
+                                  '</tr>';
+                    }
+
+                });
+
+                if (result != "") {
+                    retorno.html(result);
+                    $("#tabla-usuario").show();
+                }
+                if (result2 != "") {
+                    retorno2.html(result2);
+                    $("#tabla-subasta").show();
+                }
+
+                //alert(JSON.stringify(data));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve books.');
+            }
+        });
+    }
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    }
+
+
+</script>*@

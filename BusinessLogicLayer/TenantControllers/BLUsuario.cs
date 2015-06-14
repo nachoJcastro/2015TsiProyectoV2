@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Crosscutting.EntityTenant;
+using System.Collections;
 
 namespace BusinessLogicLayer.TenantControllers
 {

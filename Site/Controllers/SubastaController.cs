@@ -37,7 +37,7 @@ namespace Site.Controllers
         private string valor_tenant;
         private SubastaSite sub_site;
         private int id_sub;
-       
+
 
         public SubastaController(IBLSubasta subbl, IBLComentario combl, IBLProducto probl, IBLOferta ofebl, IBLUsuario usubl, IBLAtributo atrIBL, IBLAtributo_Subasta atrSubIBL, IBLFavorito favIBL)
         {
@@ -133,7 +133,7 @@ namespace Site.Controllers
             return View(sub_site);
         }
 
-          
+                
         // GET: Subastas/Create
         public ActionResult Create()
         {
@@ -361,7 +361,7 @@ namespace Site.Controllers
                 // tipo subasta
                 List<String> tipo_subasta = new List<String> { "Subasta", "Compra directa" };
                 ViewData["Tipo"] = tipo_subasta;
-                
+
                 // Garantia
                 List<String> garantia = new List<String> { "Si", "No" };
                 ViewData["Garantia"] = garantia;
@@ -375,11 +375,11 @@ namespace Site.Controllers
 
                
 
-             }
-             catch (Exception)
-             {
-              throw;
-             }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
              return PartialView(sub_site);
          }
 
@@ -388,8 +388,8 @@ namespace Site.Controllers
          public ActionResult Mapa()
          {
              return PartialView();
-         }
-                
+        }
+        
         
         
         // POST: Subastas/Create
@@ -422,7 +422,7 @@ namespace Site.Controllers
 
             //string atr_sub = form["Atributos"];
 
-            
+
 
            // int producto = int.Parse(prod);
            // subasta.id_Producto = producto;
@@ -465,7 +465,7 @@ namespace Site.Controllers
             }
 
 
-            
+
             foreach (var item in subasta_site.atributos)
             {
                 System.Diagnostics.Debug.WriteLine("Atributo idsub:" + id_sub.ToString() + " id atrib " + item.IdAtributo.ToString());
@@ -477,7 +477,7 @@ namespace Site.Controllers
                 //atributo.Subasta = subasta;
                 atrSubIBL.AgregarAtributo_Subasta(valor_tenant, atributo);
             }
-            sub_site = crearSubastaSite(subasta);
+                sub_site = crearSubastaSite(subasta);
             
 
             return View("ImagenesSubasta", subasta);
@@ -550,7 +550,7 @@ namespace Site.Controllers
         }
 
 
-       // [HttpPost]
+        [HttpPost]
         public JsonResult AgregarAtributos(String valor, int idAtributo)//, int idSubasta
         {
             user_sitio = Session["usuario"] as UsuarioSite;
@@ -565,9 +565,9 @@ namespace Site.Controllers
         }
 
 
-       
 
-       
+
+
 
 
         public IList<TipoProductoDTO> ObtenerProducto(int CategoriaId)
@@ -715,6 +715,8 @@ namespace Site.Controllers
             {
                 user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
                 valor_tenant = user_sitio.Dominio.ToString();
+                int idLogueado = usuIBL.ObtenerIdByEmail(valor_tenant, user_sitio.Email);
+                var usuario = usuIBL.GetUsuario(valor_tenant, idLogueado);
 
                 Subasta subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
                 ViewBag.ListaImg = subIBL.ObtenerImagenes(valor_tenant, idSubasta);
@@ -724,6 +726,10 @@ namespace Site.Controllers
                 }
 
                 sub_site = crearSubastaSite(subasta);
+                if(usuario != null){
+                    sub_site.billeteraUsuario = usuario.billetera;
+            }
+                
             }
             catch (Exception)
             {
@@ -854,6 +860,38 @@ namespace Site.Controllers
                 favIBL.AgregarFavorito(valor_tenant, favorito);
                 modelList = true;
             }
+
+            return Json(modelList, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Categoria(int idCat, string SearchString)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+
+            ViewBag.idCat = idCat;
+            var lista = subIBL.ObtenerSubastasActivasxCategoria(user_sitio.Dominio, idCat).ToList();
+            if (String.IsNullOrEmpty(SearchString))
+            {
+                ViewBag.ListaSubastas = lista.ToList();
+            }
+            else 
+            {
+                ViewBag.ListaSubastas = lista.Where(x => x.titulo.Contains(SearchString)).ToList();
+            }
+
+
+           return View();
+        }
+
+
+
+        public JsonResult esFavorito(int idSubasta)
+        {
+            user_sitio = Session["usuario"] as UsuarioSite;
+            var idUsuario = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
+            valor_tenant = user_sitio.Dominio.ToString();
+
+            Boolean modelList = favIBL.esFavorito(valor_tenant, idSubasta, idUsuario);
 
             return Json(modelList, JsonRequestBehavior.AllowGet);
         }

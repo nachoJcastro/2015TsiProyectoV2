@@ -14,7 +14,7 @@ namespace DAL
 {
     public class DALSubastaEF : IDALSubasta
     {
-        static TenantDB db ;//= new TenantDB(" ")
+        static TenantDB db ;
         IDALUsuario _idal;
         
 
@@ -112,6 +112,7 @@ namespace DAL
             }
         }
 
+
         public List<Subasta> ObtenerSubastasActivas(string tenant) {
 
             var listaSub = new List<Subasta>();
@@ -129,7 +130,24 @@ namespace DAL
         
         }
 
+        public List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat)
+        {
 
+            var listaSub = new List<Subasta>();
+            try
+            {
+                db = new TenantDB(tenant);
+                var aux = db.Subasta.Where(x => x.estado == EstadoTransaccion.Activa).ToList();
+                listaSub = aux.Where(x => x.id_Categoria == idCat).ToList();
+                return listaSub;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
+        }
 
 
         public void ActualizarSubasta(String tenant, Subasta subastaNueva)
@@ -247,6 +265,22 @@ namespace DAL
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+
+        public List<Subasta> ObtenerSubastasByTipoProducto(String tenant, int idTipoProducto)
+        {
+            var listaSub = new List<Subasta>();
+            try
+            {
+                db = new TenantDB(tenant);
+                listaSub = db.Subasta.Where(s => s.id_Producto == idTipoProducto && s.estado == EstadoTransaccion.Activa).ToList();
+                return listaSub;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 

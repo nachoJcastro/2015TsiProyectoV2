@@ -72,7 +72,9 @@ namespace Site.Models
         [DataType(DataType.DateTime)]
         public DateTime fecha_Cierre { get; set; }
 
-         public virtual ICollection<Atributo_Subasta> Atributo_Subasta { get; set; }
+        public double billeteraUsuario { get; set; }
+
+        public virtual ICollection<Atributo_Subasta> Atributo_Subasta { get; set; }
 
 
         public virtual ICollection<Calificacion> Calificacion { get; set; }

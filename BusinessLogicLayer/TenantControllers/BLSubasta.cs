@@ -69,6 +69,10 @@ namespace BusinessLogicLayer.TenantControllers
         }
 
 
+        public List<Subasta> ObtenerSubastasByTipoProducto(String tenant, int idTipoProducto)
+        {
+            return _dal.ObtenerSubastasByTipoProducto(tenant, idTipoProducto);
+        }
         //public void FinalizarSubastaPorTiempo(String tenant,int subastaId)
         //{
         //    var subasta = ObtenerSubasta(tenant,subastaId);
@@ -261,6 +265,10 @@ namespace BusinessLogicLayer.TenantControllers
 
         public List<Imagen> ObtenerImagenes(string tenant, int id) {
             return _dal.ObtenerImagenes(tenant, id);
+        }
+
+        public List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat) {
+            return _dal.ObtenerSubastasActivasxCategoria(tenant, idCat);
         }
 
      public int AgregarSubasta_ID(String tenant, Subasta subasta){

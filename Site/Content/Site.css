@@ -27,12 +27,12 @@ a:focus {
   outline-offset: 0;
 }
 
-a {
+/*a {
   -webkit-transition: 300ms;
   -moz-transition: 300ms;
     -o-transition: 300ms;
     transition: 300ms;
-}
+}*/
 
 /* Tipografia titulos*/
 h1, h2, h3, h4, h5, h6 {
@@ -525,10 +525,10 @@ button + label{
 }
 
 
-.container{
+/*.container{
   -webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0);
-}
+}*/
 
 
 
@@ -552,4 +552,32 @@ button + label{
   color: #B4B1AB;
   font-family: abel;
   font-size: 35px;
+}
+
+.hide-bullets {
+    list-style:none;
+    margin-left: -40px;
+    margin-top:20px;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.carousel-inner>.item>img, .carousel-inner>.item>a>img {
+    width: 100%;
+}
+
+.carousel-inner > .item {
+    padding-left:0px !important;
+}
+
+.contenedor_slider {
+    padding:0px !important;
+}
+.contenedor_slider_t {
+    padding:0px !important; 
+}
+.contenedor_slider_t>.thumbnail {
+    margin-bottom:10px !important;
 }

@@ -11,21 +11,18 @@ namespace BusinessLogicLayer.TenantInterfaces
     public interface IBLSubasta
     {
         //Operaciones CRUD
-        void AgregarSubasta(String tenant,Subasta subasta); //Insert
-        Subasta ObtenerSubasta(String tenant, int subastaId); //FindOne
-        List<Subasta> ObtenerSubastas(String tenant);//FindAllAs
-        void ActualizarSubasta(String tenant, Subasta subasta); //Update
-        void EliminarSubasta(int subastaId); //Delete
+        void AgregarSubasta(String tenant,Subasta subasta);
+        Subasta ObtenerSubasta(String tenant, int subastaId);
+        List<Subasta> ObtenerSubastas(String tenant);
+        void ActualizarSubasta(String tenant, Subasta subasta);
+        void EliminarSubasta(int subastaId);
 
         List<Oferta> ObtenerOfertas(int subastaId);
-        //void FinalizarSubastaPorTiempo(String tenant,int subastaId);
-        //void FinalizarSubastaCompraDirecta(String tenant, int subastaId);
+        List<Subasta> ObtenerSubastasByTipoProducto(String tenant, int idTipoProducto);
 
         void AltaSubasta(string valor_tenant, Subasta subasta);
 
         Boolean ActualizarMonto(string valor_tenant, int id_subasta, double monto);
-
-        //void FinalizarSubastaTiempo();
 
         void FinalizarSubastasTarea(String tenant);
         List<Subasta> ObtenerSubastasActivas(String tenant);
@@ -36,5 +33,7 @@ namespace BusinessLogicLayer.TenantInterfaces
         List<Imagen> ObtenerImagenes(string tenant, int id);
 
         int AgregarSubasta_ID(String tenant, Subasta subasta);
+
+        List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat);
     }
 }

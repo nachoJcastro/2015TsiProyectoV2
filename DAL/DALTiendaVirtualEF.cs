@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Crosscutting.EntityTenant;
+using System.Data.Entity.Core.Objects;
 
 namespace DAL
 {
@@ -349,6 +350,102 @@ namespace DAL
 
             return sub;
         }
+
+        public List<ReporteLineal> ReportUsersLineal(string dominio, DateTime fechaini, DateTime fechafin)
+        {
+            List<ReporteLineal> reporte = new List<ReporteLineal>();
+            try
+            {
+                dbt = new TenantDB(dominio);
+                //sub = dbt.Subasta.Where(u => (u.fecha_Inicio >= fechaini && u.fecha_Inicio <= fechafin)).ToList();
+
+                //var query = from c in dbt.Subasta group c by c.fecha_Cierre into g select new { Fecha = g.Key.fecha_Cierre, cantidad = g.Count() };
+                List<UsuarioAux> aux = new List<UsuarioAux>();
+                List<Usuario> todos = dbt.Usuario.Where(x => x.fecha_Alta != null).ToList();
+
+                foreach (var item in todos)
+                {
+                    UsuarioAux aux2 = new UsuarioAux
+                    {
+                        id = item.id,
+                        nick = item.nick,
+                        password = item.password,
+                        nombre = item.nombre,
+                        apellido = item.apellido,
+                        fecha_Nacimiento = (DateTime)item.fecha_Nacimiento,
+                        email = item.email,
+                        direccion = item.direccion,
+                        imagen = item.imagen,
+                        fecha_Alta = (DateTime)item.fecha_Alta,
+                        reputacion_Venta = item.reputacion_Venta,
+                        reputacion_Compra= item.reputacion_Compra 
+                    };
+
+                    aux.Add(aux2);
+                }
+
+
+                reporte = aux.Where(u => (u.fecha_Alta >= fechaini && u.fecha_Alta <= fechafin)).GroupBy(x => new { x.fecha_Alta.Date }).Select(a => new ReporteLineal { Fecha = (DateTime)a.Key.Date, cantidad = a.Count() }).ToList();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return reporte;
+        }
+
+        public List<ReporteLineal> ReportSubastaLineal(string dominio, DateTime fechaini, DateTime fechafin) {
+            List<ReporteLineal> reporte = new List<ReporteLineal>();
+
+            try
+            {
+                dbt = new TenantDB(dominio);
+                //sub = dbt.Subasta.Where(u => (u.fecha_Inicio >= fechaini && u.fecha_Inicio <= fechafin)).ToList();
+
+                //var query = from c in dbt.Subasta group c by c.fecha_Cierre into g select new { Fecha = g.Key.fecha_Cierre, cantidad = g.Count() };
+                List<SubastaAux> aux = new List<SubastaAux>();
+                List<Subasta> todas = dbt.Subasta.Where(x => x.fecha_Cierre != null).ToList();
+                
+                foreach (var item in todas)
+                {
+                    SubastaAux aux2 = new SubastaAux
+                    {
+                        id = item.id,
+                        id_Comprador = item.id_Comprador,
+                        id_Vendedor = item.id_Vendedor,
+                        id_Categoria = item.id_Categoria,
+                        id_Producto = item.id_Producto,
+                        titulo = item.titulo,
+                        descripcion = item.descripcion,
+                        precio_Base = item.precio_Base,
+                        precio_Compra = item.precio_Compra,
+                        valor_Actual = item.valor_Actual,
+                        portada = item.portada,
+                        fecha_Inicio = (DateTime)item.fecha_Inicio,
+                        fecha_Cierre = (DateTime)item.fecha_Cierre
+                    };
+
+                    aux.Add(aux2);
+                }
+
+
+                reporte = aux.Where(u => (u.fecha_Cierre >= fechaini && u.fecha_Cierre <= fechafin)).GroupBy(x => new { x.fecha_Cierre.Date } ).Select(a => new ReporteLineal { Fecha = (DateTime)a.Key.Date, cantidad = a.Count() }).ToList();
+                    
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+            return reporte;
+        }
+
+        
+
 
     }
 }

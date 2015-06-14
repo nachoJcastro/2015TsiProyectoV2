@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Recomendaciones;
 
 namespace Site.Controllers
 {
@@ -16,6 +17,7 @@ namespace Site.Controllers
     {
         IBLTenant _ibl = new BLTenant();
         IBLSubasta _sub = new BLSubasta();
+        IBLProducto proIBL = new BLProducto();
         
         public UsuarioSite user;
         public string tenantID;
@@ -116,6 +118,8 @@ namespace Site.Controllers
                     }
                 }
 
+                ViewBag.ListaCategorias = proIBL.ObtenerCategoriasPorTienda(user.idTienda);
+
                 ViewBag.ListaImagenes = imagenesT;
 
                 ViewBag.ListarSubastas = lista_Subastas;
@@ -124,6 +128,17 @@ namespace Site.Controllers
                 ViewBag.ListarSubastasSubasta = lista_Subastas;
                 ViewBag.ListarSubastasDirecta = lista_Subastas_compraDirecta;
 
+
+                ///////////
+
+                RamdomRecomendaciones recom = new RamdomRecomendaciones();
+
+                IBLUsuario usuIBL = new BLUsuario();
+                var idUsuario = usuIBL.ObtenerIdByEmail(tenantID, user.Email);
+
+                List<Subasta> prodsfav = recom.AlgRecomen(tenantID, idUsuario);/////////////RECOMENDACIONES//////////////////////////////
+
+                
                 return View();
                 //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());
                 //Thread t = Thread.CurrentThread;
