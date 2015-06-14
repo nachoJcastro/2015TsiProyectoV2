@@ -95,16 +95,20 @@ namespace DAL
         //***************************************
          public List<TipoProductoDTO>   ObtenerTipoProdCategoria(int idTienda, int idCategoria){
              var listaProd = new List<TipoProductoDTO>();
+             var listaProd_temp = new List<TipoProductoDTO>();
              try
              {
-                 
-                     List<TipoProductoDTO> listaProd_temp = db.TiposProductos.Where(t => t.CategoriaId == idCategoria).ToList();
+                System.Diagnostics.Debug.WriteLine("Entro en DAL  ObtenerTipoProdCategoria: " + idTienda + "- cat " + idCategoria);
+                listaProd_temp = db.TiposProductos.Where(t => t.CategoriaId == idCategoria).ToList();
 
-                     foreach (var item2 in listaProd_temp)
-                     {
-                         listaProd.Add(item2);
-                     }
+                foreach (var item in listaProd_temp)
+                {
+                    listaProd.Add(item);
+                }
 
+                if (listaProd == null) System.Diagnostics.Debug.WriteLine("Retorno lista nula");
+                else  System.Diagnostics.Debug.WriteLine("Lista con datos");
+                return listaProd;
                  
              }
              catch (Exception e)
@@ -112,7 +116,7 @@ namespace DAL
                  throw e;
              }
 
-             return listaProd;
+            
          }
 
         //************************************************

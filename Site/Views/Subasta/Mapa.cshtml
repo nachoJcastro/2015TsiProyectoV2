@@ -1,0 +1,39 @@
+﻿
+
+
+
+
+
+<div id="map" style="height: 397px; width: 513px">
+</div>
+
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false">
+</script>
+
+
+<script>
+
+   
+
+        function InitializeMap(initialMapPosition, markers) {
+            var latlng = new google.maps.LatLng(initialMapPosition.latitude, initialMapPosition.longitude);
+            var options = {
+                zoom: 15,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP // this could be as per your requirement.
+            };
+
+            var map = new google.maps.Map($('#map-canvas')[0], options);
+            // Place markers on map
+            for (i = 0; i < markers.length; i++) {
+                var latLng = new google.maps.LatLng(markers[i].lat, markers[i].lng);
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+            }
+
+        };
+     
+</script>

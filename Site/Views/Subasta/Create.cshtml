@@ -1,247 +1,135 @@
-﻿@model Crosscutting.EntityTenant.Subasta
-       
+﻿
+     
 
 @{
     ViewBag.Title = "Alta Subasta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
-    <h2>Alta de una Subasta</h2>
-
-    @using (Html.BeginForm("Create", "Subasta", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>Subasta</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            @*****|****|*******|**DROPDOWNS DEPENDIENTES****|******@
-            @*****v****v*******v**DROPDOWNS DEPENDIENTES****v******@
-
-            @*@using (Html.BeginForm())
-                    {
-                        @Html.DropDownList("Categoria", ViewBag.CategoriaId as SelectList, "Seleccione una Categoria", new { id = "Categoria" })<br />
-                        <select id="TipoProd" name="tipoProd"></select><br />
-                        <select id="Articulo" name="articulo"></select><br />
-                    }
-
-
-                <script type="text/jscript">
-                $(function () {
-                    $('#Categoria').change(function () {
-                        $.getJSON('/Subasta/TipoProdList/' + $('#Categoria').val(), function (data) {
-                            var items = '<option>Seleccione un Tipo de Producto</option>';
-                            $.each(data, function (i, tipoProd) {
-                                items += "<option value='" + tipoProd.Value + "'>" + tipoProd.Text + "</option>";
-                            });
-                            $('#TipoProd').html(items);
-                        });
-                    });
-
-                    $('#TipoProd').change(function () {
-                        $.getJSON('/Subasta/ArticuloList/' + $('#TipoProd').val(), function (data) {
-                            var items = '<option>Select un Articulo</option>';
-                            $.each(data, function (i, articulo) {
-                                items += "<option value='" + articulo.Value + "'>" + articulo.Text + "</option>";
-                            });
-                            $('#Articulo').html(items);
-                        });
-                    });
-                });
-                    </script>*@
-
-            @*****^****^*******^**DROPDOWNS DEPENDIENTES****^******@
-            @*****|****|*******|**DROPDOWNS DEPENDIENTES****|******@
-
-
-
-            @*<div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownList("Tipo de Subasta", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]))
-                    </div>
-                </div>*@
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="col-md-8">
-                        @Html.DropDownList("Categorias", new SelectList((System.Collections.IEnumerable)ViewData["Categorias"], "CategoriaId", "Nombre"), new { @class = "form-control" })
-                    </div>
+    
+    <h3>Subasta</h3>
+    <hr /> 
+   
+    
+    <div class="form-horizontal">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="col-md-6">
+                    @Html.Label("Categorias")
                 </div>
-
-                <div class="form-group">
-                    <div class="col-md-8">
-                        @Html.DropDownList("Productos", new SelectList((System.Collections.IEnumerable)ViewData["Productos"], "TipoProductoId", "Titulo"), new { @class = "form-control" })
-                    </div>
+                <div class="col-md-8">
+                    @Html.DropDownList("Categorias", ViewData["Categorias"] as SelectList, new { @class = "form-control" })
                 </div>
-
-                <div class="form-group">
-                    <div class="col-md-8">
-                        @Html.DropDownList("Tipo", new SelectList((System.Collections.IEnumerable)ViewData["Tipo"]), new { @class = "form-control" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Titulo")
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.titulo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.titulo, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Descripcion")
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Tags")
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Precio inicial de subasta")
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.precio_Base, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.precio_Base, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Precio venta directa")
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.precio_Compra, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.precio_Compra, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                @*<div class="form-group">
-                        @Html.Label("Fecha de inicio")
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.fecha_Inicio, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.fecha_Inicio, "", new { @class = "text-danger" })
-                        </div>
-                    </div>*@
-                <div class="form-group">
-                    @Html.LabelFor(model => model.portada)
-                    <div class="col-md-8">
-                        <div class="form-control">
-                            <input type="file" id="portada" name="portada" accept="image/*" />
-                            @Html.ValidationMessageFor(model => model.portada, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Fecha finalizacion")
-                    <div class="col-md-8">
-                        <div class='input-group date' id='datetimepicker1'>
-                            @*@Html.TextBoxFor(model => model.fecha_Cierre, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
-                                @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })*@
-                            @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-                @*<div class="form-group">
-                        @Html.Label("Fecha finalizacion")
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
-                        </div>
-                    </div>*@
-
-                <div class="form-group">
-                    @Html.Label("Garantia")
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.garantia, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.garantia, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Coordenadas")
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div>Atributos propios de la categoria seleccionada</div>
-                @{  var indice = 0;
-                  foreach (var atributo in ViewBag.ListaAtributos)
-                  {
-
-                    <div class="form-group">
-
-                        @atributo.Nombre
-                        <div id="index @indice" class="col-md-8" data-idatributo="@atributo.AtributoId">
-                            <input type="text" id="@indice" class="form-control">
-                            @*@Html.EditorFor(model => model.coordenadas, new { htmlAttributes = new { @class = "form-control", @id = indice} })
-                                @Html.ValidationMessageFor(model => model.coordenadas, "", new { @class = "text-danger" })*@
-
-                        </div>
-                    </div>
-
-                      indice++;
-                  }
-                }
-                <div class="form-group">
-                    <div class="col-md-8">
-                        <input type="submit" value="Create" class="btn btn-default" onclick="agregarAtributos(@indice);" />
-                    </div>
-                </div>
-
-
-                <script>
-                    function agregarAtributos(indice) {
-                        //var idS = Model.id;
-                        for (i = 0 ; i < indice; i++) {
-                            var idat = "index " + i;
-                            $.ajax({
-                                cache: false,
-                                type: "POST",
-                                url: '@Url.Action("AgregarAtributos", "Subasta")',
-                                data: {
-                                    "valor": document.getElementById(i).value,
-                                    "idAtributo": document.getElementById(idat).getAttribute('data-idatributo')
-                                    //,"idSubasta": idS
-                                }
-                            });
-                        }
-                    }
-                </script>
             </div>
-        </div>
-    }
+            <div class="form-group">
+                <div class="col-md-6">
+                    @Html.Label("Productos")
+                </div>
+                <div class="col-md-8">
+                   @Html.DropDownList("Productos", new SelectList(string.Empty, "Value", "Text"), "Seleccione un Producto", new { @class = "form-control" })
+                </div>
+            </div>
+            <input type="hidden" name="id_Categoria" id="id_Categoria" class="id_Categoria" />
+            <input type="hidden" name="id_Producto" id="id_Producto" class="id_Producto" />
+            
+             <!-- Div que carga los datos de la subasta-->
+            <div id="subasta">
+            </div><!-- Div que carga los datos de la subasta-->
+            
+        </div><!-- Div col md 6-->
+    </div> <!-- Div form-->
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-</div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+</div> <!-- Div container-->
+    
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 <script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/moment.js"></script>
 <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
 
+<!--Atributo
 <script>
+    function agregarAtributos(indice) {
+        for (i = 0 ; i < indice; i++) {
+            var idat = "index " + i;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: 'Url.Action("AgregarAtributos", "Subasta")',
+                data: {
+                    "valor": document.getElementById(i).value,
+                    "idAtributo": document.getElementById(idat).getAttribute('data-idatributo')
+                }
+            });
+        }
+    }
+</script>-->
+
+<script type="text/javascript">
     $(document).ready(function () {
-        
-      $('.datepicker').datetimepicker();
-        
+
+/*
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '<Ant',
+            nextText: 'Sig>',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+        */
+
+       
+       
+
+        $("#Categorias").change(function () {
+            document.getElementById('id_Categoria').value = $("#Categorias").val();
+            var categoria = document.getElementById('id_Categoria').value;
+            $("#Productos").empty();
+            $.ajax({
+                type:'POST',
+                url: '@Url.Action("TipoProdList")',// we are calling json method
+                dataType: 'json',
+                data: { id: $("#Categorias").val() },
+                success: function (productos) {
+                    $.each(productos, function (i, productos) {
+                        $("#Productos").append('<option value="' + productos.Value + '">' +
+                             productos.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Error al devolver productos.' + ex);
+                }
+            });
+            return false;
+        })
+        //*****************************************************************
+         $("#Productos").change(function () {
+            $("#subasta").html("");
+            document.getElementById('id_Producto').value= $("#Productos").val();
+            var producto = document.getElementById('id_Producto');
+            //alert(producto.value);
+            var categoria = document.getElementById('id_Categoria');
+            //alert(producto.value);
+            $("#subasta").load("/Subasta/CreacionSubasta",
+            { id_cat: categoria.value, id_prod: producto.value });
+        });
+        //*****************************************************************
     });
 </script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false">
+</script>
+
+

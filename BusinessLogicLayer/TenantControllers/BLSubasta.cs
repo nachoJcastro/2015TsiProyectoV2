@@ -263,5 +263,10 @@ namespace BusinessLogicLayer.TenantControllers
             return _dal.ObtenerImagenes(tenant, id);
         }
 
+     public int AgregarSubasta_ID(String tenant, Subasta subasta){
+
+        return  _dal.AgregarSubasta_ID(tenant, subasta);
+
+      }
     }
 }

@@ -224,6 +224,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OfertaController.cs" />
+    <Compile Include="Models\AtributoSite.cs" />
     <Compile Include="Models\ChatHub.cs" />
     <Compile Include="Models\EstiloTienda.cs" />
     <Compile Include="Models\OfertaModel.cs" />
@@ -285,6 +286,7 @@
     <Content Include="Scripts\dropzone\dropzone.js" />
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
+    <Content Include="Scripts\es.js" />
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -358,6 +360,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Subasta\AgregarComentario.cshtml" />
+    <Content Include="Views\Subasta\CargarAtributo.cshtml" />
+    <Content Include="Views\Subasta\CreacionSubasta.cshtml" />
+    <Content Include="Views\Subasta\Mapa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
