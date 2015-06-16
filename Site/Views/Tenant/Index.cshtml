@@ -139,13 +139,13 @@
                                             <img src="@item.portada" alt="" />
                                             <h2>$@item.precio_Compra</h2>
                                             <p>@item.titulo</p>
-                                            <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Detalle</a>
                                         </div>
                                     </div>
                                     <div class="choose">
                                         <ul class="nav nav-pills nav-justified">
-                                            <li><a href="#"><i class="fa fa-plus-square"></i> Favoritos</a></li>
-                                            <li><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)"><i class="fa fa-plus-square"></i> Comparar</a></li>
+                                            <!--<li><a href="#"><i class="fa fa-plus-square"></i> Favoritos</a></li>-->
+                                            <!--<li><a href="Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)"><i class="fa fa-plus-square"></i> Comparar</a></li>-->
                                         </ul>
                                     </div>
                                 </div>
