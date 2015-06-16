@@ -102,6 +102,7 @@
         </div>
     </div>
         <!--FECHA FIN-->
+      
     <div class="form-group">
         <div class="col-md-6">
             @Html.Label("Fecha finalizacion", new { htmlAttributes = new { @class = "form-control" } })
@@ -109,8 +110,8 @@
         <div class="col-md-8">
             <div class='input-group date' id='datepicker1'>
                 @*@Html.TextBoxFor(model => model.fecha_Cierre, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
-            @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })*@
-                @Html.EditorFor(model => model.fecha_Cierre, new { @Value = DateTime.Now.ToString(" yyyy/MM/dd"), @class = "datepicker" })
+                    @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })*@
+                @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -118,6 +119,9 @@
             @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
         </div>
     </div>
+
+
+
         <!--GARANTIA-->
     <div class="form-group">
         <div class="col-md-6">
@@ -154,6 +158,7 @@
         </div>
     </div>
 
+   
     <!--Escondido Coordenadas-->
     @Html.HiddenFor(model => model.coordenadas)
 
@@ -180,7 +185,8 @@
 <script>
 $(document).ready(function () {
 
-    $("#datepicker1").datetimepicker();
+    
+  
 
     //*****************************************************************
     $("#Tipo").change(function () {
@@ -228,13 +234,32 @@ $(document).ready(function () {
     var markers = [];
     var image = 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/96/Map-Marker-Marker-Outside-Chartreuse-icon.png';
     $(function () {
+       
+
         latlng = new google.maps.LatLng(-34.895154, -56.164083);
+
         var myOptions = {
             zoom: 13,
-            center: latlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(obtener_posicion);
+        }
+        else {
+
+            latlng = new google.maps.LatLng(-34.895154, -56.164083);
+            cargar_mapa(latlng);
+        }
+
+
+
+    });
+
+    function cargar_mapa(latlng) {
+
+        map.setCenter(latlng);
         geocoder = new google.maps.Geocoder();
         //geocoder=new GClientGeocoder();
         google.maps.event.addListener(map, 'click', function (event) {
@@ -242,7 +267,8 @@ $(document).ready(function () {
         });
         // Adds a marker at the center of the map.
         agregar_marca(latlng, 'Mi direccion');
-    });
+    }
+
 
     // Elimina
     function borrarMarkers() {
@@ -253,8 +279,21 @@ $(document).ready(function () {
         setAllMap(null);
     }
     //*******************************************
+
+    function obtener_posicion(position) {
+        latlng = new google.maps.LatLng(position.coords.latitude,
+                                             position.coords.longitude);
+
+        cargar_mapa(latlng);
+    };
+
+
+
+
+
     function agregar_marca(location, direccion) {
         borrarMarkers();
+
         var marker = new google.maps.Marker({
             position: location,
             clickable: true,
@@ -263,8 +302,10 @@ $(document).ready(function () {
             icon: image
         });
         markers.push(marker);
-        document.getElementById("coordenadas").value = "Latitud: "+ location.lat()+" .Longitud: "+location.lng();
 
+        if (location != null) {
+            document.getElementById("coordenadas").value = location.lat() + "," + location.lng();
+        }
         if (direccion == "Mi direccion") {
             buscar_Direccion_latlon(location);
         }
@@ -276,7 +317,7 @@ $(document).ready(function () {
         }
     }
     //*********************************************
-    function buscar_Direccion_latlon (point) {
+    function buscar_Direccion_latlon(point) {
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({ latLng: point }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -329,7 +370,7 @@ $(document).ready(function () {
                     }
                     //BUSCO PAIS
                     if (var2[k] == "administrative_area_level_2") {
-                        datos_dir = datos_dir + "" + var1[j].long_name+". ";
+                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
                         //put the county name in the form
                         //alert(var1[j].long_name);
                     }

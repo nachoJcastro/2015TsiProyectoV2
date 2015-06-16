@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.WebPages.Html;
+
+
 
 namespace Site.Models
 {
@@ -18,7 +22,7 @@ namespace Site.Models
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+        public ICollection<System.Web.WebPages.Html.SelectListItem> Providers { get; set; }
         public string ReturnUrl { get; set; }
         public bool RememberMe { get; set; }
     }
@@ -68,7 +72,7 @@ namespace Site.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Correo electrónico")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
@@ -82,17 +86,28 @@ namespace Site.Models
         [Display(Name = "Apellido")]
         public string Apellido { get; set; }
 
-        [Display(Name = "Fecha nacimiento")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public string Fecha { get; set; }
 
-        [Display(Name = "Direccion")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Fecha de Nacimiento")]
+        public DateTime Fecha { get; set; }
+
+        [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
         [Display(Name = "Coordenadas")]
         public string Coordenadas { get; set; }
+
+        [Display(Name = "Preferencias")]
+        public List <string> preferencias { get; set; }
+
+        [Display(Name = "Lista Pref")]
+        public List<System.Web.WebPages.Html.SelectListItem> lista_preferencias { get; set; }
+
        
+        [Display(Name = "Celular")]
+        public string telefono { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
