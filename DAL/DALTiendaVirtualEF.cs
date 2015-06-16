@@ -108,13 +108,12 @@ namespace DAL
                 {
                     tienda.Nombre = tiendaDTO.Nombre;
                     tienda.Dominio = tiendaDTO.Dominio;
-                    tienda.StringConection = tiendaDTO.StringConection;
+                    //tienda.StringConection = tiendaDTO.StringConection;
                     tienda.Logo = tiendaDTO.Logo;
-                    tienda.Estado = tienda.Estado;
-                    tienda.Css = tiendaDTO.Css;
-                    tienda.Dominio = tiendaDTO.Descripcion;
+                    //tienda.Estado = tienda.Estado;
+                    //tienda.Css = tiendaDTO.Css;
                     tienda.Descripcion = tiendaDTO.Descripcion;
-                    tienda.ListaImagenes = tiendaDTO.ListaImagenes;
+                    //tienda.ListaImagenes = tiendaDTO.ListaImagenes;
                     //Mapper.Map(tiendaDTO, tienda);
                     //Mapper.Map(tiendaDTO.ListaImagenes, tienda.Imagenes);
 
@@ -331,15 +330,42 @@ namespace DAL
             return usuarios;
         }
 
-        public List<Subasta> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin)
+        public List<SubastaAux> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin)
         {
             List<Subasta> sub = new List<Subasta>();
+            var listaSub = new List<SubastaAux>();
 
             try
             {
                 dbt = new TenantDB(dominio);
                 sub = dbt.Subasta.Where(u => (u.fecha_Inicio >= fechaini && u.fecha_Inicio <= fechafin)).ToList();
+                sub = sub.Where(x => x.id_Comprador != null).ToList();
 
+                foreach (var subasta in sub)
+                {
+                    SubastaAux aux = new SubastaAux();
+                    Usuario Comprador = dbt.Usuario.FirstOrDefault(x => x.id == subasta.id_Comprador);
+                    Usuario Vendedor = dbt.Usuario.FirstOrDefault(x => x.id == subasta.id_Vendedor);
+
+                    aux.id = subasta.id;
+                    aux.id_Comprador = subasta.id_Comprador;
+                    aux.nombreComprador = Comprador.nick;
+                    aux.id_Vendedor = subasta.id_Vendedor;
+                    aux.nombreVendedor = Vendedor.nick;
+                    aux.id_Categoria = subasta.id_Categoria;
+                    aux.id_Producto = subasta.id_Producto;
+                    aux.titulo = subasta.titulo;
+                    aux.descripcion = subasta.descripcion;
+                    aux.precio_Base = subasta.precio_Base;
+                    aux.precio_Compra = subasta.precio_Compra;
+                    aux.valor_Actual = subasta.valor_Actual;
+                    aux.portada = subasta.portada;
+                    aux.fecha_Inicio = (DateTime)subasta.fecha_Inicio;
+                    aux.fecha_Cierre = (DateTime)subasta.fecha_Cierre;
+
+                    listaSub.Add(aux);
+
+                }
             }
             catch (Exception ex)
             {
@@ -348,7 +374,7 @@ namespace DAL
             }
 
 
-            return sub;
+            return listaSub;
         }
 
         public List<ReporteLineal> ReportUsersLineal(string dominio, DateTime fechaini, DateTime fechafin)

@@ -100,7 +100,7 @@ namespace BusinessLogicLayer.Controllers
         public List<Usuario> ReportUsers(string dominio, DateTime fechaini, DateTime fechafin) {
             return _dal.ReportUsers(dominio, fechaini, fechafin);
         }
-        public List<Subasta> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin) {
+        public List<SubastaAux> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin) {
             return _dal.ReportSubasta(dominio, fechaini, fechafin);
         }
 

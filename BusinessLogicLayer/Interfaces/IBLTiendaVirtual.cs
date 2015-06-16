@@ -26,7 +26,7 @@ namespace BusinessLogicLayer
 
         List<String> ObtenerTenants();
         List<Usuario> ReportUsers(string dominio, DateTime fechaini, DateTime fechafin);
-        List<Subasta> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin);
+        List<SubastaAux> ReportSubasta(string dominio, DateTime fechaini, DateTime fechafin);
 
         List<ReporteLineal> ReportSubastaLineal(string dominio, DateTime fechaini, DateTime fechafin);
         List<ReporteLineal> ReportUsersLineal(string dominio, DateTime fechaini, DateTime fechafin);

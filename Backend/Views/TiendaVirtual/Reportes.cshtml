@@ -95,6 +95,8 @@
                 <thead>
                     <tr>
                         <th>Titulo</th>
+                        <th>Comprador</th>
+                        <th>Vendedor</th>
                         <th>Precio</th>
                         <th>Fecha Alta</th>
                     </tr>
@@ -163,6 +165,8 @@
 
                             result2 += '<tr>' +
                                       '<td>' + item.titulo + '</td>' +
+                                      '<td>' + item.nickComprador + '</td>' +
+                                      '<td>' + item.nickVendedor + '</td>' +
                                       '<td>' + item.precio_Base + '</td>' +
                                       '<td>' + ToJavaScriptDate(item.fecha_Inicio) + '</td>' +
                                       '</tr>';

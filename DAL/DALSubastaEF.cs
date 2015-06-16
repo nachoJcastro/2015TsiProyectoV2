@@ -517,6 +517,98 @@ namespace DAL
 
         }
 
+        public List<Subasta> ObtenerSubastasPorCriterio(string tenant, int idCat, string criterio, int? tipo, String min, string max)
+        {
+            
+            var listaSub = new List<Subasta>();
+            try
+            {
+                db = new TenantDB(tenant);
+                var aux = db.Subasta.Where(x => x.estado == EstadoTransaccion.Activa).ToList();
+                listaSub = aux.Where(x => x.id_Categoria == idCat).ToList();
+
+                if (!String.IsNullOrEmpty(criterio))
+                {
+                    listaSub = listaSub.Where(x => (x.titulo.Contains(criterio) || x.descripcion.Contains(criterio))).ToList();
+                    
+                }
+
+                if (!String.IsNullOrEmpty(min) && !String.IsNullOrEmpty(max)) {
+                    double minimo = double.Parse(min.ToString());
+                    double maximo = double.Parse(max.ToString());
+
+                    listaSub = listaSub.Where(x => (x.precio_Compra >= minimo && x.precio_Compra <= maximo)).ToList();
+                    
+                }
+                else
+                {
+
+                    if (!String.IsNullOrEmpty(min))
+                    {
+                        double minimo = double.Parse(min.ToString());
+                        listaSub = listaSub.Where(x => x.precio_Compra >= minimo).ToList();
+                    }
+
+                    if (!String.IsNullOrEmpty(max))
+                    {
+                        double maximo = double.Parse(max.ToString());
+                        listaSub = listaSub.Where(x => x.precio_Compra <= maximo).ToList();
+                    }
+
+                }
+
+                if (tipo!=null && tipo!= 0)
+                {
+                    TipoFinalizacion t;
+
+                    switch (tipo)
+                    {
+                        case 1:
+                            t = (TipoFinalizacion)Enum.Parse(typeof(TipoFinalizacion), "Subasta");
+                            listaSub = listaSub.Where(x => x.finalizado == t).ToList();
+                            break;
+                        case 2:
+                            t = (TipoFinalizacion)Enum.Parse(typeof(TipoFinalizacion), "Compra_directa");
+                            listaSub = listaSub.Where(x => x.finalizado == t).ToList();
+                            break;
+                    }
+
+                    
+                }
+
+                /*switch (campoOrdenamiento)
+                {
+                    case "nombre_desc":
+                        juegos = juegos.OrderByDescending(o => o.Nombre);
+                        break; ;
+                    case "consola":
+                        juegos = juegos.OrderBy(o => o.Consola.Nombre);
+                        break;
+                    case "consola_desc":
+                        juegos = juegos.OrderByDescending(o => o.Consola.Nombre);
+                        break;
+                    case "genero":
+                        juegos = juegos.OrderBy(o => o.Genero.Nombre);
+                        break;
+                    case "genero_desc":
+                        juegos = juegos.OrderByDescending(o => o.Genero.Nombre);
+                        break;
+                    default:  // Nombre ascending 
+                        juegos = juegos.OrderBy(s => s.Nombre);
+                        break;
+                }*/
+
+
+                return listaSub;
+                
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
+        }
+
 
     }
 }

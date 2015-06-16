@@ -1,11 +1,19 @@
 ﻿@{
     ViewBag.Title = "Confirmar correo electrónico";
-    Layout = "~/Views/Account/_LayoutAccount.cshtml";
+    Layout = "~/Views/Shared/_LayoutBackUser.cshtml";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Gracias por confirmar su correo electrónico. @Html.ActionLink("Haga clic aquí para iniciar sesión", "Iniciar sesión", "Cuenta", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
+<div class="col-md-12 contendor-admin-user">
+
+    <div class="col-md-12 titulo-componentes-user">
+        <h1>@ViewBag.Title.</h1>
+    </div>
+    <div class="col-md-12 contenido-componentes-user">
+
+        <div>
+            <p>
+                Gracias por confirmar su correo electrónico. @Html.ActionLink("Haga clic aquí para iniciar sesión", "Iniciar sesión", "Cuenta", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </p>
+        </div>
+    </div>
 </div>
