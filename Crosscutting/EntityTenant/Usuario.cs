@@ -38,7 +38,7 @@ namespace Crosscutting.EntityTenant
         public string apellido { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime? fecha_Nacimiento { get; set; }
+        public DateTime fecha_Nacimiento { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -48,9 +48,13 @@ namespace Crosscutting.EntityTenant
 
         public string coordenadas { get; set; }
 
+        public string preferencias { get; set; }
+
         public string imagen { get; set; }
 
         public double billetera { get; set; }
+
+        public string telefono { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime? fecha_Alta { get; set; }

@@ -12,5 +12,6 @@ namespace Site.Models
         public string Password { get; set; }
         public string Dominio { get; set; }
         public int idTienda { get; set; }
+        public int idUsuario { get; set; }
     }
 }

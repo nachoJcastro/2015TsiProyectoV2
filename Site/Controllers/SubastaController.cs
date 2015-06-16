@@ -109,7 +109,7 @@ namespace Site.Controllers
                 }
                 
                 sub_site.finalizado = subasta.finalizado;
-                sub_site.fecha_Inicio = subasta.fecha_Inicio;
+                sub_site.fecha_Inicio = DateTime.Now;
                 sub_site.fecha_Cierre = (DateTime)subasta.fecha_Cierre;
                 sub_site.garantia = subasta.garantia;
                 sub_site.Comentario = subasta.Comentario;
@@ -358,6 +358,7 @@ namespace Site.Controllers
              {
                 sub_site.id_Categoria = Convert.ToInt32(id_cat);
                 sub_site.id_Producto = Convert.ToInt32(id_prod);
+                sub_site.fecha_Cierre = DateTime.Now;
                 // tipo subasta
                 List<String> tipo_subasta = new List<String> { "Subasta", "Compra directa" };
                 ViewData["Tipo"] = tipo_subasta;
@@ -398,19 +399,24 @@ namespace Site.Controllers
          public ActionResult Create([Bind(Include = "id_Categoria,id_Producto,atributos,titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre")]SubastaSite subasta_site, FormCollection form, HttpPostedFileBase portada)
         {
             Subasta subasta = new Subasta();
+            
 
+            if (subasta_site.fecha_Cierre != null) System.Diagnostics.Debug.WriteLine("fecha " + subasta_site.fecha_Cierre);
 
+            else System.Diagnostics.Debug.WriteLine("Nulo");
             user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
             
             subasta.id_Vendedor = usuIBL.ObtenerIdByEmail(user_sitio.Dominio, user_sitio.Email);
             subasta.estado = EstadoTransaccion.Activa;
             subasta.titulo = subasta_site.titulo;
             subasta.valor_Actual = (double)subasta_site.precio_Base;
-            subasta.fecha_Inicio = System.DateTime.Now;
-            subasta.fecha_Cierre = sub_site.fecha_Cierre;
-            subasta.garantia = sub_site.garantia;
-            subasta.direccion = sub_site.direccion;
-            subasta.coordenadas = sub_site.coordenadas;
+            subasta.fecha_Inicio = (DateTime)System.DateTime.Now;
+            if (subasta_site.fecha_Cierre != null)
+            { subasta.fecha_Cierre = (DateTime)subasta_site.fecha_Cierre; }
+
+            subasta.garantia = subasta_site.garantia;
+            subasta.direccion = subasta_site.direccion;
+            subasta.coordenadas = subasta_site.coordenadas;
             subasta.id_Categoria = (int)subasta_site.id_Categoria;
             subasta.id_Producto = (int)subasta_site.id_Producto;
 
@@ -477,7 +483,7 @@ namespace Site.Controllers
                 //atributo.Subasta = subasta;
                 atrSubIBL.AgregarAtributo_Subasta(valor_tenant, atributo);
             }
-                sub_site = crearSubastaSite(subasta);
+             SubastaSite  sub_site = crearSubastaSite(subasta);
             
 
             return View("ImagenesSubasta", subasta);
@@ -527,7 +533,7 @@ namespace Site.Controllers
                 }
 
                 sub_site.finalizado = subasta.finalizado;
-                sub_site.fecha_Inicio = subasta.fecha_Inicio;
+                sub_site.fecha_Inicio = DateTime.Now;
                 sub_site.fecha_Cierre = (DateTime)subasta.fecha_Cierre;
                 sub_site.garantia = subasta.garantia;
                 sub_site.Comentario = subasta.Comentario;

@@ -1,4 +1,4 @@
-﻿@model Site.Models.UsuarioSite
+﻿@model Site.Models.UsuarioModel
 
 <h3>Datos del Usuario</h3>
 <hr />
@@ -11,34 +11,78 @@
                 @Html.Label("Nombre")
             </div>
             <div class="col-md-4">
-                @Html.DisplayFor(model => model.Nombre)
+                @Html.DisplayFor(model => model.nombre)
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Apellido")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.apellido)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Nick")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.nick)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Celular")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.telefono)
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-4">
                 @Html.Label("Email")
             </div>
 
             <div class="col-md-4">
-                @Html.DisplayFor(model => model.Email)
+                @Html.DisplayFor(model => model.email)
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-4">
-                @Html.Label("Password")
+                @Html.Label("Dirección")
             </div>
             <div class="col-md-4">
-                @Html.DisplayFor(model => model.Password)
+                @Html.DisplayFor(model => model.direccion)
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-4">
-                @Html.Label("Tienda")
+                @Html.Label("Billetera")
             </div>
             <div class="col-md-4">
-                @Html.DisplayFor(model => model.Dominio)
+                @Html.DisplayFor(model => model.billetera)
             </div>
         </div>
+
+
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Preferencias")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.preferencias)
+            </div>
+        </div>
+
+
+        @Html.HiddenFor(model => model.coordenadas)
+       
         <div class="form-group">
             @Html.ActionLink("Volver", "Index", "Tenant", new { area = "" }, new { @class = "navbar-brand" })
         </div>

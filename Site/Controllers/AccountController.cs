@@ -13,6 +13,7 @@ using Crosscutting.EntityTenant;
 using System.Threading;
 using BusinessLogicLayer.TenantInterfaces;
 using BusinessLogicLayer.TenantControllers;
+using System.Collections.Generic;
 
 
 
@@ -23,6 +24,7 @@ namespace Site.Controllers
     public class AccountController : Controller
     {
         IBLUsuario _bl=new BLUsuario();
+        IBLProducto proIBL ;
 
         //[ThreadStatic]  
         public string valor_tenant;
@@ -129,6 +131,7 @@ namespace Site.Controllers
                             user_Session.Email = usr.email;
                             user_Session.Nombre = usr.nombre;
                             user_Session.Password = usr.password;
+                            user_Session.idUsuario = usr.id;
                             
                            // Session["usuario"] = new UsuarioSite { Nombre = usr.nombre, Email = usr.email, Password = usr.password, Dominio = valor_tenant };
                             return RedirectToAction("Index", "Tenant");
@@ -147,34 +150,87 @@ namespace Site.Controllers
             return View(model);
         }
 
+
+        //*********************
+        
+        //*********************
+
+
         
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
+            RegisterViewModel registro = new RegisterViewModel();
+            registro.preferencias = new List<string>();
+            
             try
             {
+                user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
 
-               
+               // if (user_sitio.Email == null) return RedirectToAction("Login", "Account");
+                valor_tenant = user_sitio.Dominio.ToString();
+
                 
-            
+                proIBL = new BLProducto();
+                System.Diagnostics.Debug.WriteLine("Bandera2");
 
-            //System.Threading.
-           // var user = Session["usuario"] as UsuarioSite;
-            //if (user.Dominio != null) valor_tenant = user.Dominio;
+                var  lista_Origen= proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda);
+                System.Diagnostics.Debug.WriteLine("Bandera 3");
+                List<System.Web.WebPages.Html.SelectListItem> lista_item_Cat = new List<System.Web.WebPages.Html.SelectListItem>();
+                
+                System.Diagnostics.Debug.WriteLine("Bandera 4");
+                foreach (var item in lista_Origen)
+                {
+                    lista_item_Cat.Add(new System.Web.WebPages.Html.SelectListItem()
+                    {
+                         Value = item.CategoriaId.ToString(),
+                         Text = item.Nombre,
+                         Selected = false 
+                    });
+                }
 
-           /* local = Thread.GetNamedDataSlot("tenant");
-            if (local == null) System.Diagnostics.Debug.WriteLine("Valor tenant nulo");
-            else System.Diagnostics.Debug.WriteLine("Tenant " + Thread.GetData(local));
-            valor_tenant = System.Threading.Thread.GetData(local).ToString();*/
-            //Sitio sitio = Session["sitio"] as Sitio;
+                if (lista_item_Cat != null) {
+                    foreach (var item in lista_item_Cat)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Bandera 5 item " +item.Text.ToString());
+                    }
+                
+                } 
+                
+                ViewData["Categorias"] = lista_item_Cat;
+                System.Diagnostics.Debug.WriteLine("Bandera 6");
+
+                //registro.lista_preferencias;
+                registro.lista_preferencias =lista_item_Cat;
+                if(lista_Origen!=null)
+                {
+                    foreach (var item in lista_Origen)
+                    {
+                        registro.preferencias.Add(item.Nombre);
+                    }
+                }
+               // ViewData["Productos"] = proIBL.ObtenerProductos();
+                //  ViewData["Atributos"] = atrIBL.ObtenerAtributos();
+                //   ViewBag.ListaAtributos = atrIBL.ObtenerAtributos();
+                // ViewBag.CategoriaId = new SelectList(proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda), "CategoriaId","TiendaId", "Nombre");
+                //System.Threading.
+                // var user = Session["usuario"] as UsuarioSite;
+                //if (user.Dominio != null) valor_tenant = user.Dominio;
+
+                /* local = Thread.GetNamedDataSlot("tenant");
+                if (local == null) System.Diagnostics.Debug.WriteLine("Valor tenant nulo");
+                else System.Diagnostics.Debug.WriteLine("Tenant " + Thread.GetData(local));
+                valor_tenant = System.Threading.Thread.GetData(local).ToString();*/
+                //Sitio sitio = Session["sitio"] as Sitio;
+               System.Diagnostics.Debug.WriteLine("Bandera 7");
             }
             catch (Exception)
             {
                 throw;
             }
-            
-            return View();
+
+            return View(registro);
         }
 
         //
@@ -182,24 +238,16 @@ namespace Site.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        //email,direccion,fecha_Nacimiento,nombre,apellido,nick,password,coordenadas,preferencias,lista_preferencias};
         public ActionResult Register(RegisterViewModel model)
         {
+            System.Diagnostics.Debug.WriteLine("Bandera 1");
             if (ModelState.IsValid)
             {
-                //_bl = new BLUsuario();
-               // String valor_tenant=null;
+               
                 try
                 {
-                    //Thread t = System.Threading.Thread.CurrentThread;
-                    /*local =Thread.GetNamedDataSlot("tenant");
-                    if (local == null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Valor tenant nulo");
-                        return View("Error");
-                    }
-                    else
-                    {*/
-
+                        System.Diagnostics.Debug.WriteLine("Bandera 2");
                         user_sitio = Session["usuario"] as UsuarioSite;
 
                         if (user_sitio.Dominio != null)
@@ -207,25 +255,40 @@ namespace Site.Controllers
                             System.Diagnostics.Debug.WriteLine(" Dominio en sesion Registro " + user_sitio.Dominio.ToString());
                             valor_tenant = user_sitio.Dominio.ToString();
                         }
-                        //System.Threading.
-                        //System.Diagnostics.Debug.WriteLine("Registrando : " + valor_tenant);
-                        //valor_tenant = (String)Thread.GetData(local);
-                        //System.Diagnostics.Debug.WriteLine("Registro de usuario en tenant :" + valor_tenant);
-                        
-                       // _bl.ExisteUsuario(valor_tenant, model.Email);
-                        //System.Diagnostics.Debug.WriteLine("Registrando : " + valor_tenant + "Usuario : " + model.Email.ToString());
                         if (!(_bl.ExisteUsuario(valor_tenant, model.Email)))
                         {
-                            user = new Usuario { email = model.Email, direccion = model.Direccion, fecha_Nacimiento = Convert.ToDateTime(model.Fecha), nombre = model.Nombre, apellido = model.Apellido, nick = model.Nick, password = model.Password, fecha_Alta = DateTime.Now, reputacion_Venta = "0", reputacion_Compra = "0" };
+                            System.Diagnostics.Debug.WriteLine("no existe usuario");
+                            user = new Usuario { email = model.Email, direccion = model.Direccion, fecha_Nacimiento = Convert.ToDateTime(model.Fecha), nombre = model.Nombre, apellido = model.Apellido, nick = model.Nick, password = model.Password, fecha_Alta = DateTime.Now, reputacion_Venta = "0", reputacion_Compra = "0" ,coordenadas=model.Coordenadas,telefono=model.telefono};
+                            
+                            //user.preferencias;
+                            if(model.lista_preferencias!=null) System.Diagnostics.Debug.WriteLine("lISTA PREFERNCIAS" + model.lista_preferencias.ToString());
+                            System.Diagnostics.Debug.WriteLine("prefencias " + model.preferencias.ToString());
 
+                            if (model.lista_preferencias != null && model.preferencias!=null){
+                                foreach (var item in model.lista_preferencias)
+                                {
+                                    if (item.Selected)
+                                    {
+                                        System.Diagnostics.Debug.WriteLine("Item " + item.Selected.ToString()+" "+item.Text+" "+item.Value );
+                                        if (user.preferencias!=null) user.preferencias = user.preferencias + ";" + item.Text;
+                                        else user.preferencias =item.Text;
+                                    }
+                                }
+                            }
                             System.Diagnostics.Debug.WriteLine("Registrando : " + valor_tenant + "Usuario : " + user.ToString());
                             _bl.RegistrarUsuario(valor_tenant, user);
                             //Session["usuario"] = new UsuarioSite { Nombre = model.Nombre, Email = model.Email, Password = model.Password, Dominio = valor_tenant };
 
-                            var user_Session = Session["usuario"] as UsuarioSite;
-                            user_Session.Email = model.Email;
-                            user_Session.Nombre = model.Nombre;
-                            user_Session.Password = model.Password;
+                            Usuario usr = _bl.LoginUsuario(valor_tenant, model.Email, model.Password);
+                            if (usr != null)
+                            {
+
+                                var user_Session = Session["usuario"] as UsuarioSite;
+                                user_Session.Email = usr.email;
+                                user_Session.Nombre = usr.nombre;
+                                user_Session.Password = usr.password;
+                                user_Session.idUsuario = usr.id;
+                            }
 
                             return RedirectToAction("Index", "Tenant");
                         }

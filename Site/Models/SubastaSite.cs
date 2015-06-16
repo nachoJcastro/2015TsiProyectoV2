@@ -3,6 +3,7 @@ using Crosscutting.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -39,38 +40,50 @@ namespace Site.Models
 
         public int id_Producto { get; set; }
 
+        [Display(Name = "Título")]
         public string titulo { get; set; }
 
+        [Display(Name = "Descripción")]
         public string descripcion { get; set; }
 
+        [Display(Name = "Tags")]
         public string tags { get; set; }
 
+        [Display(Name = "Precio Base")]
         public double precio_Base { get; set; }
 
+        [Display(Name = "Precio de Compra")]
         public double precio_Compra { get; set; }
 
+        [Display(Name = "Garantía")]
         public string garantia { get; set; }
 
+        [Display(Name = "Coordenadas")]
         public string coordenadas { get; set; }
 
+        [Display(Name = "Dirección")]
         public string direccion { get; set; }
 
         public EstadoTransaccion estado { get; set; }
 
+        [Display(Name = "Tipo de Venta")]
         public string tipo_venta { get; set; }
 
         public TipoFinalizacion finalizado { get; set; }
 
+        [Display(Name = "Valor Actual")]
         public double valor_Actual { get; set; }
 
+        [Display(Name = "Imagen de Portada")]
         public string portada { get; set; }
 
-        public DateTime? fecha_Inicio { get; set; }
+        [Display(Name = "Fecha de inicio")]
+        public DateTime fecha_Inicio { get; set; }
 
 
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.DateTime)]
-        public DateTime fecha_Cierre { get; set; }
+        
+        [Display(Name = "Fecha de Finalización")]
+        public DateTime? fecha_Cierre { get; set; }
 
         public double billeteraUsuario { get; set; }
 

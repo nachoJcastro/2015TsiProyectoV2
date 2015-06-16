@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Site.Models;
+using BusinessLogicLayer.TenantInterfaces;
+using BusinessLogicLayer.TenantControllers;
 
 
 namespace Site.Controllers
@@ -25,9 +27,33 @@ namespace Site.Controllers
         // GET: Usuario
         public ActionResult DatosUsuario()
         {
+            UsuarioModel usr_model = new UsuarioModel();
+
             try
             {
                  usuario = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                 var id = usuario.idUsuario;
+                 var tienda = usuario.Dominio;
+                 IBLUsuario _iusr = new BLUsuario();
+                 var usr= _iusr.GetUsuario(tienda, id);
+
+                 if (usr != null) {
+
+                     usr_model.id = usr.id;
+                     usr_model.nick = usr.nick;
+                     usr_model.nombre = usr.nombre;
+                     usr_model.preferencias = usr.preferencias;
+                     usr_model.telefono = usr.telefono;
+                     usr_model.apellido = usr.apellido;
+                     usr_model.billetera = usr.billetera;
+                     usr_model.coordenadas = usr.coordenadas;
+                     usr_model.direccion = usr.direccion;
+                     usr_model.email = usr.email;
+                     usr_model.fecha_Nacimiento = (DateTime)usr.fecha_Nacimiento;
+                    
+                  }
+
+            
             }
             catch (Exception)
             {
@@ -35,7 +61,7 @@ namespace Site.Controllers
                 throw;
             }
 
-            return View(usuario);
+            return View(usr_model);
         }
         
 
