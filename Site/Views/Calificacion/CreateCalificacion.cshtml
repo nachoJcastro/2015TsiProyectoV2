@@ -1,0 +1,84 @@
+﻿@model Site.Models.SubastaSite
+@{
+    ViewBag.Title = "Calificar Venta";
+}
+
+<h2>Calificar Transaccion</h2>
+
+
+<div>
+    Clasificacion
+    <input id="areaPuntaje" type="text">
+    <br /><br />
+    Observaciones
+    <textarea id="areaObservaciones" rows="3" cols="50" placeholder="Ingrese aqui sus observaciones.."></textarea>
+    <br />
+    <button type="button" onclick="crearCalificacion()" class=" btn btn-primary">Calificar</button>
+</div>
+
+
+
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td><img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;"></td>
+                    </tr>
+                    <tr>
+                        <th>Producto</th>
+                        <th>@Html.DisplayFor(model => model.nombre_producto)</th>
+                    </tr>
+
+                    <tr>
+                        <th>Descripcion</th>
+                        <th>@Html.DisplayFor(model => model.descripcion)</th>
+                    </tr>
+
+                    <tr>
+                        <th>Comprador</th>
+                        <th>@Html.DisplayFor(model => model.nick_Comprador)</th>
+                    </tr>
+                    <tr>
+                        <th>Precio</th>
+                        <th>$ @Html.DisplayFor(model => model.precio_Compra)</th>
+                    </tr>
+                    <tr>
+                        <th>Fecha Cierre</th>
+                        <th>@Html.DisplayFor(model => model.fecha_Cierre)</th>
+                    </tr>
+                    <tr>
+                        <th>Tipo de Venta</th>
+                        <th>@Html.DisplayFor(model => model.finalizado)</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+<script>
+
+    function crearCalificacion() {
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("CreateCalificacion", "Calificacion")',
+            data: {
+                "idSubasta": @Model.id,
+                "puntaje": document.getElementById("areaPuntaje").value,
+                "observaciones": document.getElementById("areaObservaciones").value,
+                "venta":@Model.listaVenta,
+    },
+            success: function (json) {
+                if (json.isRedirect) {
+                    window.location.href = json.redirectUrl;
+                }
+            }
+    });
+    }
+</script>

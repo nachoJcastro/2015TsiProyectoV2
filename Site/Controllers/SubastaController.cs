@@ -49,6 +49,7 @@ namespace Site.Controllers
             this.atrIBL = atrIBL;
             this.favIBL = favIBL;
             this.atrSubIBL = atrSubIBL;
+
         }
 
         public SubastaController()
@@ -894,7 +895,6 @@ namespace Site.Controllers
         }
 
 
-
         public JsonResult esFavorito(int idSubasta)
         {
             user_sitio = Session["usuario"] as UsuarioSite;
@@ -906,12 +906,5 @@ namespace Site.Controllers
             return Json(modelList, JsonRequestBehavior.AllowGet);
         }
 
-        
     }
 }
-
-
-                
-                
-                                                
-

@@ -671,5 +671,37 @@ namespace DAL
         }
 
 
+        public List<Subasta> ObtenerVentasbyUsuario(string tenant, int idUsuario)
+        {
+            var listaSub = new List<Subasta>();
+            try
+            {
+                db = new TenantDB(tenant);
+                listaSub = db.Subasta.Where(s => s.id_Vendedor == idUsuario && s.estado == EstadoTransaccion.Cerrada).ToList();
+                return listaSub;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public List<Subasta> ObtenerComprasbyUsuario(string tenant, int idUsuario)
+        {
+            var listaSub = new List<Subasta>();
+            try
+            {
+                db = new TenantDB(tenant);
+                listaSub = db.Subasta.Where(s => s.id_Comprador == idUsuario && s.estado == EstadoTransaccion.Cerrada).ToList();
+                return listaSub;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
     }
 }

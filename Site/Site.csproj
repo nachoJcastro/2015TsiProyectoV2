@@ -219,6 +219,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BlobStorage.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CalificacionController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\FavoritosController.cs" />
     <Compile Include="Controllers\FileReader.cs" />
@@ -368,6 +369,8 @@
     <Content Include="Views\Subasta\CreacionSubasta.cshtml" />
     <Content Include="Views\Subasta\Mapa.cshtml" />
     <Content Include="Views\Account\View.cshtml" />
+    <Content Include="Views\Calificacion\CreateCalificacion.cshtml" />
+    <Content Include="Views\Calificacion\ListadoComprasVentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
