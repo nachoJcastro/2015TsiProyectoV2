@@ -7,29 +7,45 @@
     <div class="col-md-12 titulo-componentes-user">
         <a href="@Url.Action("index", "TiendaVirtual")" class="btn btn-default"><span class="fa fa-arrow-left fa-2x"></span></a><h1>Imagenes Tienda</h1>
     </div>
+    <br />
     <div class="col-md-12">
-        <p>
+        <br />
+        <div class="col-md-12 contenedor-upload">
             @using (Html.BeginForm("Upload", "TiendaVirtual", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.HiddenFor(x => Model.TiendaVitualId)
                 @Html.HiddenFor(x => Model.Dominio)
-                <input type="file" name="image" />
-                <input type="submit" value="Upload" />
+                <input type="file" name="image" class="form-control" /><br />
+                <input type="submit" value="Upload" class="btn btn-default" />
             }
 
-        </p>
+        </div>
 
-        <ul style="list-style-type:none; padding:0;">
-            @if (Model.ListaImagenes != null) { 
+        <div class="col-md-12 contenedor-img-upload">
+
+            @if (Model.ListaImagenes != null)
+            {
                 foreach (var item in Model.ListaImagenes)
                 {
-                    <li>
-                        <img src="@item.UrlImagenMediana" alt="Alternate Text" width="100" height="100" />
-                        <a id="@item.UrlImagenMediana" href="#" onclick="deleteImage('@item.Nombre','@item.UrlImagenMediana','@item.TiendaId');">Delete</a>
-                    </li>
+                    <article class="col-xs-12 col-sm-6 col-md-3 list-img">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="#" title="Nature Portfolio" class="zoom" data-title="Amazing Nature" data-footer="The beauty of nature" data-type="image" data-toggle="lightbox">
+                                    <img src="@item.UrlImagenMediana" alt="Nature Portfolio" />
+                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                </a>
+                            </div>
+                            <div class="panel-footer">
+                                <span class="pull-right">
+                                    <a id="@item.UrlImagenMediana" href="#" onclick="deleteImage('@item.Nombre','@item.UrlImagenMediana','@item.TiendaId');">Delete</a>
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+      
                 }
             }
-        </ul>
+        </div>
     </div>
 </div>
 
