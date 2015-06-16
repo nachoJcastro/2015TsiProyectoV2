@@ -27,13 +27,13 @@ namespace Site.Tareas
                 List<String> tenants = tiendas.ObtenerTenants();
                 
                 
-                //System.Diagnostics.Debug.WriteLine(item.ToString());
+                System.Diagnostics.Debug.WriteLine("Tenants = "+ tenants.ToString());
 
                 foreach (var item in tenants)
                 {
-                    System.Diagnostics.Debug.WriteLine(item.ToString());
-                    
+                    System.Diagnostics.Debug.WriteLine("Antes  de finalizar subastas en tenant = " + item.ToString());
                     subIBL.FinalizarSubastasTarea(item.ToString());
+                    System.Diagnostics.Debug.WriteLine("Despues de finalizar subastas en tenant = " + item.ToString());
                 }
 
 

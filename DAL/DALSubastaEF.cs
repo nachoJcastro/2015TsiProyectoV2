@@ -9,6 +9,8 @@ using Crosscutting.EntityTareas;
 using Crosscutting.Enum;
 using DAL.IDAL_Tenant;
 using DAL.DAL_Tenant;
+using System.Data.Entity;
+using Crosscutting.Entity;
 
 namespace DAL
 {
@@ -115,7 +117,7 @@ namespace DAL
 
         public List<Subasta> ObtenerSubastasActivas(string tenant) {
 
-            var listaSub = new List<Subasta>();
+            List<Subasta> listaSub = null;
             try
             {
                 db = new TenantDB(tenant);
@@ -154,11 +156,19 @@ namespace DAL
         {
             try
             {
+                
+                System.Diagnostics.Debug.WriteLine("Ingreso actualizo subasta");
+                System.Diagnostics.Debug.WriteLine("Actualizo a estado "+ subastaNueva.estado.ToString());
+
                 db = new TenantDB(tenant);
-                var subasta = db.Subasta.FirstOrDefault(p => p.id == subastaNueva.id);
+                Subasta subasta = db.Subasta.Find(subastaNueva.id);
+                
+                System.Diagnostics.Debug.WriteLine("Paso busco subasta");
                 if (subasta != null)
                 {
-                    subasta.Atributo_Subasta = subastaNueva.Atributo_Subasta;
+
+                    System.Diagnostics.Debug.WriteLine("Entro mod subasta");
+                    /*subasta.Atributo_Subasta = subastaNueva.Atributo_Subasta;
                     subasta.Calificacion = subastaNueva.Calificacion;
                     subasta.Comentario = subastaNueva.Comentario;
                     subasta.coordenadas = subastaNueva.coordenadas;
@@ -169,7 +179,7 @@ namespace DAL
                     subasta.fecha_Inicio = subastaNueva.fecha_Inicio;
                     subasta.finalizado = subastaNueva.finalizado;
                     subasta.garantia = subastaNueva.garantia;
-                    subasta.id = subastaNueva.id;
+                    //subasta.id = subastaNueva.id;
                     subasta.id_Categoria = subastaNueva.id_Categoria;
                     subasta.id_Comprador = subastaNueva.id_Comprador;
                     subasta.id_Producto = subastaNueva.id_Producto;
@@ -181,10 +191,22 @@ namespace DAL
                     subasta.tags = subastaNueva.tags;
                     subasta.titulo = subastaNueva.titulo;
                     subasta.valor_Actual = subastaNueva.valor_Actual;
-                    //subasta.Vendedor = subastaNueva.Vendedor;
+                    //subasta.Vendedor = subastaNueva.Vendedor;*/
+
+                    //save modified entity using new Context
+
+                    db.Entry(subasta).CurrentValues.SetValues(subastaNueva);
+                    
 
                     db.SaveChanges();
-                }
+                    System.Diagnostics.Debug.WriteLine("Sub "+ subasta.estado.ToString());
+                    
+                    // other changed properties
+                   
+                    System.Diagnostics.Debug.WriteLine("Salgo actualizar subasta");
+            }
+               
+            else System.Diagnostics.Debug.WriteLine("No hay subasta para actualizar");
             }
             catch (Exception e)
             {
@@ -289,6 +311,9 @@ namespace DAL
             List<Correo> lista=new List<Correo>();
             try
             {
+
+               
+
                 System.Diagnostics.Debug.WriteLine("Entro correoCompraDirecta DAL ");
                 //Creo los correos a enviar
                 Correo comprador = correoComprador(tenant, sub);
@@ -313,6 +338,38 @@ namespace DAL
             
             return lista;
         }
+
+
+
+        public TiendaVirtualDTO datos_tienda(string tenant) {
+
+            TiendaVirtualDTO tienda = null;
+
+            try
+            {
+                IDALTiendaVirtual _itienda = new DALTiendaVirtualEF();
+
+                List<TiendaVirtualDTO> tiendas = _itienda.ObtenerTiendas();
+
+                foreach (var item in tiendas)
+                {
+                    if (item.Dominio.Equals(tenant))
+                    {
+                        tienda = (TiendaVirtualDTO)item;
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            return tienda;
+        
+        }
+
+
 
 
         //******************************************************
@@ -362,7 +419,7 @@ namespace DAL
 
                 correo.destinatario = vendedor.email;
                 correo.asunto = "Felicidades " + vendedor.nick + ". El usuario " + comprador.nick +" ha comprado tu articulo " + sub.titulo;
-                correo.mensaje = "Articulo : " + sub.titulo + "Precio venta " + sub.precio_Compra.ToString() + " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
+                correo.mensaje = "Articulo : " + sub.titulo + "Precio venta " + sub.valor_Actual.ToString() + " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
 
                 System.Diagnostics.Debug.WriteLine("Salgo correoVendedor DAL ");
                
@@ -386,6 +443,10 @@ namespace DAL
             Correo correo = new Correo();
             try
             {
+               TiendaVirtualDTO tienda = datos_tienda(tenant);
+
+
+
                 System.Diagnostics.Debug.WriteLine("Entro correoVendedor DAL");
                 _idal = new DALUsuario();
 
@@ -430,7 +491,7 @@ namespace DAL
                 
                 correo.destinatario = comprador.email;
                 correo.asunto = "Felicidades " + comprador.nick + ". Has comprado el articulo " + sub.titulo;
-                correo.mensaje = "Articulo : " + sub.titulo + "Precio compra " + sub.precio_Compra.ToString() + " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
+                correo.mensaje = "Articulo : " + sub.titulo + "Precio compra " + sub.valor_Actual.ToString() + " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
 
                 System.Diagnostics.Debug.WriteLine("Salgo correoComprador DAL");
                 

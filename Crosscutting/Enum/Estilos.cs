@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Crosscutting.Enum
 {
-    public enum Estilos
+    public enum Estilos : int
     {
-        Style1,
+        Style1 = 0,
         Style2
     }
 }

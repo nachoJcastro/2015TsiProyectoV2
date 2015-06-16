@@ -44,6 +44,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/moment.js"></script>
@@ -69,6 +70,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $('.datepicker').datetimepicker(); //Initialise any date pickers
+        $('#datetimepicker1').datetimepicker(); //Initialise any date picker
+
+
 
 /*
         $.datepicker.regional['es'] = {
@@ -131,5 +137,4 @@
 </script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false">
 </script>
-
 

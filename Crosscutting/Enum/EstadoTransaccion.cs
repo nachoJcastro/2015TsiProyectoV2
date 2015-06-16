@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Crosscutting.Enum
 {
-    public enum EstadoTransaccion
+    public enum EstadoTransaccion : int
     {
-        Pendiente,
+        Pendiente =0 ,
         Activa,
         Cerrada,
         Bloqueda,

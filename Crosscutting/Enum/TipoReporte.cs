@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Crosscutting.Enum
 {
-    public enum TipoReporte
+    public enum TipoReporte :int
     {
-        Usuario,
+        Usuario = 0,
         Transaccion
     }
 }

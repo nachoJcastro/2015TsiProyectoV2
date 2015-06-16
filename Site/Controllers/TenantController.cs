@@ -34,6 +34,10 @@ namespace Site.Controllers
             System.Diagnostics.Debug.WriteLine("ID tenant :" + tenantID);
             if (_ibl.ExisteSitio(tenantID))
             {
+
+
+               // System.Web.HttpContext.Current.Session.Clear();
+                
                 /*System.Diagnostics.Debug.WriteLine("ID tenant :" + id);
                 System.Diagnostics.Debug.WriteLine("Tenant");
                 ViewBag.Message = id;

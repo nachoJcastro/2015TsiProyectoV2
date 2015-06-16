@@ -127,37 +127,44 @@ namespace BusinessLogicLayer.TenantControllers
 
 
 
-
+        // TAREA FINALIZAR SUBASTAS
         public void FinalizarSubastasTarea(String tenant)
         {
-            System.Diagnostics.Debug.WriteLine("Entro en finalizar tarea por JOB");
+            System.Diagnostics.Debug.WriteLine("Entro en finalizar SUBASTA POR TAREA");
             try
             {
-                List<Subasta> subastas =this.ObtenerSubastas(tenant);
+                List<Subasta> subastas =ObtenerSubastasActivas(tenant);
                 IBLOferta ioferta = new BLOferta();
                 _dal = new DALSubastaEF();
+
+                if (subastas.Count==0) System.Diagnostics.Debug.WriteLine("No hay subastas activas");
+                if (subastas.Count > 0) System.Diagnostics.Debug.WriteLine("Cantidad Subastas = "+ subastas.Count.ToString());
 
                 foreach (var item in subastas)
                 {
 
-                    // List<Oferta> ofertas = ibl.ObtenerOfertas(item.id);  
+                    System.Diagnostics.Debug.WriteLine("Hay subasta activa  Id ="+  item.id.ToString());
                     List<Correo> lista = new List<Correo>();
-
                     DateTime ahora = DateTime.Now;
-
                     DateTime fecha_subasta = (DateTime)item.fecha_Cierre;
 
                     int resultado = DateTime.Compare(fecha_subasta, ahora);
 
-                    System.Diagnostics.Debug.WriteLine("paso fechas y resultado = " + resultado.ToString());
+                    System.Diagnostics.Debug.WriteLine("Paso fechas y resultado = " + resultado.ToString());
 
-                    if (resultado <= 0 && item.estado==EstadoTransaccion.Activa)
+                    System.Diagnostics.Debug.WriteLine("Estado subasta = " + item.estado.ToString());
+
+                    String estado = item.estado.ToString();
+
+
+
+                    if (resultado <= 0 && estado.Equals("Activa"))
                     {
                         List<Oferta> ofertas = _dal.ObtenerOfertas(item.id);
 
-                        if (ofertas != null)
+                        System.Diagnostics.Debug.WriteLine("Cantidad ofertas = " + ofertas.Count.ToString());
+                        if (ofertas.Count > 0)
                         {
-
                             var ofertasOrdenadas = ofertas.OrderByDescending(o => o.fecha);
                             //var oferta = ofertasOrdenadas.First();
                             IBLUsuario blUsu = new BLUsuario();
@@ -197,13 +204,20 @@ namespace BusinessLogicLayer.TenantControllers
                         }
                         else {
 
-                            
+                            System.Diagnostics.Debug.WriteLine("Sin ofertas = " + ofertas.Count.ToString());
                             try
                             {
-                                System.Diagnostics.Debug.WriteLine("Entro Finalizar Compra directa sin oferta " + item.titulo);
+                                
+                                item.estado = EstadoTransaccion.Cerrada;
+                                _dal.ActualizarSubasta(tenant, (Subasta)item);
+                                
+                                System.Diagnostics.Debug.WriteLine("Actualizo Subasta sin ofertas " + item.titulo);
+                                
+                                
                                 lista = new List<Correo>();
 
                                 Correo correo = _dal.correoSinOfertas(tenant, (Subasta)item);
+                                
                                 System.Diagnostics.Debug.WriteLine("Correo "+ correo.mensaje);
                                 
                                 lista.Add( _dal.correoSinOfertas(tenant, (Subasta)item));
@@ -219,19 +233,13 @@ namespace BusinessLogicLayer.TenantControllers
 
                                 throw;
                             }
-            
-                        
-                        
-                        
-                        
-                        
                         }
 
 
 
-                        //enviarMails(Uvendedor, Ucomprador);*/
-                    }
+                    }   
                 }
+                System.Diagnostics.Debug.WriteLine("Salgo de finalizar SUBASTA POR TAREA");
             }
             catch (Exception)
             {

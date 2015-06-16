@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Crosscutting.Enum
 {
-    public enum TipoFinalizacion
+    public enum TipoFinalizacion: int
     {
         [Description("Subasta")]
-        Subasta,
+        Subasta = 0,
         [Description("Directa")]
-        Compra_directa,
+        Compra_directa
     }
 
     

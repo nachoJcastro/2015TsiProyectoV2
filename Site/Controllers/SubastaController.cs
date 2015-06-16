@@ -396,7 +396,7 @@ namespace Site.Controllers
         // POST: Subastas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-         public ActionResult Create([Bind(Include = "id_Categoria,id_Producto,atributos,titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,fecha_Inicio,fecha_Cierre")]SubastaSite subasta_site, FormCollection form, HttpPostedFileBase portada)
+         public ActionResult Create([Bind(Include = "id_Categoria,id_Producto,atributos,titulo,descripcion,tags,precio_Base,precio_Compra,garantia,coordenadas,direccion,fecha_Inicio,fecha_Cierre")]SubastaSite subasta_site, FormCollection form, HttpPostedFileBase portada)
         {
             Subasta subasta = new Subasta();
             
@@ -414,13 +414,16 @@ namespace Site.Controllers
             if (subasta_site.fecha_Cierre != null)
             { subasta.fecha_Cierre = (DateTime)subasta_site.fecha_Cierre; }
 
+            subasta.tags = subasta_site.tags;
+            subasta.descripcion= subasta_site.descripcion;
             subasta.garantia = subasta_site.garantia;
             subasta.direccion = subasta_site.direccion;
             subasta.coordenadas = subasta_site.coordenadas;
             subasta.id_Categoria = (int)subasta_site.id_Categoria;
             subasta.id_Producto = (int)subasta_site.id_Producto;
-
-
+            subasta.precio_Base = (double)subasta_site.precio_Base;
+            subasta.precio_Compra = (double)subasta_site.precio_Compra;
+            subasta.valor_Actual = (double)subasta_site.valor_Actual;
             string tipo = form["Tipo"];
             //string cat = form["Categorias"];
             //string prod = form["Productos"];
@@ -458,7 +461,7 @@ namespace Site.Controllers
             {
                 TipoFinalizacion tipoSub = TipoFinalizacion.Subasta;
                 subasta.finalizado = tipoSub;
-
+                subasta.valor_Actual=(double)subasta.precio_Base;
                 valor_tenant = user_sitio.Dominio.ToString();
                 id_sub = subIBL.AgregarSubasta_ID(valor_tenant, subasta);
             }
@@ -466,6 +469,7 @@ namespace Site.Controllers
             {
                 TipoFinalizacion tipoSub = TipoFinalizacion.Compra_directa;
                 subasta.finalizado = tipoSub;
+                subasta.precio_Base=subasta.precio_Compra;
                 valor_tenant = user_sitio.Dominio.ToString();
                 id_sub= subIBL.AgregarSubasta_ID(valor_tenant, subasta);
             }
@@ -474,7 +478,7 @@ namespace Site.Controllers
 
             foreach (var item in subasta_site.atributos)
             {
-                System.Diagnostics.Debug.WriteLine("Atributo idsub:" + id_sub.ToString() + " id atrib " + item.IdAtributo.ToString());
+              //  System.Diagnostics.Debug.WriteLine("Atributo idsub:" + id_sub.ToString() + " id atrib " + item.IdAtributo.ToString());
 
                 Atributo_Subasta atributo=new Atributo_Subasta();
                 atributo.id_Subasta=id_sub;
@@ -533,17 +537,16 @@ namespace Site.Controllers
                 }
 
                 sub_site.finalizado = subasta.finalizado;
-                sub_site.fecha_Inicio = DateTime.Now;
-                sub_site.fecha_Cierre = (DateTime)subasta.fecha_Cierre;
+                sub_site.fecha_Inicio = subasta.fecha_Inicio;
+                sub_site.fecha_Cierre = subasta.fecha_Cierre;
                 sub_site.garantia = subasta.garantia;
                 sub_site.Comentario = subasta.Comentario;
                 sub_site.Atributo_Subasta = subasta.Atributo_Subasta;
-
+                sub_site.valor_Actual = (double)subasta.valor_Actual;
+                sub_site.precio_Base=(double)subasta.precio_Base;
+                sub_site.precio_Compra = (double)subasta.precio_Compra;
                 sub_site.Calificacion = subasta.Calificacion;
                 sub_site.Favorito = subasta.Favorito;
-
-               
-
             }
             catch (Exception)
             {

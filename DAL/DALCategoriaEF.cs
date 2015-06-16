@@ -61,7 +61,7 @@ namespace DAL
         }
         public List<CategoriasDTO> ObtenerCategoriasPorTienda(int Tienda) 
         {
-            var listaCat = new List<CategoriasDTO>();
+            List<CategoriasDTO> listaCat = null;
             try
             {
                 listaCat = db.Categorias.Where(t => t.TiendaId == Tienda).ToList();

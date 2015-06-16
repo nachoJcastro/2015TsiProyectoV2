@@ -11,7 +11,7 @@ namespace Site.Tareas
     {
         public static void Start()
         {
-            IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
+            /*IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
 
             IJobDetail job = JobBuilder.Create<EmailTarea>().Build();
@@ -21,11 +21,11 @@ namespace Site.Tareas
                   (s =>
                      s.WithIntervalInMinutes(5)
                     .OnEveryDay()
-                    .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(19,32))
+                   .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(DateTime.Now.Hour, DateTime.Now.Minute))
                   )
                 .Build();
 
-            scheduler.ScheduleJob(job, trigger);
+            scheduler.ScheduleJob(job, trigger);*/
         }
     }
 }

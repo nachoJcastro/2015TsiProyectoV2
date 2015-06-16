@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
+using System.Text;
 
 namespace ServicioCorreo
 {
@@ -18,6 +20,10 @@ namespace ServicioCorreo
                    
                     mensaje.Subject = item.asunto;
                     mensaje.Body = item.mensaje;
+                    mensaje.IsBodyHtml = true;
+
+                    
+
                     using (SmtpClient client = new SmtpClient
                     {
                         EnableSsl = true,
