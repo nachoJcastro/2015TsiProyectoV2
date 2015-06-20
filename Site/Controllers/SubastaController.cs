@@ -360,7 +360,7 @@ namespace Site.Controllers
                 sub_site.id_Producto = Convert.ToInt32(id_prod);
                 sub_site.fecha_Cierre = DateTime.Now;
                 // tipo subasta
-                List<String> tipo_subasta = new List<String> { "Subasta", "Compra directa" };
+                List<String> tipo_subasta = new List<String> { "Tipo de Venta", "Subasta", "Compra directa" };
                 ViewData["Tipo"] = tipo_subasta;
 
                 // Garantia
@@ -462,6 +462,7 @@ namespace Site.Controllers
                 TipoFinalizacion tipoSub = TipoFinalizacion.Subasta;
                 subasta.finalizado = tipoSub;
                 subasta.valor_Actual=(double)subasta.precio_Base;
+                subasta.precio_Compra = (double)subasta.precio_Base;
                 valor_tenant = user_sitio.Dominio.ToString();
                 id_sub = subIBL.AgregarSubasta_ID(valor_tenant, subasta);
             }
@@ -469,7 +470,8 @@ namespace Site.Controllers
             {
                 TipoFinalizacion tipoSub = TipoFinalizacion.Compra_directa;
                 subasta.finalizado = tipoSub;
-                subasta.precio_Base=subasta.precio_Compra;
+                subasta.precio_Base = (double)subasta.precio_Compra;
+                subasta.valor_Actual = (double)subasta.precio_Compra;
                 valor_tenant = user_sitio.Dominio.ToString();
                 id_sub= subIBL.AgregarSubasta_ID(valor_tenant, subasta);
             }

@@ -281,6 +281,7 @@ namespace DAL
                 db = new TenantDB(tenant);
                 var subasta = db.Subasta.FirstOrDefault(s => s.id == id_subasta);
                 subasta.valor_Actual = monto;
+                subasta.precio_Compra = monto;
                 db.SaveChanges();
                 return true;
             }
@@ -419,7 +420,7 @@ namespace DAL
 
                 correo.destinatario = vendedor.email;
                 correo.asunto = "Felicidades " + vendedor.nick + ". El usuario " + comprador.nick +" ha comprado tu articulo " + sub.titulo;
-                correo.mensaje = "Articulo : " + sub.titulo + "Precio venta " + sub.valor_Actual.ToString() + " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
+                correo.mensaje = "Articulo : " + sub.titulo + "Precio venta " + sub.precio_Base.ToString() + " Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant + "chebay.com";
 
                 System.Diagnostics.Debug.WriteLine("Salgo correoVendedor DAL ");
                
@@ -456,7 +457,7 @@ namespace DAL
 
                 correo.destinatario = vendedor.email;
                 correo.asunto = "Lo sentimos " + vendedor.nick + ". El articulo finalizo sin ofertas " ;
-                correo.mensaje = "Articulo : " + subasta.titulo + " .Precio de venta " + subasta.valor_Actual + " .Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant+"chebay.com" ;
+                correo.mensaje = "Articulo : " + subasta.titulo + " .Precio base " + subasta.precio_Base + " .Fecha : " + DateTime.Now.ToString() + System.Environment.NewLine + " Sitio " + tenant+"chebay.com" ;
 
                 System.Diagnostics.Debug.WriteLine("Salgo correoVendedor DAL ");
 

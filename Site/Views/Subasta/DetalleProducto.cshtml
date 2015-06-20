@@ -18,7 +18,16 @@
                 </div>
                 <div class="modal-body">
                     <p>Esta seguro de comprar este producto? </p>
-                    <p> Usted dispone de $ @Model.billeteraUsuario y se le descontaran $ @Model.valor_Actual </p>
+                    @if (Model.valor_Actual == 0)
+                    {
+                        <p> Usted dispone de $ @Model.billeteraUsuario y se le descontaran $ @Model.precio_Compra </p>
+
+                    }
+                    else
+                    {
+                        <p> Usted dispone de $ @Model.billeteraUsuario y se le descontaran $ @Model.valor_Actual </p>
+                    }
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -116,9 +125,21 @@
         <div class="col-md-12">
             @*<img src="@Html.DisplayFor(model => model.portada)" style="max-width: 300px;">*@
         </div>
-        <div class="col-md-12">
-            <h2>$ @Html.DisplayFor(model => model.precio_Compra)</h2>
-        </div>
+        @if (@Model.precio_Compra == 0)
+        {
+            <div class="col-md-12">
+                <h2>$ @Html.DisplayFor(model => model.valor_Actual)</h2>
+            </div>
+
+        }
+        else
+        {
+            <div class="col-md-12">
+                <h2>$ @Html.DisplayFor(model => model.precio_Compra)</h2>
+            </div>
+
+        }
+        
         <div class="col-md-12">
             <p><i class="fa fa-clock-o"></i> Finaliza - @Html.DisplayFor(model => model.fecha_Cierre)</p>
         </div>
