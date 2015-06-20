@@ -38,10 +38,12 @@ namespace Recomendaciones
                     int calculo = item.cantidad * cantRetorno / totalDeNFavoritos;//calcula el "porcentaje" de ese tipo de producto en la lista
 
                     subastasRecomendadasAux = subIBL.ObtenerSubastasByTipoProducto(tenant, item.idTProd);
-
-                    for (int i = 0; i < calculo; i++)
+                    if (subastasRecomendadasAux.Count > 1)
                     {
-                        subastasRecomendadas.Add(subastasRecomendadasAux.ElementAt(rnd.Next(subastasRecomendadasAux.Count - 1)));//obtiene subastas de forma ramdom
+                        for (int i = 0; i < calculo; i++)
+                        {
+                            subastasRecomendadas.Add(subastasRecomendadasAux.ElementAt(rnd.Next(subastasRecomendadasAux.Count - 1)));//obtiene subastas de forma ramdom
+                        }
                     }
                 }
             }

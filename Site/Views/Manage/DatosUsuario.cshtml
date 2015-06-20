@@ -82,6 +82,10 @@
 
 
         @Html.HiddenFor(model => model.coordenadas)
+
+        <button type="button" onclick="location.href='@Url.Action("ListadoComprasVentas/", "Calificacion", new { ventas = false})'" class="btn btn-default">Mis Compras</button>
+        <button type="button" onclick="location.href='@Url.Action("ListadoComprasVentas/", "Calificacion", new { ventas = true })'" class="btn btn-default">Mis Ventas</button>
+
        
         <div class="form-group">
             @Html.ActionLink("Volver", "Index", "Tenant", new { area = "" }, new { @class = "navbar-brand" })
