@@ -139,8 +139,8 @@ namespace Site.Controllers
 
                 IBLUsuario usuIBL = new BLUsuario();
                 var idUsuario = usuIBL.ObtenerIdByEmail(tenantID, user.Email);
-
-                List<Subasta> prodsfav = recom.AlgRecomen(tenantID, idUsuario);/////////////RECOMENDACIONES//////////////////////////////
+                int idTenant = _ibl.ObtenerIdTenant(tenantID);
+                List<Subasta> prodsfav = recom.AlgRecomen(idTenant, idUsuario);/////////////RECOMENDACIONES//////////////////////////////
 
                 
                 return View();

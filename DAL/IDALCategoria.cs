@@ -15,5 +15,6 @@ namespace DAL
         List<CategoriasDTO> ObtenerCategoriasPorTienda(int Tienda);
         void ActualizarCategoria(CategoriasDTO categoriaDTO); //Update
         void EliminarCategoria(int categoriaId); //Delete
+        CategoriasDTO ObtenerCategoriaByNombre(int tenant, String nombre);
     }
 }

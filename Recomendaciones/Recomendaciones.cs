@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.TenantControllers;
+﻿using BusinessLogicLayer;
+using BusinessLogicLayer.TenantControllers;
 using BusinessLogicLayer.TenantInterfaces;
 using Crosscutting.EntityTenant;
 using Crosscutting.Struct;
@@ -13,19 +14,21 @@ namespace Recomendaciones
     public abstract class Recomendaciones
     {
 
-        public List<Subasta> AlgRecomen(String tenant, int idUsuario)
+        public List<Subasta> AlgRecomen(int tenantId, int idUsuario)
         {
+            IBLTenant tiendaIBL = new BLTenant();
+            var tenant = tiendaIBL.ObtenerDatosTenant(tenantId);
             IBLFavorito favIBL = new BLFavorito();
 
-            List<TprodXCant> tipoProds = favIBL.obtenerTopNtipoProdFav(tenant, idUsuario, 3);
+            List<TprodXCant> tipoProds = favIBL.obtenerTopNtipoProdFav(tenant.Nombre, idUsuario, 3);
             
-            List<Subasta> prods = getRecomendaciones(tenant, idUsuario, tipoProds, 6);
+            List<Subasta> prods = getRecomendaciones(tenantId, idUsuario, tipoProds, 6);
 
             return prods;
         }
 
 
-        public abstract List<Subasta> getRecomendaciones(String tenant, int idUsuario, List<TprodXCant> tipoProds, int cantRetorno);
+        public abstract List<Subasta> getRecomendaciones(int tenant, int idUsuario, List<TprodXCant> tipoProds, int cantRetorno);
 
     }
 }
