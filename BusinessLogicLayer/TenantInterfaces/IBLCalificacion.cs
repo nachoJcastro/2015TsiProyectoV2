@@ -18,5 +18,8 @@ namespace BusinessLogicLayer.TenantInterfaces
         CalificacionMongo ObtenerCalificacionDelVendedor(String tenant, int subastaId);
         CalificacionMongo ObtenerCalificacionDelComprador(String tenant, int subastaId);
 
+        double ObtenerReputacionVendedor(String tenant, int usuarioId);
+        double ObtenerReputacionComprador(String tenant, int usuarioId);
+
     }
 }

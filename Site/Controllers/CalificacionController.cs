@@ -99,7 +99,7 @@ namespace Site.Controllers
 
             _blcalificacion.AgregarCalificacion(valor_tenant, calificacion);
 
-            return Json(new { redirectUrl = Url.Action("DatosUsuario", "Manage"), isRedirect = true });
+            return Json(new { redirectUrl = Url.Action("DatosUsuario/", "Manage", new { idUsuario = idLogueado}), isRedirect = true });
         }
 
 
@@ -148,6 +148,7 @@ namespace Site.Controllers
                         throw;
                     }
                 }
+                ViewBag.idUsuario = idUsuario;
                 ViewBag.Ventas = ventas;
                 ViewBag.TamanioLista = listaSub.Count;
                 ViewBag.ListaComprasVentas = listaSub.OrderBy(c => c.fecha_Cierre);

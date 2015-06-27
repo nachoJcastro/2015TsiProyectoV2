@@ -42,9 +42,9 @@ namespace Site.Models
 
         public DateTime fecha_Alta { get; set; }
 
-        public string reputacion_Venta { get; set; }
+        public double reputacion_Venta { get; set; }
 
-        public string reputacion_Compra { get; set; }
+        public double reputacion_Compra { get; set; }
 
     }
 }

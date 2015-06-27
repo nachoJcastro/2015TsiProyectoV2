@@ -17,6 +17,9 @@ namespace Site.Controllers
    
     public class ManageController : Controller
     {
+
+        IBLUsuario _iusr = new BLUsuario();
+        IBLCalificacion _ical = new BLCalificacion();
         private UsuarioSite usuario;
        /* private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;*/
@@ -35,7 +38,6 @@ namespace Site.Controllers
                  usuario = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
 
                  var tienda = usuario.Dominio;
-                 IBLUsuario _iusr = new BLUsuario();
                                   
                  var usr = _iusr.GetUsuario(tienda, idUsuario);
                  
@@ -51,6 +53,8 @@ namespace Site.Controllers
                      usr_model.direccion = usr.direccion;
                      usr_model.email = usr.email;
                      usr_model.fecha_Nacimiento = (DateTime)usr.fecha_Nacimiento;
+                     usr_model.reputacion_Compra = _ical.ObtenerReputacionComprador(tienda, idUsuario);
+                     usr_model.reputacion_Venta = _ical.ObtenerReputacionVendedor(tienda, idUsuario);
 
                      if (idUsuario == usuario.idUsuario)
                      {

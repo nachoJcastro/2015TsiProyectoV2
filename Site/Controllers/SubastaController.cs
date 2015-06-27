@@ -482,13 +482,15 @@ namespace Site.Controllers
             foreach (var item in subasta_site.atributos)
             {
               //  System.Diagnostics.Debug.WriteLine("Atributo idsub:" + id_sub.ToString() + " id atrib " + item.IdAtributo.ToString());
-
-                Atributo_Subasta atributo=new Atributo_Subasta();
-                atributo.id_Subasta=id_sub;
-                atributo.id_Atributo=item.IdAtributo;
-                atributo.valor=item.valor;
-                //atributo.Subasta = subasta;
-                atrSubIBL.AgregarAtributo_Subasta(valor_tenant, atributo);
+                if (item.valor != null)
+                {
+                    Atributo_Subasta atributo=new Atributo_Subasta();
+                    atributo.id_Subasta=id_sub;
+                    atributo.id_Atributo=item.IdAtributo;
+                    atributo.valor=item.valor;
+                    //atributo.Subasta = subasta;
+                    atrSubIBL.AgregarAtributo_Subasta(valor_tenant, atributo);
+                }
             }
              SubastaSite  sub_site = crearSubastaSite(subasta);
             
