@@ -284,10 +284,24 @@ namespace BusinessLogicLayer.TenantControllers
         return  _dal.AgregarSubasta_ID(tenant, subasta);
 
       }
-    public List<Subasta> ObtenerSubastasPorCriterio(string tenant, int idCat, string criterio, int? tipo, string min, string max)
-    {
-        return _dal.ObtenerSubastasPorCriterio(tenant, idCat, criterio,tipo,min,max);
-    }
+
+
+        public List<Subasta> ObtenerSubastasPorCriterio(string tenant, int idCat, string criterio, int? tipo, string min, string max)
+        {
+            return _dal.ObtenerSubastasPorCriterio(tenant, idCat, criterio,tipo,min,max);
+        }
+
+
+        public List<Subasta> ObtenerVentasbyUsuario(string tenant, int idUsuario)
+        {
+            return _dal.ObtenerVentasbyUsuario(tenant, idUsuario);
+        }
+
+
+        public List<Subasta> ObtenerComprasbyUsuario(string tenant, int idUsuario)
+        {
+            return _dal.ObtenerComprasbyUsuario(tenant, idUsuario);
+        }
 
 
     public List<Subasta> ObtenerSubastasCompleto(string tenant, int idCat, string criterio, int? tipo, string min, string max, int page, int rows)

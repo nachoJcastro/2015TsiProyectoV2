@@ -42,7 +42,6 @@ namespace Site.Controllers
                 var user = Session["usuario"] as UsuarioSite;
                 valor_tenant = user.Dominio;
                 
-                //int id_subasta = Convert.ToInt32(idSubasta);
                 var lista = _bloferta.ObtenerOfertasByProducto(valor_tenant, idSubasta);
                 List<OfertaModel> listOfer = new List<OfertaModel>();
 
@@ -65,6 +64,8 @@ namespace Site.Controllers
 
                     listOfer.Add(ofert);
                 }
+                ViewBag.monto_actual = _blsubasta.ObtenerSubasta(valor_tenant, idSubasta).valor_Actual;
+                ViewBag.ListaOfertasLargo = listOfer.Count;
                 ViewBag.ListaOfertas = listOfer;
                 ViewBag.idSubasta = idSubasta;
             }

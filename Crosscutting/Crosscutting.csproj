@@ -33,6 +33,18 @@
     <Reference Include="Facebook">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\MongoDB.Bson.2.0.1\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\MongoDB.Driver.2.0.1\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.0.1\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy">
+      <HintPath>..\packages\mongocsharpdriver.2.0.1\lib\net45\MongoDB.Driver.Legacy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -46,6 +58,7 @@
     <Compile Include="EntityTareas\Correo.cs" />
     <Compile Include="EntityTenant\Atributo_Subasta.cs" />
     <Compile Include="EntityTenant\Calificacion.cs" />
+    <Compile Include="EntityTenant\CalificacionMongo.cs" />
     <Compile Include="EntityTenant\Comentario.cs" />
     <Compile Include="EntityTenant\ImagenesTenant.cs" />
     <Compile Include="Entity\Paginacion.cs" />

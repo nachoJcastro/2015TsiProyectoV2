@@ -14,6 +14,8 @@ namespace Site.Models
 
         public DateTime fecha { get; set; }
 
+        public string nombreUsuario { get; set; }
+
         public int id_Usuario { get; set; }
 
         public int id_Subasta { get; set; }

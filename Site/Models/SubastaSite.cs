@@ -80,10 +80,16 @@ namespace Site.Models
         [Display(Name = "Fecha de inicio")]
         public DateTime fecha_Inicio { get; set; }
 
-
-        
         [Display(Name = "Fecha de Finalización")]
         public DateTime? fecha_Cierre { get; set; }
+
+        [Display(Name = "Calificacion del Vendedor")]
+        public int calificacionDelVendedor { get; set; }
+
+        [Display(Name = "Calificacion del Comprador")]
+        public int calificacionDelComprador { get; set; }
+
+        public int listaVenta { get; set; }
 
         public double billeteraUsuario { get; set; }
 

@@ -6,10 +6,14 @@
     ViewBag.Title = "Listado";
 }
 
-<h2>Historial de Ofertas</h2>
 
-@if (ViewBag.ListaOfertas != null)
+
+@if (ViewBag.ListaOfertasLargo != 0)
 {
+    <h2>Historial de Ofertas</h2>
+
+    <h2><a href="@Url.Action("CreateOferta/", "Oferta", new { idSubasta = ViewBag.idSubasta, ViewBag.monto_actual }, null)"> Superar estas ofertas</a></h2>
+
     <div class="panel-body">
         <table class="table">
             <tr>
@@ -28,7 +32,7 @@
             {
                 <tr class="texto_table">
                     <td>
-                        @item.nombre
+                        <a href="@Url.Action("DatosUsuario/", "Manage", new { idUsuario = item.id_Usuario }, null)">@item.nombre</a>
                     </td>
                     <td>
                         @item.Monto
@@ -41,8 +45,15 @@
         </table>
     </div>
 
+    }
+    else
+    {
+    <h2>
+        Publicacion sin ofertas,
+        <a href="@Url.Action("CreateOferta/", "Oferta", new { idSubasta = ViewBag.idSubasta, ViewBag.monto_actual }, null)">sé el primero</a>
+    </h2>
+    }
     <div class="jumbotron">
-        <button type="button" onclick="location.href='@Url.Action("DetalleProducto/", "Subasta",new { idSubasta = ViewBag.idSubasta})'" class="btn btn-default">Volver</button>
+        @Html.ActionLink("Volver", "DetalleProducto/", "Subasta", new { idSubasta = ViewBag.idSubasta }, new { @class = "navbar-brand" })
     </div>
 
-}

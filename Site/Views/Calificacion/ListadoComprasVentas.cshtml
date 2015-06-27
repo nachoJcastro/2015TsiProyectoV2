@@ -1,0 +1,142 @@
+﻿@using Site.Models
+@model SubastaSite
+@{
+    ViewBag.Title = "Listado de Calificaciones";
+}
+
+@if (ViewBag.TamanioLista != 0)
+{
+    if (ViewBag.Ventas)
+    {
+        <h2>Listado de Ventas</h2>
+    }
+    else
+    {
+        <h2>Listado de Compras</h2>
+    }
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>
+                    Producto
+                </th>
+                <th>
+                    Finalizacion
+                </th>
+                <th>
+                    Precio
+                </th>
+                <th>
+                    Fecha
+                </th>
+                @if (ViewBag.Ventas)
+                { 
+                <th>
+                    Calificacion Recibida
+                </th>
+                <th>
+                    Calificacion Otorgada
+                </th>
+                }
+                else
+                {
+                    <th>
+                        Calificacion Otorgada
+                    </th>
+                    <th>
+                        Calificacion Recibida
+                    </th>
+                }
+            </tr>
+
+            @foreach (var item in ViewBag.ListaComprasVentas)
+            {
+                <tr class="texto_table">
+                    <td>
+                        <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)">@item.titulo</a>
+                    </td>
+                    <td>
+                        @item.finalizado
+                    </td>
+                    <td>
+                        $ @item.precio_Compra
+                    </td>
+                    <td>
+                        @item.fecha_Cierre
+                    </td>
+                    @if (ViewBag.Ventas)
+                    {
+
+                        if(@item.calificacionDelComprador == 0)
+                        {
+                        <td>
+                            Aun sin calificar
+                        </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @item.calificacionDelComprador
+                            </td>
+                        }
+
+
+                        if (@item.calificacionDelVendedor == 0)
+                        {
+                        <td>
+                            <a href="@Url.Action("CreateCalificacion/", "Calificacion", new { idSubasta = item.id, venta = ViewBag.Ventas})">Calificar</a>
+                        </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @item.calificacionDelVendedor
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        if (@item.calificacionDelComprador == 0)
+                        {
+                            <td>
+                                <a href="@Url.Action("CreateCalificacion/", "Calificacion", new {idSubasta = item.id, venta = ViewBag.Ventas})">Calificar</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @item.calificacionDelComprador
+                            </td>
+                        }
+                        if (@item.calificacionDelVendedor == 0)
+                        {
+                            <td>
+                                Aun sin calificar
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @item.calificacionDelVendedor
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    if (ViewBag.Ventas)
+    {
+        <h2>No hay ventas registradas</h2>
+    }
+    else
+    {
+        <h2>No hay compras registradas</h2>
+    }
+}
+    <div class="jumbotron">
+        <button type="button" onclick="location.href='@Url.Action("DatosUsuario/", "Manage", new { idUsuario = ViewBag.idUsuario})'" class="btn btn-default">Volver</button>
+    </div>

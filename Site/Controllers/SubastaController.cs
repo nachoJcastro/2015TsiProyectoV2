@@ -50,6 +50,7 @@ namespace Site.Controllers
             this.atrIBL = atrIBL;
             this.favIBL = favIBL;
             this.atrSubIBL = atrSubIBL;
+
         }
 
         public SubastaController()
@@ -361,7 +362,7 @@ namespace Site.Controllers
                 sub_site.id_Producto = Convert.ToInt32(id_prod);
                 sub_site.fecha_Cierre = DateTime.Now;
                 // tipo subasta
-                List<String> tipo_subasta = new List<String> { "Subasta", "Compra directa" };
+                List<String> tipo_subasta = new List<String> { "Tipo de Venta", "Subasta", "Compra directa" };
                 ViewData["Tipo"] = tipo_subasta;
 
                 // Garantia
@@ -463,6 +464,7 @@ namespace Site.Controllers
                 TipoFinalizacion tipoSub = TipoFinalizacion.Subasta;
                 subasta.finalizado = tipoSub;
                 subasta.valor_Actual=(double)subasta.precio_Base;
+                subasta.precio_Compra = (double)subasta.precio_Base;
                 valor_tenant = user_sitio.Dominio.ToString();
                 id_sub = subIBL.AgregarSubasta_ID(valor_tenant, subasta);
             }
@@ -470,7 +472,8 @@ namespace Site.Controllers
             {
                 TipoFinalizacion tipoSub = TipoFinalizacion.Compra_directa;
                 subasta.finalizado = tipoSub;
-                subasta.precio_Base=subasta.precio_Compra;
+                subasta.precio_Base = (double)subasta.precio_Compra;
+                subasta.valor_Actual = (double)subasta.precio_Compra;
                 valor_tenant = user_sitio.Dominio.ToString();
                 id_sub= subIBL.AgregarSubasta_ID(valor_tenant, subasta);
             }
@@ -480,13 +483,15 @@ namespace Site.Controllers
             foreach (var item in subasta_site.atributos)
             {
               //  System.Diagnostics.Debug.WriteLine("Atributo idsub:" + id_sub.ToString() + " id atrib " + item.IdAtributo.ToString());
-
-                Atributo_Subasta atributo=new Atributo_Subasta();
-                atributo.id_Subasta=id_sub;
-                atributo.id_Atributo=item.IdAtributo;
-                atributo.valor=item.valor;
-                //atributo.Subasta = subasta;
-                atrSubIBL.AgregarAtributo_Subasta(valor_tenant, atributo);
+                if (item.valor != null)
+                {
+                    Atributo_Subasta atributo=new Atributo_Subasta();
+                    atributo.id_Subasta=id_sub;
+                    atributo.id_Atributo=item.IdAtributo;
+                    atributo.valor=item.valor;
+                    //atributo.Subasta = subasta;
+                    atrSubIBL.AgregarAtributo_Subasta(valor_tenant, atributo);
+                }
             }
              SubastaSite  sub_site = crearSubastaSite(subasta);
             
@@ -548,6 +553,7 @@ namespace Site.Controllers
                 sub_site.precio_Compra = (double)subasta.precio_Compra;
                 sub_site.Calificacion = subasta.Calificacion;
                 sub_site.Favorito = subasta.Favorito;
+                sub_site.id_Vendedor = subasta.id_Vendedor;
             }
             catch (Exception)
             {
@@ -631,41 +637,6 @@ namespace Site.Controllers
         //    return View(subasta);
         //}
 
-        //// GET: Subastas/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Subasta subasta = db.Subastas.Find(id);
-        //    if (subasta == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(subasta);
-        //}
-
-        //// POST: Subastas/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Subasta subasta = db.Subastas.Find(id);
-        //    db.Subastas.Remove(subasta);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
 
         public ActionResult FinalizarCompraDirecta(int idSubasta)
         {
@@ -738,7 +709,7 @@ namespace Site.Controllers
                 sub_site = crearSubastaSite(subasta);
                 if(usuario != null){
                     sub_site.billeteraUsuario = usuario.billetera;
-            }
+                }
                 
             }
             catch (Exception)
@@ -811,15 +782,16 @@ namespace Site.Controllers
             //comentario.Subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
             comIBL.AgregarComentario(valor_tenant,comentario);
 
-            IEnumerable<Comentario> modelList = new List<Comentario>();
+            IEnumerable<ComentarioModel> modelList = new List<ComentarioModel>();
             List<Comentario> comentarios;
             comentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
             comentarios.Reverse();
             modelList = comentarios.Select(x =>
-                                            new Comentario()
+                                            new ComentarioModel()
                                             {
                                                 id_Subasta = x.id_Subasta,
                                                 id_Usuario = x.id_Usuario,
+                                                nombreUsuario = usuIBL.GetNombreUsuario(valor_tenant, x.id_Usuario),
                                                 texto = x.texto,
                                                 fecha = x.fecha
                                             });
@@ -832,15 +804,16 @@ namespace Site.Controllers
             user_sitio = Session["usuario"] as UsuarioSite;
             valor_tenant = user_sitio.Dominio.ToString();
 
-            IEnumerable<Comentario> modelList = new List<Comentario>();
+            IEnumerable<ComentarioModel> modelList = new List<ComentarioModel>();
             List<Comentario> comentarios;
             comentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
             comentarios.Reverse();
             modelList = comentarios.Select(x =>
-                                            new Comentario()
+                                            new ComentarioModel()
                                             {
                                                 id_Subasta = x.id_Subasta,
                                                 id_Usuario = x.id_Usuario,
+                                                nombreUsuario = usuIBL.GetNombreUsuario(valor_tenant, x.id_Usuario),
                                                 texto = x.texto,
                                                 fecha = x.fecha
                                             });
@@ -939,7 +912,6 @@ namespace Site.Controllers
             return result;
         }
 
-
         public JsonResult esFavorito(int idSubasta)
         {
             user_sitio = Session["usuario"] as UsuarioSite;
@@ -951,12 +923,5 @@ namespace Site.Controllers
             return Json(modelList, JsonRequestBehavior.AllowGet);
         }
 
-        
     }
 }
-
-
-                
-                
-                                                
-

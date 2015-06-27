@@ -12,6 +12,7 @@ namespace BusinessLogicLayer.Interfaces
         //Operaciones CRUD
         void AgregarCategoria(CategoriasDTO categoriaDTO); //Create
         CategoriasDTO ObtenerCategoria(int categoriaId); //Read
+        CategoriasDTO ObtenerCategoriaByNombre(int tenant, String nombre);
         List<CategoriasDTO> ObtenerCategorias();
         List<CategoriasDTO> ObtenerCategoriasPorTienda(int Tienda);
         void ActualizarCategoria(CategoriasDTO categoriaDTO); //Update
