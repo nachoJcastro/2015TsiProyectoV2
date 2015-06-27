@@ -5,7 +5,7 @@
 }
 <div class="container">
     <div class="col-md-12 text-center">
-        <h2>@Html.DisplayFor(model =>model.nombre_producto)</h2>
+        <h2>@Html.DisplayFor(model =>model.titulo)</h2>
         <h5>@Html.DisplayFor(model => model.tipo_venta)</h5>
     </div>
 
@@ -41,22 +41,22 @@
                             </a>
                         </li>*@
                                     @{
-                var index = 0;
+                                    var index = 0;
 
-                if (ViewBag.ListaImg != null)
-                {
-                    foreach (var imagen in ViewBag.ListaImg)
-                    {
+                                    if (ViewBag.ListaImg != null)
+                                    {
+                                        foreach (var imagen in ViewBag.ListaImg)
+                                        {
 
-                                    <li class="col-sm-12 contenedor_slider_t">
-                                        <a class="thumbnail" id="carousel-selector-@index">
-                                            <img src="@imagen.uri">
-                                        </a>
-                                    </li>
+                                                        <li class="col-sm-12 contenedor_slider_t">
+                                                            <a class="thumbnail" id="carousel-selector-@index">
+                                                                <img src="@imagen.uri"  />
+                                                            </a>
+                                                        </li>
 
-                        index++;
-                    }
-                }
+                                            index++;
+                                        }
+                                    }
                                     }
 
                     </ul>
@@ -80,13 +80,13 @@
                                             if (index == 0)
                                             {
                                                 <div class="item active" data-slide-number="@index">
-                                                    <img alt="" src="@imagen.uri" />
+                                                    <img id="zoom_@index" alt="" src="@imagen.uri" data-zoom-image="@imagen.uri" />
                                                 </div>
                                             }
                                             else
                                             {
                                                 <div class="item" data-slide-number="@index">
-                                                    <img alt="" src="@imagen.uri" />
+                                                    <img id="zoom_@index" alt="" src="@imagen.uri" data-zoom-image="@imagen.uri" />
                                                 </div>
                                             }
 
@@ -204,15 +204,35 @@
 </div>
 
 <div class="container">
-    <div class="col-md-12 jumbotron" style="margin-top:10px;">
-        <div class="text-center">
-            <h3>Descripción de la publicación</h3>
-        </div>
-        <div class="col-md-12">
+    <!-- Nav tabs -->
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs" style="margin-top:10px;">
+        <li class="active"><a href="#des" data-toggle="tab"><h4>Descripción</h4></a></li>
+        <li><a href="#car" data-toggle="tab"><h4>Caracteristicas</h4></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="des">
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <h3>Descripción de la publicación</h3>
+                    </div>
+                    <div class="col-md-12">
 
-            @Html.DisplayFor(model => model.titulo)
+                        @Html.DisplayFor(model => model.descripcion)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane active" id="car">
+            <br />
+            <div class="row">
+
+            </div>
         </div>
     </div>
+
     <div class="col-md-12">
 
         @if (estado.Equals("Activa"))
@@ -240,7 +260,7 @@
     <script>
         $(document).ready(function () {
             listarComentarios();
-        pintarFavorito();
+            pintarFavorito();
         });
         function listarComentarios(){
 
@@ -318,45 +338,45 @@
                 success: function (data) {
                     //if false
 
-                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){   
-     
+                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){
+
                         document.querySelector('#fav > span').classList.add('fa-heart');
-                        document.querySelector('#fav > span').classList.remove('fa-heart-o'); 
+                        document.querySelector('#fav > span').classList.remove('fa-heart-o');
                         //document.querySelector('#boton').setAttribute('value','OFF');
- 
-                        }
+
+                    }
                     else{
-     
+
                         document.querySelector('#fav >span').classList.add('fa-heart-o');
                         document.querySelector('#fav >span').classList.remove('fa-heart');
-                        //document.querySelector('#boton').setAttribute('value','ON');   
-     
+                        //document.querySelector('#boton').setAttribute('value','ON');
+
                     }
 
-            }
-        });
-    }
-
-    function pintarFavorito()
-    {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("esFavorito", "Subasta")',
-            data: {
-                "idSubasta": @Model.id,
-            },
-            success: function (data){
-                if(data)
-                {
-                    document.querySelector('#fav > span').classList.add('fa-heart');
-                    document.querySelector('#fav > span').classList.remove('fa-heart-o');
-
                 }
-                else{
-                    document.querySelector('#fav >span').classList.add('fa-heart-o');
-                    document.querySelector('#fav >span').classList.remove('fa-heart');
+            });
+        }
+
+        function pintarFavorito()
+        {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("esFavorito", "Subasta")',
+                data: {
+                    "idSubasta": @Model.id,
+                },
+                success: function (data){
+                    if(data)
+                    {
+                        document.querySelector('#fav > span').classList.add('fa-heart');
+                        document.querySelector('#fav > span').classList.remove('fa-heart-o');
+
+                    }
+                    else{
+                        document.querySelector('#fav >span').classList.add('fa-heart-o');
+                        document.querySelector('#fav >span').classList.remove('fa-heart');
+                    }
                 }
-            }
             });
         }
 

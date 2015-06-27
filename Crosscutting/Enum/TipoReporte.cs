@@ -8,7 +8,7 @@ namespace Crosscutting.Enum
 {
     public enum TipoReporte :int
     {
-        Usuario = 0,
+        Usuario,
         Transaccion
     }
 }

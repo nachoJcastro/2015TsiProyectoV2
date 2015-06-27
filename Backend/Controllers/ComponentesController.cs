@@ -237,6 +237,7 @@ namespace Backend.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 _blatributo.AgregarAtributo(atributosDTO);
                 return RedirectToAction("Index", new { id = this.Session["_tiendaSesion"] });
             }
@@ -313,6 +314,7 @@ namespace Backend.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _bltipo.AgregarTipoProducto(tipoProductoDTO);
                 return RedirectToAction("Index", new { id = this.Session["_tiendaSesion"] });
             }

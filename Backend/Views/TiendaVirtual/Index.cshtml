@@ -2,6 +2,7 @@
 @{
     Layout = "~/Views/Shared/_LayoutBackUser.cshtml";
     ViewBag.Title = "Index";
+    var user = ViewBag.numero;
 }
 
 <div class="col-md-12 contendor-admin-user">
@@ -12,10 +13,18 @@
     </div>
     <div class="col-md-6">
         <div class="col-md-12 panel-info-user wow bounceInRight" data-wow-duration="0.5s" data-wow-delay="0.5s">
+            <a href="#" id="startTourBtn" class="btn btn-primary">Guia</a>
             <h3>En el panel de administracion, el usuario puede realizar la ceracion de tiendas virtuales y realizar todas las configuraciones disponibles para la misma.</h3>
         </div>
         <div class="col-md-6 btn-creartienda wow zoomIn" data-wow-duration="0.5s" data-wow-delay="0.7s">
-            <a id="btnTiendaV" href="#myModal" data-toggle="modal" class="btn btn-default"><span class="fa fa-cart-plus fa-3x"></span> <p>Tienda</p></a>
+            @if (user < 1)
+            {
+                <a id="btnTiendaV" href="#myModal" data-id="@user" data-toggle="modal" class="btn btn-default"><span class="fa fa-cart-plus fa-3x"></span> <p>Tienda</p></a>
+            }
+            else
+            {
+                <a id="btnTiendaV" href="#" data-id="@user" class="btn btn-default"><span class="fa fa-cart-plus fa-3x"></span> <p>Tienda</p></a>
+            }
         </div>
     </div>
     <div class="col-md-12 shop-user">
@@ -26,7 +35,7 @@
                     <div class="shape">
                         <div class="shape-text">
                             <!-- @*Url.Action(" delete",new { id=item.TiendaVitualId })*@ -->
-                            <a href="#myModal" data-toggle="modal" class="close btnDeleteTienda" data-id="@item.TiendaVitualId" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+                            <a href="#myModal" data-toggle="modal" class="close btnDeleteTienda" data-id="@item.TiendaVitualId" aria-label="Close"><span id="elim_tienda" aria-hidden="true">&times;</span></a>
                         </div>
                     </div>
                     <div class="offer-content">
@@ -38,12 +47,12 @@
                         @*<h5><small>@*Html.DisplayFor(modelItem => item.Dominio)</small></h5>*@
                     </div>
                     <div class="offer-footer text-right">
-                        <a class="" href="@Url.Action("upload", new { id=item.TiendaVitualId})" data-toggle="tooltip" data-placement="top" title="Subir Imagenes"><span class="fa fa-picture-o fa-2x"></span></a>
+                        <a href="@Url.Action("upload", new { id=item.TiendaVitualId})" data-toggle="tooltip" data-placement="top" title="Subir Imagenes"><span id="sub_img" class="fa fa-picture-o fa-2x"></span></a>
                         <span data-toggle="modal" data-target="#myModal" data-id="@item.TiendaVitualId" class="btnEditTienda">
-                            <a data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-pencil fa-2x"></span></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Editar"><span id="edit_tienda" class="fa fa-pencil fa-2x"></span></a>
                         </span>   
-                        <a class="" href="@Url.Action("estilo", new { id=item.TiendaVitualId})" data-toggle="tooltip" data-placement="top" title="Editar Css"><span class="fa fa-css3 fa-2x"></span></a>
-                        <a class="" href="@Url.Action("index", "Componentes" , new { id=item.TiendaVitualId}, null)" data-toggle="tooltip" data-placement="top" title="Componentes"><span class="fa fa-arrow-circle-o-right fa-2x"></span></a>
+                        <a class="" href="@Url.Action("estilo", new { id=item.TiendaVitualId})" data-toggle="tooltip" data-placement="top" title="Editar Css"><span id="editor_css" class="fa fa-css3 fa-2x"></span></a>
+                        <a class="" href="@Url.Action("index", "Componentes" , new { id=item.TiendaVitualId}, null)" data-toggle="tooltip" data-placement="top" title="Componentes"><span id="comp_tienda" class="fa fa-arrow-circle-o-right fa-2x"></span></a>
                     </div>
                 </div>
             }
@@ -65,4 +74,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/componentes.js"></script>
     <script src="~/Scripts/wow.min.js"></script>
+    <script src="~/Scripts/hopscotch.js"></script>
+    <script src="~/Scripts/tourupload.js"></script>
 }

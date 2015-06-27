@@ -1,0 +1,249 @@
+﻿@model  Backend.Models.Reporte
+@{
+    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+    ViewBag.Title = "Reportes";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Reporte</h4>
+    </div>
+    <div class="panel-body">
+        @*@using (Html.BeginForm("Reportes", "TiendaVirtual"))
+            {*@
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                @*<div class="form-group">
+                    @Html.Label("Tipo Reporte", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.tipo, new SelectList(Enum.GetValues(typeof(Crosscutting.Enum.TipoReporte))), new { @class = "form-control" })
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    @Html.Label("Tienda Virtual", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.dominio, new SelectList((System.Collections.IEnumerable)ViewBag.tiendas, "Dominio", "Dominio"), "Seleccionar Tienda", new { @class = "form-control" })
+                        @*@Html.DropDownList("Tiendas Virtuales", new SelectList((System.Collections.IEnumerable)ViewData["Tiendas"], "TiendaVirtualId", "Dominio"), new { @class = "form-control", @id = "idTienda" })*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                @Html.Label("Fecha Inicio", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class='input-group date' id='datetimepicker9'>
+
+                        @Html.EditorFor(model => model.fechaini, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.fechaini, "", new { @class = "text-danger" })
+                </div>
+
+
+
+                @Html.Label("Fecha Fin", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class='input-group date' id='datetimepicker10'>
+
+                        @Html.EditorFor(model => model.fechafin, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.fechaini, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="col-md-12 text-right">
+                <input type="button" value="Buscar" onclick="ObtenerReporteSubasta();" class="btn btn-default" />
+            </div>
+
+        </div>
+        @*}*@
+
+
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Resultado</h4>
+    </div>
+    <div class="panel-body">
+        <div id="tabla-subasta">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Transacciones</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody id="retorno2"></tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+<!-- Modal-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Comprador</th>
+                            <th>Vendedor</th>
+                            <th>Precio</th>
+                            <th>Fecha Alta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="retornodetalle"></tbody>
+     
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
+<script>
+
+    $("#tabla-subasta").hide();
+    function ObtenerReporteSubasta() {
+
+
+        $("#tabla-subasta").hide();
+
+        var tipo = "Transaccion";
+        var dominio = $("#dominio").val();
+        var fechaini = $("#fechaini").val();
+        var fechafin = $("#fechafin").val();
+        var myActionUrl = '@Url.Action("ReportesAjaxPrueba", "TiendaVirtual")';
+        var retorno2 = $("#retorno2");
+
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: myActionUrl,
+            data: {
+                "tipo": tipo,
+                "dominio": dominio,
+                "fechaini": fechaini,
+                "fechafin": fechafin
+            },
+            success: function (data) {
+
+                var result2 = "";
+
+                retorno2.html('');
+                $.each(data, function (id, item) {
+                    //if (item.tipo == "Usuario") {
+                        //var date = new Date(item.fecha_Alta)
+
+                    //    result += '<tr>' +
+                    //              '<td>' + ToJavaScriptDate(item.Fecha) + '</td>' +
+                    //              '<td>' + item.cantidad + '</td>' +
+                    //              '</tr>';
+                    //} else {
+                        //var date = new Date(item.fecha_Inicio)
+
+                        result2 += '<tr>' +
+                                    '<td>' + ToJavaScriptDate(item.Fecha) + '</td>' +
+                                    '<td>' + item.cantidad + '</td>' +
+                                    '<td><a id="btnDetUs" href="#myModal" onclick="detalles(' + item.Fecha + ');" data-toggle="modal"><i class="fa fa-info-circle"></i></a></td>' +
+                                    '</tr>';
+                    //}
+
+                });
+
+                //if (result != "") {
+                //    retorno.html(result);
+                //    $("#tabla-usuario").show();
+                //}
+                if (result2 != "") {
+                    retorno2.html(result2);
+                    $("#tabla-subasta").show();
+                }
+
+                //alert(JSON.stringify(data));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve books.');
+            }
+        });
+    }
+
+    function detalles(fecha) {
+
+
+        var tipo = "Transaccion";
+        var dominio = $("#dominio").val();
+        var fechaini = ToDate(fecha);
+        var fechafin = $("#fechafin").val();
+        var myActionUrl = '@Url.Action("ReportesDetalle", "TiendaVirtual")';
+        var retorno = $("#retornodetalle");
+
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: myActionUrl,
+            data: {
+                "tipo": tipo,
+                "dominio": dominio,
+                "fechaini": fechaini,
+                "fechafin": fechafin
+            },
+            success: function (data) {
+                var result3 = "";
+                retorno.html('');
+
+                $.each(data, function (id, item) {
+                    result3 += '<tr>' +
+                            '<td>' + item.titulo + '</td>' +
+                            '<td>' + item.nickComprador + '</td>' +
+                            '<td>' + item.nickVendedor + '</td>' +
+                            '<td>' + item.precio_Base + '</td>' +
+                            '<td>' + ToJavaScriptDate(item.fecha_Inicio) + '</td>' +
+                            '</tr>';
+                });
+
+                if (result3 != "") {
+                    retorno.html(result3);
+                    $("#tabla-detalle").show();
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve books.');
+            }
+        });
+    }
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    }
+
+    function ToDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+
+        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    }
+</script>

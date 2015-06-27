@@ -18,7 +18,8 @@ namespace DAL
         void ActualizarCSS(TiendaVirtualDTO tiendaDTO); //Update
         void EliminarTienda(int tiendaId); //Delete
         void EliminarTiendaVirtual(int tiendaId);
-        void EliminarImagenTienda(int tiendaId, string nombre);
+        bool EliminarImagenTienda(int tiendaId, string nombre);
+        List<ImagenesDTO> ObtenerImagenes(int tiendaId);
 
         void AgregarImagenTienda(ImagenesDTO img);
 
@@ -31,5 +32,10 @@ namespace DAL
 
         List<ReporteLineal> ReportSubastaLineal(string dominio, DateTime fechaini, DateTime fechafin);
         List<ReporteLineal> ReportUsersLineal(string dominio, DateTime fechaini, DateTime fechafin);
+
+        List<UsuarioAux> DetUsers(string dominio, DateTime fechaini);
+        List<SubastaAux> DetSub(string dominio, DateTime fechaini);
+
+        bool ExisteDominio(string dominio);
     }
 }

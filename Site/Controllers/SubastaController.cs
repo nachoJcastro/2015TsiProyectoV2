@@ -15,6 +15,7 @@ using Crosscutting.Enum;
 using Crosscutting.Entity;
 using Microsoft.WindowsAzure.Storage.Blob;
 using BusinessLogicLayer.Controllers;
+using PagedList;
 
 namespace Site.Controllers
 {
@@ -873,26 +874,70 @@ namespace Site.Controllers
             return Json(modelList, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Categoria(int idCat, string SearchString, int? Tipo, string min, string max)
+        public ActionResult Categoria(int idCat, string SearchString, int? Tipo, string min, string max, int? page, int? rows)
         {
             user_sitio = Session["usuario"] as UsuarioSite;
-
             ViewBag.idCat = idCat;
-            var lista = subIBL.ObtenerSubastasPorCriterio(user_sitio.Dominio, idCat,SearchString,Tipo,min,max).ToList();
-            ViewBag.ListaSubastas = lista;
-            /*if (!String.IsNullOrEmpty(SearchString))
+            if (page == null)
             {
-                ViewBag.ListaSubastas = lista.ToList();
+                page = 1;
             }
-            else 
+
+            if (rows == null)
             {
-                ViewBag.ListaSubastas = lista.Where(x => x.titulo.Contains(SearchString)).ToList();
-            }*/
+                rows = 10;
+            }
+
+            var lista = subIBL.ObtenerSubastasPorCriterio(user_sitio.Dominio, idCat,SearchString,Tipo,min,max).ToList();
+            //var lista = subIBL.ObtenerSubastasCompleto(user_sitio.Dominio, idCat, SearchString, Tipo, min, max, (int)page, (int)rows).ToList();
+            //ViewBag.ListaSubastas = lista;
+            var totalRows = lista.Count();
+            var totalPages = (int)Math.Ceiling((double)totalRows / (int)rows);
+            //var pageIndex = (page ?? 1) - 1;
+            //var usersAsIPagedList = new StaticPagedList<Subasta>(lista, (int)pageIndex, totalPages, totalRows);
+           var usersAsIPagedList = lista.ToPagedList((int)page, (int)rows);
+            ViewBag.ListaSubastas = usersAsIPagedList;
 
 
-           return View();
+            return View();
         }
 
+        public ActionResult GetCategoriasFilters(int idCat)
+        {
+            ViewBag.idCat = idCat;
+            return View();
+        }
+
+        public Paginacion<Subasta> GetCategoriasFiltersP(int idCat, string SearchString, int? Tipo, string min, string max, int? page, int? rows)
+        {
+
+            user_sitio = Session["usuario"] as UsuarioSite;
+            ViewBag.idCat = idCat;
+            //var lista = subIBL.ObtenerSubastasCompleto(user_sitio.Dominio, idCat, SearchString, Tipo, min, max,page,rows).ToList();
+            if (page == null)
+            {
+                page = 1;
+            }
+
+            if (rows == null) {
+                rows = 10;
+            }
+
+            var results = subIBL.ObtenerSubastasCompleto(user_sitio.Dominio, idCat, SearchString, Tipo, min, max, (int)page, (int)rows).ToList();
+            var totalRows = results.Count();
+            var totalPages = (int)Math.Ceiling((double)totalRows / (int)rows);
+
+            var result = new Paginacion<Subasta>()
+            {
+                PageSize = (int)rows,
+                TotalRows = totalRows,
+                TotalPages = totalPages,
+                CurrentPage = (int)page,
+                Results = results
+            };
+
+            return result;
+        }
 
 
         public JsonResult esFavorito(int idSubasta)

@@ -57,17 +57,17 @@ var Script = function () {
 
 
     //    sidebar toggle
-
     $(function () {
         function responsiveView() {
             var wSize = $(window).width();
+        
             if (wSize <= 768) {
-                $('#container').addClass('sidebar-close');
+                $('#collapse-2').hide();
                 $('#sidebar > ul').hide();
             }
 
             if (wSize > 768) {
-                $('#container').removeClass('sidebar-close');
+                $('#collapse-2').show();
                 $('#sidebar > ul').show();
             }
         }
@@ -75,31 +75,15 @@ var Script = function () {
         $(window).on('resize', responsiveView);
     });
 
-    $('.fa-bars').click(function () {
-        if ($('#sidebar > ul').is(":visible") === true) {
-            //$('#main-content').css({
-            //    'margin-left': '0px'
-            //});
-            $('#sidebar').css({
-                'margin-left': '-250px'
-            });
-            $('.main-content').css({
-                'margin-left': '0px'
-            });
+    $('#juas').click(function () {
+
+        if ($('#collapse-2').is(":visible") === true) {
             $('#sidebar > ul').hide();
-            //$("#container").addClass("sidebar-closed");
+            $("#collapse-2").hide();
         } else {
-            //$('#main-content').css({
-            //    'margin-left': '250px'
-            //});
+
             $('#sidebar > ul').show();
-            $('#sidebar').css({
-                'margin-left': '0px'
-            });
-            $('.main-content').css({
-                'margin-left': '250px'
-            });
-            //$("#container").removeClass("sidebar-closed");
+            $("#collapse-2").show();
         }
     });
 
@@ -122,9 +106,9 @@ var Script = function () {
     wow.init();
 
 
-    $('#datetimepicker1').datetimepicker({
-        format: "YYYY-MM-DD hh:mm:ss",
-    });
+    //$('#datetimepicker1').datetimepicker({
+    //    format: "YYYY-MM-DD hh:mm:ss",
+    //});
 
     $('#datetimepicker2').datetimepicker({
         format: "YYYY-MM-DD hh:mm:ss",
@@ -146,4 +130,16 @@ var Script = function () {
         format: "YYYY-MM-DD hh:mm:ss",
     });
 
+    $('#datetimepicker7').datetimepicker({
+        format: "YYYY-MM-DD hh:mm:ss",
+    });
+    $('#datetimepicker8').datetimepicker({
+        format: "YYYY-MM-DD hh:mm:ss",
+    });
+    $('#datetimepicker9').datetimepicker({
+        format: "YYYY-MM-DD hh:mm:ss",
+    });
+    $('#datetimepicker10').datetimepicker({
+        format: "YYYY-MM-DD hh:mm:ss",
+    });
 }();

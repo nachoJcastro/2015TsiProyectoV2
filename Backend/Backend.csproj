@@ -221,6 +221,7 @@
     <Compile Include="Models\Charts.cs" />
     <Compile Include="Models\Estilo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\JQueryDataTableParamModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Reporte.cs" />
     <Compile Include="Models\SubastaReporte.cs" />
@@ -236,7 +237,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estilo.css" />
     <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\nifty.min.css" />
+    <Content Include="Content\hopscotch.min.css" />
+    <Content Include="Content\sweet-alert.css" />
+    <Content Include="Content\toastr.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -251,19 +254,18 @@
     <Content Include="img\1.png" />
     <Content Include="img\2.png" />
     <Content Include="img\admin.png" />
+    <Content Include="img\alamon.jpg" />
+    <Content Include="img\castro.JPG" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\fondo-index.jpg" />
-    <Content Include="img\fondo-index2.jpg" />
     <Content Include="img\fondo.jpg" />
     <Content Include="img\fondouser51.jpg" />
+    <Content Include="img\gas.jpg" />
     <Content Include="img\logo1.png" />
     <Content Include="img\logo2.png" />
     <Content Include="img\logo2_2.png" />
-    <Content Include="img\perfil.jpg" />
-    <Content Include="img\screen-mobile.png" />
-    <Content Include="img\screen-tablet.png" />
-    <Content Include="img\screen.png" />
-    <Content Include="img\screen1.png" />
+    <Content Include="img\misa.jpg" />
+    <Content Include="img\tienda-boceto-imagenes.jpg" />
     <Content Include="lineicons\fonts\linecons.svg" />
     <Content Include="lineicons\index.html" />
     <Content Include="lineicons\lte-ie7.js" />
@@ -382,10 +384,6 @@
     <Content Include="Scripts\componentes.js" />
     <Content Include="Scripts\editor_conf.js" />
     <Content Include="Scripts\exporting.js" />
-    <Content Include="Scripts\gritter\.DS_Store" />
-    <Content Include="Scripts\gritter\css\.DS_Store" />
-    <Content Include="Scripts\gritter\images\.DS_Store" />
-    <Content Include="Scripts\gritter\js\.DS_Store" />
     <Content Include="lineicons\.DS_Store" />
     <Content Include="lineicons\fonts\.DS_Store" />
     <Content Include="lineicons\fonts\linecons.eot" />
@@ -410,14 +408,8 @@
     <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\gritter\css\jquery.gritter.css" />
-    <Content Include="Scripts\gritter\css\jquery.gritter0.css" />
-    <Content Include="Scripts\gritter\images\gritter-light.png" />
-    <Content Include="Scripts\gritter\images\gritter-long.png" />
-    <Content Include="Scripts\gritter\images\gritter.png" />
-    <Content Include="Scripts\gritter\images\ie-spacer.gif" />
-    <Content Include="Scripts\gritter\js\jquery.gritter.js" />
     <Content Include="Scripts\highcharts.js" />
+    <Content Include="Scripts\hopscotch.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.backstretch.min.js" />
@@ -430,12 +422,13 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
-    <Content Include="Scripts\nifty.min.js" />
     <Content Include="Scripts\npm.js" />
-    <Content Include="Scripts\price-range.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\root.js" />
+    <Content Include="Scripts\sweet-alert.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\tourupload.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -494,6 +487,8 @@
     <Content Include="Views\TiendaVirtual\Reportes.cshtml" />
     <Content Include="Views\TiendaVirtual\Charts.cshtml" />
     <Content Include="Views\TiendaVirtual\ChartsLineal.cshtml" />
+    <Content Include="Views\TiendaVirtual\ReportesSubastas.cshtml" />
+    <Content Include="Views\TiendaVirtual\ReportesUsuarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

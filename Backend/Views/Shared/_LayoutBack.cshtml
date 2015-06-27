@@ -18,16 +18,22 @@
             <div class="container-fluid contenedor-navbar">
 
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-1">
+                    <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-1">
                         <span class="sr-only">Menu</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                    </button>
+                    </button>-->
                     <a class="navbar-brand" href="#">Che-Bay <span class="badge">v1.0</span></a>
-                    <ul class="nav navbar-nav menu-top">
+                    <!--<ul class="nav navbar-nav menu-top">
                         <li class="btn-manu"><a href="#"><span class="fa fa-bars"></span></a></li>
-                    </ul>
+                    </ul>-->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-1">
+                        <span class="">Login</span>
+                    </button>
+                    <button type="button" id="juas" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-2">
+                        <span class="">Menu</span>
+                    </button>
                 </div>
                 
                 <div class="collapse navbar-collapse" id="collapse-1">
@@ -51,45 +57,52 @@
     </header>
     <!-- / HEADER -->
     <!-- MENU LEFT -->
-    <aside id="container">
-        <div id="sidebar">
+    <aside class="collapse" id="collapse-2">
+        <div id="sidebar" class="nav-collapse ">
 
             <!--<div class="row">
-                <div class="col-md-12 perfil ">
-                    <img src="img/perfil.jpg" alt="" class="img-responsive img-circle center-block">
-                    
-                    
+            <div class="col-md-12 perfil ">
+                <img src="img/perfil.jpg" alt="" class="img-responsive img-circle center-block">
 
-                    <!--<ul>
-                      <li><a href="#"><span class="li_bubble"></span></a></li>
-                      <li><a href="#"><span class="li_bubble"></span></a></li>
-                    </ul>
 
-                </div>
-            </div-->
+
+                <!--<ul>
+                  <li><a href="#"><span class="li_bubble"></span></a></li>
+                  <li><a href="#"><span class="li_bubble"></span></a></li>
+                </ul>
+
+            </div>
+        </div-->
 
             <ul class="sidebar-menu-fixed" id="nav-accordion2">
                 <li class="mt">
-                    <a class="" href="@Url.Action("AdminUser", "TiendaVirtual")" >
+                    <a class="" href="@Url.Action("AdminUser", "TiendaVirtual")">
                         <i class=" fa fa-shopping-cart">
                         </i>
                         <span>Tiendas Virtuales</span>
                     </a>
                 </li>
                 <li class="mt">
-                    <a class="" href="@Url.Action("AdminUser", "TiendaVirtual")">
-                        <i class=" fa fa-user">
+                    <a class="" href="@Url.Action("ReportesUsuarios", "TiendaVirtual")">
+                        <i class=" fa fa-bar-chart">
                         </i>
-                        <span>Usuarios</span>
+                        <span>Usuarios/Tiempo</span>
                     </a>
                 </li>
                 <li class="mt">
+                    <a class="" href="@Url.Action("ReportesSubastas", "TiendaVirtual")">
+                        <i class=" fa fa-bar-chart">
+                        </i>
+                        <span>Transacciones/Tiempo</span>
+                    </a>
+                </li>
+                @*<li class="mt">
                     <a class="" href="@Url.Action("Reportes", "TiendaVirtual")">
                         <i class=" fa fa-bar-chart">
                         </i>
                         <span>Reporte</span>
                     </a>
-                </li>
+                </li>*@
                 <li class="mt">
                     <a class="" href="@Url.Action("Charts", "TiendaVirtual")">
                         <i class=" fa fa-pie-chart">
@@ -107,23 +120,23 @@
             </ul>
 
             <!--<ul class="sidebar-menu" id="nav-accordion">
-                <li class="titulo_menu_left">
-                    <span>Setting</span>
-                    <i class="fa fa-desktop pull-right"></i>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-desktop"></i>
-                        <span>UI Elements</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="#">General</a></li>
-                        <li><a href="#">Buttons</a></li>
-                        <li><a href="#">Panels</a></li>
-                    </ul>
-                </li>
+            <li class="titulo_menu_left">
+                <span>Setting</span>
+                <i class="fa fa-desktop pull-right"></i>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;">
+                    <i class="fa fa-desktop"></i>
+                    <span>UI Elements</span>
+                </a>
+                <ul class="sub">
+                    <li><a href="#">General</a></li>
+                    <li><a href="#">Buttons</a></li>
+                    <li><a href="#">Panels</a></li>
+                </ul>
+            </li>
 
-            </ul>-->
+        </ul>-->
         </div>
     </aside>
     <!-- / MENU LEFT -->

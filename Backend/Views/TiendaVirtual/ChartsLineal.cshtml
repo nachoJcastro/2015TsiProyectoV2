@@ -185,6 +185,11 @@
                     text: 'Fechas'
                 }
             },
+            yAxis: {
+                title: {
+                    text: 'Cantidad'
+                }
+            },
             legend: {
                 layout: 'vertical',
                 align: 'right',
@@ -192,7 +197,7 @@
                 borderWidth: 0
             },
             tooltip: {
-                pointFormat: '{series.Fecha}: {point.y} (<b>{point.percentage:.1f}%</b>)'
+                pointFormat: '{series.Fecha}: {point.y}'
             },
             plotOptions: {
                 line: {

@@ -141,7 +141,7 @@ namespace Site.Controllers
                 var idUsuario = usuIBL.ObtenerIdByEmail(tenantID, user.Email);
 
                 List<Subasta> prodsfav = recom.AlgRecomen(tenantID, idUsuario);/////////////RECOMENDACIONES//////////////////////////////
-
+                ViewBag.Recomendadas = prodsfav.ToList();
                 
                 return View();
                 //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());

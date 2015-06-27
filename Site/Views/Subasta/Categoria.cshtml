@@ -2,7 +2,13 @@
 @{
     ViewBag.Title = "Categoria";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
+@using PagedList;
+@using PagedList.Mvc;
+
+<!--model PagedList.IPagedList<Crosscutting.EntityTenant.Subasta>-->
+
 <div class="container">
     <br />
     <br />
@@ -113,15 +119,9 @@
             </div>
         </div>
     </section>
+    @Html.PagedListPager((IPagedList)ViewBag.ListaSubastas, page => Url.Action("Categoria", "Subasta", new { page = page }), PagedListRenderOptions.PageNumbersOnly)
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-<script>
-    function buscar() {
-
-
-    }
-</script>

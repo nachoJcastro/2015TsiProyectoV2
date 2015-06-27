@@ -87,16 +87,18 @@ namespace BusinessLogicLayer.Controllers
             return _dal.ObtenerTenants();
         }
 
-        public void EliminarImagenTienda(int tiendaId, string nombre) {
+        public bool EliminarImagenTienda(int tiendaId, string nombre) {
 
-            _dal.EliminarImagenTienda(tiendaId, nombre);
+            return _dal.EliminarImagenTienda(tiendaId, nombre);
         }
 
         public void AgregarImagenTienda(ImagenesDTO img){
         
             _dal.AgregarImagenTienda(img);
         }
-
+        public List<ImagenesDTO> ObtenerImagenes(int tiendaId) {
+            return _dal.ObtenerImagenes(tiendaId);
+        }
         public List<Usuario> ReportUsers(string dominio, DateTime fechaini, DateTime fechafin) {
             return _dal.ReportUsers(dominio, fechaini, fechafin);
         }
@@ -109,6 +111,17 @@ namespace BusinessLogicLayer.Controllers
         }
         public List<ReporteLineal> ReportUsersLineal(string dominio, DateTime fechaini, DateTime fechafin) {
             return _dal.ReportUsersLineal(dominio, fechaini, fechafin);
+        }
+
+        public List<UsuarioAux> DetUsers(string dominio, DateTime fechaini)
+        {
+            return _dal.DetUsers(dominio, fechaini);
+        }
+        public List<SubastaAux> DetSub(string dominio, DateTime fechaini) {
+            return _dal.DetSub(dominio, fechaini);
+        }
+        public bool ExisteDominio(string dominio) {
+            return _dal.ExisteDominio(dominio);        
         }
     }
 }

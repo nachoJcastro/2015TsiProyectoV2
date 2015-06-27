@@ -1,11 +1,4 @@
-/*price range*/
 
- $('#rango').slider();
-
-	var RGBChange = function() {
-	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
-	};	
-		
 /*scroll to top*/
 
 $(document).ready(function(){
@@ -83,6 +76,30 @@ $(document).ready(function(){
 	    var id = $('.item.active').data('slide-number');
 	    $('#carousel-text').html($('#slide-content-' + id).html());
 	});
+
+	$('.flexslider').flexslider({
+	    animation: 'fade', //String: Select your animation type, "fade" or "slide"
+	    //Boolean: Create navigation for previous/next navigation? (true/false)
+	    slideshowSpeed: 7000, //Integer: Set the speed of the slideshow cycling, in milliseconds
+	    animationSpeed: 600, //Integer: Set the speed of animations, in milliseconds
+	    pauseOnHover: false, //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
+	    prevText: "", //String: Set the text for the "previous" directionNav item
+	    nextText: "" //String: Set the text for the "next" directionNav item
+	});
+
+	$(".flex-control-nav").prepend('<a class="prev" href="/"><span class="fa fa-chevron-left"></span></a>');
+	$(".flex-control-nav").append('<a class="next" href="/"><span class="fa fa-chevron-right"></span></a>');
+
+	$(".flex-control-nav .prev").click(function () {
+	    $(".flex-prev").trigger('click');
+	});
+	$(".flex-control-nav .next").click(function () {
+	    $(".flex-next").trigger('click');
+	});
+
+	$(".flex-control-nav").wrap("<div class='container'></div>");
+
+
 
 });
 

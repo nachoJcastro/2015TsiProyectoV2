@@ -36,5 +36,7 @@ namespace BusinessLogicLayer.TenantInterfaces
 
         List<Subasta> ObtenerSubastasActivasxCategoria(string tenant, int idCat);
         List<Subasta> ObtenerSubastasPorCriterio(string tenant, int idCat, string criterio, int? tipo,string min,string max);
+
+        List<Subasta> ObtenerSubastasCompleto(string tenant, int idCat, string criterio, int? tipo, string min, string max, int page, int rows);
     }
 }

@@ -58,7 +58,7 @@ var Script = function () {
     
 //    sidebar toggle
 
-    $(function() {
+    /*$(function() {
         function responsiveView() {
             var wSize = $(window).width();
             if (wSize <= 768) {
@@ -83,9 +83,7 @@ var Script = function () {
         
         if (wSize <= 768) {
             if ($('#sidebar > ul').is(":visible") === true) {
-                //$('#main-content').css({
-                //    'margin-left': '0px'
-                //});
+
                 $('#sidebar').css({
                     'margin-left': '-250px'
                 });
@@ -93,12 +91,9 @@ var Script = function () {
                     'margin-left': '0px'
                 });
                 $('#sidebar > ul').hide();
-                
-                //$("#container").addClass("sidebar-closed");
+
             } else {
-                //$('#main-content').css({
-                //    'margin-left': '250px'
-                //});
+
 
                 $('#sidebar > ul').show();
                 $('#sidebar').css({
@@ -108,10 +103,10 @@ var Script = function () {
                     'margin-left': '250px'
                 });
                 
-                //$("#container").removeClass("sidebar-closed");
+
             }
         }
-    });
+    })*/
 
     $('[data-toggle="tooltip"]').tooltip();
 // custom scrollbar

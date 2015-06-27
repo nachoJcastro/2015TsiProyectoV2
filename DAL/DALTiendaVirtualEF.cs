@@ -37,7 +37,20 @@ namespace DAL
             }
             
         }
+        
+        public bool ExisteDominio(string dominio) {
+            try
+            {
+                //var tienda = db.TiendaVirtual.Where(r => r.Dominio == dominio);
+                return db.TiendaVirtual.Any(r => r.Dominio == dominio);
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
         public TiendaVirtualDTO ObtenerTienda(int tiendaId) 
         { 
             try
@@ -254,13 +267,13 @@ namespace DAL
         
         }
 
-        public void EliminarImagenTienda(int tiendaId, string nombre) 
+        public bool EliminarImagenTienda(int tiendaId, string nombre) 
         {
 
             try
             {
                 var tienda = db.TiendaVirtual.FirstOrDefault(r => r.TiendaVitualId == tiendaId);
-
+                bool encontrada = false;
                 if (tienda.ListaImagenes != null)
                 {
                     foreach (var imagen in tienda.ListaImagenes.ToList())
@@ -268,10 +281,19 @@ namespace DAL
                         if (imagen.Nombre.Equals(nombre)) 
                         {
                             imagen.ImagenEliminada = true;
-                           
+                            db.SaveChanges();
+                            encontrada = true;   
                         }
                         
                     }
+                }
+
+                if (encontrada)
+                {
+                    return true;
+                }
+                else {
+                    return false;
                 }
 
             }
@@ -282,7 +304,23 @@ namespace DAL
         
         
         }
+        public List<ImagenesDTO> ObtenerImagenes(int tiendaId) {
+            List<ImagenesDTO> imagenes = new List<ImagenesDTO>();
 
+            try
+            {
+
+                imagenes = db.Imagenes.Where(t=>t.TiendaId==tiendaId).ToList();
+                imagenes = imagenes.Where(i => i.ImagenEliminada == false).ToList();
+
+                return imagenes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
         public void AgregarImagenTienda(ImagenesDTO img) 
         {
             try
@@ -432,7 +470,8 @@ namespace DAL
 
                 //var query = from c in dbt.Subasta group c by c.fecha_Cierre into g select new { Fecha = g.Key.fecha_Cierre, cantidad = g.Count() };
                 List<SubastaAux> aux = new List<SubastaAux>();
-                List<Subasta> todas = dbt.Subasta.Where(x => x.fecha_Cierre != null).ToList();
+                //List<Subasta> todas = dbt.Subasta.Where(x => x.fecha_Cierre != null).ToList();
+                List<Subasta> todas = dbt.Subasta.Where(x => x.id_Comprador != null).ToList();
                 
                 foreach (var item in todas)
                 {
@@ -470,7 +509,114 @@ namespace DAL
             return reporte;
         }
 
-        
+        public List<UsuarioAux> DetUsers(string dominio, DateTime fechaini) {
+            List<UsuarioAux> usuarios = new List<UsuarioAux>();
+
+            if ((dominio == null) || (fechaini == null))
+            {
+                System.Diagnostics.Debug.WriteLine("Dominio nulo");
+
+
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Chart dom - " + dominio);
+                System.Diagnostics.Debug.WriteLine("Chart fech inic - " + fechaini);
+
+                try
+                {
+                    dbt = new TenantDB(dominio);
+                    usuarios = dbt.Usuario.Select(u => new UsuarioAux {
+                        id = u.id,
+                        nombre = u.nombre,
+                        apellido = u.apellido,
+                        fecha_Nacimiento = u.fecha_Nacimiento,
+                        fecha_Alta = (DateTime)u.fecha_Alta,
+                        direccion = u.direccion,
+                        email = u.email,
+                        imagen = u.imagen,
+                        nick = u.nick,
+                        reputacion_Compra = u.reputacion_Compra,
+                        reputacion_Venta = u.reputacion_Venta,
+                        password = u.password
+                    }).ToList();
+
+                    usuarios = usuarios.Where(u => u.fecha_Alta.Date == fechaini.Date).ToList();
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
+            }
+            System.Diagnostics.Debug.WriteLine("Usuarios" + usuarios.ToString());
+            return usuarios;
+        }
+
+        public List<SubastaAux> DetSub(string dominio, DateTime fechaini) {
+            List<SubastaAux> sub = new List<SubastaAux>();
+            var listaSub = new List<SubastaAux>();
+
+            try
+            {
+                dbt = new TenantDB(dominio);
+
+                sub = dbt.Subasta.Select(u => new SubastaAux
+                {
+                    id = u.id,
+                    id_Comprador = u.id_Comprador,                  
+                    id_Vendedor = u.id_Vendedor,
+                    id_Categoria = u.id_Categoria,
+                    id_Producto = u.id_Producto,
+                    titulo = u.titulo,
+                    descripcion = u.descripcion,
+                    precio_Base = u.precio_Base,
+                    precio_Compra = u.precio_Compra,
+                    valor_Actual = u.valor_Actual,
+                    portada = u.portada,
+                    fecha_Inicio = (DateTime)u.fecha_Inicio,
+                    fecha_Cierre = (DateTime)u.fecha_Cierre
+                }).ToList();
+                    
+                    
+                sub = sub.Where(u => u.fecha_Inicio.Date == fechaini.Date).ToList();
+                sub = sub.Where(x => x.id_Comprador != null).ToList();
+
+                foreach (var subasta in sub)
+                {
+                    SubastaAux aux = new SubastaAux();
+                    Usuario Comprador = dbt.Usuario.FirstOrDefault(x => x.id == subasta.id_Comprador);
+                    Usuario Vendedor = dbt.Usuario.FirstOrDefault(x => x.id == subasta.id_Vendedor);
+
+                    aux.id = subasta.id;
+                    aux.id_Comprador = subasta.id_Comprador;
+                    aux.nombreComprador = Comprador.nick;
+                    aux.id_Vendedor = subasta.id_Vendedor;
+                    aux.nombreVendedor = Vendedor.nick;
+                    aux.id_Categoria = subasta.id_Categoria;
+                    aux.id_Producto = subasta.id_Producto;
+                    aux.titulo = subasta.titulo;
+                    aux.descripcion = subasta.descripcion;
+                    aux.precio_Base = subasta.precio_Base;
+                    aux.precio_Compra = subasta.precio_Compra;
+                    aux.valor_Actual = subasta.valor_Actual;
+                    aux.portada = subasta.portada;
+                    aux.fecha_Inicio = (DateTime)subasta.fecha_Inicio;
+                    aux.fecha_Cierre = (DateTime)subasta.fecha_Cierre;
+
+                    listaSub.Add(aux);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return listaSub;
+        }
 
 
     }
