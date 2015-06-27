@@ -64,7 +64,7 @@ namespace Site.Controllers
                 sub_site.id_Comprador = Convert.ToInt32(subasta.id_Comprador);
                 sub_site.portada = subasta.portada;
                 sub_site.nombre_producto = subasta.titulo;
-                sub_site.precio_Compra = subasta.precio_Compra;
+                sub_site.precio_Compra = Convert.ToDouble(subasta.precio_Compra);
                 if (venta)
                 {
                     sub_site.listaVenta = 1;
@@ -130,7 +130,7 @@ namespace Site.Controllers
                     {
                         subasta.titulo = item.titulo;
                         subasta.finalizado = item.finalizado;
-                        subasta.precio_Compra = item.precio_Compra;
+                        subasta.precio_Compra = Convert.ToDouble(item.precio_Compra);
                         subasta.fecha_Cierre = item.fecha_Cierre;
                         if (_blcalificacion.ObtenerCalificacionDelVendedor(valor_tenant, subasta.id) != null)
                         {

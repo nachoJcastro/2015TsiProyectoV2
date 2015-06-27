@@ -143,13 +143,7 @@
         <div class="col-md-12">
             <p><i class="fa fa-clock-o"></i> Finaliza - @Html.DisplayFor(model => model.fecha_Cierre)</p>
         </div>
-        @*<div class="col-md-12">
-            @Html.DisplayFor(model => model.tipo_venta)
-        </div>*@
-        @*@Html.DisplayFor(model => model.titulo)*@
-        @*<div class="col-md-12">
-            @Html.DisplayFor(model => model.nombre_producto)
-        </div>*@
+
         <div class="col-md-12">
             <p>@Html.DisplayFor(model => model.nick_Vendedor)</p>
         </div>
@@ -165,14 +159,9 @@
                             }
         </div>
 
-        
-        @*<div class="col-md-12">
-            @Html.DisplayFor(model => model.fecha_Inicio)
-        </div>*@
-
         <div class="col-md-12">
             @Html.DisplayFor(model => model.estado)
-    </div>
+        </div>
 
         <div class="col-md-12">
     @using Site.Models
@@ -182,33 +171,35 @@
         var tipoFinalizacion = Model.finalizado.ToString();
     }
 
-    @if (estado.Equals("Activa"))
+    @if (user.idUsuario != Model.id_Vendedor )
     {
-
-        if (user != null && user.Email != null)
+        if (estado.Equals("Activa"))
         {
-
-            if (tipoFinalizacion == "Subasta")
+        
+            if (user != null && user.Email != null)
             {
 
-                        if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
-                    {
-                        <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
+                if (tipoFinalizacion == "Subasta")
+                {
 
-                    }
-                    <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ver Ofertas</button>
+                            if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
+                        {
+                            <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
 
+                        }
+                        <button type="button" onclick="location.href='@Url.Action("Lista/", "Oferta", new { idSubasta = Model.id })'" class="btn btn-default">Ver Ofertas</button>
+
+                }
+                else
+                {
+
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
+
+                }
+                        <a id="fav" onclick="cambiarFavorito(@Model.id)" data-toggle="tooltip" data-placement="top" title="Favoritos"><span id="iconoFav" class="fa fa-heart-o fa-2x"></span></a>
             }
             else
             {
-
-                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Comprar!</button>
-
-            }
-                    <a id="fav" onclick="cambiarFavorito(@Model.id)" data-toggle="tooltip" data-placement="top" title="Favoritos"><span id="iconoFav" class="fa fa-heart-o fa-2x"></span></a>
-        }
-        else
-        {
             <p>Debe loguarse para poder ofertar</p>
 
         }
@@ -218,6 +209,7 @@
     else
     {
         <p>La publicacion está finalizada</p>
+    }
     }
         </div>
 
@@ -234,21 +226,18 @@
             @Html.DisplayFor(model => model.titulo)
         </div>
     </div>
+
+    <p>Comentarios</p>
+
+    @if (estado.Equals("Activa") && user != null && user.Email != null)
+    {
     <div class="col-md-12">
-
-        @if (estado.Equals("Activa"))
-        {
-
-            <dt>Comentarios</dt>
-
-            <div>
-                <textarea id="areaComentario" rows="4" cols="133" class="form-control" placeholder="Ingrese aqui su comentario.."></textarea>
-            </div>
-            <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
-        }
-
+         <div>
+            <textarea id="areaComentario" rows="4" cols="133" class="form-control" placeholder="Ingrese aqui su comentario.."></textarea>
+        </div>   
+        <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
     </div>
-
+    }
 
     <dl id="retorno"></dl>
 
@@ -259,100 +248,100 @@
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
     <script>
-        $(document).ready(function () {
-            listarComentarios();
+    $(document).ready(function () {
+        listarComentarios();
         pintarFavorito();
+    });
+    function listarComentarios(){
+
+        var retorno = $("#retorno");
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("ListarComentario", "Subasta")',
+            data: {
+                "idSubasta": @Model.id,
+            },
+            success: function (data) {
+                retorno.html('');
+                var result = "";
+                $.each(data, function (id, item) {
+                    result += '<dt>' +
+                                ToJavaScriptDate(item.fecha) + '           ' +
+                                '<a href=' + '/Manage/DatosUsuario/' +'?idUsuario=' + item.id_Usuario +'>' + item.nombreUsuario + '</a>' +
+                                '</dt>' +
+                                '<dd>' +
+                                item.texto +
+                                '</dd>';
+                })
+                retorno.html(result);
+                document.getElementById("areaComentario").value = '';
+                $("#com").show();
+            }
         });
-        function listarComentarios(){
+    }
 
-            var retorno = $("#retorno");
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: '@Url.Action("ListarComentario", "Subasta")',
-                data: {
-                    "idSubasta": @Model.id,
-                },
-                success: function (data) {
-                    retorno.html('');
-                    var result = "";
-                    $.each(data, function (id, item) {
-                        result += '<dt>' +
-                                    ToJavaScriptDate(item.fecha) + '      ' +
-                                    item.id_Usuario +
-                                    '</dt>' +
-                                    '<dd>' +
-                                    item.texto +
-                                    '</dd>';
-                    })
-                    retorno.html(result);
-                    document.getElementById("areaComentario").value = '';
-                    $("#com").show();
+    function crearComentario() {
+        var retorno = $("#retorno");
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("AgregarComentario", "Subasta")',
+            data: {
+                "idSubasta": @Model.id,
+                "texto": document.getElementById("areaComentario").value
+            },
+            success: function (data) {
+                retorno.html('');
+                var result = "";
+                $.each(data, function (id, item) {
+                    result += '<dt>' +
+                                ToJavaScriptDate(item.fecha) + '           ' +
+                                '<a href=' + '/Manage/DatosUsuario/' +'?idUsuario=' + item.id_Usuario +'>' + item.nombreUsuario + '</a>' +
+                                '</dt>' +
+                                '<dd>' +
+                                item.texto +
+                                '</dd>';
+                })
+                retorno.html(result);
+                document.getElementById("areaComentario").value = '';
+                $("#com").show();
+            }
+        });
+    }
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+    }
+
+    function cambiarFavorito(idSubasta){
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("CambiarFavorito", "Subasta")',
+            data: {
+                "idSubasta": idSubasta,
+            },
+            success: function (data) {
+                //if false
+
+                if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){
+
+                    document.querySelector('#fav > span').classList.add('fa-heart');
+                    document.querySelector('#fav > span').classList.remove('fa-heart-o');
+                    //document.querySelector('#boton').setAttribute('value','OFF');
+
                 }
-            });
-        }
+                else{
 
-        function crearComentario() {
-            var retorno = $("#retorno");
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: '@Url.Action("AgregarComentario", "Subasta")',
-                data: {
-                    "idSubasta": @Model.id,
-                    "texto": document.getElementById("areaComentario").value
-                },
-                success: function (data) {
-                    retorno.html('');
-                    var result = "";
-                    $.each(data, function (id, item) {
-                        result += '<dt>' +
-                                    ToJavaScriptDate(item.fecha) + '      ' +
-                                    item.id_Usuario +
-                                    '</dt>' +
-                                    '<dd>' +
-                                    item.texto +
-                                    '</dd>';
-                    })
-                    retorno.html(result);
-                    document.getElementById("areaComentario").value = '';
-                    $("#com").show();
+                    document.querySelector('#fav >span').classList.add('fa-heart-o');
+                    document.querySelector('#fav >span').classList.remove('fa-heart');
+                    //document.querySelector('#boton').setAttribute('value','ON');
+
                 }
-            });
-        }
-
-        function ToJavaScriptDate(value) {
-            var pattern = /Date\(([^)]+)\)/;
-            var results = pattern.exec(value);
-            var dt = new Date(parseFloat(results[1]));
-            return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
-        }
-
-        function cambiarFavorito(idSubasta){
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: '@Url.Action("CambiarFavorito", "Subasta")',
-                data: {
-                    "idSubasta": idSubasta,
-                },
-                success: function (data) {
-                    //if false
-
-                    if (document.querySelector('#fav >span').classList.contains('fa-heart-o')){   
-     
-                        document.querySelector('#fav > span').classList.add('fa-heart');
-                        document.querySelector('#fav > span').classList.remove('fa-heart-o'); 
-                        //document.querySelector('#boton').setAttribute('value','OFF');
- 
-                        }
-                    else{
-     
-                        document.querySelector('#fav >span').classList.add('fa-heart-o');
-                        document.querySelector('#fav >span').classList.remove('fa-heart');
-                        //document.querySelector('#boton').setAttribute('value','ON');   
-     
-                    }
 
             }
         });
@@ -378,8 +367,8 @@
                     document.querySelector('#fav >span').classList.remove('fa-heart');
                 }
             }
-            });
-        }
+        });
+    }
 
     </script>
 

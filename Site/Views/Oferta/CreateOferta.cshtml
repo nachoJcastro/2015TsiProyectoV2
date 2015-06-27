@@ -6,7 +6,7 @@
 }
 
 <h2>Ofertar</h2>
-<h2>Valor actual @ViewBag.monto</h2>
+<h2>Valor actual $ @ViewBag.monto</h2>
 
 @using (Html.BeginForm())
 {
@@ -31,6 +31,10 @@
         </div>
     </div>
 }
+
+<div class="jumbotron">
+    @Html.ActionLink("Volver", "DetalleProducto/", "Subasta", new { idSubasta = ViewBag.idsub }, new { @class = "navbar-brand" })
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

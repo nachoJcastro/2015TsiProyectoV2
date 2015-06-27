@@ -53,7 +53,7 @@ namespace Site.Models
         public double precio_Base { get; set; }
 
         [Display(Name = "Precio de Compra")]
-        public double? precio_Compra { get; set; }
+        public double precio_Compra { get; set; }
 
         [Display(Name = "Garantía")]
         public string garantia { get; set; }

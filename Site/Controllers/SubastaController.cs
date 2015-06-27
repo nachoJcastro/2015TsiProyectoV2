@@ -550,6 +550,7 @@ namespace Site.Controllers
                 sub_site.precio_Compra = (double)subasta.precio_Compra;
                 sub_site.Calificacion = subasta.Calificacion;
                 sub_site.Favorito = subasta.Favorito;
+                sub_site.id_Vendedor = subasta.id_Vendedor;
             }
             catch (Exception)
             {
@@ -633,41 +634,6 @@ namespace Site.Controllers
         //    return View(subasta);
         //}
 
-        //// GET: Subastas/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Subasta subasta = db.Subastas.Find(id);
-        //    if (subasta == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(subasta);
-        //}
-
-        //// POST: Subastas/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Subasta subasta = db.Subastas.Find(id);
-        //    db.Subastas.Remove(subasta);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
 
         public ActionResult FinalizarCompraDirecta(int idSubasta)
         {
@@ -740,7 +706,7 @@ namespace Site.Controllers
                 sub_site = crearSubastaSite(subasta);
                 if(usuario != null){
                     sub_site.billeteraUsuario = usuario.billetera;
-            }
+                }
                 
             }
             catch (Exception)
@@ -813,15 +779,16 @@ namespace Site.Controllers
             //comentario.Subasta = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
             comIBL.AgregarComentario(valor_tenant,comentario);
 
-            IEnumerable<Comentario> modelList = new List<Comentario>();
+            IEnumerable<ComentarioModel> modelList = new List<ComentarioModel>();
             List<Comentario> comentarios;
             comentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
             comentarios.Reverse();
             modelList = comentarios.Select(x =>
-                                            new Comentario()
+                                            new ComentarioModel()
                                             {
                                                 id_Subasta = x.id_Subasta,
                                                 id_Usuario = x.id_Usuario,
+                                                nombreUsuario = usuIBL.GetNombreUsuario(valor_tenant, x.id_Usuario),
                                                 texto = x.texto,
                                                 fecha = x.fecha
                                             });
@@ -834,15 +801,16 @@ namespace Site.Controllers
             user_sitio = Session["usuario"] as UsuarioSite;
             valor_tenant = user_sitio.Dominio.ToString();
 
-            IEnumerable<Comentario> modelList = new List<Comentario>();
+            IEnumerable<ComentarioModel> modelList = new List<ComentarioModel>();
             List<Comentario> comentarios;
             comentarios = comIBL.ComentariosByProducto(valor_tenant, idSubasta);
             comentarios.Reverse();
             modelList = comentarios.Select(x =>
-                                            new Comentario()
+                                            new ComentarioModel()
                                             {
                                                 id_Subasta = x.id_Subasta,
                                                 id_Usuario = x.id_Usuario,
+                                                nombreUsuario = usuIBL.GetNombreUsuario(valor_tenant, x.id_Usuario),
                                                 texto = x.texto,
                                                 fecha = x.fecha
                                             });

@@ -173,13 +173,10 @@ namespace Site.Controllers
 
                 
                 proIBL = new BLProducto();
-                System.Diagnostics.Debug.WriteLine("Bandera2");
 
                 var  lista_Origen= proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda);
-                System.Diagnostics.Debug.WriteLine("Bandera 3");
                 List<System.Web.WebPages.Html.SelectListItem> lista_item_Cat = new List<System.Web.WebPages.Html.SelectListItem>();
                 
-                System.Diagnostics.Debug.WriteLine("Bandera 4");
                 foreach (var item in lista_Origen)
                 {
                     lista_item_Cat.Add(new System.Web.WebPages.Html.SelectListItem()
@@ -189,17 +186,8 @@ namespace Site.Controllers
                          Selected = false 
                     });
                 }
-
-                if (lista_item_Cat != null) {
-                    foreach (var item in lista_item_Cat)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Bandera 5 item " +item.Text.ToString());
-                    }
-                
-                } 
                 
                 ViewData["Categorias"] = lista_item_Cat;
-                System.Diagnostics.Debug.WriteLine("Bandera 6");
 
                 //registro.lista_preferencias;
                 registro.lista_preferencias =lista_item_Cat;
@@ -223,7 +211,6 @@ namespace Site.Controllers
                 else System.Diagnostics.Debug.WriteLine("Tenant " + Thread.GetData(local));
                 valor_tenant = System.Threading.Thread.GetData(local).ToString();*/
                 //Sitio sitio = Session["sitio"] as Sitio;
-               System.Diagnostics.Debug.WriteLine("Bandera 7");
             }
             catch (Exception)
             {
@@ -238,16 +225,13 @@ namespace Site.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        //email,direccion,fecha_Nacimiento,nombre,apellido,nick,password,coordenadas,preferencias,lista_preferencias};
         public ActionResult Register(RegisterViewModel model)
         {
-            System.Diagnostics.Debug.WriteLine("Bandera 1");
             if (ModelState.IsValid)
             {
                
                 try
                 {
-                        System.Diagnostics.Debug.WriteLine("Bandera 2");
                         user_sitio = Session["usuario"] as UsuarioSite;
 
                         if (user_sitio.Dominio != null)

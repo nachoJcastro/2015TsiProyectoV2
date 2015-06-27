@@ -375,7 +375,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="contenido\" />
-    <Folder Include="Views\Comentario\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
