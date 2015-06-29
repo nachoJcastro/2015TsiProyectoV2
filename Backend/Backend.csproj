@@ -218,11 +218,13 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AtributoAux.cs" />
     <Compile Include="Models\Charts.cs" />
     <Compile Include="Models\Estilo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JQueryDataTableParamModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProductoAux.cs" />
     <Compile Include="Models\Reporte.cs" />
     <Compile Include="Models\SubastaReporte.cs" />
     <Compile Include="Models\UsuarioReporte.cs" />

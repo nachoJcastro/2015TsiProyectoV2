@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Index tenant ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var tienda = Session["datosTienda"] as Crosscutting.EntityTenant.TiendaTenant;
 }
 <h1 align="center">@ViewBag.Message</h1>
 
@@ -79,11 +81,27 @@
 
     <div class="flexslider home-slider">
         <div class="banner">
-            <h1>Sed iaculis, nisi vel rhoncus</h1>
+            @if (tienda != null){
+                <h1>@tienda.Nombre</h1>
+            }else{
+                <h1>Prueba</h1>
+            }
+            
             <div class="line_1"></div>
-            <h4>Maecenas non justo varius, egestas nisi nec, ultrices erat. Aliquam elit urna</h4>
-            <p>Sed iaculis, nisi vel rhoncus sagittis, est risus ultricies eros, a varius diam eros pretium arcu. <br> Etiam mattis orci ut pharetra laoreet.</p>
-            <a class="btn_c" href="#">Details</a>
+            @*<h4>Maecenas non justo varius, egestas nisi nec, ultrices erat. Aliquam elit urna</h4>*@
+            <p>@tienda.Descripcion</p>
+            @if (ViewBag.ListaCategorias != null)
+            {
+
+                foreach (var item in ViewBag.ListaCategorias)
+                {
+
+                    <a href="@Url.Action("Categoria/", "Subasta", new { idCat = item.CategoriaId  }, null)" class="btn_c">@item.Nombre</a>
+
+                }
+
+            }
+            
         </div>
         <ul class="slides">
             @if (ViewBag.ListaImagenes != null)
@@ -107,7 +125,7 @@
 
 
 }
-<section>
+@*<section>
     <div class="container">
         @if (ViewBag.ListaCategorias != null)
         {
@@ -121,18 +139,18 @@
 
         }
     </div>
-</section>
+</section>*@
 
 @if (ViewBag.Recomendadas != null)
 {
-    <div class="container contenedor-listasubasta" style="margin-top:30px;">
+    <div class="container contenedor-listasubasta" style="margin-top:10px;">
 
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2>Recomendados</h2>
                 <hr>
             </div>
-            @foreach (var item in ViewBag.Recomendadas)
+            @*@foreach (var item in ViewBag.Recomendadas)
             {
                 <div class="col-sm-3 col-md-3 subastaslista">
                     <div class="thumbnail">
@@ -145,16 +163,40 @@
                         </div>
                     </div>
                 </div>
+            }*@
 
-                @*<div class="col-lg-4 col-md-4 col-sm-6">
-                        <a>
 
-                            <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
-                            @Html.ActionLink("Seleccionar", "DetalleProducto/", "Subasta", new { idSubasta = item.id }, false)
-                        </a>
 
-                    </div>*@
-            }
+            <div class="recommended_items">
+                <!--recommended_items-->
+                <div class="slider_re" data-slick='{"slidesToShow": 4, "slidesToScroll": 4}'>
+                    @foreach (var item in ViewBag.Recomendadas)
+                    {
+
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="@item.portada" alt="" />
+                                        <h2>$@item.precio_Compra</h2>
+                                        <p>@item.titulo</p>
+                                        <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Detalle</a>
+                                    </div>
+                                </div>
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <!--<li><a href="#"><i class="fa fa-plus-square"></i> Favoritos</a></li>-->
+                                        <!--<li><a href="Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)"><i class="fa fa-plus-square"></i> Comparar</a></li>-->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    }
+                </div>
+            </div><!--/recommended_items-->
+
         </div>
     </div>
 }

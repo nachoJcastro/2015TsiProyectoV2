@@ -274,6 +274,8 @@
     <Content Include="Content\price-range.css" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\site.css" />
+    <Content Include="Content\slick-theme.css" />
+    <Content Include="Content\slick.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="img\img1.jpg" />
@@ -322,6 +324,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Site.js" />
+    <Content Include="Scripts\slick.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -385,6 +388,8 @@
     <Content Include="Views\Subasta\GetCategoriasFilters.cshtml" />
     <Content Include="Views\Calificacion\CreateCalificacion.cshtml" />
     <Content Include="Views\Calificacion\ListadoComprasVentas.cshtml" />
+    <Content Include="Views\Subasta\Comparar.cshtml" />
+    <Content Include="Views\Subasta\SubastaComparar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

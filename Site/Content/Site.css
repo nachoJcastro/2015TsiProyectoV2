@@ -51,7 +51,7 @@ a#scrollUp {
   bottom: 0px;
   right: 10px;
   padding: 5px 10px;
-  background: #FE980F;
+  background: #37bbec;
   color: #FFF;
   -webkit-animation: bounce 2s ease infinite;
   animation: bounce 2s ease infinite;
@@ -160,13 +160,13 @@ a#scrollUp i{
 }
 
 .usa:hover {
-	background:#FE980F;
+	background:#37bbec;
 	color:#fff;
-	border-color:#FE980F;
+	border-color:#37bbec;
 }
 
 .usa:active, .usa.active {
-  background: none repeat scroll 0 0 #FE980F;
+  background: none repeat scroll 0 0 #37bbec;
   box-shadow: inherit;
   outline: 0 none;
 }
@@ -177,7 +177,7 @@ a#scrollUp i{
 }
 
 .dropdown-menu  li  a:hover, .dropdown-menu  li  a:focus {
-  background-color: #FE980F;
+  background-color: #37bbec;
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   text-decoration: none;
@@ -239,7 +239,8 @@ a#scrollUp i{
 	right: -3px;
 	z-index: -1;
 	border-radius: 50%;
-	background-color: #edefef;
+	/*background-color: #edefef;*/
+    background-color: black;
 	-webkit-box-shadow: 0 1px #fff, inset 0 1px #c9cbcb;
 	-moz-box-shadow: 0 1px #fff, inset 0 1px #c9cbcb;
 	box-shadow: none;
@@ -418,7 +419,9 @@ a#scrollUp i{
 	margin:0 0 0 5px;
 	line-height:36px;
 }
-
+.fa {
+      transform: none !important;
+}
 /*
 .shop-menu ul li {
     display:inline-block;
@@ -463,7 +466,7 @@ a#scrollUp i{
 }*/
 
 .shop-menu ul li a:hover {
-	color:#fe980f;
+	color:#37bbec;
 	background:#fff;
 }
 
@@ -613,7 +616,7 @@ outline:0px;
 }
 
 .footer-bottom p span a {
-  color: #FE980F;
+  color: #37bbec;
   font-style: italic;
   text-decoration: underline;
 }
@@ -632,7 +635,7 @@ outline:0px;
 }
 
 .carousel-indicators li.active {
- background: #FE980F;
+ background: #37bbec;
 }
 
 .item {
@@ -647,7 +650,7 @@ outline:0px;
 }
 
 .item h1 span {
-	color:#FE980F;
+	color:#37bbec;
 }
 
 .item h2 {
@@ -668,7 +671,7 @@ outline:0px;
 
 
 .get {
-  background: #FE980F;
+  background: #37bbec;
   border: 0 none;
   border-radius: 0;
   color: #FFFFFF;
@@ -680,7 +683,7 @@ outline:0px;
 
 
 .item button:hover {
-  background: #FE980F;
+  background: #37bbec;
 }
 
 .control-carousel {
@@ -691,7 +694,7 @@ outline:0px;
 }
 
 .control-carousel:hover{
-  color: #FE980F ;
+  color: #37bbec;
 }
 
 .right {
@@ -706,7 +709,7 @@ outline:0px;
   padding-top: 15px;
 }
 .left-sidebar h2, .brands_products h2 {
-  color: #FE980F;
+  color: #37bbec;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -826,7 +829,7 @@ h2.title:before{
 
 
 .tooltip-inner {
-  background-color: #FE980F;
+
   border-radius: 4px;
   color: #FFFFFF;
   max-width: 200px;
@@ -836,7 +839,7 @@ h2.title:before{
 }
 
 .tooltip.top .tooltip-arrow {
-  border-top-color: #FE980F;
+  border-top-color: #37bbec;
   border-width: 5px 5px 0;
   bottom: 0;
   left: 50%;
@@ -854,7 +857,7 @@ h2.title:before{
 
 
 h2.title {
-  color: #FE980F;
+  color: #37bbec;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -873,12 +876,7 @@ h2.title {
 }
 
 .product-image-wrapper:hover{
-    background-color: #FE980F;
 	border:1px solid #6F6F6F;
-
-}
-.product-image-wrapper:hover .productinfo>h2{
-    color:white;
 }
 
 .single-products {
@@ -886,7 +884,7 @@ h2.title {
 }
 
 .productinfo h2{
-	color: #FE980F;
+	color: #37bbec;
 	font-family: 'Roboto', sans-serif;
 	font-size: 24px;
 	font-weight: 700;
@@ -919,7 +917,7 @@ h2.title {
 }
 
 .add-to-cart:hover {
-  background: transparent;
+  background: #37bbec;
   border: 1px solid white;
   border-radius: 0;
   color: #FFFFFF;
@@ -953,11 +951,13 @@ h2.title {
 .choose ul li a i{
 	margin-right:5px;
 }
-
+.choose ul li a i:hover{
+	color:#37bbec;
+}
 .choose ul li a:hover{
 	background:none;
 	/*color:#FE980F;*/
-    color:white;
+    color:#37bbec;
 }
 
 .contenedor-listasubasta {
@@ -1074,7 +1074,7 @@ button + label{
 	-moz-transition: all 0.1s linear;
 	transition: all 0.1s linear;
 
-	color:#FE980F;
+	color:#37bbec;
 	font-size: 18px;
 }
 
@@ -1098,8 +1098,8 @@ button + label{
 .btn-login:hover,
 .btn-login:focus {
 	color: #fff;
-	background-color: #FE980F;
-	border-color: #FE980F;
+	background-color: #37bbec;
+	border-color: #37bbec;
 }
 .forgot-password {
 	text-decoration: underline;

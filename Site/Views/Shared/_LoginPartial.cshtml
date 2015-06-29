@@ -7,7 +7,7 @@
     @Html.AntiForgeryToken()
     @*<ul class="nav navbar-nav navbar-right">*@
         <li>
-            <a href="@Url.Action("DatosUsuario/", "Manage", new { idUsuario = user.idUsuario }, null)" data-toggle="tooltip" data-placement="bottom" title="Usuario">@user.Nombre <i class="fa fa-user fa-lg"></i></a>
+            <a href="@Url.Action("DatosUsuario/", "Manage", new { idUsuario = user.idUsuario }, null)" data-toggle="tooltip" data-placement="bottom" title="@user.Nombre"><i class="fa fa-user fa-lg"></i></a>
             @*@Html.ActionLink("Hola " + user.Nombre + "!", "DatosUsuario", "Manage")*@
         </li>
         @*<li>

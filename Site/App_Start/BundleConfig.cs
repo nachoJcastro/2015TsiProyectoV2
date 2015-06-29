@@ -37,6 +37,8 @@ namespace Site
                       "~/Content/responsive.css",
                       "~/Content/site.css",
                       "~/Content/PagedList.css",
+                      "~/Content/slick.css",
+                      "~/Content/slick-theme.css",
                       "~/Content/bootstrap-datetimepicker.min.css"));
 
 
@@ -47,7 +49,7 @@ namespace Site
                       "~/Scripts/respond.js",
                       "~/Scripts/jquery.zoom.min.js",
                       "~/Scripts/jquery.flexslider.js",
-                      "~/Scripts/jquery.elevatezoom.js",
+                      "~/Scripts/slick.js",
                       "~/Scripts/site.js",
                       "~/Scripts/main.js"
                       ));
