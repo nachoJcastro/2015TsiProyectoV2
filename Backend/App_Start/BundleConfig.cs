@@ -22,11 +22,13 @@ namespace Backend
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/moment.js",
+                      "~/Scripts/sweet-alert.js",
+                      "~/Scripts/toastr.js",
                       "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/otros").Include(
-                      "~/Scripts/nifty.min.js",
                       "~/Scripts/jquery.backstretch.min.js",
                       "~/Scripts/jquery.dcjqaccordion.js",
                       "~/Scripts/jquery.nicescroll.js",
@@ -36,20 +38,22 @@ namespace Backend
                         "~/Scripts/admin.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/root").Include(
-                       "~/Scripts/root.js"));
+                       "~/Scripts/hopscotch.js",
+                        "~/Scripts/root.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/chart").Include(
                       "~/Scripts/exporting.js",
                       "~/Scripts/highchart.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Scripts/moment.js",
                       "~/Content/bootstrap.css",
                       "~/Content/animate.css",
-                      "~/Content/nifty.min.css",
+                      "~/Content/sweet-alert.css",
+                      "~/Content/toastr.css",
                       "~/Content/font-awesome.css",
                       "~/Content/estilo.css",
-                      "~/Content/bootstrap-datetimepicker.min.css"));
+                      "~/Content/bootstrap-datetimepicker.min.css",
+                      "~/Content/hopscotch.min.css"));
 
         }
     }

@@ -8,7 +8,13 @@
 
 <div>
     Clasificacion
-    <input id="areaPuntaje" type="text">
+    <select id="Puntaje">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
     <br /><br />
     Observaciones
     <textarea id="areaObservaciones" rows="3" cols="50" placeholder="Ingrese aqui sus observaciones.."></textarea>
@@ -70,7 +76,7 @@
             url: '@Url.Action("CreateCalificacion", "Calificacion")',
             data: {
                 "idSubasta": @Model.id,
-                "puntaje": document.getElementById("areaPuntaje").value,
+                "puntaje": document.getElementById("Puntaje").value,
                 "observaciones": document.getElementById("areaObservaciones").value,
                 "venta":@Model.listaVenta,
     },

@@ -126,5 +126,21 @@ namespace DAL
                 throw;
             }
         }
+
+
+        public CategoriasDTO ObtenerCategoriaByNombre(int tenant, String nombre)
+        {
+            CategoriasDTO Cat = null;
+            try
+            {
+                Cat = db.Categorias.Where(c => c.TiendaId == tenant && c.Nombre == nombre).First();
+                return Cat;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
     }
 }

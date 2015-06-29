@@ -42,7 +42,7 @@ namespace Site.Controllers
             System.Diagnostics.Debug.WriteLine("ID tenant :" + tenantID);
             if (_ibl.ExisteSitio(tenantID))
             {
-                // System.Web.HttpContext.Current.Session.Clear();
+               // System.Web.HttpContext.Current.Session.Clear();
                 
                 /*System.Diagnostics.Debug.WriteLine("ID tenant :" + id);
                 System.Diagnostics.Debug.WriteLine("Tenant");
@@ -145,34 +145,12 @@ namespace Site.Controllers
 
                 IBLUsuario usuIBL = new BLUsuario();
                 var idUsuario = usuIBL.ObtenerIdByEmail(tenantID, user.Email);
+                int idTenant = _ibl.ObtenerIdTenant(tenantID);
+                List<Subasta> prodsfav = recom.AlgRecomen(idTenant, idUsuario);/////////////RECOMENDACIONES//////////////////////////////
+
 
                 List<Subasta> prodsfav = recom.AlgRecomen(tenantID, idUsuario);/////////////RECOMENDACIONES//////////////////////////////
-
-                try
-                {
-                    /*if (tenants_idChat.ContainsKey(tenantID) == true)
-                    {
-                        t.IdConexion_Chat = tenants_idChat[tenantID];
-
-                    }
-                    else {
-
-                        var id_chat = ChatHub.ObtenerIdConexion();
-                        log.Warn("SITIO  " + tenantID + " tiene ID CONEXION " + id_chat);
-                        tenants_idChat.Add(tenantID, id_chat);
-                    
-                    }*/
-
-
-                }
-                catch (Exception e)
-                {
-                    log.Error(e.StackTrace);
-                    throw e;
-                }
-
-               
-                
+                ViewBag.Recomendadas = prodsfav.ToList();
                 
                 return View();
                 //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());

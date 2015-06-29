@@ -10,7 +10,8 @@
 <h1 align="center">@ViewBag.Message</h1>
 
 @if (ViewBag.ListaImagenes != null)
-{<section id="slider">
+{
+    @*<section id="slider">
         <div class="container">
 
             <div class="row">
@@ -79,7 +80,37 @@
                 </div>
             </div>
         </div>
-  </section>
+  </section>*@
+
+    <div class="flexslider home-slider">
+        <div class="banner">
+            <h1>Sed iaculis, nisi vel rhoncus</h1>
+            <div class="line_1"></div>
+            <h4>Maecenas non justo varius, egestas nisi nec, ultrices erat. Aliquam elit urna</h4>
+            <p>Sed iaculis, nisi vel rhoncus sagittis, est risus ultricies eros, a varius diam eros pretium arcu. <br> Etiam mattis orci ut pharetra laoreet.</p>
+            <a class="btn_c" href="#">Details</a>
+        </div>
+        <ul class="slides">
+            @if (ViewBag.ListaImagenes != null)
+            {
+
+                foreach (var imagen in ViewBag.ListaImagenes)
+                {
+                    <li>
+                        <img alt="alt" src="@imagen.Uri" width="1600" height="800" style="height:500px;">
+
+                    </li>
+
+                }
+            }
+        </ul>
+        <div class="container">
+            <div class="banner_nav " style="padding-top:40px;">
+            </div>
+        </div>
+    </div>
+
+
 }
 <section>
     <div class="container">
@@ -96,139 +127,43 @@
         }
     </div>
 </section>
-<section style="margin-top:30px;">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="left-sidebar">
-                    <h2>Categorias</h2>
-                    <div class="panel-group category-products" id="accordian">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title"><a href="#">Subastas</a></h4>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title"><a href="#">Compra directa</a></h4>
-                            </div>
-                        </div>
 
-                    </div>
-
-                    <div class="price-range">
-                        <h2>Precio</h2>
-                        <div class="well text-center">
-                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
-                            <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-sm-9 padding-right">
-                <div class="features_items">
-                    <!--features_items-->
-                    <h2 class="title text-center">Filtro items</h2>
-
-                    @if (ViewBag.ListarSubastas != null)
-                    {
-
-                        foreach (var item in ViewBag.ListarSubastasActivas)
-                        {
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="@item.portada" alt="" />
-                                            <h2>$@item.precio_Compra</h2>
-                                            <p>@item.titulo</p>
-                                            <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Detalle</a>
-                                        </div>
-                                    </div>
-                                    <div class="choose">
-                                        <ul class="nav nav-pills nav-justified">
-                                            <!--<li><a href="#"><i class="fa fa-plus-square"></i> Favoritos</a></li>-->
-                                            <!--<li><a href="Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)"><i class="fa fa-plus-square"></i> Comparar</a></li>-->
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            @*<div class="col-sm-3 col-md-3 subastaslista">
-                                <div class="thumbnail">
-                                    <img src="@item.portada" style="max-width:150px;max-height:180px;" alt="">
-                                    <div class="caption">
-                                        <h3>@item.titulo</h3>
-                                        <p>@item.descripcion</p>
-                                        <p>$ @item.precio_Compra</p>
-                                        <p><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-primary" role="button">Detalle</a></p>
-                                    </div>
-                                </div>
-                            </div>*@
-
-                        }
-                       
-                    }
-
-                </div><!--features_items-->
-
-            </div>
-        </div>
-    </div>
-</section>
-@*@if (ViewBag.ListarSubastas != null)
+@if (ViewBag.Recomendadas != null)
 {
-    <div class="container contenedor-listasubasta">
+    <div class="container contenedor-listasubasta" style="margin-top:30px;">
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Articulos Destacados</h2>
+                <h2>Recomendados</h2>
                 <hr>
             </div>
-            @foreach (var item in ViewBag.ListarSubastasActivas)
+            @foreach (var item in ViewBag.Recomendadas)
             {
-            <div class="col-sm-3 col-md-3 subastaslista">
-                <div class="thumbnail">
-                    <img src="@item.portada" style="max-width:150px;max-height:180px;" alt="">
-                    <div class="caption">
-                        <h3>@item.titulo</h3>
-                        <p>@item.descripcion</p>
-                        <p>$ @item.precio_Compra</p>
-                        <p><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-primary" role="button">Detalle</a></p>
+                <div class="col-sm-3 col-md-3 subastaslista">
+                    <div class="thumbnail">
+                        <img src="@item.portada" style="max-width:150px;max-height:180px;" alt="">
+                        <div class="caption">
+                            <h3>@item.titulo</h3>
+                            <p>@item.descripcion</p>
+                            <p>$ @item.precio_Compra</p>
+                            <p><a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-primary" role="button">Detalle</a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            @*<div class="col-lg-4 col-md-4 col-sm-6">
-                    <a>
+                @*<div class="col-lg-4 col-md-4 col-sm-6">
+                        <a>
 
-                        <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
-                        @Html.ActionLink("Seleccionar", "DetalleProducto/", "Subasta", new { idSubasta = item.id }, false)
-                    </a>
+                            <img class="img-responsive img-home-portfolio" src="~/img/img2.jpg">
+                            @Html.ActionLink("Seleccionar", "DetalleProducto/", "Subasta", new { idSubasta = item.id }, false)
+                        </a>
 
-                </div>*@
-            @*}
-    </div>
-</div>
-}*@
-@*@using Site.Models
-@{
-    var user = Session["usuario"] as UsuarioSite;
-}
-@if (user!=null && user.Email!=null)
-{
-    <div class="jumbotron">
-        <button type="button" onclick="location.href='@Url.Action("Create", "Subasta")'" class="btn btn-default">Subastar</button>
-    </div>
-    <div class="jumbotron">
-        <button type="button" onclick="location.href='@Url.Action("Index", "Oferta")'" class="btn btn-default">Comprar</button>
+                    </div>*@
+            }
+        </div>
     </div>
 }
-else
-{
-   <h1 align="center">Para vender o comprar debe estar logueado</h1>
-}*@
+
 
 @* *****CHAT****************
     ***********************@

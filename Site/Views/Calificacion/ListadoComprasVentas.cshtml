@@ -1,13 +1,19 @@
 ﻿@using Site.Models
 @model SubastaSite
 @{
-    ViewBag.Title = "ListadoVentas";
+    ViewBag.Title = "Listado de Calificaciones";
 }
 
 @if (ViewBag.TamanioLista != 0)
 {
-    <h2>Listado de Ventas</h2>
-    
+    if (ViewBag.Ventas)
+    {
+        <h2>Listado de Ventas</h2>
+    }
+    else
+    {
+        <h2>Listado de Compras</h2>
+    }
     <div class="panel-body">
         <table class="table">
             <tr>
@@ -122,8 +128,15 @@
 }
 else
 {
-    <h2>No hay ventas registradas</h2>
+    if (ViewBag.Ventas)
+    {
+        <h2>No hay ventas registradas</h2>
+    }
+    else
+    {
+        <h2>No hay compras registradas</h2>
+    }
 }
     <div class="jumbotron">
-        <button type="button" onclick="location.href='@Url.Action("DatosUsuario/", "Manage",new { idUsuario = ViewBag.idUsuario})'" class="btn btn-default">Volver</button>
+        <button type="button" onclick="location.href='@Url.Action("DatosUsuario/", "Manage", new { idUsuario = ViewBag.idUsuario})'" class="btn btn-default">Volver</button>
     </div>

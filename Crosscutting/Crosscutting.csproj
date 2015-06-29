@@ -67,6 +67,7 @@
     <Compile Include="EntityTenant\CalificacionMongo.cs" />
     <Compile Include="EntityTenant\Comentario.cs" />
     <Compile Include="EntityTenant\ImagenesTenant.cs" />
+    <Compile Include="Entity\Paginacion.cs" />
     <Compile Include="EntityTenant\TiendaTenant.cs" />
     <Compile Include="Entity\ReporteLineal.cs" />
     <Compile Include="Entity\SubastaAux.cs" />

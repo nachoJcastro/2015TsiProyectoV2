@@ -3,10 +3,12 @@
     ViewBag.Title = "Listar";
 }
 
-<h2>Lista de Subastas favoritas</h2>
 
-@if (ViewBag.favoritas != null)
+
+@if (ViewBag.favoritasLargo != 0)
 {
+    <h2>Lista de Subastas favoritas</h2>
+    
     <div class="panel-body">
         <table class="table">
             <tr>
@@ -50,5 +52,11 @@
             }
         </table>
     </div>
-
 }
+else
+{
+    <h2>Usted no dispone de publicaciones favoritas</h2>
+}
+    <div class="jumbotron">
+        @Html.ActionLink("Volver", "Index", "Tenant", new { }, new { @class = "navbar-brand" })
+    </div>

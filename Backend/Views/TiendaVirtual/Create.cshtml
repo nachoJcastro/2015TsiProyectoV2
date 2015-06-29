@@ -29,10 +29,12 @@
             @Html.LabelFor(model => model.Dominio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.Dominio, new { htmlAttributes = new { @class = "form-control" } } )
-                
+                <div id="errores"></div>
                  @Html.ValidationMessageFor(model => model.Dominio, "", new { @class = "text-danger" })
             </div><p ><h4><strong>.chebay.com</strong></h4></p>
+            
         </div>
+        
 
      
 
@@ -47,10 +49,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="form-control">
-                    <input type="file" id="Logo" name="Logo" accept="image/*" />
+                
+                    <input class="form-control" type="file" id="Logo" name="Logo" accept="image/*" required />
                     @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
-                </div>
+                
             </div>
         </div>
        
@@ -82,11 +84,62 @@
         </div>*@
 
         <div class="modal-footer">
-            <input type="submit" value="Crear" class="btn btn-default" />
+            <input type="submit" id="crear_subasta" value="Crear" class="btn btn-default" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
     </div>
 }
 
 @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    $(document).ready(function () {
+
+        $('#crear_subasta').addClass('disabled');
+
+        $("#Dominio").change(function() {
+            var retorno = $("#errores");
+            retorno.html('');
+
+            var dominio = $("#Dominio").val();
+            var myActionUrl = '@Url.Action("ExisteDominio", "TiendaVirtual")';
+
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: myActionUrl,
+                data: {
+                    "dominio": dominio,
+                },
+                dataType: "json",
+                success: function (Result) {
+                    if(Result.toString()=="true")
+                    {
+                        if (!$('#crear_subasta').hasClass('disabled')) $('#crear_subasta').addClass('disabled');
+                        
+                        $("#Dominio").css("border", "1px solid red");
+                        retorno.css("color", "white");
+                        retorno.css("background", "red");
+                        retorno.html('<span>&nbsp<i class="fa fa-times"></i>&nbspDominio en uso</span>');
+                    }
+                    else
+                    {
+                        $('#crear_subasta').removeClass('disabled');
+                        $("#Dominio").css("border", "1px solid green");
+                        retorno.css("color", "white");
+                        retorno.css("background", "green");
+                        retorno.html('<span>&nbsp<i class="fa fa-check"></i>&nbspDominio disponible</span>');
+
+                    }
+                },
+                error: function (Result) {
+                    alert("Error");
+                }
+
+
+        });
+
+        });
+});
+</script>
 

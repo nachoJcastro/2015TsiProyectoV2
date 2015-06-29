@@ -49,5 +49,10 @@ namespace BusinessLogicLayer.Controllers
         {
             _dal.EliminarCategoria(categoriaId);
         }
+
+        public CategoriasDTO ObtenerCategoriaByNombre(int tenant, String nombre)
+        {
+            return _dal.ObtenerCategoriaByNombre(tenant, nombre);
+        }
     }
 }

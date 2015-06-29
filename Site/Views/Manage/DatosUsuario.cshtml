@@ -35,6 +35,25 @@
 
         <div class="form-group">
             <div class="col-md-4">
+                @Html.Label("Reputacion como vendedor")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.reputacion_Venta)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Reputacion como comprador")
+            </div>
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.reputacion_Compra)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-4">
                 @Html.Label("Celular")
             </div>
             <div class="col-md-4">
@@ -60,16 +79,18 @@
                 @Html.DisplayFor(model => model.direccion)
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-4">
-                @Html.Label("Billetera")
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(model => model.billetera)
-            </div>
-        </div>
-
+        
+            @if (Model.billetera != 0)
+            {
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.Label("Billetera")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DisplayFor(model => model.billetera)
+                    </div>
+                </div>
+            }
 
         <div class="form-group">
             <div class="col-md-4">
@@ -92,3 +113,4 @@
         </div>
     </div>
 </div>
+

@@ -21,7 +21,7 @@ namespace Backend.Models
         public DateTime fechaini { get; set; }
         [Required(ErrorMessage = "Ingrese la fecha de fin del reporte")]
         public DateTime fechafin { get; set; }
-
+        
 
         //public virtual ICollection<TiendaVirtualDTO> ListaTienda { get; set; }
     }

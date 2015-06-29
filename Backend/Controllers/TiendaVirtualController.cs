@@ -49,6 +49,7 @@ namespace Backend.Controllers
         {
             var idUser = User.Identity.GetUserId();
             var tiendas = _bl.ObtenerTiendaDelUsuario(idUser);
+            ViewBag.numero = tiendas.Count();
             return View(tiendas);
         }
 
@@ -80,7 +81,10 @@ namespace Backend.Controllers
             {
                  var idUser = User.Identity.GetUserId();
                  var tienda= _bl.ObtenerTiendaDelUsuario(User.Identity.GetUserName());
-
+                 var tiendanumber = _bl.ObtenerTiendaDelUsuario(idUser).Count();
+                 
+                 return View();
+                 //return Content("<script language='javascript' type='text/javascript'>mensaje('Tienda Virtual', 'Solo se permite crear una tienda virtual por usuario', 'error');</script>"); }
                     
             }
             catch (Exception)
@@ -90,7 +94,7 @@ namespace Backend.Controllers
             }
             
             
-            return View();
+            
         }
 
         // POST: TiendaVirtual/Create
@@ -378,7 +382,7 @@ namespace Backend.Controllers
 
 
         [Authorize(Roles = "Usuario")]
-        public ActionResult Upload(int id)
+        public ActionResult Upload(int id, string mensaje,string tipo)
         {
             TiendaVirtualDTO tienda = _bl.ObtenerTienda(id);
             //CloudBlobContainer blobContainer = _bss.GetContainerTienda(tienda.Dominio);
@@ -389,7 +393,11 @@ namespace Backend.Controllers
             //{
             //    blobs.Add(blob.Uri.ToString());
             //}
-
+            if (mensaje == null) mensaje = "";
+            if (tipo == null) tipo = "";
+            ViewBag.Imagenes = _bl.ObtenerImagenes(id);
+            ViewBag.mensaje = mensaje;
+            ViewBag.tipo = tipo;
             return View(tienda);
         }
 
@@ -397,28 +405,37 @@ namespace Backend.Controllers
         [Authorize(Roles = "Usuario")]
         public ActionResult Upload(TiendaVirtualDTO tienda, HttpPostedFileBase image)
         {
-
-                TiendaVirtualDTO tiendaDTO = _bl.ObtenerTienda(tienda.TiendaVitualId);
+            TiendaVirtualDTO tiendaDTO = _bl.ObtenerTienda(tienda.TiendaVitualId);
+            if (image.ContentLength < 2097152)
+            {
+                
                 var nombreFoto = tienda.Dominio + Guid.NewGuid().ToString() + "_portada";
                 CloudBlobContainer blobContainer = _bss.GetContainerTienda(tienda.Dominio);
                 CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
-                
+
                 ImagenesDTO imagen = new ImagenesDTO();
                 imagen.TiendaId = tiendaDTO.TiendaVitualId;
                 imagen.Nombre = nombreFoto;
                 imagen.UrlImagenMediana = blob.Uri.ToString();
                 _bl.AgregarImagenTienda(imagen);
-                
+
 
                 blob.UploadFromStream(image.InputStream);
 
-                return RedirectToAction("Upload", "TiendaVirtual", new { id = tiendaDTO.TiendaVitualId });
+                return RedirectToAction("Upload", "TiendaVirtual", new { id = tiendaDTO.TiendaVitualId, mensaje = "Se agrego la imagen correctamente", tipo = "success" });
+            }
+            else
+            {
+                return RedirectToAction("Upload", "TiendaVirtual", new { id = tiendaDTO.TiendaVitualId, mensaje = "Tamaño maximo 2 MB", tipo="warning" });
+               
+            }
+  
         }
 
 
         [HttpPost]
         [Authorize(Roles = "Usuario")]
-        public string DeleteImage(string Name, string Uri, int id)
+        public ActionResult DeleteImage(string Name, string Uri, int id)
         {
             TiendaVirtualDTO tienda = _bl.ObtenerTienda(id);
 
@@ -427,11 +444,24 @@ namespace Backend.Controllers
             CloudBlobContainer blobContainer = _bss.GetContainerTienda(tienda.Dominio);
             CloudBlockBlob blob = blobContainer.GetBlockBlobReference(filename);
 
-            _bl.EliminarImagenTienda(tienda.TiendaVitualId, Name);
+            bool ok=_bl.EliminarImagenTienda(tienda.TiendaVitualId, Name);
 
-            blob.Delete();
+            if (ok)
+            {
+                blob.Delete();
+                ViewBag.mensaje = "Prueba";
+                ViewBag.tipo = "Prueba";
+                return Content("<script language='javascript' type='text/javascript'>mensaje('Tienda Virtual', 'Solo se permite crear una tienda virtual por usuario', 'error');</script>"); 
+                    
+            }
+            else 
+            {
+                ViewBag.mensaje = "";
+                ViewBag.tipo = "";
+                return Content("<script language='javascript' type='text/javascript'>mensaje('Tienda Virtual', 'Solo se permite crear una tienda virtual por usuario', 'error');</script>");
+            }
 
-            return "File delete";
+            
         }
 
         [Authorize(Roles = "Admin")]
@@ -475,6 +505,7 @@ namespace Backend.Controllers
         {
             List<SubastaAux> subastas;
             List<Usuario> usuarios;
+
 
             IEnumerable<UsuarioReporte> modelList = new List<UsuarioReporte>();
             IEnumerable<SubastaReporte> modelList2 = new List<SubastaReporte>();
@@ -574,8 +605,7 @@ namespace Backend.Controllers
             IEnumerable<ReporteLineal> modelList2 = new List<ReporteLineal>();
 
             TipoReporte e = (TipoReporte)Enum.Parse(typeof(TipoReporte), "Usuario");
-            //DateTime fechai = Convert.ToDateTime(fechaini);
-            //DateTime fechaf = Convert.ToDateTime(fechafin);
+
 
             if (rep.tipo.Equals(e))
             {
@@ -678,6 +708,92 @@ namespace Backend.Controllers
 
 
             //return Json(modelList, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult ReportesSubastas()
+        {
+
+            // ViewData["Tiendas"] = _bl.ObtenerTiendas().ToList();
+
+
+
+            ViewBag.tiendas = _bl.ObtenerTiendas().ToList();
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult ReportesUsuarios()
+        {
+
+            // ViewData["Tiendas"] = _bl.ObtenerTiendas().ToList();
+
+
+
+            ViewBag.tiendas = _bl.ObtenerTiendas().ToList();
+            return View();
+        }
+
+        public ActionResult ReportesDetalle(Reporte rep)
+        {
+            List<SubastaAux> subastas;
+            List<UsuarioAux> usuarios;
+
+
+            IEnumerable<UsuarioReporte> modelList = new List<UsuarioReporte>();
+            IEnumerable<SubastaReporte> modelList2 = new List<SubastaReporte>();
+
+            TipoReporte e = (TipoReporte)Enum.Parse(typeof(TipoReporte), "Usuario");
+            //DateTime fechai = Convert.ToDateTime(fechaini);
+            //DateTime fechaf = Convert.ToDateTime(fechafin);
+
+            if (rep.tipo.Equals(e))
+            {
+                usuarios = _bl.DetUsers(rep.dominio, rep.fechaini).ToList();
+                modelList = usuarios.Select(x =>
+                                            new UsuarioReporte()
+                                            {
+                                                tipo = "Usuario",
+                                                nick = x.nick,
+                                                nombre = x.nombre,
+                                                apellido = x.apellido,
+                                                email = x.email,
+                                                fecha_Alta = x.fecha_Alta
+
+                                            });
+                return Json(modelList, JsonRequestBehavior.AllowGet);
+
+
+            }
+            else
+            {
+                subastas = _bl.DetSub(rep.dominio, rep.fechaini).ToList();
+                modelList2 = subastas.Select(x =>
+                                            new SubastaReporte()
+                                            {
+                                                tipo = "Subasta",
+                                                titulo = x.titulo,
+                                                nickComprador = x.nombreComprador,
+                                                nickVendedor = x.nombreVendedor,
+                                                precio_Base = x.precio_Base,
+                                                fecha_Inicio = x.fecha_Inicio
+
+                                            });
+                return Json(modelList2, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
+        public ActionResult ExisteDominio(string dominio)
+        {
+            string retorno;
+            bool existe = _bl.ExisteDominio(dominio);
+            if(existe) retorno="true";
+            else retorno="false";
+
+            return Json(retorno, JsonRequestBehavior.AllowGet);
 
         }
     }

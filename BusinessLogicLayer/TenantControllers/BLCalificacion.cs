@@ -58,5 +58,64 @@ namespace BusinessLogicLayer.TenantControllers
         {
             return _dal.ObtenerCalificacionDelComprador(tenant, subastaId);
         }
+
+
+        public double ObtenerReputacionVendedor(String tenant, int usuarioId)
+        {
+            IDALSubasta _dalSub = new DALSubastaEF();
+            List<Subasta> ventas = _dalSub.ObtenerVentasbyUsuario(tenant, usuarioId);
+            int total = 0;
+            int cantidad = 0;
+
+            foreach (var item in ventas)
+            {
+                var calificacion = _dal.ObtenerCalificacionDelComprador(tenant, item.id);
+                if (calificacion != null)
+                {
+                    total = total + calificacion.puntaje;
+                    cantidad++;
+                }
+                
+            }
+
+            if (total == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return total / cantidad;
+            }
+        }
+
+
+        public double ObtenerReputacionComprador(String tenant, int usuarioId)
+        {
+            IDALSubasta _dalSub = new DALSubastaEF();
+            List<Subasta> compras = _dalSub.ObtenerComprasbyUsuario(tenant, usuarioId);
+            int total = 0;
+            int cantidad = 0;
+
+            foreach (var item in compras)
+            {
+                var calificacion = _dal.ObtenerCalificacionDelVendedor(tenant, item.id);
+                if (calificacion != null)
+                {
+                    total = total + calificacion.puntaje;
+                    cantidad++;
+                }
+
+            }
+
+            if (total == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return total / cantidad;
+            }
+        }
+
     }
 }

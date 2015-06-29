@@ -22,18 +22,21 @@ namespace Site
             bundles.Add(new ScriptBundle("~/bundles/modern-business").Include(
                        "~/Scripts/modern-business.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            //          "~/Scripts/knockout-3.3.0.js",
+            //          "~/Scripts/bootstrap.js",
+            //          "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/animate.css",
                       "~/Content/font-awesome.css",
+                      "~/Content/flexslider.css",
                       "~/Content/prettyPhoto.css",
                       "~/Content/price-range.css",
                       "~/Content/responsive.css",
                       "~/Content/site.css",
+                      "~/Content/PagedList.css",
                       "~/Content/bootstrap-datetimepicker.min.css"));
 
 
@@ -42,9 +45,10 @@ namespace Site
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/respond.js",
+                      "~/Scripts/jquery.zoom.min.js",
+                      "~/Scripts/jquery.flexslider.js",
+                      "~/Scripts/jquery.elevatezoom.js",
                       "~/Scripts/site.js",
-                      "~/Scripts/price-range.js",
-                      "~/Scripts/jquery.mixitup.js",
                       "~/Scripts/main.js"
                       ));
 

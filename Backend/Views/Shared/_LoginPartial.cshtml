@@ -4,7 +4,7 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-        <a href="#" class="dropdown-toggle datos-user" data-toggle="dropdown" role="button" aria-expanded="false"> @User.Identity.GetUserName()</a>
+    <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-expanded="false"> @User.Identity.GetUserName()</a>
         <ul class="dropdown-menu drop-right-user wow fadeInUp" role="menu" data-wow-duration="0.5s" data-wow-delay="0s">
             <li class="drop-titulo-user center-block">
                 <img class="img-responsive img-circle center-block" src="~/img/admin.png" />

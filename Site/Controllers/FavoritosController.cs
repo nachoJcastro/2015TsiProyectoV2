@@ -43,7 +43,7 @@ namespace Site.Controllers
             int idLogueado = usuIBL.ObtenerIdByEmail(valor_tenant, user_sitio.Email);
 
             List<Subasta> favoritas = favIBL.SubastasFavoritasByUsuario(valor_tenant, idLogueado);
-
+            ViewBag.favoritasLargo = favoritas.Count;
             ViewBag.favoritas = favoritas;
 
             return View();

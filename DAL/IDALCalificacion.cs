@@ -17,6 +17,6 @@ namespace DAL
 
         CalificacionMongo ObtenerCalificacionDelVendedor(String tenant, int subastaId);
         CalificacionMongo ObtenerCalificacionDelComprador(String tenant, int subastaId);
-        
+
     }
 }

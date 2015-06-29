@@ -5,17 +5,23 @@
 
 <div class="col-md-12 contendor-admin-user">
     <div class="col-md-12 titulo-componentes-user">
-        <a href="@Url.Action("index", "TiendaVirtual")" class="btn btn-default"><span class="fa fa-arrow-left fa-2x"></span></a><h1>Imagenes Tienda</h1>
+        <a href="@Url.Action("index", "TiendaVirtual")" class="btn btn-default"><span class="fa fa-arrow-left fa-2x"></span></a>
+        <span data-toggle="modal" data-target="#myModal">
+            <a data-toggle="tooltip" data-placement="top" class="btn btn-default" title="Preview"><span class="fa fa-magic fa-2x"></span></a>
+        </span> 
+        <h1>Imagenes Tienda</h1>
+
     </div>
     <br />
     <div class="col-md-12">
         <br />
         <div class="col-md-12 contenedor-upload">
+
             @using (Html.BeginForm("Upload", "TiendaVirtual", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.HiddenFor(x => Model.TiendaVitualId)
                 @Html.HiddenFor(x => Model.Dominio)
-                <input type="file" name="image" class="form-control" /><br />
+                <input type="file" name="image" class="form-control" required /><br />
                 <input type="submit" value="Upload" class="btn btn-default" />
             }
 
@@ -23,39 +29,74 @@
 
         <div class="col-md-12 contenedor-img-upload">
 
-            @if (Model.ListaImagenes != null)
+            @if (ViewBag.Imagenes != null)
             {
-                foreach (var item in Model.ListaImagenes)
+                foreach (var item in ViewBag.Imagenes)
                 {
-                    <article class="col-xs-12 col-sm-6 col-md-3 list-img">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <a href="#" title="Nature Portfolio" class="zoom" data-title="Amazing Nature" data-footer="The beauty of nature" data-type="image" data-toggle="lightbox">
-                                    <img src="@item.UrlImagenMediana" alt="Nature Portfolio" />
-                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
-                                </a>
+                    
+                        <article class="col-xs-12 col-sm-6 col-md-3 list-img">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <a href="#" title="Nature Portfolio" class="zoom" data-title="Amazing Nature" data-footer="The beauty of nature" data-type="image" data-toggle="lightbox">
+                                        <img src="@item.UrlImagenMediana" alt="Nature Portfolio" />
+                                        <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                    </a>
+                                </div>
+                                <div class="panel-footer">
+                                    <span class="pull-right">
+                                        <a id="@item.UrlImagenMediana" href="#" onclick="deleteImage('@item.Nombre','@item.UrlImagenMediana','@item.TiendaId');">Delete</a>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="panel-footer">
-                                <span class="pull-right">
-                                    <a id="@item.UrlImagenMediana" href="#" onclick="deleteImage('@item.Nombre','@item.UrlImagenMediana','@item.TiendaId');">Delete</a>
-                                </span>
-                            </div>
-                        </div>
-                    </article>
-      
+                        </article>
+                    
                 }
             }
         </div>
     </div>
 </div>
-
+<!-- Modal-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="~/img/tienda-boceto-imagenes.jpg" class="img-responsive" />
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/toastr.js"></script>
 <script>
     function deleteImage(nombre,image,id) {
         var url = "/TiendaVirtual/DeleteImage";
         $.post(url, { Name: nombre, Uri: image, id: id }, function (data) {
+            $.msj("Se elimino la imagen correctamente", "success");
             window.location.href = "/TiendaVirtual/Upload/" + id;
+            $.msj("Se elimino la imagen correctamente","success");
         });
     }
 </script>
 
 
+<script>
+    $(document).ready(function () {
+        $.msj = function (parametros,tipo) {
+            if (parametros != "") {
+                switch(tipo){
+                    case "warning":
+                        toastr.warning(parametros);
+                        break;
+                    case "success":
+                        toastr.success(parametros);
+                        break;
+                    case "error":
+                        toastr.error(parametros);
+                        break;
+                }
+            }
+        }
+        
+        $.msj("@ViewBag.mensaje", "@ViewBag.tipo");
+    });
+</script>

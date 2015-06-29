@@ -127,12 +127,19 @@
     });
 
     $('#btnTiendaV').click(function () {
-        $(".modal-dialog").hide();
-        $('.modal-body').load("/tiendavirtual/create");
+        var id = $(this).data("id");
+        if (id < 1) {
 
-        setTimeout(function () {
-            $(".modal-dialog").fadeIn();
-        }, 100);
+            $(".modal-dialog").hide();
+            $('.modal-body').load("/tiendavirtual/create");
+
+            setTimeout(function () {
+                $(".modal-dialog").fadeIn();
+            }, 100);
+        }
+        else {
+            mensaje("Tienda Virtual", "Solo se permite crear una tienda virtual por usuario", "error");
+        }
     });
 
     $('.btnEditTienda').click(function () {
@@ -148,3 +155,11 @@
   
 
 });
+
+function mensaje(titulo, texto, tipo) {
+    swal({
+        title: titulo,
+        text: texto,
+        type: tipo,
+    });
+}
