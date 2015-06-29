@@ -144,7 +144,7 @@ namespace DAL.DAL_Tenant
                     usuario.apellido = usuarioNuevo.apellido;
                     usuario.billetera = usuarioNuevo.billetera;
                     usuario.Calificacion = usuarioNuevo.Calificacion;
-                    usuario.Comentario = usuarioNuevo.Comentario;
+                    //usuario.Comentario = usuarioNuevo.Comentario;
                     usuario.direccion = usuarioNuevo.direccion;
                     usuario.email = usuarioNuevo.email;
                     //usuario.Favorito = usuarioNuevo.Favorito;

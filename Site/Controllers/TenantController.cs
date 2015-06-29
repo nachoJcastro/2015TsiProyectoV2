@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Recomendaciones;
+using Common.Logging;
+using Site.Chat;
 
 namespace Site.Controllers
 {
@@ -24,19 +26,23 @@ namespace Site.Controllers
         public TiendaTenant t;
         public EstiloTienda estilo;
 
+       
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /*static LocalDataStoreSlot local;
         private String tenantID;
         static LocalDataStoreSlot tenant = Thread.AllocateNamedDataSlot("Tenant");*/
         // GET: Tenant
         public ActionResult Index(string id)
         {
+           
+            log.Warn("TENANT CONTROLLER SITIO = "+id);
+
             tenantID = id;
             System.Diagnostics.Debug.WriteLine("ID tenant :" + tenantID);
             if (_ibl.ExisteSitio(tenantID))
             {
-
-
-               // System.Web.HttpContext.Current.Session.Clear();
+                // System.Web.HttpContext.Current.Session.Clear();
                 
                 /*System.Diagnostics.Debug.WriteLine("ID tenant :" + id);
                 System.Diagnostics.Debug.WriteLine("Tenant");
@@ -142,6 +148,31 @@ namespace Site.Controllers
 
                 List<Subasta> prodsfav = recom.AlgRecomen(tenantID, idUsuario);/////////////RECOMENDACIONES//////////////////////////////
 
+                try
+                {
+                    /*if (tenants_idChat.ContainsKey(tenantID) == true)
+                    {
+                        t.IdConexion_Chat = tenants_idChat[tenantID];
+
+                    }
+                    else {
+
+                        var id_chat = ChatHub.ObtenerIdConexion();
+                        log.Warn("SITIO  " + tenantID + " tiene ID CONEXION " + id_chat);
+                        tenants_idChat.Add(tenantID, id_chat);
+                    
+                    }*/
+
+
+                }
+                catch (Exception e)
+                {
+                    log.Error(e.StackTrace);
+                    throw e;
+                }
+
+               
+                
                 
                 return View();
                 //System.Diagnostics.Debug.WriteLine(" Dominio en sesion " + user.Dominio.ToString());

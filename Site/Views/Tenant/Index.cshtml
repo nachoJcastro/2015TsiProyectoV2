@@ -1,6 +1,11 @@
-﻿@{
+﻿@using Site.Models
+@{
     ViewBag.Title = "Index tenant ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var tienda = Session["datosTienda"] as Crosscutting.EntityTenant.TiendaTenant;
+}
+@{
+    var user = Session["usuario"] as UsuarioSite;
 }
 <h1 align="center">@ViewBag.Message</h1>
 
@@ -225,9 +230,381 @@ else
    <h1 align="center">Para vender o comprar debe estar logueado</h1>
 }*@
 
+@* *****CHAT****************
+    ***********************@
+<section>
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <div id="contenedorChat">
+            <div id="divChat" class="chatRoom">
+                <div class="title">
+                    Sala de Chat [<span id='spanSala'></span>] Usuario [<span id='spanUser'></span>]
+
+                </div>
+                <div class="content">
+                    <div id="divChatWindow" class="chatWindow">
+                    </div>
+                    <div id="divusers" class="users">
+                    </div>
+                </div>
+                <div class="messageBar">
+                    <input class="textbox" type="text" id="txtMensaje" />
+                    <input id="btnEnviarMsj" type="button" value="Enviar" class="submitButton" />
+                </div>
+            </div>
+
+            <input id="hdId" type="hidden" />
+            <input id="hdNomUsuario" type="hidden" />
+        </div>
+    </div>
+</section>
+@* *****CHAT****************
+    ***********************@
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
 
+    <!--SCRIPT NECESARIOS Y OPCIONALES-->
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.signalR-2.0.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/signalr/hubs")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/chat/jquery.ui.core.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/chat/jquery.ui.widget.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/chat/jquery.ui.mouse.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/chat/jquery.ui.draggable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/chat/jquery.ui.resizable.js")" type="text/javascript"></script>
+
+    <!--SignalR FUNCIONES-->
+    <script type="text/javascript">
+
+        var chatHub;
+        var userName;
+        var tienda;
+
+        $(document).ready(function () {
+            $("#contenedorChat").hide();
+
+            chatHub = $.connection.chatHub;
+            //alert(chatHub);
+
+            //chatHub = chatHub;
+            $.connection.hub.start().done(function () {
+                // chatHub.server.conectar_Site("Moderador");
+                registerEvents(chatHub);
+
+            }).fail(function (error) {
+                console.log('Error al iniciar: ' + error)
+            });
+
+        });
+        /*function obtener_chat() {
+             chatHub = chatHub;
+
+         };*/
+
+
+        //*************************************************************************
+        // PRINCIPAL
+        //*************************************************************************
+        /*function iniciarSala() {
+
+        }*/
+
+        $('#bt-chat').click(function () {
+            // function iniciar_sala() {
+            //alert("aca carga");
+            //holaaaaaaaaaaaaa
+            //obtener_chat();
+            //var chatHub = chatHub;
+            //var chatHub = GlobalHost.ConnectionManager.GetHubContext<chatHub>();
+           // alert(chatHub);
+
+            userName = '@user.Nombre';
+            sala = '@tienda.Nombre';
+
+            $('#hdNomUsuario').val(userName);
+            $('#spanUser').html(userName);
+            $('#spanSala').html(sala);
+
+            
+           
+
+
+            //alert(userName+" - "+sala);
+            chatHub.server.entrarSala(sala, userName);
+
+           // alert("agrego usuario");
+            Agregar_Usuario(chatHub, userName);
+            // chatHub.client.onConnected = function (id, userName, allUsers, mensajes) {
+
+
+
+
+               
+          //  };
+           
+
+           // registroMetodosCliente(chatHub);
+            $("#contenedorChat").show();
+
+        });
+        //******************************
+        // function setScreen(isLogin) {
+        //   if (!isLogin) {
+        //     $("#divChat").hide();
+        //      // $("#divLogin").show();
+        //  }
+        //   else {
+        //     $("#divChat").show();
+        //       $("#divLogin").hide();
+        //    }
+
+        // }
+        //******************************
+        function registerEvents(chatHub){
+
+
+            // FUNCION ENVIAR MENSAJE
+            $('#btnEnviarMsj').click(function () {
+
+                var msj = $("#txtMensaje").val();
+                //alert("Mensaje broadcast " + msj);
+
+                if (msj.length > 0) {
+
+                    userName = '@user.Nombre';
+                    sala = '@tienda.Nombre';
+
+                    //var nombreUsuario = $('#hdNomUsuario').val();
+                   // alert("Nombre usuario " + userName);
+                    chatHub.server.mensajeSala(sala, userName, msj);
+                    mensaje= $("#txtMensaje").val('');
+                    Agregar_Mensaje(userName, msj);
+                }
+            });
+
+
+
+            // EVENTO CLICK NICK
+            $("#txtNickUsuario").keypress(function (e) {
+                if (e.which == 13) {
+                    $("#btnComenzarChat").click();
+                }
+            });
+            // EVENTO  ENVIAR MENSAJE
+            $("#txtMensaje").keypress(function (e) {
+                if (e.which == 13) {
+                    $('#btnEnviarMsj').click();
+                }
+            });
+
+
+        }
+        // Comienzo HUB CHAT
+        //  $.connection.hub.start().done(function () {
+        //      registerEvents(chatHub)
+        //   }).fail(function (error) {
+        //      console.log('Error al iniciar: ' + error)
+        //    });
+
+        // REGISTRO EVENTOS
+        /* function registerEvents(chatHub) {
+             // $("#btnComenzarChat").click(function () {
+             // Nombre Usuario Logueado
+            // var nombre = 'user.Nombre';
+             if (nombre.length > 0) {
+
+                 alert("Ingreso Usuario = " + nombre);
+                 chatHub.server.conectar(nombre);
+             }
+             else {
+                 alert("Ingrese Nombre");
+             }
+             // });
+         };*/
+
+
+
+
+
+
+
+        // REGISTRO METODOS CLIENTE
+        function registroMetodosCliente(chatHub) {
+
+            // Calls when user successfully logged in
+            chatHub.client.onConnected = function (id, userName, allUsers, mensajes) {
+                setScreen(true);
+
+                $('#hdId').val(id);
+                $('#hdNomUsuario').val(userName);
+                $('#spanUser').html(userName);
+
+                // Add All Users
+                for (i = 0; i < allUsers.length; i++) {
+                    Agregar_Usuario(chatHub, allUsers[i].IdConexion_Chat, allUsers[i].NombreUsuario);
+                }
+
+                // Add Existing mensajes
+                for (i = 0; i < mensajes.length; i++) {
+
+                    Agregar_Mensaje(mensajes[i].NombreUsuario, mensajes[i].Mensaje);
+                }
+
+
+            }
+
+            // CUANDO SE CONECTA UN NUEVO USUARIO
+            chatHub.client.onNewUserConnected = function (id, nombre) {
+                Agregar_Usuario(chatHub, id, nombre);
+            }
+            // CUANDO SE DESCONECTA
+            chatHub.client.onUserDisconnected = function (id, userName) {
+                $('#' + id).remove();
+                var ctrId = 'private_' + id;
+                $('#' + ctrId).remove();
+                var disc = $('<div class="disconnect">"' + userName + '" logged off.</div>');
+                $(disc).hide();
+                $('#divusers').prepend(disc);
+                $(disc).fadeIn(200).delay(2000).fadeOut(200);
+            }
+            chatHub.client.messageReceived = function (userName, mensaje) {
+                Agregar_Mensaje(userName, mensaje);
+            }
+            chatHub.client.sendPrivateMessage = function (windowId, fromnombreUsuario, mensaje) {
+                var ctrId = 'private_' + windowId;
+                if ($('#' + ctrId).length == 0) {
+                    crearSalaPrivada(chatHub, windowId, ctrId, fromnombreUsuario);
+                }
+                $('#' + ctrId).find('#divmensaje').append('<div class="message"><span class="userName">' + fromnombreUsuario + '</span>: ' + mensaje + '</div>');
+                // set scrollbar
+                var height = $('#' + ctrId).find('#divmensaje')[0].scrollHeight;
+                $('#' + ctrId).find('#divmensaje').scrollTop(height);
+            }
+
+        }
+
+        // CUANDO SE AGREGA UN NUEVO USUARIO
+        function Agregar_Usuario(chatHub, nombre) {
+            code = $('<div class="loginUser">' + nombre + "</div>");
+            $("#divusers").append(code);
+            //alter
+            //var userId = $('#hdId').val();
+           // var code = "";
+
+           // if (1 == 1) {
+
+               // code = $('<div class="loginUser">' + nombre + "</div>");
+
+           // }
+          //  else {
+
+                //code = $('<a id="' + id + '" class="user" >' + nombre + '<a>');
+
+              //  $(code).dblclick(function () {
+
+                   // var id = $(this).attr('id');
+                 //   var id=1
+
+                    //if (userId != id)
+                      //  AbrirChatPrivado(chatHub, id, nombre);
+
+              //  });
+           // }
+
+           // $("#divusers").append(code);
+
+        }
+        // CUANDO SE AGREGA UN NUEVO MENSAJE
+        function Agregar_Mensaje(userName, mensaje) {
+            $('#divChatWindow').append('<div class="message"><span class="userName">' + userName + '</span>: ' + mensaje + '</div>');
+
+            var height = $('#divChatWindow')[0].scrollHeight;
+            $('#divChatWindow').scrollTop(height);
+        }
+
+        function AbrirChatPrivado(chatHub, id, userName) {
+            var ctrId = 'private_' + id;
+            if ($('#' + ctrId).length > 0) return;
+            crearSalaPrivada(chatHub, id, ctrId, userName);
+
+        }
+
+        // FUNCION CREO CHAT PRIVADO
+        function crearSalaPrivada(chatHub, userId, ctrId, userName) {
+
+            var div = '<div id="' + ctrId + '" class="ui-widget-content draggable" rel="0">' +
+                       '<div class="header2">' +
+                          '<div  style="float:right;">' +
+                              '<img id="imgDelete"  style="cursor:pointer;" src="~/img/delete.png"/>' +
+                           '</div>' +
+
+                           '<span class="selText" rel="0">' + userName + '</span>' +
+                       '</div>' +
+                       '<div id="divmensaje" class="messageArea">' +
+
+                       '</div>' +
+                       '<div class="buttonBar">' +
+                          '<input id="txtMensajePrivado" class="msgText" type="text"   />' +
+                          '<input id="btnEnviarMensaje" class="submitButton button" type="button" value="Enviar"   />' +
+                       '</div>' +
+                    '</div>';
+
+            var $div = $(div);
+
+            // DELETE BUTTON IMAGE
+            $div.find('#imgDelete').click(function () {
+                $('#' + ctrId).remove();
+            });
+
+            // Evento ENVIAR
+            $div.find("#btnEnviarMensaje").click(function () {
+
+                $textBox = $div.find("#txtMensajePrivado");
+                var msj = $textBox.val();
+                if (msj.length > 0) {
+
+                    chatHub.server.mensajePrivado(userId, msj);
+                    $textBox.val('');
+                }
+            });
+
+            // EVENTO TEXT BOX
+            $div.find("#txtMensajePrivado").keypress(function (e) {
+                if (e.which == 13) {
+                    $div.find("#btnEnviarMensaje").click();
+                }
+            });
+
+            AddDivToContainer($div);
+
+        }
+        // AGREGO DIV
+        function AddDivToContainer($div) {
+            $('#contenedorChat').prepend($div);
+
+            $div.draggable({
+
+                handle: ".header2",
+                stop: function () {
+
+                }
+            });
+
+            ////$div.resizable({
+            ////    stop: function () {
+
+            ////    }
+            ////});
+
+        }
+        //});
+
+
+    </script>
+}

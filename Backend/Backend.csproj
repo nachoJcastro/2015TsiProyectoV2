@@ -79,6 +79,10 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
@@ -207,6 +211,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\RutaSubdominio.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BlobStorageServiceIIS.cs" />
     <Compile Include="BlobStorageService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ComponentesController.cs" />
@@ -405,6 +410,7 @@
     <Content Include="Scripts\codemirror-2.37\mode\pascal\LICENSE" />
     <Content Include="Scripts\codemirror-2.37\mode\coffeescript\LICENSE" />
     <Content Include="Scripts\codemirror-2.37\LICENSE" />
+    <None Include="Properties\PublishProfiles\Local IIS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Icon.png" />
     <Content Include="Scripts\admin.js" />

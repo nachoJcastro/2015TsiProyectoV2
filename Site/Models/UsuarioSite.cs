@@ -13,5 +13,6 @@ namespace Site.Models
         public string Dominio { get; set; }
         public int idTienda { get; set; }
         public int idUsuario { get; set; }
+        public string IdConexion_Chat { get; set; }
     }
 }
