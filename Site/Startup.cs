@@ -1,13 +1,16 @@
-﻿using Microsoft.Owin;
+﻿
+using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Site.Startup))]
+[assembly: OwinStartup(typeof(Site.Startup))]
 namespace Site
 {
     public partial class Startup
     {
         public void Configuration(IAppBuilder app)
         {
+            app.MapSignalR();
+
             ConfigureAuth(app);
         }
     }

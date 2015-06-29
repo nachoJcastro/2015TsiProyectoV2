@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Crosscutting.EntityTenant;
 using Crosscutting.EntityTareas;
 
+
 namespace BusinessLogicLayer.TenantInterfaces
-{
+{    
+   
     public interface IBLSubasta
     {
         //Operaciones CRUD

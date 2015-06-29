@@ -1,4 +1,5 @@
-﻿using Quartz;
+﻿using log4net;
+using Quartz;
 using Quartz.Impl;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,17 @@ namespace Site.Tareas
 {
     public class SchedulerSubasta
     {
+        //public static IScheduler scheduler;
+       // public static ISchedulerFactory StdSchedulerFactory sfactor
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+
         public static void Start()
         {
-            IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
-            scheduler.Start();
+            log.Warn("ENTRO  SchedulerSubasta START");
+            
+            MvcApplication.scheduler = StdSchedulerFactory.GetDefaultScheduler();
+            MvcApplication.scheduler.Start();
 
             IJobDetail job = JobBuilder.Create<FinalizarTarea>().Build();
             int minutos = 0;
@@ -30,7 +38,9 @@ namespace Site.Tareas
                   )
                 .Build();
 
-            scheduler.ScheduleJob(job, trigger);
+            MvcApplication.scheduler.ScheduleJob(job, trigger);
+            log.Warn("ENTRO  SchedulerSubasta START");
+            //scheduler.ScheduleJob(job, trigger);
         }
     }
 }

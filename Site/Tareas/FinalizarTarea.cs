@@ -4,6 +4,7 @@ using BusinessLogicLayer.Controllers;
 using BusinessLogicLayer.TenantControllers;
 using BusinessLogicLayer.TenantInterfaces;
 using Crosscutting.EntityTareas;
+using log4net;
 using Quartz;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,13 @@ namespace Site.Tareas
 {
    public class FinalizarTarea: IJob
     {
+       private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+
         public void Execute (IJobExecutionContext context)
         {
-
-            System.Diagnostics.Debug.WriteLine("entro Finalizar Subasta por tiempo");
+            log.Info("entro Finalizar Subasta por tiempo");
+            //System.Diagnostics.Debug.WriteLine("entro Finalizar Subasta por tiempo");
 
             try
             {
@@ -25,15 +29,15 @@ namespace Site.Tareas
                 IBLTiendaVirtual tiendas = new BLTiendaVirtual();
 
                 List<String> tenants = tiendas.ObtenerTenants();
-                
-                
-                System.Diagnostics.Debug.WriteLine("Tenants = "+ tenants.ToString());
+
+                log.Info("Tenants = " + tenants.ToString());
+                //System.Diagnostics.Debug.WriteLine("Tenants = "+ tenants.ToString());
 
                 foreach (var item in tenants)
                 {
-                    System.Diagnostics.Debug.WriteLine("Antes  de finalizar subastas en tenant = " + item.ToString());
+                    log.Info("Antes  de finalizar subastas en tenant = " + item.ToString());
                     subIBL.FinalizarSubastasTarea(item.ToString());
-                    System.Diagnostics.Debug.WriteLine("Despues de finalizar subastas en tenant = " + item.ToString());
+                    log.Info("Despues de finalizar subastas en tenant = " + item.ToString());
                 }
 
 
@@ -60,8 +64,8 @@ namespace Site.Tareas
                     client.Send(mensaje);
                 }
             }*/
-       
-        
+
+            log.Info("SALGO Finalizar Subasta por tiempo");
         }
     }
 

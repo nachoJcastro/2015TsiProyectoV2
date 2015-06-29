@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.Owin;
+
 
 namespace Site.Models
 {
-     public class ChatHub : Hub
+    //[HubName("ChatHub")]
+    public class ChatHubZ //: Hub
     {
-        public void Hello()
+      /*  public void Hello()
         {
             Clients.All.hello();
         }
@@ -16,7 +20,7 @@ namespace Site.Models
         {
             // Call the addNewMessageToPage method to update clients.
             Clients.All.addNewMessageToPage(name, message);
-        }
+        }*/
     }
 }
 

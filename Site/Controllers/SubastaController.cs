@@ -31,7 +31,7 @@ namespace Site.Controllers
         IBLAtributo_Subasta atrSubIBL;
         IBLFavorito favIBL;
 
-        BlobStorage _bls = new BlobStorage();
+        BlobStorageIIS _bls = new BlobStorageIIS();
         //IBLCategoria catIBL;
         //IBLAtributo atrIBL;
         public UsuarioSite user_sitio;

@@ -19,6 +19,10 @@ using System.Drawing;
 using System.Collections;
 using Crosscutting.EntityTenant;
 using Crosscutting.Enum;
+using Microsoft.Web.Administration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure;
+using DNSManager;
 
 namespace Backend.Controllers
 {   
@@ -26,7 +30,8 @@ namespace Backend.Controllers
     {
 
         IBLTiendaVirtual _bl;
-        BlobStorageService _bss = new BlobStorageService();
+        BlobStorageServiceIIS _bss = new BlobStorageServiceIIS();
+        //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
         public TiendaVirtualController(IBLTiendaVirtual bl)
         {
@@ -106,6 +111,7 @@ namespace Backend.Controllers
             
                 if (ModelState.IsValid)
                 {
+
                     CloudBlobContainer blobContainer = _bss.GetContainerTienda(tiendaVirtualDTO.Dominio);
                     if (logo != null)
                     {
@@ -165,7 +171,59 @@ namespace Backend.Controllers
                     tiendaVirtualDTO.StringConection = "StringConection";
 
                     _bl.AgregarTienda(tiendaVirtualDTO);
-                    return RedirectToAction("Index");
+                    // IIS AGREGO SITIO
+                    //127.0.0.1:80:sitio.chebay.com
+                    //ServerManager iisManager = new ServerManager();
+                    //iisManager.Sites.Add(dominio, "http", "127.0.0.1:80:"+dominio+".chebay.com", "C:\\inetpub\\wwwroot\\Site");
+                    //iisManager.CommitChanges(); 
+
+
+                    //ServerManager manager = new ServerManager();
+                    try
+                    {   
+                        IHosts _hosts = new Hosts();
+
+                        _hosts.AgregarSitio(dominio);
+                        
+                        // Add this site.
+                        /*Site hrSite = manager.Sites.Add(name, "http", "*:80:", path);
+                        // The site will need to be started manually.
+                        hrSite.ServerAutoStart = false;
+                        manager.CommitChanges();
+                        Console.WriteLine("Site " + name + " added to ApplicationHost.config file.");*/
+                    
+                    
+                            /*ServerManager serverMgr = new ServerManager();
+                            string strWebsitename = dominio; // abc
+                            string strApplicationPool = dominio.ToUpper();  // set your deafultpool :4.0 in IIS
+                            string strhostname = dominio+".chebay.com"; //abc.com
+                            string stripaddress = "127.0.0.1";// ip address
+                            string bindinginfo = stripaddress + ":80:" + strhostname;*/
+ 
+                            //check if website name already exists in IIS
+                            //ServerManager serverMgr = new ServerManager();
+                            //Site mySite = serverMgr.Sites.Add(dominio.ToUpper(), "C:\\inetpub\\wwwroot\\Site", 80);
+                            //serverMgr.ApplicationPools.Add("DefaultAppPool");
+                            //mySite.ApplicationDefaults.ApplicationPoolName = "DefaultAppPool";
+                            //mySite.TraceFailedRequestsLogging.Enabled = true;
+                            //mySite.TraceFailedRequestsLogging.Directory = "C:\\inetpub\\wwwroot\\site";
+                           //serverMgr.CommitChanges();
+
+
+                           /* Site mySite = serverMgr.Sites.Add(strWebsitename.ToString(), "http", bindinginfo, "C:\\inetpub\\wwwroot");
+                            mySite.ApplicationDefaults.ApplicationPoolName = strApplicationPool;
+                            mySite.TraceFailedRequestsLogging.Enabled = true;
+                            mySite.TraceFailedRequestsLogging.Directory = "C:\\inetpub\\wwwroot\\Site";
+                            serverMgr.CommitChanges();*/
+                            //lblmsg.Text = "New website  " + strWebsitename + " added sucessfully";
+                            //lblmsg.ForeColor = System.Drawing.Color.Green;
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+                    // IIS AGREGO SITIO
+                     return RedirectToAction("Index");
                 }
             }
             else

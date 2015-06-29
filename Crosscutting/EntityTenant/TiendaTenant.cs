@@ -18,6 +18,7 @@ namespace Crosscutting.EntityTenant
 
         public string Css { get; set; }
 
+        public string IdConexion_Chat { get; set; }
 
     }
 }
