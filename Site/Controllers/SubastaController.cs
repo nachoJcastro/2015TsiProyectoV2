@@ -660,7 +660,9 @@ namespace Site.Controllers
             else
             {
                 usuario.billetera = usuario.billetera - (double)subasta.precio_Compra;
-                usuIBL.ActualizarUsuario(valor_tenant, usuario);
+                usuIBL.ActualizarUsuario(valor_tenant, usuario);//le descuento plata al comprador
+                
+
                 subasta.estado = EstadoTransaccion.Cerrada;
                 subasta.finalizado = TipoFinalizacion.Compra_directa;
                 subasta.id_Comprador = idLogueado;
