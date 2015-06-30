@@ -486,8 +486,6 @@ namespace DAL
 
                 _idal= new DALUsuario();
                 Usuario vendedor = _idal.GetUsuario(tenant, sub.id_Vendedor);
-
-
                 Usuario comprador = _idal.GetUsuario(tenant,(int)sub.id_Comprador);
                 
                 correo.destinatario = comprador.email;

@@ -10,6 +10,7 @@ using Crosscutting.Enum;
 using BusinessLogicLayer.Controllers;
 using Crosscutting.EntityTareas;
 using ServicioCorreo;
+using log4net;
 
 
 namespace BusinessLogicLayer.TenantControllers
@@ -17,6 +18,8 @@ namespace BusinessLogicLayer.TenantControllers
     public class BLSubasta : IBLSubasta{
         
         private IDALSubasta _dal = new DALSubastaEF();
+
+        private static readonly ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         public BLSubasta(IDALSubasta dal)
@@ -130,7 +133,7 @@ namespace BusinessLogicLayer.TenantControllers
         // TAREA FINALIZAR SUBASTAS
         public void FinalizarSubastasTarea(String tenant)
         {
-            System.Diagnostics.Debug.WriteLine("Entro en finalizar SUBASTA POR TAREA");
+            log.Info("Entro en finalizar SUBASTA POR TAREA");
             try
             {
                 List<Subasta> subastas =ObtenerSubastasActivas(tenant);
@@ -143,16 +146,16 @@ namespace BusinessLogicLayer.TenantControllers
                 foreach (var item in subastas)
                 {
 
-                    System.Diagnostics.Debug.WriteLine("Hay subasta activa  Id ="+  item.id.ToString());
+                    log.Info("Hay subasta activa  Id =" + item.id.ToString());
                     List<Correo> lista = new List<Correo>();
                     DateTime ahora = DateTime.Now;
                     DateTime fecha_subasta = (DateTime)item.fecha_Cierre;
 
                     int resultado = DateTime.Compare(fecha_subasta, ahora);
 
-                    System.Diagnostics.Debug.WriteLine("Paso fechas y resultado = " + resultado.ToString());
+                    log.Info("Paso fechas y resultado = " + resultado.ToString());
 
-                    System.Diagnostics.Debug.WriteLine("Estado subasta = " + item.estado.ToString());
+                    log.Info("Estado subasta = " + item.estado.ToString());
 
                     String estado = item.estado.ToString();
 
@@ -162,7 +165,7 @@ namespace BusinessLogicLayer.TenantControllers
                     {
                         List<Oferta> ofertas = _dal.ObtenerOfertas(item.id);
 
-                        System.Diagnostics.Debug.WriteLine("Cantidad ofertas = " + ofertas.Count.ToString());
+                        log.Info("Cantidad ofertas = " + ofertas.Count.ToString());
                         if (ofertas.Count > 0)
                         {
                             var ofertasOrdenadas = ofertas.OrderByDescending(o => o.fecha);
@@ -200,31 +203,31 @@ namespace BusinessLogicLayer.TenantControllers
                                 IEnvioCorreo _envio = new EnvioCorreo();
                                 _envio.enviarCorreos(lista);
                             }
-                            catch (Exception)
+                            catch (Exception e)
                             {
-                                
-                                throw;
+                                log.Error("Error", e);
+                                throw e;
                             }
 
 
                         }
                         else {
 
-                            System.Diagnostics.Debug.WriteLine("Sin ofertas = " + ofertas.Count.ToString());
+                            log.Info("Sin ofertas = " + ofertas.Count.ToString());
                             try
                             {
                                 
                                 item.estado = EstadoTransaccion.Cerrada;
                                 _dal.ActualizarSubasta(tenant, (Subasta)item);
-                                
-                                System.Diagnostics.Debug.WriteLine("Actualizo Subasta sin ofertas " + item.titulo);
+
+                                log.Info("Actualizo Subasta sin ofertas " + item.titulo);
                                 
                                 
                                 lista = new List<Correo>();
 
                                 Correo correo = _dal.correoSinOfertas(tenant, (Subasta)item);
-                                
-                                System.Diagnostics.Debug.WriteLine("Correo "+ correo.mensaje);
+
+                                log.Info("Correo " + correo.mensaje);
                                 
                                 lista.Add( _dal.correoSinOfertas(tenant, (Subasta)item));
                                 
@@ -232,12 +235,12 @@ namespace BusinessLogicLayer.TenantControllers
                                 IEnvioCorreo _envio = new EnvioCorreo();
 
                                 _envio.enviarCorreos(lista);
-                                System.Diagnostics.Debug.WriteLine("Salgo Finalizar Compra directa sin oferta ");
+                                log.Info("Salgo Finalizar Compra directa sin oferta ");
                             }
-                            catch (Exception)
+                            catch (Exception e)
                             {
-
-                                throw;
+                                log.Error("Error", e);
+                                throw e;
                             }
                         }
 
@@ -245,11 +248,12 @@ namespace BusinessLogicLayer.TenantControllers
 
                     }   
                 }
-                System.Diagnostics.Debug.WriteLine("Salgo de finalizar SUBASTA POR TAREA");
+                log.Info("Salgo de finalizar SUBASTA POR TAREA");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                log.Error("Error", e);
+                throw e;
             }
         }
 
@@ -258,16 +262,16 @@ namespace BusinessLogicLayer.TenantControllers
             List<Correo> lista = new List<Correo>();
             try
             {
-                System.Diagnostics.Debug.WriteLine("Entro correoCompraDirecta ");
+                log.Info("Entro correoCompraDirecta ");
                 
                 lista = _dal.correoCompraDirecta(tenant, sub);
                 IEnvioCorreo _envio = new EnvioCorreo();
                 _envio.enviarCorreos(lista);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                
-                throw;
+                log.Error("Error", e);
+                throw e;
             }
             
             

@@ -1,0 +1,93 @@
+﻿@model Site.Models.SubastaSite
+
+<div class="container">
+    <div class="col-md-12 text-center">
+        <h2>Comparar Productos</h2>
+        <hr />
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <input type="text" class="form-control" value="@Model.titulo" disabled />
+        </div>
+        <div class="col-md-4">
+            <img src="@Model.portada" class="img-thumbnail" style="width:150px;height:180px;" />
+        </div>
+        <div class="col-md-8">
+            <ul class="list-group" style="margin-top:10px;">
+                <li class="list-group-item"><b>Titulo:</b> @Model.titulo </li>
+                <li class="list-group-item"><b>Tipo:</b> @Model.tipo_venta</li>
+                <li class="list-group-item">
+                    @if (Model.precio_Compra == 0)
+                    {
+                        <b>Precio Actual:</b>
+                        <p>$ @Model.valor_Actual</p>
+                    }
+                    else
+                    {
+                        <b>Precio Compra:</b>
+                        <p>$ @Model.precio_Compra</p>
+                    }
+                </li>
+                <li class="list-group-item"><b>Fecha:</b> @Model.fecha_Cierre</li>
+                <li class="list-group-item"><b>Estado:</b> @Model.estado</li>
+                <li class="list-group-item"><b>Garantia:</b> @Model.garantia</li>
+                @foreach (var item in Model.atributos)
+                {
+                    <li class="list-group-item"><b>@item.Nombre:</b> @item.valor</li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <div class="col-md-10">
+                @Html.DropDownList("Subastas", ViewData["Subastas"] as SelectList, new { @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-default btnComparar">Comparar</button>
+            </div>
+        </div>
+        <div id="retorno"></div>
+    </div>
+</div>
+<script src="http://localhost:49866/Scripts/jquery.js"></script>
+<script>
+        $(document).ready(function () {
+            $('.btnComparar').click(function () {
+                var idSubasta = $("#Subastas option:selected").val();
+                $('#retorno').load("/subasta/subastacomparar/?idSubasta=" + $("#Subastas option:selected").val());
+                //setTimeout(function () {
+                //    $(".modal-dialog").fadeIn();
+                //}, 100);
+            });
+        });
+        @*function crearComentario() {
+            var retorno = $("#retorno");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("AgregarComentario", "Subasta")',
+                data: {
+                    "idSubasta": @Model.id,
+                    "texto": document.getElementById("areaComentario").value
+                },
+                success: function (data) {
+                    retorno.html('');
+                    var result = "";
+                    $.each(data, function (id, item) {
+                        result += '<dt>' +
+                                ToJavaScriptDate(item.fecha) + '           ' +
+                                '<a href=' + '/Manage/DatosUsuario/' +'?idUsuario=' + item.id_Usuario +'>' + item.nombreUsuario + '</a>' +
+                                    '</dt>' +
+                                    '<dd>' +
+                                    item.texto +
+                                    '</dd>';
+                    })
+                    retorno.html(result);
+                    document.getElementById("areaComentario").value = '';
+                    $("#com").show();
+                }
+            });
+        }*@
+
+</script>

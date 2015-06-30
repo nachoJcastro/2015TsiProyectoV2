@@ -53,8 +53,35 @@ namespace Backend.Controllers
                 }
             }
 
-            ViewBag.ListaAtri = listaA;
-            ViewBag.ListaTipos = listaT;
+            var atributosAux = new List<AtributoAux>();
+            foreach (var atr in listaA)
+            {
+                AtributoAux aux = new AtributoAux();
+                var nombreCat = _blcategoria.ObtenerCategoria(atr.CategoriaId).Nombre;
+                aux.AtributoId = atr.AtributoId;
+                aux.CategoriaId = atr.CategoriaId;
+                aux.NombreAtributo = atr.Nombre;
+                aux.NombreCategoria = nombreCat;
+
+                atributosAux.Add(aux);
+            }
+
+            var productosAux = new List<ProductoAux>();
+            foreach (var prod in listaT)
+            {
+                ProductoAux aux2 = new ProductoAux();
+                var nombreCat = _blcategoria.ObtenerCategoria(prod.CategoriaId).Nombre;
+                aux2.TipoProductoId = prod.TipoProductoId;
+                aux2.CategoriaId = prod.CategoriaId;
+                aux2.NombreCategoria = nombreCat;
+                aux2.Titulo = prod.Titulo;
+                aux2.Descripcion = prod.Descripcion;
+
+                productosAux.Add(aux2);
+            }
+
+            ViewBag.ListaAtri = atributosAux;
+            ViewBag.ListaTipos = productosAux;
 
             this.Session["_tiendaSesion"] = id;
             ViewBag.idT = this.Session["_tiendaSesion"];

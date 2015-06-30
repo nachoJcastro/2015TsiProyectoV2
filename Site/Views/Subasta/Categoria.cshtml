@@ -81,20 +81,32 @@
 
                 <div class="col-sm-9 padding-right">
                     <div class="features_items">
-                        <!--features_items-->
-                        <h2 class="title text-center">Filtro items</h2>
 
                         @if (ViewBag.ListaSubastas != null)
                         {
-
                             foreach (var item in ViewBag.ListaSubastas)
                             {
                                 <div class="col-sm-4">
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="@item.portada" alt="" />
-                                                <h2>$@item.precio_Compra</h2>
+                                                <img src="@item.portada" style="max-width:150px;max-height:180px;" alt="" />
+                                                @{
+                                                  var tip ="";
+                                                }
+                                                @if (item.precio_Compra == 0)
+                                                {
+                                                    tip = "Compra";
+                                                  
+                                                    <h2>$ @item.valor_Actual</h2>
+
+                                                }
+                                                else
+                                                {
+                                                    tip = "Subasta";
+                                                    <h2>$@item.precio_Compra</h2>
+                                                }
+                                                
                                                 <p>@item.titulo</p>
                                                 <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Detalle</a>
                                             </div>
@@ -102,7 +114,7 @@
                                         <div class="choose">
                                             <ul class="nav nav-pills nav-justified">
                                                 <!--<li><a href="#"><i class="fa fa-plus-square"></i> Favoritos</a></li>-->
-                                                <!--<li><a href="Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)"><i class="fa fa-plus-square"></i> Comparar</a></li>-->
+                                                <li><a href='@Url.Action("Comparar/", "Subasta", new { idSubasta = item.id, idCat = ViewBag.idCat, Tipo = tip }, null)'><i class="fa fa-plus-square"></i> Comparar</a></li>
                                             </ul>
                                         </div>
                                     </div>

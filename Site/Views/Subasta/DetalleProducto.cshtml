@@ -49,24 +49,24 @@
                                 <img src="@Html.DisplayFor(model => model.portada)">
                             </a>
                         </li>*@
-                                    @{
-                var index = 0;
+                        @{
+                            var index = 0;
 
-                if (ViewBag.ListaImg != null)
-                {
-                    foreach (var imagen in ViewBag.ListaImg)
-                    {
+                            if (ViewBag.ListaImg != null)
+                            {
+                                foreach (var imagen in ViewBag.ListaImg)
+                                {
 
-                                    <li class="col-sm-12 contenedor_slider_t">
-                                        <a class="thumbnail" id="carousel-selector-@index">
-                                                                <img src="@imagen.uri"  />
-                                        </a>
-                                    </li>
+                                                <li class="col-sm-12 contenedor_slider_t">
+                                                    <a class="thumbnail" id="carousel-selector-@index">
+                                                                            <img src="@imagen.uri"  />
+                                                    </a>
+                                                </li>
 
-                        index++;
-                    }
-                }
-                                    }
+                                    index++;
+                                }
+                            }
+                        }
 
                     </ul>
                 </div>
@@ -156,7 +156,7 @@
                     @Html.DisplayFor(model => model.nick_Comprador)
 
                 }
-                            }
+            }
         </div>
 
         <div class="col-md-12">

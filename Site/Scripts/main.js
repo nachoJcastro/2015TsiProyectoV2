@@ -27,34 +27,34 @@ $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 
 
-	$(function () {
-	    var $container = $('#Container'),
-            $controls = $('.controls');
+	//$(function () {
+	//    var $container = $('#Container'),
+    //        $controls = $('.controls');
 
-	    $container.mixItUp({
-	        animation: {
-	            duration: 700,
-	            effects: 'fade translateY(600%) stagger(35ms)',
-	            easing: 'cubic-bezier(0.86, 0, 0.07, 1)',
-	            reverseOut: true
-	        },
-	        controls: {
-	            enable: false
-	        }
-	    });
+	//    $container.mixItUp({
+	//        animation: {
+	//            duration: 700,
+	//            effects: 'fade translateY(600%) stagger(35ms)',
+	//            easing: 'cubic-bezier(0.86, 0, 0.07, 1)',
+	//            reverseOut: true
+	//        },
+	//        controls: {
+	//            enable: false
+	//        }
+	//    });
 
-	    $controls.on('click', '.filter', function () {
-	        var $btn = $(this),
-                filter = $btn.attr('data-filter');
+	//    $controls.on('click', '.filter', function () {
+	//        var $btn = $(this),
+    //            filter = $btn.attr('data-filter');
 
-	        $btn.addClass('active').siblings().removeClass('active');
+	//        $btn.addClass('active').siblings().removeClass('active');
 
-	        $container.mixItUp('filter', 'none', function () {
-	            $container.mixItUp('filter', filter);
-	        });
-	    });
+	//        $container.mixItUp('filter', 'none', function () {
+	//            $container.mixItUp('filter', filter);
+	//        });
+	//    });
 
-	});
+	//});
 
 	$('#carousel-606608').carousel({
 	    interval: 5000
@@ -99,8 +99,10 @@ $(document).ready(function(){
 
 	$(".flex-control-nav").wrap("<div class='container'></div>");
 
-
-
+	$('.slider_re').slick();
+	$('#zoom_0').zoom();
+	$('#zoom_1').zoom();
+	$('#zoom_2').zoom();
 });
 
 

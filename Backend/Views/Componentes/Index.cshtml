@@ -90,7 +90,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                @(@itemT.Categoria == null ? @itemT.CategoriaId : itemT.Categoria.Nombre)
+                                                @itemT.NombreCategoria
                                             </td>
                                             <td>
                                                 @itemT.Titulo
@@ -137,10 +137,10 @@
                                     {
                                         <tr>
                                             <td>
-                                                @(@itemA.Categoria == null ? @itemA.CategoriaId : itemA.Categoria.Nombre)
+                                                @itemA.NombreCategoria
                                             </td>
                                             <td>
-                                                @itemA.Nombre
+                                                @itemA.NombreAtributo
                                             </td>
                                             <td>
                                                 <a href="#myModal" class="btnEditarA btn btn-info" data-toggle="modal" data-id="@itemA.AtributoId"><i class="glyphicon glyphicon-pencil"></i> Editar</a>

@@ -14,11 +14,7 @@
     {    <title>@user.Dominio - @ViewBag.Title</title>
          <link href="~/Content/@estilo.css" rel="stylesheet" />
     }
-    else
-    {
-        <title>Sitio- @ViewBag.Title</title>
-    }
-
+   
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/dropzonescss")
@@ -95,5 +91,6 @@
     <script src="~/Scripts/jquery.scrollUp.min.js"></script>
     @RenderSection("scripts", required: false)
 
+   
 </body>
 </html>

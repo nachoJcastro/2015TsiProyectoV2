@@ -1,4 +1,6 @@
-﻿using Site.Tareas;
+﻿using log4net;
+using Quartz;
+using Site.Tareas;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +15,11 @@ namespace Site
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+
+        public static IScheduler scheduler;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+
         protected void Application_Start()
         {
            
@@ -21,10 +28,14 @@ namespace Site
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            // tareas
-            SchedulerMail.Start();
+            // CHAT 
+            //RouteTable.Routes.MapHubs();
+            // QUARTZ.NET TAREAS
+            log.Warn("ANTES DE SchedulerSubasta");
+            //SchedulerMail.Start();
             SchedulerSubasta.Start();
-            //tareas
+            log.Warn("DESPUES DE SchedulerSubasta");
+           
         }
 
        

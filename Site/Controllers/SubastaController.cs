@@ -31,7 +31,7 @@ namespace Site.Controllers
         IBLAtributo_Subasta atrSubIBL;
         IBLFavorito favIBL;
 
-        BlobStorage _bls = new BlobStorage();
+        BlobStorageIIS _bls = new BlobStorageIIS();
         //IBLCategoria catIBL;
         //IBLAtributo atrIBL;
         public UsuarioSite user_sitio;
@@ -554,6 +554,18 @@ namespace Site.Controllers
                 sub_site.Calificacion = subasta.Calificacion;
                 sub_site.Favorito = subasta.Favorito;
                 sub_site.id_Vendedor = subasta.id_Vendedor;
+                sub_site.atributos = AtributoSiteList(subasta.id_Categoria.ToString());
+                foreach (var atributo in sub_site.atributos)
+                {
+                    foreach (var atrib_subasta in sub_site.Atributo_Subasta)
+                    {
+                        if (atrib_subasta.id_Atributo == atributo.IdAtributo)
+                        {
+
+                            atributo.valor = atrib_subasta.valor;
+                        }
+                    }
+                }
             }
             catch (Exception)
             {
@@ -666,7 +678,7 @@ namespace Site.Controllers
                 subasta.estado = EstadoTransaccion.Cerrada;
                 subasta.finalizado = TipoFinalizacion.Compra_directa;
                 subasta.id_Comprador = idLogueado;
-               
+                subasta.fecha_Cierre = DateTime.Now;
                 subIBL.ActualizarSubasta(valor_tenant, subasta);
                 var vendedor = usuIBL.GetUsuario(valor_tenant, idLogueado);
                 //enviar mail
@@ -924,6 +936,55 @@ namespace Site.Controllers
 
             return Json(modelList, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Comparar(int idSubasta, int idCat, string Tipo) 
+        {
+            int tipos = 0;
+            if (Tipo == "Subasta")
+            {
+                tipos = 1;
+            }
+            else 
+            {
+                tipos = 2;            
+            }
+
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+            var sub = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+
+            var lista = subIBL.ObtenerSubastasPorCriterio(user_sitio.Dominio, idCat,"", tipos, null, null).ToList();
+            var lista_item_Cat = new List<SelectListItem>();
+            lista_item_Cat.Add(new SelectListItem()
+            {
+                Value = "0",
+                Text = "Seleccione una publicacion",
+                Selected = true
+            });
+            foreach (var item in lista)
+            {
+                lista_item_Cat.Add(new SelectListItem()
+                {
+                    Value = item.id.ToString(),
+                    Text = item.titulo,
+                    Selected = false
+                });
+            }
+            ViewData["Subastas"] = lista_item_Cat;
+            SubastaSite sub_site = crearSubastaSite(sub);
+            return View(sub_site);
+        }
+
+        public ActionResult SubastaComparar(int idSubasta)
+        {
+
+            user_sitio = Session["usuario"] as UsuarioSite;
+            valor_tenant = user_sitio.Dominio.ToString();
+            var sub = subIBL.ObtenerSubasta(valor_tenant, idSubasta);
+            SubastaSite sub_site = crearSubastaSite(sub);
+            return View(sub_site);
+        }
+
 
     }
 }

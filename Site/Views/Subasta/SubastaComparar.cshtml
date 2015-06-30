@@ -1,0 +1,35 @@
+﻿@model Site.Models.SubastaSite
+@{
+    Layout = null;
+}
+<div class="col-md-4">
+    <img src="@Model.portada" class="img-thumbnail" style="width:150px;height:180px;" />
+</div>
+<div class="col-md-8">
+    <ul class="list-group" style="margin-top:10px;">
+        <li class="list-group-item"><b>Titulo:</b> @Model.titulo </li>
+        <li class="list-group-item"><b>Tipo:</b> @Model.tipo_venta</li>
+        <li class="list-group-item">
+            @if (Model.precio_Compra == 0)
+            {
+                <b>Precio Actual:</b>
+                <p>$ @Model.valor_Actual</p>
+            }
+            else
+            {
+                <b>Precio Compra:</b>
+                <p>$ @Model.precio_Compra</p>
+            }
+        </li>
+        <li class="list-group-item"><b>Fecha:</b> @Model.fecha_Cierre</li>
+        <li class="list-group-item"><b>Estado:</b> @Model.estado</li>
+        <li class="list-group-item"><b>Garantia:</b> @Model.garantia</li>
+        @foreach (var item in Model.atributos)
+        {
+            <li class="list-group-item"><b>@item.Nombre:</b> @item.valor</li>
+        }
+    </ul>
+</div>
+
+
+

@@ -10,6 +10,9 @@ namespace DNSManager
     public interface IHosts
     {
         //Operaciones 
-        void AgregarHost(String dominio); //Create
+        void AgregarHost(String dominio); 
+
+        void AgregarSitio(String dominio);
+      
     }
 }
