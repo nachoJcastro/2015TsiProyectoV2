@@ -1772,15 +1772,15 @@ ul.social-buttons li a:hover,ul.social-buttons li a:focus,ul.social-buttons li a
 }
 
 .errores{
-        -webkit-boxshadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        display: none;
-        font-size: 14px;
-        margin-top: -50px;
-        margin-left: 180px;
-        padding: 10px;
-        position: absolute;
-        z-index:2000;
+    -webkit-boxshadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: none;
+    font-size: 14px;
+    margin-top: -50px;
+    margin-left: 180px;
+    padding: 10px;
+    position: absolute;
+    z-index:2000;
 }

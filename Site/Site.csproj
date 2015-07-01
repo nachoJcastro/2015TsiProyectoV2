@@ -40,7 +40,8 @@
         </ObjectGroup>
       </Objects>
     </PublishDatabaseSettings>
-    <IncludeIisSettings>false</IncludeIisSettings>
+    <IncludeIisSettings>true</IncludeIisSettings>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -291,18 +292,14 @@
     <Content Include="Content\site.css" />
     <Content Include="Content\slick-theme.css" />
     <Content Include="Content\slick.css" />
-    <Content Include="Content\estiloChat.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="img\img1.jpg" />
-    <Content Include="img\img2.jpg" />
-    <Content Include="img\img3.jpg" />
-    <Content Include="img\img4.jpg" />
     <Content Include="img\logo1.png" />
     <Content Include="img\logo2.png" />
     <Content Include="img\user.png" />
+    <Content Include="img\userdefault.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -319,6 +316,7 @@
     <Content Include="log4.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\EXPORTAR IIS.pubxml" />
     <None Include="Properties\PublishProfiles\Local IIS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\chat\jquery.ui.core.js" />
@@ -362,6 +360,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\slick.js" />
+    <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

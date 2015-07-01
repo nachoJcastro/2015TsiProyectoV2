@@ -50,6 +50,7 @@ namespace Site
                       "~/Scripts/jquery.zoom.min.js",
                       "~/Scripts/jquery.flexslider.js",
                       "~/Scripts/slick.js",
+                      "~/Scripts/wow.min.js",
                       "~/Scripts/site.js",
                       "~/Scripts/main.js"
                       ));
