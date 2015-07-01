@@ -271,8 +271,12 @@
     <Content Include="img\logo1.png" />
     <Content Include="img\logo2.png" />
     <Content Include="img\logo2_2.png" />
-    <Content Include="img\misa.jpg" />
+    <Content Include="img\misa.png" />
+    <Content Include="img\misa_2.jpg" />
+    <Content Include="img\sprite-green.png" />
+    <Content Include="img\sprite-orange.png" />
     <Content Include="img\tienda-boceto-imagenes.jpg" />
+    <Content Include="img\tiendadefault.png" />
     <Content Include="lineicons\fonts\linecons.svg" />
     <Content Include="lineicons\index.html" />
     <Content Include="lineicons\lte-ie7.js" />
@@ -410,6 +414,7 @@
     <Content Include="Scripts\codemirror-2.37\mode\pascal\LICENSE" />
     <Content Include="Scripts\codemirror-2.37\mode\coffeescript\LICENSE" />
     <Content Include="Scripts\codemirror-2.37\LICENSE" />
+    <None Include="Properties\PublishProfiles\EXPORTAR IIS.pubxml" />
     <None Include="Properties\PublishProfiles\Local IIS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Icon.png" />
