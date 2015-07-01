@@ -18,50 +18,67 @@
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Cree una cuenta nueva.</h4>
+        <div class="col-md-12 text-center registro">
+            <h5 class="text-center">Cree una cuenta nueva</h5>
+        </div>
+        
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="col-md-6">
+
+
         <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @*@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Correo" })
             </div>
         </div>
 
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Nick, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(m => m.Nick, new { @class = "form-control" })
+            @*@Html.LabelFor(m => m.Nick, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Nick, new { @class = "form-control", @placeholder = "Nick" })
+            </div>
+        </div>
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+            </div>
+        </div>
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Password" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre" })
             </div>
         </div>
 
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Apellido, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control" })
+            @*@Html.LabelFor(m => m.Apellido, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", @placeholder = "Apellido" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.telefono, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(m => m.telefono, new { @class = "form-control" })
+            @*@Html.LabelFor(m => m.telefono, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.telefono, new { @class = "form-control", @placeholder = "Teléfono" })
             </div>
         </div>
          <!--FECHA NACIMIENTO-->
         <div class="form-group">
             @Html.LabelFor(m => m.Fecha, new { @class = "col-md-2 control-label" })
-            <div class='col-md-6'>
+            <div class='col-md-12'>
                 <div class='input-group date' id='datetimepicker1'>
                     @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
                     <span class="input-group-addon">
@@ -70,78 +87,67 @@
                 </div>
             </div>
         </div>
-       
-
-
-          <!--MAPA-->
-        <div class="form-group">
             
-            <div class="col-md-6 col-sm-offset-2 id="contenendor_mapa">
-                <div id="map" style="height: 400px; width: 500px ; margin: 10px">
+       </div>
+
+        <div class="col-md-6">
+            <!--MAPA-->
+            <div class="form-group">
+
+                <div class="col-md-12" id=" contenendor_mapa">
+                    <div id="map" style="height: 400px; width: 100%; margin: 10px">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6">
-                <input id="direccion_coord" type="text" value="Montevideo" class="form-control">
+            
+            <div class="form-group">
+                <div class="col-md-8">
+                    <input id="direccion_coord" type="text" value="Montevideo" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <input type="button" value="Buscar Direccion" onclick="buscar_Direccion()" class="btn btn-default btn-lg btn-buscador" />
+                </div>
             </div>
-            <div class="col-md-2">
-                <input type="button" value="Buscar Direccion" onclick="buscar_Direccion()" class="btn btn-default" />
+
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.Direccion, new { @class = "col-md-2 control-label" })*@
+                <div class='col-md-12'>
+                    @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", @placeholder = "Direccion" } })
+                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+            <!--Escondido Coordenadas-->
+            @Html.HiddenFor(model => model.Coordenadas)
+            @Html.HiddenFor(model => model.preferencias)
         </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Direccion, new { @class = "col-md-2 control-label" })
-            <div class='col-md-6'>
-                @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="col-md-6 registro">
+                   <h5>Preferencias</h5>
+                </div>
             </div>
+            @if (Model.lista_preferencias.Count > 0)
+            {
+
+                for (int i = 0; i < Model.lista_preferencias.Count; i++)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.lista_preferencias[i].Selected)
+                            @Html.DisplayFor(model => model.lista_preferencias[i].Text)
+                            @Html.HiddenFor(model => model.lista_preferencias[i].Text)
+                            @Html.HiddenFor(model => model.lista_preferencias[i].Value)
+                        </div>
+                    </div>
+                }
+            }
         </div>
-
-
-
-
-        <!--Escondido Coordenadas-->
-        @Html.HiddenFor(model => model.Coordenadas)
-        @Html.HiddenFor(model => model.preferencias)
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6">
-                @Html.Label("Preferencias")
-            </div>
-        </div>
-        if (Model.lista_preferencias.Count > 0)
-        {
-
-        for (int i = 0; i < Model.lista_preferencias.Count; i++)
-        {
-        <div class="form-group">
-            <div class="col-md-6">
-                @Html.CheckBoxFor(model => model.lista_preferencias[i].Selected)
-                @Html.DisplayFor(model => model.lista_preferencias[i].Text)
-                @Html.HiddenFor(model => model.lista_preferencias[i].Text)
-                @Html.HiddenFor(model => model.lista_preferencias[i].Value)
-            </div>
-        </div>
-        }
-        }
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-6">
-                <input type="submit" class="btn btn-default" value="Registrarse" />
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <input type="submit" class="btn btn-default btn-lg btn-registrar" value="Registrarse" />
+                </div>
             </div>
         </div>
         }

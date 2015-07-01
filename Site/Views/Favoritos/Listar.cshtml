@@ -4,12 +4,12 @@
 }
 
 
-
+<div class="container">
 @if (ViewBag.favoritasLargo != 0)
-{
-    <h2>Lista de Subastas favoritas</h2>
-    
-    <div class="panel-body">
+{   <div class="col-md-12 text-center">
+        <h2>Lista de Subastas favoritas</h2>
+    </div>
+   
         <table class="table">
             <tr>
                 <th>
@@ -27,14 +27,17 @@
                 <th>
                     Estado
                 </th>
+                <th>
+                    Detalle
+                </th>
             </tr>
 
             @foreach (var item in ViewBag.favoritas)
-            {
-                var titulo = @item.titulo;
+        {
+            var titulo = @item.titulo;
                 <tr class="texto_table">
                     <td>
-                        <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)">@item.titulo</a>
+                        <img src="@item.portada" alt="Alternate Text" style="width:150px;height:180px;" />
                     </td>
                     <td>
                         $ @item.valor_Actual
@@ -48,15 +51,22 @@
                     <td>
                         @item.estado
                     </td>
+                    <td>
+                        <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)"><i class="fa fa-info-circle fa-lg"></i></a>
+                    </td>
                 </tr>
-            }
+        }
         </table>
-    </div>
+
+
 }
 else
-{
-    <h2>Usted no dispone de publicaciones favoritas</h2>
+{   <div class="col-md-12 text-center">
+        <h2>Usted no dispone de publicaciones favoritas</h2>
+    </div>
+
 }
     <div class="jumbotron">
         @Html.ActionLink("Volver", "Index", "Tenant", new { }, new { @class = "navbar-brand" })
     </div>
+</div>
