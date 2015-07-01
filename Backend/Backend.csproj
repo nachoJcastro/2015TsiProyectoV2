@@ -271,7 +271,7 @@
     <Content Include="img\logo1.png" />
     <Content Include="img\logo2.png" />
     <Content Include="img\logo2_2.png" />
-    <Content Include="img\misa.jpg" />
+    <Content Include="img\misa.png" />
     <Content Include="img\tienda-boceto-imagenes.jpg" />
     <Content Include="lineicons\fonts\linecons.svg" />
     <Content Include="lineicons\index.html" />
@@ -439,7 +439,9 @@
     <Content Include="Scripts\tourupload.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
