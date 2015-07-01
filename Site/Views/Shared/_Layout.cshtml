@@ -18,8 +18,7 @@
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/dropzonescss")
-    
-  
+
 </head>
 <body>
     <header id="header">
@@ -66,10 +65,17 @@
             </div>
             
     </nav>*@
-    <div class="body-content">
+    <div class="body-content" style="min-height:500px;">
         @RenderBody()
     </div>
     
+    <section class="semi-footer">
+        <div class="container" style="padding-top:20px;padding-bottom:20px;">
+            <div class="logo pull-left">
+                <a href="@Url.Action("Index", "Tenant")"><img src="@tienda.Logo" style="display:inline-block" id="logo-footer" alt="" /><h3>@tienda.Nombre.ToUpper()</h3></a>
+            </div>
+        </div>
+    </section>
     <footer id="footer">
         <!--Footer-->
 

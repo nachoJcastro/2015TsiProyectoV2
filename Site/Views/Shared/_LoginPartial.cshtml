@@ -6,16 +6,23 @@
 {
     @Html.AntiForgeryToken()
     @*<ul class="nav navbar-nav navbar-right">*@
-        <li>
-            <a href="@Url.Action("DatosUsuario/", "Manage", new { idUsuario = user.idUsuario }, null)" data-toggle="tooltip" data-placement="bottom" title="@user.Nombre"><i class="fa fa-user fa-lg"></i></a>
-            @*@Html.ActionLink("Hola " + user.Nombre + "!", "DatosUsuario", "Manage")*@
-        </li>
+    <li class="dropdown">
+        <a id="dropdownMenu2" class="btn-clean button-dropdown dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
+        <ul class="dropdown-menu dropdown-menu-left clean" aria-labelledby="dropdownMenu2">
+            <li class="center-block" style="display:block; margin-left:auto; margin-right:auto;"><img src="~/img/userdefault.png" class="img-responsive img-circle center-block" style="width:70px;height:70px;border:2px solid grey;display:block; margin-left:auto; margin-right:auto;" /></li>
+            <li class="text-center"><span class="label label-default">@user.Nombre</span></li>
+            <li class="text-center"><a href="@Url.Action("DatosUsuario/", "Manage", new { idUsuario = user.idUsuario }, null)">Perfil</a></li>
+            <li class="divider"></li>
+            <li class="text-center"><a href="#">Dropdown Item</a></li>
+            <li class="text-center"><a href="#">Dropdown Item</a></li>
+        </ul>
+        @*@Html.ActionLink("Hola " + user.Nombre + "!", "DatosUsuario", "Manage")*@
+    </li>
         @*<li>
         @Html.ActionLink("Chatear!", "Chat", "Chat")
                     <a id="btnChat" href="#myModalChat" data-toggle="modal"><span class="fa fa-cart-plus fa-3x"></span> <p>Chat</p></a>
     </li>*@
         <li><a href="@Url.Action("Chat", "Chat")" data-toggle="tooltip" data-placement="bottom" title="Chatear"><i class="fa fa-weixin fa-lg"></i></a></li>
-        <li><input type="button" id="bt-chat" value="chat"></li>
         <li><a href="@Url.Action("Listar", "Favoritos")" data-toggle="tooltip" data-placement="bottom" title="Favoritos"><i class="fa fa-star fa-lg"></i></a></li>
         <li><a href="@Url.Action("Create", "Subasta")" data-toggle="tooltip" data-placement="bottom" title="Publicar"><i class="fa fa-shopping-cart fa-lg"></i></a></li>
         @*<li>

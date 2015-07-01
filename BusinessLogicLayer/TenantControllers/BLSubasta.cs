@@ -172,6 +172,7 @@ namespace BusinessLogicLayer.TenantControllers
                             //var oferta = ofertasOrdenadas.First();
                             IBLUsuario blUsu = new BLUsuario();
                             Usuario ganador = null;
+                            Usuario vendedor = null;
                             foreach (var itemOfertas in ofertasOrdenadas)
                             {
                                 if (ganador == null)
@@ -180,11 +181,16 @@ namespace BusinessLogicLayer.TenantControllers
                                     if (usuario.billetera > item.valor_Actual)
                                     {
                                         ganador = usuario;
-                                        ganador.billetera = ganador.billetera - itemOfertas.Monto;
+                                        ganador.billetera = ganador.billetera - itemOfertas.Monto;//le descuento plata al comprador
                                         blUsu.ActualizarUsuario(tenant, ganador);
                                         item.valor_Actual = itemOfertas.Monto;
                                         item.id_Comprador = ganador.id;
-                                    }      
+
+                                        vendedor = blUsu.GetUsuario(tenant, item.id_Vendedor);//le asigno plata al vendedor
+                                        vendedor.billetera = vendedor.billetera + itemOfertas.Monto;
+                                        blUsu.ActualizarUsuario(tenant, vendedor);
+
+                                    }
                                 }
                             }
                             item.finalizado = TipoFinalizacion.Subasta;
