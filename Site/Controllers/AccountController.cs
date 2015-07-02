@@ -14,8 +14,8 @@ using System.Threading;
 using BusinessLogicLayer.TenantInterfaces;
 using BusinessLogicLayer.TenantControllers;
 using System.Collections.Generic;
-using System.Web.Security;
 using Facebook;
+using System.Web.Security;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
 
@@ -27,10 +27,7 @@ namespace Site.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        IBLUsuario _bl=new BLUsuario();
-        IBLProducto proIBL ;
-        BlobStorageIIS _bss = new BlobStorageIIS();
-
+        
         IBLUsuario _bl = new BLUsuario();
         IBLProducto proIBL;
         IBLTenant _ibl = new BLTenant();
@@ -42,7 +39,9 @@ namespace Site.Controllers
         
         private UsuarioSite user_sitio;
         private Usuario user;
-         
+
+        BlobStorageIIS _bss = new BlobStorageIIS();
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
