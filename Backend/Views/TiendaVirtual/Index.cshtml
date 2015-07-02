@@ -40,9 +40,10 @@
                     </div>
                     <div class="offer-content">
                         <img src="@item.Logo" alt="Muestra de la Imagen" width="100" />
-                        <h3 class="">
-                            @Html.DisplayFor(modelItem => item.Nombre)
-                        </h3>
+                        <h5 class="">
+                           @(item.Dominio.ToString() + ".chebay.com")
+                             
+                        </h5>
                         @*<h5><small>@Html.DisplayFor(modelItem => item.Dominio)'.css'</small></h5>*@
                         @*<h5><small>@*Html.DisplayFor(modelItem => item.Dominio)</small></h5>*@
                     </div>
