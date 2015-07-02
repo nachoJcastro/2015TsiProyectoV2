@@ -6,7 +6,7 @@
 
 }
 
-@*@if (tienda != null)
+    @*@if (tienda != null)
     {
         <img src="@tienda.Logo" alt="" class="img-responsive center-block" />
         <h2>
@@ -23,80 +23,91 @@
     </ol>
 
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12 text-center registro">
             <h5 class="text-center">Cree una cuenta nueva</h5>
         </div>
-
+        
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="col-md-6">
 
 
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })*@
-                <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Correo" })
-                </div>
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Correo" })
             </div>
-
-
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.Nick, new { @class = "col-md-2 control-label" })*@
-                <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.Nick, new { @class = "form-control", @placeholder = "Nick" })
-                </div>
-            </div>
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })*@
-                <div class="col-md-12">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
-                </div>
-            </div>
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })*@
-                <div class="col-md-12">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Password" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })*@
-                <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre" })
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.Apellido, new { @class = "col-md-2 control-label" })*@
-                <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", @placeholder = "Apellido" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.telefono, new { @class = "col-md-2 control-label" })*@
-                <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.telefono, new { @class = "form-control", @placeholder = "Teléfono" })
-                </div>
-            </div>
-            <!--FECHA NACIMIENTO-->
-            <div class="form-group">
-                @Html.LabelFor(m => m.Fecha, new { @class = "col-md-2 control-label" })
-                <div class='col-md-12'>
-                    <div class='input-group date' id='datetimepicker1'>
-                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
+
+
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.Nick, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Nick, new { @class = "form-control", @placeholder = "Nick" })
+            </div>
+        </div>
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+            </div>
+        </div>
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Password" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.Apellido, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", @placeholder = "Apellido" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(m => m.telefono, new { @class = "col-md-2 control-label" })*@
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.telefono, new { @class = "form-control", @placeholder = "Teléfono" })
+            </div>
+        </div>
+         <!--FECHA NACIMIENTO-->
+        <div class="form-group">
+            @Html.LabelFor(m => m.Fecha, new { @class = "col-md-2 control-label" })
+            <div class='col-md-12'>
+                <div class='input-group date' id='datetimepicker1'>
+                    @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+            
+        <div class="form-group">
+            @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                <input class="form-control" type="file" id="Imagen" name="Imagen" accept="image/*" required />
+                @Html.ValidationMessageFor(model => model.Imagen, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+            
+       </div>
 
         <div class="col-md-6">
             <!--MAPA-->
@@ -107,7 +118,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="form-group">
                 <div class="col-md-8">
                     <input id="direccion_coord" type="text" value="Montevideo" class="form-control">
@@ -132,7 +143,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="col-md-6 registro">
-                    <h5>Preferencias</h5>
+                   <h5>Preferencias</h5>
                 </div>
             </div>
             @if (Model.lista_preferencias.Count > 0)
@@ -158,8 +169,8 @@
                 </div>
             </div>
         </div>
-    }
-</div>
+        }
+    </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
@@ -180,179 +191,179 @@
 
 
 <script type="text/javascript">
-    var geocoder;
-    var map;
+        var geocoder;
+        var map;
     var latlng = null;
     var nuevo_lat = null;
-    var markers = [];
-    var image = 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/96/Map-Marker-Marker-Outside-Chartreuse-icon.png';
+        var markers = [];
+        var image = 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/96/Map-Marker-Marker-Outside-Chartreuse-icon.png';
 
 
 
-    // var marker;
-    $(function () {
-        $('#datetimepicker1').datetimepicker({});
+        // var marker;
+        $(function () {
+            $('#datetimepicker1').datetimepicker({});
 
 
-
-        latlng = new google.maps.LatLng(-34.895154, -56.164083);
-
-        var myOptions = {
-            zoom: 13,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("map"), myOptions);
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(obtener_posicion);
-        }
-        else {
 
             latlng = new google.maps.LatLng(-34.895154, -56.164083);
-            cargar_mapa(latlng);
-        }
 
+            var myOptions = {
+                zoom: 13,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map"), myOptions);
 
-
-
-    });
-
-    function cargar_mapa(latlng) {
-
-        map.setCenter(latlng);
-        geocoder = new google.maps.Geocoder();
-        //geocoder=new GClientGeocoder();
-        google.maps.event.addListener(map, 'click', function (event) {
-            agregar_marca(event.latLng, 'Mi direccion');
-        });
-        // Adds a marker at the center of the map.
-        agregar_marca(latlng, 'Mi direccion');
-    }
-
-
-    // Elimina
-    function borrarMarkers() {
-        limpiarMarkers();
-        markers = [];
-    }
-    function limpiarMarkers() {
-        setAllMap(null);
-    }
-    //*******************************************
-
-    function obtener_posicion(position) {
-        latlng = new google.maps.LatLng(position.coords.latitude,
-                                             position.coords.longitude);
-
-        cargar_mapa(latlng);
-    };
-
-
-
-
-
-    function agregar_marca(location, direccion) {
-        borrarMarkers();
-
-        var marker = new google.maps.Marker({
-            position: location,
-            clickable: true,
-            title: direccion,
-            map: map,
-            icon: image
-        });
-        markers.push(marker);
-
-        if (location != null) {
-            document.getElementById("Coordenadas").value = location.lat() + "," + location.lng();
-        }
-        if (direccion == "Mi direccion") {
-            buscar_Direccion_latlon(location);
-        }
-    }
-    // Sets the map on all markers in the array.
-    function setAllMap(map) {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-        }
-    }
-    //*********************************************
-    function buscar_Direccion_latlon(point) {
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ latLng: point }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                    document.getElementById("Direccion").value = results[0].formatted_address;
-                }
-            }
-        });
-    }
-    //***************************************************
-    function buscar_Direccion() {
-        var direccion_coord = document.getElementById("direccion_coord").value;
-        geocoder.geocode({ 'address': direccion_coord }, function (resultados, estado) {
-            if (estado == google.maps.GeocoderStatus.OK) {
-                map.setCenter(resultados[0].geometry.location);
-                // direccion
-                //break down the three dimensional array into simpler arrays
-                datos_direccion(resultados);
-                agregar_marca(resultados[0].geometry.location, direccion_coord);
-                //var  marker = new google.maps.Marker({
-                //    map: map,
-                //
-                //    clickable: false,
-                //     icon: image,
-                //     position: resultados[0].geometry.location
-
-                //   });
-                // markers.push(marker);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(obtener_posicion);
             }
             else {
-                alert('La busqueda no dio resultado: ' + estado);
+
+                latlng = new google.maps.LatLng(-34.895154, -56.164083);
+                cargar_mapa(latlng);
             }
+
+
+
+
         });
-    }
 
-    //****************************************************
-    function datos_direccion(resultados) {
-        var datos_dir = "";
-        for (i = 0 ; i < resultados.length ; ++i) {
-            var var1 = resultados[i].address_components;
+        function cargar_mapa(latlng) {
 
-            for (j = 0 ; j < var1.length ; ++j) {
-                var var2 = var1[j].types;
-                for (k = 0 ; k < var2.length ; ++k) {
-                    //BUSCO CIUDAD
-                    if (var2[k] == "locality") {
-                        //CIUDAD
-                        //alert(var1[j].long_name);
-                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
-                    }
-                    //BUSCO PAIS
-                    if (var2[k] == "administrative_area_level_2") {
-                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
-                        //put the county name in the form
-                        //alert(var1[j].long_name);
-                    }
-                    //BUSCO ESTADO
-                    if (var2[k] == "administrative_area_level_1") {
-                        //put the state abbreviation in the form
-                        // alert(var1[j].short_name);
-                    }
-                    //BUSCO CALLE
-                    if (var2[k] == "street_number") {
-                        datos_dir = datos_dir + "" + var1[j].long_name + ". ";
-                        // alert(var1[j].long_name);
-                    }
-                    //CODIGO POSTAL
-                    if (var2[k] == "postal_code_prefix") {
+            map.setCenter(latlng);
+            geocoder = new google.maps.Geocoder();
+            //geocoder=new GClientGeocoder();
+            google.maps.event.addListener(map, 'click', function (event) {
+                agregar_marca(event.latLng, 'Mi direccion');
+            });
+            // Adds a marker at the center of the map.
+            agregar_marca(latlng, 'Mi direccion');
+        }
 
-                        // alert(var1[j].long_name);
-                    }
 
-                }
+        // Elimina
+        function borrarMarkers() {
+            limpiarMarkers();
+            markers = [];
+        }
+        function limpiarMarkers() {
+            setAllMap(null);
+        }
+        //*******************************************
+
+        function obtener_posicion(position) {
+            latlng = new google.maps.LatLng(position.coords.latitude,
+                                                 position.coords.longitude);
+
+            cargar_mapa(latlng);
+        };
+
+
+
+
+
+        function agregar_marca(location, direccion) {
+            borrarMarkers();
+
+            var marker = new google.maps.Marker({
+                position: location,
+                clickable: true,
+                title: direccion,
+                map: map,
+                icon: image
+            });
+            markers.push(marker);
+
+            if (location != null) {
+                document.getElementById("Coordenadas").value = location.lat() + "," + location.lng();
+            }
+            if (direccion == "Mi direccion") {
+                buscar_Direccion_latlon(location);
             }
         }
-        document.getElementById("direccion").value = resultados[0].formatted_address;
-    }
+        // Sets the map on all markers in the array.
+        function setAllMap(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+        //*********************************************
+        function buscar_Direccion_latlon(point) {
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ latLng: point }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        document.getElementById("Direccion").value = results[0].formatted_address;
+                    }
+                }
+            });
+        }
+        //***************************************************
+        function buscar_Direccion() {
+            var direccion_coord = document.getElementById("direccion_coord").value;
+            geocoder.geocode({ 'address': direccion_coord }, function (resultados, estado) {
+                if (estado == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(resultados[0].geometry.location);
+                    // direccion
+                    //break down the three dimensional array into simpler arrays
+                    datos_direccion(resultados);
+                    agregar_marca(resultados[0].geometry.location, direccion_coord);
+                    //var  marker = new google.maps.Marker({
+                    //    map: map,
+                    //
+                    //    clickable: false,
+                    //     icon: image,
+                    //     position: resultados[0].geometry.location
+
+                    //   });
+                    // markers.push(marker);
+                }
+                else {
+                    alert('La busqueda no dio resultado: ' + estado);
+                }
+            });
+        }
+
+        //****************************************************
+        function datos_direccion(resultados) {
+            var datos_dir = "";
+            for (i = 0 ; i < resultados.length ; ++i) {
+                var var1 = resultados[i].address_components;
+
+                for (j = 0 ; j < var1.length ; ++j) {
+                    var var2 = var1[j].types;
+                    for (k = 0 ; k < var2.length ; ++k) {
+                        //BUSCO CIUDAD
+                        if (var2[k] == "locality") {
+                            //CIUDAD
+                            //alert(var1[j].long_name);
+                            datos_dir = datos_dir + "" + var1[j].long_name + ". ";
+                        }
+                        //BUSCO PAIS
+                        if (var2[k] == "administrative_area_level_2") {
+                            datos_dir = datos_dir + "" + var1[j].long_name + ". ";
+                            //put the county name in the form
+                            //alert(var1[j].long_name);
+                        }
+                        //BUSCO ESTADO
+                        if (var2[k] == "administrative_area_level_1") {
+                            //put the state abbreviation in the form
+                            // alert(var1[j].short_name);
+                        }
+                        //BUSCO CALLE
+                        if (var2[k] == "street_number") {
+                            datos_dir = datos_dir + "" + var1[j].long_name + ". ";
+                            // alert(var1[j].long_name);
+                        }
+                        //CODIGO POSTAL
+                        if (var2[k] == "postal_code_prefix") {
+
+                            // alert(var1[j].long_name);
+                        }
+
+                    }
+                }
+            }
+            document.getElementById("direccion").value = resultados[0].formatted_address;
+        }
 </script>

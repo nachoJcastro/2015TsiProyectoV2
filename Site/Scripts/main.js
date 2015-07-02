@@ -23,7 +23,6 @@ $(document).ready(function(){
 
     $('#datetimepicker1').datetimepicker({
         format: "YYYY-MM-DD hh:mm:ss",
-        use24hours: true,
         });
 	$('[data-toggle="tooltip"]').tooltip();
 

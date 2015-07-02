@@ -49,5 +49,11 @@ namespace BusinessLogicLayer.TenantControllers
         {
             _dal.ActualizarUsuario(tenant, usuarioNuevo);
         }
+
+        public Usuario LoginUsuarioFacebook(string valor_tenant, string email)
+        {
+
+            return _dal.LoginUsuarioFacebook(valor_tenant, email);
+        }
     }
 }

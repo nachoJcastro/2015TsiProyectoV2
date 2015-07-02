@@ -23,6 +23,7 @@ using Microsoft.Web.Administration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure;
 using DNSManager;
+using System.Text.RegularExpressions;
 
 namespace Backend.Controllers
 {   
@@ -112,6 +113,19 @@ namespace Backend.Controllers
                 if (ModelState.IsValid)
                 {
 
+                    var dominio_temp = tiendaVirtualDTO.Dominio.ToLower();
+                    var dominio = "";
+                    try
+                    {
+                        dominio = Regex.Replace(dominio_temp, @"\s+", "");
+                        tiendaVirtualDTO.Dominio = dominio;
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw e;
+                    }
+
                     CloudBlobContainer blobContainer = _bss.GetContainerTienda(tiendaVirtualDTO.Dominio);
                     if (logo != null)
                     {
@@ -162,9 +176,10 @@ namespace Backend.Controllers
                     var fileContents = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/Site.css"));
 
                     //Controlo que el dominio sea en minuscula
-                    var dominio = tiendaVirtualDTO.Dominio.ToLower();
+                   
+                    
 
-                    tiendaVirtualDTO.Dominio = dominio;
+                   // tiendaVirtualDTO.Dominio = dominio;
                     tiendaVirtualDTO.Css = fileContents.ToString();
                     tiendaVirtualDTO.Fecha_creacion = System.DateTime.Now;
                     tiendaVirtualDTO.Estado = true;

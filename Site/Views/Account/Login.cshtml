@@ -73,6 +73,11 @@
                                     <p class="text-center">
                                         @Html.ActionLink("Registrar como nuevo usuario", "Register", null, new { @class = "btn-reg-login" })
                                     </p>
+
+                                    <p class="text-center">
+                                        @Html.ActionLink("Login con Facebook.", "Facebook", "Account", null, new { @class = "btn-reg-login" })
+                                    </p>
+
                                     @* Habilite esta opción después de habilitar la confirmación de la cuenta para la función de restablecimiento de contraseña
                                         <p>
                                             @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
