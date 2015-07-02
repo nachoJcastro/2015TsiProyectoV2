@@ -228,12 +228,11 @@
             <br />
             <div class="row">
                 <div class="col-md-12">
-        <div class="text-center">
-            <h3>Descripción de la publicación</h3>
-        </div>
-        <div class="col-md-12">
-
-                        @Html.DisplayFor(model => model.descripcion)
+                    <div class="text-center">
+                        <h3>Descripción de la publicación</h3>
+                    </div>
+                    <div class="col-md-12">
+                        @Model.descripcion
                     </div>
                 </div>
             </div>
@@ -241,23 +240,41 @@
         <div class="tab-pane active" id="car">
             <br />
             <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <h3>Caracteristicas</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <tbody>
+                                @foreach (var item in Model.atributos)
+                                {
+                                    <tr>
+                                        <td width="40%">@item.Nombre</td>
+                                        <td>@item.valor</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="col-md-12">
 
-    <p>Comentarios</p>
+    <h5><i class="fa fa-comment fa-lg" style="padding-right:20px;"></i>Comentarios</h5>
 
-    @if (estado.Equals("Activa") && user != null && user.Email != null)
+        @if (estado.Equals("Activa") && user != null && user.Email != null)
         {
-    <div class="col-md-12">
-            <div>
-                <textarea id="areaComentario" rows="4" cols="133" class="form-control" placeholder="Ingrese aqui su comentario.."></textarea>
+            <div class="col-md-12">
+                    <div>
+                        <textarea id="areaComentario" rows="4" cols="133" class="form-control" placeholder="Ingrese aqui su comentario.."></textarea>
+                    </div>
+                    <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
             </div>
-            <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
-    </div>
         }
 
     </div>

@@ -864,7 +864,10 @@ namespace Site.Controllers
         public ActionResult Categoria(int idCat, string SearchString, int? Tipo, string min, string max, int? page, int? rows)
         {
             user_sitio = Session["usuario"] as UsuarioSite;
+            List<CategoriasDTO> cat = proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda);
+            CategoriasDTO aux = cat.FirstOrDefault(c => c.CategoriaId == idCat);
             ViewBag.idCat = idCat;
+            ViewBag.nomCat = aux.Nombre;
             if (page == null)
             {
                 page = 1;

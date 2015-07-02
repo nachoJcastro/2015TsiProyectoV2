@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                       @if (tienda != null)
-                      {  <div class="logo pull-left">
+                      { <div class="logo pull-left">
                             <a href="@Url.Action("Index", "Tenant")"><img src="@tienda.Logo" style="display:inline-block" alt="" /><h3>@tienda.Nombre.ToUpper()</h3></a>
                         </div>
                       }
@@ -91,6 +91,8 @@
     </footer><!--/Footer-->
     
     <!-- /.container -->
+    
+    @Scripts.Render("~/bundles/wysihtml")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/dropzonescripts")

@@ -32,7 +32,7 @@ namespace Site.Controllers
         /*static LocalDataStoreSlot local;
         private String tenantID;
         static LocalDataStoreSlot tenant = Thread.AllocateNamedDataSlot("Tenant");*/
-        // GET: Tenant
+        //GET: Tenant/
         public ActionResult Index(string id)
         {
            

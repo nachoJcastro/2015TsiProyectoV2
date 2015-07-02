@@ -1242,7 +1242,18 @@ button + label{
 	font-size: 18px;
 }
 
+.titulo-usuario{
+	text-decoration: none;
+	
+	font-weight: bold;
+	
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	transition: all 0.1s linear;
 
+	color:#37bbec;
+	font-size: 18px;
+}
 
 
 /* Required for Dropdowns */
@@ -1353,6 +1364,10 @@ button + label{
 .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
 .hero-widget label { font-size: 17px; }
 .hero-widget .options { margin-top: 10px; }
+
+.datos-user i {
+    padding-right:10px;
+}
 
 .btn {
     border-radius:0px !important;

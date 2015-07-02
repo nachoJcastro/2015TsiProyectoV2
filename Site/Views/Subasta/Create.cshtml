@@ -6,37 +6,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
-    
-    <h3>Subasta</h3>
-    <hr /> 
-   
-    
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Tenant")">Home</a></li>
+        <li class="active">Publicacion</li>
+    </ol>
+
+    <div class="col-md-12 text-center">
+        <h3 class="titulo-usuario">Publicacion</h3>
+    </div>
+    <hr />
+
+
     <div class="form-horizontal">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="form-group">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     @Html.Label("Categorias")
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     @Html.DropDownList("Categorias", ViewData["Categorias"] as SelectList, new { @class = "form-control" })
                 </div>
             </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     @Html.Label("Productos")
                 </div>
-                <div class="col-md-8">
-                   @Html.DropDownList("Productos", new SelectList(string.Empty, "Value", "Text"), "Seleccione un Producto", new { @class = "form-control" })
+                <div class="col-md-12">
+                    @Html.DropDownList("Productos", new SelectList(string.Empty, "Value", "Text"), "Seleccione un Producto", new { @class = "form-control" })
                 </div>
             </div>
-            <input type="hidden" name="id_Categoria" id="id_Categoria" class="id_Categoria" />
-            <input type="hidden" name="id_Producto" id="id_Producto" class="id_Producto" />
-            
-             <!-- Div que carga los datos de la subasta-->
-            <div id="subasta">
-            </div><!-- Div que carga los datos de la subasta-->
-            
-        </div><!-- Div col md 6-->
+        </div>
+        <input type="hidden" name="id_Categoria" id="id_Categoria" class="id_Categoria" />
+        <input type="hidden" name="id_Producto" id="id_Producto" class="id_Producto" />
+        
+        <!-- Div que carga los datos de la subasta-->
+        <div id="subasta">
+        </div><!-- Div que carga los datos de la subasta-->
+       
+        <!-- Div col md 6-->
     </div> <!-- Div form-->
 
 </div> <!-- Div container-->

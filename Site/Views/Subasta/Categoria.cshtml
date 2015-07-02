@@ -10,9 +10,11 @@
 <!--model PagedList.IPagedList<Crosscutting.EntityTenant.Subasta>-->
 
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Tenant")">Home</a></li>
+        <li class="active">@ViewBag.nomCat</li>
+    </ol>
     <br />
-    <br />
-
     <section>
         <div class="container">
             <div class="row">
