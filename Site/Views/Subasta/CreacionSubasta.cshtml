@@ -37,41 +37,19 @@
                 @Html.ValidationMessageFor(model => model.titulo, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <textarea id="some-textarea" placeholder="Enter text ..."></textarea>
         <!--DESCRIPCION-->
         <div class="form-group">
             <div class="col-md-12">
-
                 @Html.Label("Descripcion", new { htmlAttributes = new { @class = "form-control" } })
             </div>
-            <div class="col-md-8">
-                @Html.TextAreaFor(model => model.descripcion, 4, 10, new { @class = "form-control" })
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.descripcion, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
         <!--ATRIBUTOS-->
-        <div id="atributos">
-            @for (var orderIndex = 0; orderIndex < Model.atributos.Count; orderIndex++)
-            {
-
-                @Html.HiddenFor(model => model.atributos[orderIndex].IdAtributo)
                 <div class="form-group">
                     <div class="col-md-6">
-                        @Html.DisplayFor(model => model.atributos[orderIndex].Nombre, new { @class = "form-control" })
-                    </div>
-
-                    <div class="col-md-12">
-                        @Html.TextBoxFor(model => model.atributos[orderIndex].valor, new { @class = "form-control" })
-                    </div>
-                </div>
-            }
-        </div>
-        <!--ATRIBUTOS-->
-        <div class="form-group">
-            <div class="col-md-6">
                 @Html.Label("Tags", new { htmlAttributes = new { @class = "form-control" } })
             </div>
             <div class="col-md-12">
@@ -122,23 +100,42 @@
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-            </div>
-
-
-
-            <!--GARANTIA-->
-            <div class="form-group">
-                <div class="col-md-6">
-                    @Html.Label("Garantia", new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="col-md-12">
-                    @Html.DropDownList("Garantia", new SelectList((System.Collections.IEnumerable)ViewData["Garantia"]), new { @class = "form-control" })
-                </div>
-            </div>
-            @Html.HiddenFor(model => model.garantia)
         </div>
-    <div class="col-md-6">
+
+
+
+        <!--GARANTIA-->
+        <div class="form-group">
+            <div class="col-md-6">
+                @Html.Label("Garantia", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-12">
+                @Html.DropDownList("Garantia", new SelectList((System.Collections.IEnumerable)ViewData["Garantia"]), new { @class = "form-control" })
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.garantia)
         <!--MAPA-->
+
+    </div>
+        
+    <div class="col-md-6">
+        <!--ATRIBUTOS-->
+        <div id="atributos">
+            @for (var orderIndex = 0; orderIndex < Model.atributos.Count; orderIndex++)
+            {
+
+                @Html.HiddenFor(model => model.atributos[orderIndex].IdAtributo)
+                <div class="form-group">
+    <div class="col-md-6">
+                        @Html.DisplayFor(model => model.atributos[orderIndex].Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(model => model.atributos[orderIndex].valor, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+        </div>
         <h3>Ubicacion</h3>
         <div id="contenendor_mapa">
             <div id="map" style="height: 400px; width: 500px ; margin: 10px">
@@ -152,8 +149,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
         <div class="form-group">
             <div class="col-md-6">
                 @Html.Label("Direccion", new { htmlAttributes = new { @class = "form-control" } })
@@ -167,6 +162,10 @@
 
         <!--Escondido Coordenadas-->
         @Html.HiddenFor(model => model.coordenadas)
+    </div>
+
+    <div class="col-md-6">
+        
 
         @*<div class="form-group">
                 <div class="col-md-6">

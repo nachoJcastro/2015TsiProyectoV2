@@ -4,139 +4,172 @@
     ViewBag.Title = "Listado de Calificaciones";
 }
 
-@if (ViewBag.TamanioLista != 0)
-{
-    if (ViewBag.Ventas)
+<div class="container" style="margin-top:20px;">
+    <div class="panel panel-login">
+    @if (ViewBag.TamanioLista != 0)
     {
-        <h2>Listado de Ventas</h2>
-    }
-    else
-    {
-        <h2>Listado de Compras</h2>
-    }
-    <div class="panel-body">
-        <table class="table">
-            <tr>
-                <th>
-                    Producto
-                </th>
-                <th>
-                    Finalizacion
-                </th>
-                <th>
-                    Precio
-                </th>
-                <th>
-                    Fecha
-                </th>
+        <div class="panel-heading">
+            <div class="col-md-12 text-center">
+                
                 @if (ViewBag.Ventas)
-                { 
-                <th>
-                    Calificacion Recibida
-                </th>
-                <th>
-                    Calificacion Otorgada
-                </th>
+                {
+                    <h3 class="titulo-usuario">Listado de Ventas</h3>
                 }
                 else
                 {
-                    <th>
-                        Calificacion Otorgada
-                    </th>
-                    <th>
-                        Calificacion Recibida
-                    </th>
+                    <h3 class="titulo-usuario">Listado de Compras</h3>
                 }
-            </tr>
 
-            @foreach (var item in ViewBag.ListaComprasVentas)
+            </div>
+            <hr />
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                
+                    <div class="panel-body">
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    Producto
+                                </th>
+                                <th>
+                                    Titulo
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Precio
+                                </th>
+                                <th>
+                                    Fecha
+                                </th>
+                                @if (ViewBag.Ventas)
+                                {
+                                    <th>
+                                        Calificacion Recibida
+                                    </th>
+                                    <th>
+                                        Calificacion Otorgada
+                                    </th>
+                                }
+                                else
+                                {
+                                    <th>
+                                        Calificacion Otorgada
+                                    </th>
+                                    <th>
+                                        Calificacion Recibida
+                                    </th>
+                                }
+                            </tr>
+
+                            @foreach (var item in ViewBag.ListaComprasVentas)
+                            {
+                                <tr class="texto_table">
+                                    <td>
+                                        <img src="@item.portada" alt="" style="width:100px;height:100px;" /> 
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)">@item.titulo</a>
+                                    </td>
+                                    <td>
+                                        @item.finalizado
+                                    </td>
+                                    <td>
+                                        $ @item.precio_Compra
+                                    </td>
+                                    <td>
+                                        @item.fecha_Cierre
+                                    </td>
+                                    @if (ViewBag.Ventas)
+                                    {
+
+                                        if (@item.calificacionDelComprador == 0)
+                                        {
+                                            <td>
+                                                Aun sin calificar
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <input type="hidden" data-filled="fa fa-heart fa-2x" data-empty="fa fa-heart-o fa-2x" class="rating" data-start="0" data-stop="5" value="@item.calificacionDelComprador" data-readonly />
+                                            </td>
+                                        }
+
+
+                                        if (item.calificacionDelVendedor == 0)
+                                        {
+                                            <td>
+                                                <a href="@Url.Action("CreateCalificacion/", "Calificacion", new { idSubasta = item.id, venta = ViewBag.Ventas})">Calificar</a>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <input type="hidden" data-filled="fa fa-heart fa-2x" data-empty="fa fa-heart-o fa-2x" class="rating" data-start="0" data-stop="5" value="@item.calificacionDelVendedor" data-readonly />
+                                            </td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item.calificacionDelComprador == 0)
+                                        {
+                                            <td>
+                                                <a href="@Url.Action("CreateCalificacion/", "Calificacion", new {idSubasta = item.id, venta = ViewBag.Ventas})">Calificar</a>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <input type="hidden" data-filled="fa fa-heart fa-2x" data-empty="fa fa-heart-o fa-2x" class="rating" data-start="0" data-stop="5" value="@item.calificacionDelComprador" data-readonly />
+                                            </td>
+                                        }
+                                        if (item.calificacionDelVendedor == 0)
+                                        {
+                                            <td>
+                                                Aun sin calificar
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <input type="hidden" data-filled="fa fa-heart fa-2x" data-empty="fa fa-heart-o fa-2x" class="rating" data-start="0" data-stop="5" value="@item.calificacionDelVendedor" data-readonly />
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            if (ViewBag.Ventas)
             {
-                <tr class="texto_table">
-                    <td>
-                        <a href="@Url.Action("DetalleProducto/", "Subasta", new { idSubasta = item.id }, null)">@item.titulo</a>
-                    </td>
-                    <td>
-                        @item.finalizado
-                    </td>
-                    <td>
-                        $ @item.precio_Compra
-                    </td>
-                    <td>
-                        @item.fecha_Cierre
-                    </td>
-                    @if (ViewBag.Ventas)
-                    {
+                <div class="panel-heading">
+                    <div class="col-md-12 text-center">
+                        <h3 class="titulo-usuario">No hay ventas registradas</h3>
 
-                        if(@item.calificacionDelComprador == 0)
-                        {
-                        <td>
-                            Aun sin calificar
-                        </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @item.calificacionDelComprador
-                            </td>
-                        }
-
-
-                        if (@item.calificacionDelVendedor == 0)
-                        {
-                        <td>
-                            <a href="@Url.Action("CreateCalificacion/", "Calificacion", new { idSubasta = item.id, venta = ViewBag.Ventas})">Calificar</a>
-                        </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @item.calificacionDelVendedor
-                            </td>
-                        }
-                    }
-                    else
-                    {
-                        if (@item.calificacionDelComprador == 0)
-                        {
-                            <td>
-                                <a href="@Url.Action("CreateCalificacion/", "Calificacion", new {idSubasta = item.id, venta = ViewBag.Ventas})">Calificar</a>
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @item.calificacionDelComprador
-                            </td>
-                        }
-                        if (@item.calificacionDelVendedor == 0)
-                        {
-                            <td>
-                                Aun sin calificar
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @item.calificacionDelVendedor
-                            </td>
-                        }
-                    }
-                </tr>
-            }
-        </table>
+                    </div>
+                </div>
+                <div class="panel-body"></div>
+        }
+        else
+        {
+        <div class="panel-heading">
+            <div class="col-md-12 text-center">
+                <h3 class="titulo-usuario">No hay compras registradas</h3>
+            </div>
+        </div>
+        <div class="panel-body"></div>
+        }
+        }
     </div>
-}
-else
-{
-    if (ViewBag.Ventas)
-    {
-        <h2>No hay ventas registradas</h2>
-    }
-    else
-    {
-        <h2>No hay compras registradas</h2>
-    }
-}
     <div class="jumbotron">
         <button type="button" onclick="location.href='@Url.Action("DatosUsuario/", "Manage", new { idUsuario = ViewBag.idUsuario})'" class="btn btn-default">Volver</button>
     </div>
+</div>

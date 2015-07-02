@@ -552,6 +552,7 @@ namespace Site.Controllers
                 sub_site.precio_Base=(double)subasta.precio_Base;
                 sub_site.precio_Compra = (double)subasta.precio_Compra;
                 sub_site.Calificacion = subasta.Calificacion;
+                sub_site.descripcion = subasta.descripcion;
                 sub_site.Favorito = subasta.Favorito;
                 sub_site.id_Vendedor = subasta.id_Vendedor;
                 sub_site.atributos = AtributoSiteList(subasta.id_Categoria.ToString());

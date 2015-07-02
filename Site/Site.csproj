@@ -307,7 +307,6 @@
     <Content Include="img\userdefault.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-rating.js" />
-    <Content Include="Scripts\bootstrap-wysihtml5-0.0.2.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -368,7 +367,6 @@
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\slick.js" />
     <Content Include="Scripts\wow.min.js" />
-    <Content Include="Scripts\wysihtml5-0.3.0.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
