@@ -80,8 +80,11 @@ namespace Site.Models
         [Display(Name = "Fecha de inicio")]
         public DateTime fecha_Inicio { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Fecha de Finalización")]
         public DateTime? fecha_Cierre { get; set; }
+
 
         [Display(Name = "Calificacion del Vendedor")]
         public int calificacionDelVendedor { get; set; }

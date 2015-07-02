@@ -20,6 +20,7 @@ namespace Site.Controllers
 
         IBLUsuario _iusr = new BLUsuario();
         IBLCalificacion _ical = new BLCalificacion();
+        IBLSubasta subIBL = new BLSubasta();
         private UsuarioSite usuario;
        /* private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;*/
@@ -32,7 +33,7 @@ namespace Site.Controllers
         public ActionResult DatosUsuario(int idUsuario)
         {
             UsuarioModel usr_model = new UsuarioModel();
-
+            
             try
             {
                  usuario = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
@@ -40,7 +41,9 @@ namespace Site.Controllers
                  var tienda = usuario.Dominio;
                                   
                  var usr = _iusr.GetUsuario(tienda, idUsuario);
-                 
+                 ViewBag.Ventas = subIBL.ObtenerVentasbyUsuario(usuario.Dominio, idUsuario).Count();
+                 ViewBag.Compras = subIBL.ObtenerComprasbyUsuario(usuario.Dominio, idUsuario).Count();
+
                  if (usr != null) {
 
                      usr_model.id = usr.id;
@@ -52,6 +55,7 @@ namespace Site.Controllers
                      usr_model.coordenadas = usr.coordenadas;
                      usr_model.direccion = usr.direccion;
                      usr_model.email = usr.email;
+                     usr_model.imagen = usr.imagen;
                      usr_model.fecha_Nacimiento = (DateTime)usr.fecha_Nacimiento;
                      usr_model.reputacion_Compra = _ical.ObtenerReputacionComprador(tienda, idUsuario);
                      usr_model.reputacion_Venta = _ical.ObtenerReputacionVendedor(tienda, idUsuario);
@@ -62,6 +66,8 @@ namespace Site.Controllers
                      }
                     
                   }
+
+                  
 
             
             }

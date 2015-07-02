@@ -182,7 +182,7 @@
             if (tipoFinalizacion == "Subasta")
             {
 
-                        if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
+                    if (user != null && user.Email != null && user.Nombre != Model.nick_Vendedor)
                     {
                         <button type="button" onclick="location.href='@Url.Action("CreateOferta/", "Oferta", new { idSubasta = Model.id, monto_actual =Model.valor_Actual })'" class="btn btn-default">Ofertar</button>
 

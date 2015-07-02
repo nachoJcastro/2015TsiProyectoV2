@@ -11,12 +11,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @if (user!=null)
-    {    <title>@user.Dominio - @ViewBag.Title</title>
+    {    <title>@user.Dominio - ViewBag.Title</title>
          <link href="~/Content/@estilo.css" rel="stylesheet" />
     }
    
 
-    @Styles.Render("~/Content/css")
+    @*@Styles.Render("~/Content/css")*@
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/flexslider.css" rel="stylesheet" />
+    <link href="~/Content/price-range.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-rating.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/slick-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/responsive.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
     @Styles.Render("~/Content/dropzonescss")
 
 </head>
@@ -92,7 +104,7 @@
     
     <!-- /.container -->
     
-    @Scripts.Render("~/bundles/wysihtml")
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/dropzonescripts")

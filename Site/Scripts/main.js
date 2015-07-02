@@ -115,12 +115,6 @@ $(document).ready(function(){
    )
 	wow.init();
 
-	$('#some-textarea').wysihtml5();
-
-	$('#some-textarea').change(function () {
-	    var desc = $('#some-textarea').val();
-	    $('#descripcion').val(desc);
-	});
 });
 
 

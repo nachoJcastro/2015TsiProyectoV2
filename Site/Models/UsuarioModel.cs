@@ -26,6 +26,7 @@ namespace Site.Models
         [Display(Name = "Fecha de Nacimiento")]
         public DateTime fecha_Nacimiento { get; set; }
 
+
         public string email { get; set; }
 
         public string direccion { get; set; }
