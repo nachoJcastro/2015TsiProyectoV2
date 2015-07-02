@@ -673,14 +673,18 @@ namespace Site.Controllers
             {
                 usuario.billetera = usuario.billetera - (double)subasta.precio_Compra;
                 usuIBL.ActualizarUsuario(valor_tenant, usuario);//le descuento plata al comprador
-                
+
+                int idVendedor = subasta.id_Vendedor;
+                var vendedor = usuIBL.GetUsuario(valor_tenant, idVendedor);
+
+                vendedor.billetera = vendedor.billetera + (double)subasta.precio_Compra;
+                usuIBL.ActualizarUsuario(valor_tenant, vendedor);//le agrego plata al vededor
 
                 subasta.estado = EstadoTransaccion.Cerrada;
                 subasta.finalizado = TipoFinalizacion.Compra_directa;
                 subasta.id_Comprador = idLogueado;
                 subasta.fecha_Cierre = DateTime.Now;
                 subIBL.ActualizarSubasta(valor_tenant, subasta);
-                var vendedor = usuIBL.GetUsuario(valor_tenant, idLogueado);
                 //enviar mail
                 try
                 {

@@ -14,6 +14,8 @@ using System.Threading;
 using BusinessLogicLayer.TenantInterfaces;
 using BusinessLogicLayer.TenantControllers;
 using System.Collections.Generic;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System.IO;
 
 
 
@@ -25,6 +27,7 @@ namespace Site.Controllers
     {
         IBLUsuario _bl=new BLUsuario();
         IBLProducto proIBL ;
+        BlobStorageIIS _bss = new BlobStorageIIS();
 
         //[ThreadStatic]  
         public string valor_tenant;
@@ -225,7 +228,7 @@ namespace Site.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model, HttpPostedFileBase imagen)
         {
             if (ModelState.IsValid)
             {
@@ -242,7 +245,30 @@ namespace Site.Controllers
                         if (!(_bl.ExisteUsuario(valor_tenant, model.Email)))
                         {
                             System.Diagnostics.Debug.WriteLine("no existe usuario");
-                            user = new Usuario { email = model.Email, direccion = model.Direccion, fecha_Nacimiento = Convert.ToDateTime(model.Fecha), nombre = model.Nombre, apellido = model.Apellido, nick = model.Nick, password = model.Password, fecha_Alta = DateTime.Now, reputacion_Venta = "0", reputacion_Compra = "0" ,coordenadas=model.Coordenadas,telefono=model.telefono};
+
+                            CloudBlobContainer blobContainer = _bss.GetContainerTienda(valor_tenant);
+                            if (imagen != null)
+                            {
+                                if (imagen.ContentLength > 0)
+                                {
+                                    var nombreFoto = model.Nick + Guid.NewGuid().ToString() + "_imagen";
+                                    CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+                                    blob.UploadFromStream(imagen.InputStream);
+                                    model.Imagen = blob.Uri.ToString();
+                                }
+                            }
+                            else
+                            {
+                                var path = Server.MapPath(@"~/img/userdefault.png");
+                                var nombreFoto = model.Nick + Guid.NewGuid().ToString() + "_imagen";
+                                FileStream fs = new FileStream(path, FileMode.Create);
+                                CloudBlockBlob blob = blobContainer.GetBlockBlobReference(nombreFoto);
+                                blob.UploadFromStream(fs);
+                                model.Imagen = blob.Uri.ToString();
+                            }
+
+
+                            user = new Usuario { email = model.Email, direccion = model.Direccion, fecha_Nacimiento = Convert.ToDateTime(model.Fecha), nombre = model.Nombre, apellido = model.Apellido, nick = model.Nick, password = model.Password, fecha_Alta = DateTime.Now, reputacion_Venta = "0", reputacion_Compra = "0" ,coordenadas=model.Coordenadas,telefono=model.telefono, imagen=model.Imagen};
                             
                             //user.preferencias;
                             if(model.lista_preferencias!=null) System.Diagnostics.Debug.WriteLine("lISTA PREFERNCIAS" + model.lista_preferencias.ToString());
