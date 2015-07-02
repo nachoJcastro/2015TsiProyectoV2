@@ -70,6 +70,9 @@ namespace Site.Models
 
     public class RegisterViewModel
     {
+        [Display(Name = "Imagen")]
+        public string Imagen { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
