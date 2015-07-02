@@ -29,7 +29,7 @@
     <div class="col-md-6">
         <!--TITULO-->
         <div class="form-group">
-                <div class="col-md-6">
+            <div class="col-md-6">
                     @Html.Label("Titulo", new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             <div class="col-md-12">
@@ -48,8 +48,8 @@
             </div>
         </div>
         <!--ATRIBUTOS-->
-        <div class="form-group">
-            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-6">
                 @Html.Label("Tags", new { htmlAttributes = new { @class = "form-control" } })
             </div>
             <div class="col-md-12">
@@ -92,20 +92,14 @@
         <!--FECHA FIN-->
 
         <div class="form-group">
-            <div class="col-md-6">
-                @Html.Label("Fecha finalizacion", new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-            <div class="col-md-12">
-                <div class='input-group date' id='datepicker1'>
-                    @*@Html.TextBoxFor(model => model.fecha_Cierre, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
-                    @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })*@
-                    @Html.EditorFor(model => model.fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(m => m.fecha_Cierre, new { @class = "col-md-2 control-label" })
+            <div class='col-md-6'>
+                <div class='input-group date' id='datetimepicker1'>
+                    @Html.TextBoxFor(model => model.fecha_Cierre)
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-                @Html.ValidationMessageFor(model => model.fecha_Cierre, "", new { @class = "text-danger" })
-            </div>
         </div>
 
 
@@ -132,7 +126,7 @@
 
                 @Html.HiddenFor(model => model.atributos[orderIndex].IdAtributo)
                 <div class="form-group">
-                    <div class="col-md-6">
+    <div class="col-md-6">
                         @Html.DisplayFor(model => model.atributos[orderIndex].Nombre, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
 
@@ -201,6 +195,8 @@
 <script>
 $(document).ready(function () {
 
+    $('.datepicker').datetimepicker({ format: "DD/MM/YYYY H:mm:ss" }); //Initialise any date pickers
+    $('#datetimepicker1').datetimepicker({ format: "DD/MM/YYYY H:mm:ss" }); //Initialise any date pickers
 
 
     //*****************************************************************
@@ -252,7 +248,7 @@ var markers = [];
 var image = 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/96/Map-Marker-Marker-Outside-Chartreuse-icon.png';
 $(function () {
 
-
+    $('#datetimepicker1').datetimepicker({ format: "DD/MM/YYYY H:mm:ss" }); //Initialise any date pickers
     latlng = new google.maps.LatLng(-34.895154, -56.164083);
 
     var myOptions = {

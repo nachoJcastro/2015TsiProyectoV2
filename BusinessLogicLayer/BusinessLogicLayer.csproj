@@ -71,9 +71,6 @@
     <Compile Include="TenantInterfaces\IBLUsuario.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Crosscutting\Crosscutting.csproj">
       <Project>{c0284f4c-bef1-4c7e-97de-c6ea9cfa912e}</Project>
       <Name>Crosscutting</Name>

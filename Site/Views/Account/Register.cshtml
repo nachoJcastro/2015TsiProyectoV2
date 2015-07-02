@@ -88,7 +88,8 @@
             @Html.LabelFor(m => m.Fecha, new { @class = "col-md-2 control-label" })
             <div class='col-md-12'>
                 <div class='input-group date' id='datetimepicker1'>
-                    @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBoxFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
+                   
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -183,8 +184,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.datepicker').datetimepicker(); //Initialise any date pickers
-        $('#datetimepicker1').datetimepicker(); //Initialise any date pickers
+        $('.datepicker').datetimepicker({ format: "YYYY/MM/DD" }); //Initialise any date pickers
+        $('#datetimepicker1').datetimepicker({ format: "YYYY/MM/DD" }); //Initialise any date pickers
     });
 </script>
 
@@ -202,7 +203,8 @@
 
         // var marker;
         $(function () {
-            $('#datetimepicker1').datetimepicker({});
+           
+            $('#datetimepicker1').datetimepicker({ format: "YYYY/MM/DD" }); //Initialise any date pickers
 
 
 
