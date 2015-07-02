@@ -216,7 +216,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" style="padding-bottom:30px;">
     <!-- Nav tabs -->
     <ul id="tabs" class="nav nav-tabs" data-tabs="tabs" style="margin-top:10px;">
         <li class="active"><a href="#des" data-toggle="tab"><h4>Descripción</h4></a></li>
@@ -237,7 +237,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane active" id="car">
+        <div class="tab-pane" id="car">
             <br />
             <div class="row">
                 <div class="col-md-12">
@@ -263,24 +263,26 @@
         </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="jumbotron">
 
-    <h5><i class="fa fa-comment fa-lg" style="padding-right:20px;"></i>Comentarios</h5>
+        <h5><i class="fa fa-comment fa-lg" style="padding-right:20px;"></i>Comentarios</h5>
 
         @if (estado.Equals("Activa") && user != null && user.Email != null)
         {
             <div class="col-md-12">
-                    <div>
-                        <textarea id="areaComentario" rows="4" cols="133" class="form-control" placeholder="Ingrese aqui su comentario.."></textarea>
-                    </div>
-                    <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
+                <div>
+                    <textarea id="areaComentario" rows="4" cols="133" class="form-control" placeholder="Ingrese aqui su comentario.."></textarea>
+                </div>
+                <button type="button" onclick="crearComentario()" class=" btn btn-primary">Comentar</button>
             </div>
         }
 
     </div>
 
 
-    <dl id="retorno"></dl>
+    <ul id="retorno" class="media-list" style="margin-top:20px;">
+
+    </ul>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
@@ -307,13 +309,19 @@
                     retorno.html('');
                     var result = "";
                     $.each(data, function (id, item) {
-                        result += '<dt>' +
-                                ToJavaScriptDate(item.fecha) + '           ' +
-                                '<a href=' + '/Manage/DatosUsuario/' +'?idUsuario=' + item.id_Usuario +'>' + item.nombreUsuario + '</a>' +
-                                    '</dt>' +
-                                    '<dd>' +
-                                    item.texto +
-                                    '</dd>';
+                        result +='<li class="media media-replied"><a class="pull-left" href=' + '/Manage/DatosUsuario/' +'?idUsuario=' + item.id_Usuario +'><img class="media-object img-circle" src="https://www.nosconectalasalud.com/sites/default/files/pictures/user-default.jpg" alt="profile">'+
+                                   '</a>'+
+                                    '<div class="media-body"><div class="well well-lg"><h4 class="media-heading text-uppercase reviews">'+item.nombreUsuario+'</h4>'+
+                                          '<ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+ToJavaScriptDate(item.fecha)+'</li></ul>'+
+                                          '<p class="media-comment">'+ item.texto+'</p>'+
+                                    '</div></div></li>';
+                            //'<dt>' +
+                            //    ToJavaScriptDate(item.fecha) + '           ' +
+                            //    '<a href=' + '/Manage/DatosUsuario/' +'?idUsuario=' + item.id_Usuario +'>' + item.nombreUsuario + '</a>' +
+                            //        '</dt>' +
+                            //        '<dd>' +
+                            //        item.texto +
+                            //        '</dd>';
                     })
                     retorno.html(result);
                     document.getElementById("areaComentario").value = '';
@@ -336,13 +344,12 @@
                     retorno.html('');
                     var result = "";
                     $.each(data, function (id, item) {
-                        result += '<dt>' +
-                                ToJavaScriptDate(item.fecha) + '           ' +
-                                '<a href=' + '/Manage/DatosUsuario/' +'?idUsuario=' + item.id_Usuario +'>' + item.nombreUsuario + '</a>' +
-                                    '</dt>' +
-                                    '<dd>' +
-                                    item.texto +
-                                    '</dd>';
+                        result += '<li class="media media-replied"><a class="pull-left" href=' + '/Manage/DatosUsuario/' +'?idUsuario=' + item.id_Usuario +'><img class="media-object img-circle" src="https://www.nosconectalasalud.com/sites/default/files/pictures/user-default.jpg" alt="profile">'+
+                                   '</a>'+
+                                    '<div class="media-body"><div class="well well-lg"><h4 class="media-heading text-uppercase reviews">'+item.nombreUsuario+'</h4>'+
+                                          '<ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+ToJavaScriptDate(item.fecha)+'</li></ul>'+
+                                          '<p class="media-comment">'+ item.texto+'</p>'+
+                                    '</div></div></li>';
                     })
                     retorno.html(result);
                     document.getElementById("areaComentario").value = '';

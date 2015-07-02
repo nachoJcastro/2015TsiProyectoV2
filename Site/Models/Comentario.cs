@@ -19,5 +19,7 @@ namespace Site.Models
         public int id_Usuario { get; set; }
 
         public int id_Subasta { get; set; }
+
+        public string imagen { get; set; }
     }
 }

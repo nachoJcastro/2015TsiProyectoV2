@@ -834,7 +834,8 @@ namespace Site.Controllers
                                                 id_Usuario = x.id_Usuario,
                                                 nombreUsuario = usuIBL.GetNombreUsuario(valor_tenant, x.id_Usuario),
                                                 texto = x.texto,
-                                                fecha = x.fecha
+                                                fecha = x.fecha,
+                                                imagen = usuIBL.GetUsuario(valor_tenant, x.id_Usuario).imagen
                                             });
 
             return Json(modelList, JsonRequestBehavior.AllowGet);
