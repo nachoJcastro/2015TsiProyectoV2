@@ -168,6 +168,25 @@ namespace DAL.DAL_Tenant
                 throw e;
             }
         }
+
+        public Usuario LoginUsuarioFacebook(string valor_tenant, string email)
+        {
+
+            var usuario = new Usuario();
+            try
+            {
+                TenantDB sitio = new TenantDB(valor_tenant);
+                if (sitio != null)
+                {
+                    usuario = sitio.Usuario.FirstOrDefault(r => r.email == email);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return usuario;
+        }
     }
 }
 

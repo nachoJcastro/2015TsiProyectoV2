@@ -14,6 +14,8 @@ using System.Threading;
 using BusinessLogicLayer.TenantInterfaces;
 using BusinessLogicLayer.TenantControllers;
 using System.Collections.Generic;
+using System.Web.Security;
+using Facebook;
 
 
 
@@ -23,17 +25,22 @@ namespace Site.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        IBLUsuario _bl=new BLUsuario();
-        IBLProducto proIBL ;
+        
+        IBLUsuario _bl = new BLUsuario();
+        IBLProducto proIBL;
+        IBLTenant _ibl = new BLTenant();
 
         //[ThreadStatic]  
         public string valor_tenant;
         //[ThreadStatic]
         public LocalDataStoreSlot local;
-        
+
         private UsuarioSite user_sitio;
         private Usuario user;
-         
+
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+
         public AccountController()
         {
         }
@@ -607,5 +614,196 @@ namespace Site.Controllers
             }
         }
         #endregion*/
+        //*********************************************************************
+        //********* FACEBOOK
+        //*********************************************************************
+        private Uri RedirectUri
+        {
+
+            get
+            {
+                var uriBuilder = new UriBuilder(Request.Url);
+                uriBuilder.Query = null;
+                uriBuilder.Fragment = null;
+                uriBuilder.Path = Url.Action("FacebookCallback");
+                return uriBuilder.Uri;
+            }
+        }
+        //********************************************
+
+        [AllowAnonymous]
+        public ActionResult Facebook()
+        {
+
+            log.Warn("entro ActionResult Facebook");
+            var fb = new FacebookClient();
+            var loginUrl = fb.GetLoginUrl(new
+            {
+                client_id = "508985985924118",
+                client_secret = "778ec6400e56f9382f23a3b9ca44b6bc",
+                redirect_uri = RedirectUri.AbsoluteUri,
+                response_type = "code",
+                scope = "email"
+            });
+
+            log.Warn("salgo ActionResult Facebook");
+            log.Warn("REDIRECT A abs = " + loginUrl.AbsoluteUri);
+
+            log.Warn("REDIRECT A path = " + loginUrl.AbsolutePath);
+
+            log.Warn("REDIRECT A segmentos = " + loginUrl.Segments.ToString());
+
+            return Redirect(loginUrl.AbsoluteUri);
+        }
+
+        //********************************************
+        [AllowAnonymous]
+        public ActionResult FacebookCallback(string code)
+        {
+            log.Warn("entro Facebook FacebookCallback");
+
+            string code_temp = code.Replace("code=", "");
+
+            log.Warn("URI ABSOLUTE =" + RedirectUri.AbsoluteUri.ToString());
+
+
+
+            log.Warn("Codigo  " + code);
+            try
+            {
+                var fb = new FacebookClient();
+                dynamic result = fb.Post("oauth/access_token", new
+                {
+                    client_id = "508985985924118",
+                    client_secret = "778ec6400e56f9382f23a3b9ca44b6bc",
+                    redirect_uri = RedirectUri.AbsoluteUri,
+                    code = code_temp
+                });
+
+                var accessToken = result.access_token;
+
+                // Store the access token in the session for farther use
+                Session["AccessToken"] = accessToken;
+
+                log.Warn("Paso token ");
+                // update the facebook client with the access token so 
+                // we can make requests on behalf of the user
+                fb.AccessToken = accessToken;
+                log.Warn("Antes fb.get " + accessToken);
+                // Get the user's information, like email, first name, middle name etc
+                //dynamic me = fb.Get ("me") ;
+
+
+
+                dynamic me = fb.Get("me?fields=id,email,name,picture");
+                //FacebookUserModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<FacebookUserModel>(fbresult.ToString());
+
+                //,first_name,last_name,locale,location,picture
+
+                //dynamic me = fb.Get("me?fields=first_name,middle_name,last_name,email");
+                //("/me?fields=id,name,gender,email,birthday") 
+
+                log.Warn("DATOS " + me.email);
+
+
+                string imagen = string.Format("https://graph.facebook.com/{0}/picture", me.id);
+                log.Warn("DATOS 2 " + imagen);
+                //string imagen = me.picture;
+                string email = me.email;
+                string nombre = me.name;
+
+                //string direccion =me.locale;
+                log.Warn("despues datos fb.get  " + email + " " + nombre);
+
+                user_sitio = System.Web.HttpContext.Current.Session["usuario"] as UsuarioSite;
+                valor_tenant = user_sitio.Dominio;
+                if (!(_bl.ExisteUsuario(valor_tenant, email)))
+                {
+
+
+                    // if (user_sitio.Email == null) return RedirectToAction("Login", "Account");
+                    //valor_tenant = user_sitio.Dominio.ToString();
+                    proIBL = new BLProducto();
+                    var lista_Origen = proIBL.ObtenerCategoriasPorTienda(user_sitio.idTienda);
+                    List<System.Web.WebPages.Html.SelectListItem> lista_item_Cat = new List<System.Web.WebPages.Html.SelectListItem>();
+                    foreach (var item in lista_Origen)
+                    {
+                        lista_item_Cat.Add(new System.Web.WebPages.Html.SelectListItem()
+                        {
+                            Value = item.CategoriaId.ToString(),
+                            Text = item.Nombre,
+                            Selected = true
+                        });
+                    }
+
+
+                    log.Warn("Facebook creo alta usuario");
+                    user = new Usuario
+                    {
+                        email = email,
+                        direccion = "vacia",
+                        imagen = imagen,
+                        fecha_Nacimiento = DateTime.Now,
+                        nombre = nombre,
+                        apellido = nombre,
+                        nick = nombre,
+                        password = "nada",
+                        fecha_Alta = (DateTime)DateTime.Now,
+                        reputacion_Venta = "0",
+                        reputacion_Compra = "0",
+                        billetera = (Double)5000,
+                        coordenadas = "sin direccion",
+                        telefono = "facebook"
+                    };
+                    log.Warn("Cargo preferencias del usuario ");
+                    if (lista_item_Cat != null)
+                    {
+                        foreach (var item in lista_item_Cat)
+                        {
+                            if (item.Selected)
+                            {
+                                log.Warn("Item " + item.Selected.ToString() + " " + item.Text + " " + item.Value);
+                                if (user.preferencias != null) user.preferencias = user.preferencias + ";" + item.Text;
+                                else user.preferencias = item.Text;
+                            }
+                        }
+                    }
+
+                    //****************************************
+                    log.Warn("Registrando por Facebook en  : " + valor_tenant + "Usuario : " + user.ToString());
+                    _bl.RegistrarUsuario(valor_tenant, user);
+                }
+
+                Usuario usr = _bl.LoginUsuarioFacebook(valor_tenant, email);
+                if (usr != null)
+                {
+                    int idTenant = _ibl.ObtenerIdTenant(valor_tenant);
+
+                    var user_Session = Session["usuario"] as UsuarioSite;
+                    user_Session.Email = usr.email;
+                    user_Session.Nombre = usr.nombre;
+                    //user_Session.Password = usr.password;
+                    user_Session.idUsuario = usr.id;
+                    user_Session.idTienda = idTenant;
+                }
+                // Set the auth cookie
+                FormsAuthentication.SetAuthCookie(email, false);
+            }
+            catch (Exception e)
+            {
+                log.Error("Error Facebook callback " + e);
+                throw e;
+            }
+
+
+
+            return RedirectToAction("Index", "Tenant");
+        }
+        //*****************************************************************
+        
+
+
     }
+
+
 }
