@@ -27,8 +27,7 @@ namespace Site.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        IBLUsuario _bl=new BLUsuario();
-        IBLProducto proIBL ;
+      
         BlobStorageIIS _bss = new BlobStorageIIS();
 
         IBLUsuario _bl = new BLUsuario();
@@ -275,25 +274,44 @@ namespace Site.Controllers
                                 blob.UploadFromStream(fs);
                                 model.Imagen = blob.Uri.ToString();
                             }
+                            user = new Usuario { email = model.Email, direccion = model.Direccion, fecha_Nacimiento = model.Fecha, nombre = model.Nombre, apellido = model.Apellido, nick = model.Nick, password = model.Password, fecha_Alta = DateTime.Now, reputacion_Venta = "0", reputacion_Compra = "0", coordenadas = model.Coordenadas, telefono = model.telefono, preferencias = "" };
 
+                            if (model.lista_preferencias.Count > 0) System.Diagnostics.Debug.WriteLine("lISTA PREFERNCIAS" + model.lista_preferencias.ToString());
+                            log.Warn("preferencias " + model.preferencias.ToList().ToString());
+                            user.preferencias = "";
 
-                            user = new Usuario { email = model.Email, direccion = model.Direccion, fecha_Nacimiento = Convert.ToDateTime(model.Fecha), nombre = model.Nombre, apellido = model.Apellido, nick = model.Nick, password = model.Password, fecha_Alta = DateTime.Now, reputacion_Venta = "0", reputacion_Compra = "0" ,coordenadas=model.Coordenadas,telefono=model.telefono, imagen=model.Imagen};
-                            
-                            //user.preferencias;
-                            if(model.lista_preferencias!=null) System.Diagnostics.Debug.WriteLine("lISTA PREFERNCIAS" + model.lista_preferencias.ToString());
-                            System.Diagnostics.Debug.WriteLine("prefencias " + model.preferencias.ToString());
-
-                            if (model.lista_preferencias != null && model.preferencias!=null){
+                            if (model.lista_preferencias.Count > 0 && model.preferencias.Count > 0)
+                            {
                                 foreach (var item in model.lista_preferencias)
                                 {
                                     if (item.Selected)
                                     {
-                                        System.Diagnostics.Debug.WriteLine("Item " + item.Selected.ToString()+" "+item.Text+" "+item.Value );
-                                        if (user.preferencias!=null) user.preferencias = user.preferencias + ";" + item.Text;
-                                        else user.preferencias =item.Text;
+                                        log.Warn("Item " + item.Selected.ToString() + " " + item.Text + " " + item.Value);
+                                        if (user.preferencias != "") user.preferencias = user.preferencias + ";" + item.Text;
+                                        else user.preferencias = item.Text;
                                     }
                                 }
                             }
+                            else
+                            {
+
+                                if (model.lista_preferencias.Count > 0)
+                                {
+                                    var item = model.lista_preferencias[0];
+                                    user.preferencias = item.Text;
+                                }
+                                else
+                                {
+                                    string item = model.preferencias[0];
+                                    user.preferencias = item;
+                                }
+
+                                log.Warn("Prefenrencias  " + user.preferencias);
+
+                            }
+                            log.Warn("Registrando : " + valor_tenant + "Usuario : " + user.ToString());
+
+                            
                             System.Diagnostics.Debug.WriteLine("Registrando : " + valor_tenant + "Usuario : " + user.ToString());
                             _bl.RegistrarUsuario(valor_tenant, user);
                             //Session["usuario"] = new UsuarioSite { Nombre = model.Nombre, Email = model.Email, Password = model.Password, Dominio = valor_tenant };

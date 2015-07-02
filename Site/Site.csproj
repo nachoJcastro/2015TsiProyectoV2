@@ -241,7 +241,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BlobStorage.cs" />
     <Compile Include="BlobStorageIIS.cs" />
-    <Compile Include="Chat\ChatHub.cs" />
+    <Compile Include="Chat\ChatHubR.cs" />
     <Compile Include="Chat\Mensaje.cs" />
     <Compile Include="Chat\UsuarioChat.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -253,7 +253,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OfertaController.cs" />
     <Compile Include="Models\AtributoSite.cs" />
-    <Compile Include="Chat\ChatHubZ.cs" />
+    <Compile Include="Chat\ChatHub.cs" />
     <Compile Include="Models\Comentario.cs" />
     <Compile Include="Models\EstiloTienda.cs" />
     <Compile Include="Models\OfertaModel.cs" />
@@ -284,7 +284,6 @@
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-rating.css" />
-    <Content Include="Content\bootstrap-wysihtml5-0.0.2.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\flexslider.css" />

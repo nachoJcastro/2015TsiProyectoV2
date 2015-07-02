@@ -103,24 +103,6 @@ $(document).ready(function(){
 	$('#zoom_0').zoom();
 	$('#zoom_1').zoom();
 	$('#zoom_2').zoom();
-
-	var wow = new WOW(
-     {
-         boxClass: 'wow',      // default
-         animateClass: 'animated', // default
-         offset: 0,          // default
-         mobile: true,       // default
-         live: true        // default
-     }
-   )
-	wow.init();
-
-	$('#some-textarea').wysihtml5();
-
-	$('#some-textarea').change(function () {
-	    var desc = $('#some-textarea').val();
-	    $('#descripcion').val(desc);
-	});
 });
 
 
