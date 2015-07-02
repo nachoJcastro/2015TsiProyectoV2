@@ -9,7 +9,7 @@
     <li class="dropdown">
         <a id="dropdownMenu2" class="btn-clean button-dropdown dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
         <ul class="dropdown-menu dropdown-menu-left clean wow bounceInLeft" data-wow-duration="1s" data-wow-delay="0s" aria-labelledby="dropdownMenu2">
-            <li class="center-block" style="display:block; margin-left:auto; margin-right:auto;"><img src="~/img/userdefault.png" class="img-responsive img-circle center-block" style="width:70px;height:70px;border:2px solid grey;display:block; margin-left:auto; margin-right:auto;" /></li>
+            <li class="center-block" style="display:block; margin-left:auto; margin-right:auto;"><img src="@user.imagen" class="img-responsive img-circle center-block" style="width:70px;height:70px;border:2px solid grey;display:block; margin-left:auto; margin-right:auto;" /></li>
             <li class="text-center"><span class="label label-default">@user.Nombre</span></li>
             <li class="text-center"><a href="@Url.Action("DatosUsuario/", "Manage", new { idUsuario = user.idUsuario }, null)">Perfil</a></li>
             @*<li class="divider"></li>

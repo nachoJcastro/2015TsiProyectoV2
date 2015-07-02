@@ -1383,3 +1383,12 @@ button + label{
     -ms-filter:grayscale(1);/* Internet Explorer */
     -o-filter:grayscale(1);/* Opera */
 }
+
+.img-datos-user {
+    width:250px;
+    height:250px;
+}
+
+#descripcion {
+    height:300px;
+}

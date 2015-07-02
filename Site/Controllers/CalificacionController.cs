@@ -120,6 +120,7 @@ namespace Site.Controllers
                 else
                 {
                     listaSubSite = subIBL.ObtenerComprasbyUsuario(valor_tenant, idUsuario);
+                    
                 }
 
                 foreach (var item in listaSubSite)
@@ -132,6 +133,7 @@ namespace Site.Controllers
                         subasta.finalizado = item.finalizado;
                         subasta.precio_Compra = Convert.ToDouble(item.precio_Compra);
                         subasta.fecha_Cierre = item.fecha_Cierre;
+                        subasta.portada = item.portada;
                         if (_blcalificacion.ObtenerCalificacionDelVendedor(valor_tenant, subasta.id) != null)
                         {
                             subasta.calificacionDelVendedor = _blcalificacion.ObtenerCalificacionDelVendedor(valor_tenant, subasta.id).puntaje;

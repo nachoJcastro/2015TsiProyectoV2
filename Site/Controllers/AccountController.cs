@@ -27,8 +27,7 @@ namespace Site.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        IBLUsuario _bl=new BLUsuario();
-        IBLProducto proIBL ;
+
         BlobStorageIIS _bss = new BlobStorageIIS();
 
         IBLUsuario _bl = new BLUsuario();
@@ -144,6 +143,7 @@ namespace Site.Controllers
                             user_Session.Nombre = usr.nombre;
                             user_Session.Password = usr.password;
                             user_Session.idUsuario = usr.id;
+                            user_Session.imagen = usr.imagen;
                             
                            // Session["usuario"] = new UsuarioSite { Nombre = usr.nombre, Email = usr.email, Password = usr.password, Dominio = valor_tenant };
                             return RedirectToAction("Index", "Tenant");
@@ -307,6 +307,7 @@ namespace Site.Controllers
                                 user_Session.Nombre = usr.nombre;
                                 user_Session.Password = usr.password;
                                 user_Session.idUsuario = usr.id;
+                                user_Session.imagen = usr.imagen;
                             }
 
                             return RedirectToAction("Index", "Tenant");
@@ -773,13 +774,13 @@ namespace Site.Controllers
                         imagen = imagen,
                         fecha_Nacimiento = DateTime.Now,
                         nombre = nombre,
-                        apellido = nombre,
+                        apellido = "",
                         nick = nombre,
                         password = "nada",
                         fecha_Alta = (DateTime)DateTime.Now,
                         reputacion_Venta = "0",
                         reputacion_Compra = "0",
-                        billetera = (Double)5000,
+                        //billetera = (Double)5000,
                         coordenadas = "sin direccion",
                         telefono = "facebook"
                     };
@@ -813,6 +814,7 @@ namespace Site.Controllers
                     //user_Session.Password = usr.password;
                     user_Session.idUsuario = usr.id;
                     user_Session.idTienda = idTenant;
+                    user_Session.imagen = user.imagen;
                 }
                 // Set the auth cookie
                 FormsAuthentication.SetAuthCookie(email, false);

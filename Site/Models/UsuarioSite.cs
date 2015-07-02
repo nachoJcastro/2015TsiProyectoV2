@@ -14,5 +14,6 @@ namespace Site.Models
         public int idTienda { get; set; }
         public int idUsuario { get; set; }
         public string IdConexion_Chat { get; set; }
+        public string imagen { get; set; }
     }
 }
